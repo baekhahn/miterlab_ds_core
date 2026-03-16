@@ -7,7 +7,7 @@ import type { GenerateFromPromptRequest, GenerateScreenRequest } from "./contrac
 
 const port = Number(process.env.PORT ?? 8787);
 const host = process.env.HOST ?? "0.0.0.0";
-const defaultTheme = process.env.BRIDGE_DEFAULT_THEME ?? "alpha";
+const defaultTheme = process.env.BRIDGE_DEFAULT_THEME ?? "core";
 const artifactsDir = path.resolve(process.cwd(), "artifacts/bridge");
 
 const json = (status: number, payload: unknown) => {

@@ -85,13 +85,26 @@ const createGenericInstanceNode = async (node: FigmaWriteNode): Promise<FrameNod
   return frame;
 };
 
-export const createInstanceNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
+export const createInstanceNode = async (node: FigmaWriteNode, theme = "core"): Promise<FrameNode> => {
   if (node.component === "Input") {
-    return await createInputNode(node);
+    const input = await createInputNode(node);
+    if (theme === "core") {
+      input.resize(Math.max(296, node.width), Math.max(48, node.height));
+      input.cornerRadius = 12;
+      input.strokes = [{ type: "SOLID", color: rgb("#D7DEE8") }];
+      input.fills = [{ type: "SOLID", color: rgb("#FFFFFF") }];
+    }
+    return input;
   }
 
   if (node.component === "Button") {
-    return await createButtonNode(node);
+    const button = await createButtonNode(node);
+    if (theme === "core") {
+      button.resize(Math.max(296, node.width), Math.max(48, node.height));
+      button.cornerRadius = 12;
+      button.fills = [{ type: "SOLID", color: rgb("#12141A") }];
+    }
+    return button;
   }
 
   return await createGenericInstanceNode(node);

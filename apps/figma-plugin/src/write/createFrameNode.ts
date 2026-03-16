@@ -1,6 +1,6 @@
 import type { FigmaWriteNode } from "../../../../shared/contracts/figmaWritePayload";
 
-export const createFrameNode = (node: FigmaWriteNode): FrameNode => {
+export const createFrameNode = (node: FigmaWriteNode, theme = "core"): FrameNode => {
   const frame = figma.createFrame();
   frame.name = node.name;
   frame.resize(Math.max(1, node.width), Math.max(1, node.height));
@@ -16,7 +16,12 @@ export const createFrameNode = (node: FigmaWriteNode): FrameNode => {
     frame.counterAxisSizingMode = "FIXED";
     frame.itemSpacing = 12;
   } else {
-    frame.fills = [{ type: "SOLID", color: { r: 1, g: 1, b: 1 } }];
+    frame.fills = [
+      {
+        type: "SOLID",
+        color: theme === "core" ? { r: 0.972, g: 0.976, b: 0.984 } : { r: 1, g: 1, b: 1 }
+      }
+    ];
     frame.strokes = [];
   }
 

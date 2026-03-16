@@ -5,17 +5,17 @@ import { createInstanceNode } from "./createInstanceNode";
 import { createTextNode } from "./createTextNode";
 import type { PluginWriteResult } from "../types";
 
-const toSceneNode = async (node: FigmaWriteNode): Promise<SceneNode> => {
+const toSceneNode = async (node: FigmaWriteNode, theme: string): Promise<SceneNode> => {
   if (node.type === "TEXT") {
     return await createTextNode(node);
   }
 
   if (node.type === "FRAME" || node.type === "GROUP") {
-    return createFrameNode(node);
+    return createFrameNode(node, theme);
   }
 
   if (node.type === "INSTANCE" || node.type === "COMPONENT") {
-    return await createInstanceNode(node);
+    return await createInstanceNode(node, theme);
   }
 
   return createContainerNode(node);
@@ -31,17 +31,17 @@ const positionChildInSection = (parent: FrameNode, child: SceneNode, index: numb
   child.y = index * 56;
 };
 
-const renderChildren = async (parent: FrameNode, children: FigmaWriteNode[]): Promise<number> => {
+const renderChildren = async (parent: FrameNode, children: FigmaWriteNode[], theme: string): Promise<number> => {
   let count = 0;
 
   for (const [index, child] of children.entries()) {
-    const next = await toSceneNode(child);
+    const next = await toSceneNode(child, theme);
     parent.appendChild(next);
     positionChildInSection(parent, next, index);
     count += 1;
 
     if (child.children && child.children.length > 0 && next.type === "FRAME") {
-      count += await renderChildren(next, child.children);
+      count += await renderChildren(next, child.children, theme);
     }
   }
 
@@ -54,12 +54,13 @@ export const renderPayload = async (payload: FigmaWritePayload): Promise<PluginW
     throw new Error("Payload has no root node");
   }
 
-  const frame = createFrameNode({ ...root, name: `${payload.document.name} (${payload.document.theme})` });
+  const theme = payload.document.theme || "core";
+  const frame = createFrameNode({ ...root, name: `${payload.document.name} (${payload.document.theme})` }, theme);
   figma.currentPage.appendChild(frame);
 
   let createdNodeCount = 1;
   if (root.children && root.children.length > 0) {
-    createdNodeCount += await renderChildren(frame, root.children);
+    createdNodeCount += await renderChildren(frame, root.children, theme);
   }
 
   figma.currentPage.selection = [frame];

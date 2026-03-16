@@ -52,7 +52,7 @@
   };
 
   // src/write/createFrameNode.ts
-  var createFrameNode = (node) => {
+  var createFrameNode = (node, theme = "core") => {
     const frame = figma.createFrame();
     frame.name = node.name;
     frame.resize(Math.max(1, node.width), Math.max(1, node.height));
@@ -67,7 +67,12 @@
       frame.counterAxisSizingMode = "FIXED";
       frame.itemSpacing = 12;
     } else {
-      frame.fills = [{ type: "SOLID", color: { r: 1, g: 1, b: 1 } }];
+      frame.fills = [
+        {
+          type: "SOLID",
+          color: theme === "core" ? { r: 0.972, g: 0.976, b: 0.984 } : { r: 1, g: 1, b: 1 }
+        }
+      ];
       frame.strokes = [];
     }
     return frame;
@@ -163,26 +168,39 @@
     await addLabel(frame, node.text || node.component || "Component", "#0F172A");
     return frame;
   };
-  var createInstanceNode = async (node) => {
+  var createInstanceNode = async (node, theme = "core") => {
     if (node.component === "Input") {
-      return await createInputNode(node);
+      const input = await createInputNode(node);
+      if (theme === "core") {
+        input.resize(Math.max(296, node.width), Math.max(48, node.height));
+        input.cornerRadius = 12;
+        input.strokes = [{ type: "SOLID", color: rgb("#D7DEE8") }];
+        input.fills = [{ type: "SOLID", color: rgb("#FFFFFF") }];
+      }
+      return input;
     }
     if (node.component === "Button") {
-      return await createButtonNode(node);
+      const button = await createButtonNode(node);
+      if (theme === "core") {
+        button.resize(Math.max(296, node.width), Math.max(48, node.height));
+        button.cornerRadius = 12;
+        button.fills = [{ type: "SOLID", color: rgb("#12141A") }];
+      }
+      return button;
     }
     return await createGenericInstanceNode(node);
   };
 
   // src/write/renderPayload.ts
-  var toSceneNode = async (node) => {
+  var toSceneNode = async (node, theme) => {
     if (node.type === "TEXT") {
       return await createTextNode(node);
     }
     if (node.type === "FRAME" || node.type === "GROUP") {
-      return createFrameNode(node);
+      return createFrameNode(node, theme);
     }
     if (node.type === "INSTANCE" || node.type === "COMPONENT") {
-      return await createInstanceNode(node);
+      return await createInstanceNode(node, theme);
     }
     return createContainerNode(node);
   };
@@ -193,15 +211,15 @@
     child.x = 0;
     child.y = index * 56;
   };
-  var renderChildren = async (parent, children) => {
+  var renderChildren = async (parent, children, theme) => {
     let count = 0;
     for (const [index, child] of children.entries()) {
-      const next = await toSceneNode(child);
+      const next = await toSceneNode(child, theme);
       parent.appendChild(next);
       positionChildInSection(parent, next, index);
       count += 1;
       if (child.children && child.children.length > 0 && next.type === "FRAME") {
-        count += await renderChildren(next, child.children);
+        count += await renderChildren(next, child.children, theme);
       }
     }
     return count;
@@ -211,11 +229,12 @@
     if (!root) {
       throw new Error("Payload has no root node");
     }
-    const frame = createFrameNode(__spreadProps(__spreadValues({}, root), { name: `${payload.document.name} (${payload.document.theme})` }));
+    const theme = payload.document.theme || "core";
+    const frame = createFrameNode(__spreadProps(__spreadValues({}, root), { name: `${payload.document.name} (${payload.document.theme})` }), theme);
     figma.currentPage.appendChild(frame);
     let createdNodeCount = 1;
     if (root.children && root.children.length > 0) {
-      createdNodeCount += await renderChildren(frame, root.children);
+      createdNodeCount += await renderChildren(frame, root.children, theme);
     }
     figma.currentPage.selection = [frame];
     figma.viewport.scrollAndZoomIntoView([frame]);
@@ -254,7 +273,7 @@
     </div>
     <div class="row">
       <label>Theme</label>
-      <input id="theme" value="alpha" />
+      <input id="theme" value="core" />
     </div>
     <div class="row">
       <button id="generate">Generate in Figma</button>

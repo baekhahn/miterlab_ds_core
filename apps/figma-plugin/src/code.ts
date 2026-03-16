@@ -30,7 +30,7 @@ const uiHtml = `
     </div>
     <div class="row">
       <label>Theme</label>
-      <input id="theme" value="alpha" />
+      <input id="theme" value="core" />
     </div>
     <div class="row">
       <button id="generate">Generate in Figma</button>

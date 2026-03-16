@@ -6,7 +6,7 @@ Figma 생성 요청의 입력 포맷입니다.
 ```json
 {
   "screen": "login",
-  "theme": "alpha",
+  "theme": "core",
   "components": [
     { "type": "text", "role": "title", "label": "Welcome Back" },
     { "type": "input", "name": "email" },

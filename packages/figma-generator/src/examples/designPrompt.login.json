@@ -1,6 +1,6 @@
 {
   "screen": "login",
-  "theme": "alpha",
+  "theme": "core",
   "components": [
     { "type": "text", "role": "title", "label": "Welcome Back" },
     { "type": "text", "role": "subtitle", "label": "Sign in to continue" },

@@ -1,7 +1,7 @@
 {
   "screen": "login",
   "purpose": "user authentication",
-  "theme": "alpha",
+  "theme": "core",
   "density": "comfortable",
   "sections": ["header", "form", "footer"],
   "primaryAction": "sign in",

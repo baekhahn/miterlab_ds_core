@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { alphaTheme, projectATheme, pulseTheme, type ProjectTheme } from "@miterlab/themes";
+import { alphaTheme, coreTheme, projectATheme, pulseTheme, type ProjectTheme } from "@miterlab/themes";
 import type { DesignPrompt } from "../types/designPrompt";
 import { validatePromptGrammar } from "../grammar/designPromptGrammar";
 import { fromDesignPrompt } from "../layout/fromDesignPrompt";
@@ -35,6 +35,7 @@ const flattenSemantic = (semantic: unknown) => {
 };
 
 const pickTheme = (theme: string): ProjectTheme => {
+  if (theme === "core") return coreTheme;
   if (theme === "projectA") return projectATheme;
   if (theme === "pulse") return pulseTheme;
   return alphaTheme;

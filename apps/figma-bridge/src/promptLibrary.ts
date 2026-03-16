@@ -2,7 +2,7 @@ import type { DesignPrompt } from "../../../packages/figma-generator/src/types/d
 
 const loginPrompt: DesignPrompt = {
   screen: "login",
-  theme: "alpha",
+  theme: "core",
   density: "comfortable",
   sections: ["header", "form", "action", "footer"],
   primaryAction: "Sign in",
@@ -16,7 +16,7 @@ const loginPrompt: DesignPrompt = {
 
 const settingsPrompt: DesignPrompt = {
   screen: "settings",
-  theme: "alpha",
+  theme: "core",
   density: "comfortable",
   sections: ["header", "form", "action"],
   primaryAction: "Save changes",
@@ -29,7 +29,7 @@ const settingsPrompt: DesignPrompt = {
 
 const dashboardPrompt: DesignPrompt = {
   screen: "dashboard",
-  theme: "alpha",
+  theme: "core",
   density: "comfortable",
   sections: ["header", "content", "action"],
   primaryAction: "Create report",
@@ -42,7 +42,7 @@ const dashboardPrompt: DesignPrompt = {
 
 const filterListPrompt: DesignPrompt = {
   screen: "list",
-  theme: "alpha",
+  theme: "core",
   density: "comfortable",
   sections: ["header", "filter", "list", "action"],
   primaryAction: "New item",

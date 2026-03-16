@@ -1,7 +1,7 @@
 {
   "screen": "list",
   "purpose": "filterable record list",
-  "theme": "alpha",
+  "theme": "core",
   "density": "comfortable",
   "sections": ["header", "filter", "list", "action"],
   "primaryAction": "create item",
