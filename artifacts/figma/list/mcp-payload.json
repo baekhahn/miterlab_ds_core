@@ -1,0 +1,429 @@
+{
+  "document": {
+    "name": "list screen",
+    "screen": "list",
+    "theme": "core"
+  },
+  "nodes": [
+    {
+      "id": "layout_1",
+      "type": "FRAME",
+      "name": "List Screen",
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844,
+      "children": [
+        {
+          "id": "layout_2",
+          "type": "FRAME",
+          "name": "header-section",
+          "x": 16,
+          "y": 40,
+          "width": 358,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_3",
+              "type": "TEXT",
+              "name": "Text 1",
+              "x": 16,
+              "y": 40,
+              "width": 358,
+              "height": 40,
+              "text": "Items",
+              "variables": {
+                "text.color": "semantic.text.primary"
+              },
+              "style": {
+                "text": "text/heading/xl"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_4",
+          "type": "FRAME",
+          "name": "filter-section",
+          "x": 16,
+          "y": 116,
+          "width": 358,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_5",
+              "type": "INSTANCE",
+              "name": "Open",
+              "x": 16,
+              "y": 116,
+              "width": 320,
+              "height": 48,
+              "component": "FilterButton",
+              "variant": {
+                "variant": "selected",
+                "size": "md",
+                "state": "default",
+                "selected": true
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Open"
+            },
+            {
+              "id": "layout_6",
+              "type": "INSTANCE",
+              "name": "Closed",
+              "x": 16,
+              "y": 116,
+              "width": 320,
+              "height": 48,
+              "component": "FilterButton",
+              "variant": {
+                "variant": "unselected",
+                "size": "md",
+                "state": "default",
+                "selected": false
+              },
+              "variables": {
+                "container.background": "Semantic/surface/subtle",
+                "container.border": "Semantic/border/default",
+                "label.color": "Semantic/text/secondary"
+              },
+              "text": "Closed"
+            }
+          ]
+        },
+        {
+          "id": "layout_7",
+          "type": "FRAME",
+          "name": "action-section",
+          "x": 16,
+          "y": 260,
+          "width": 358,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_8",
+              "type": "INSTANCE",
+              "name": "Create item",
+              "x": 16,
+              "y": 260,
+              "width": 358,
+              "height": 48,
+              "component": "Button",
+              "variant": {
+                "variant": "primary",
+                "size": "md",
+                "state": "default"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Create item"
+            }
+          ]
+        },
+        {
+          "id": "layout_9",
+          "type": "FRAME",
+          "name": "list-section",
+          "x": 16,
+          "y": 340,
+          "width": 358,
+          "height": 100,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "layout_2",
+      "type": "FRAME",
+      "name": "header-section",
+      "x": 16,
+      "y": 40,
+      "width": 358,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_3",
+          "type": "TEXT",
+          "name": "Text 1",
+          "x": 16,
+          "y": 40,
+          "width": 358,
+          "height": 40,
+          "text": "Items",
+          "variables": {
+            "text.color": "semantic.text.primary"
+          },
+          "style": {
+            "text": "text/heading/xl"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_3",
+      "type": "TEXT",
+      "name": "Text 1",
+      "x": 16,
+      "y": 40,
+      "width": 358,
+      "height": 40,
+      "text": "Items",
+      "variables": {
+        "text.color": "semantic.text.primary"
+      },
+      "style": {
+        "text": "text/heading/xl"
+      }
+    },
+    {
+      "id": "layout_4",
+      "type": "FRAME",
+      "name": "filter-section",
+      "x": 16,
+      "y": 116,
+      "width": 358,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_5",
+          "type": "INSTANCE",
+          "name": "Open",
+          "x": 16,
+          "y": 116,
+          "width": 320,
+          "height": 48,
+          "component": "FilterButton",
+          "variant": {
+            "variant": "selected",
+            "size": "md",
+            "state": "default",
+            "selected": true
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Open"
+        },
+        {
+          "id": "layout_6",
+          "type": "INSTANCE",
+          "name": "Closed",
+          "x": 16,
+          "y": 116,
+          "width": 320,
+          "height": 48,
+          "component": "FilterButton",
+          "variant": {
+            "variant": "unselected",
+            "size": "md",
+            "state": "default",
+            "selected": false
+          },
+          "variables": {
+            "container.background": "Semantic/surface/subtle",
+            "container.border": "Semantic/border/default",
+            "label.color": "Semantic/text/secondary"
+          },
+          "text": "Closed"
+        }
+      ]
+    },
+    {
+      "id": "layout_5",
+      "type": "INSTANCE",
+      "name": "Open",
+      "x": 16,
+      "y": 116,
+      "width": 320,
+      "height": 48,
+      "component": "FilterButton",
+      "variant": {
+        "variant": "selected",
+        "size": "md",
+        "state": "default",
+        "selected": true
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Open"
+    },
+    {
+      "id": "layout_6",
+      "type": "INSTANCE",
+      "name": "Closed",
+      "x": 16,
+      "y": 116,
+      "width": 320,
+      "height": 48,
+      "component": "FilterButton",
+      "variant": {
+        "variant": "unselected",
+        "size": "md",
+        "state": "default",
+        "selected": false
+      },
+      "variables": {
+        "container.background": "Semantic/surface/subtle",
+        "container.border": "Semantic/border/default",
+        "label.color": "Semantic/text/secondary"
+      },
+      "text": "Closed"
+    },
+    {
+      "id": "layout_7",
+      "type": "FRAME",
+      "name": "action-section",
+      "x": 16,
+      "y": 260,
+      "width": 358,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_8",
+          "type": "INSTANCE",
+          "name": "Create item",
+          "x": 16,
+          "y": 260,
+          "width": 358,
+          "height": 48,
+          "component": "Button",
+          "variant": {
+            "variant": "primary",
+            "size": "md",
+            "state": "default"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Create item"
+        }
+      ]
+    },
+    {
+      "id": "layout_8",
+      "type": "INSTANCE",
+      "name": "Create item",
+      "x": 16,
+      "y": 260,
+      "width": 358,
+      "height": 48,
+      "component": "Button",
+      "variant": {
+        "variant": "primary",
+        "size": "md",
+        "state": "default"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Create item"
+    },
+    {
+      "id": "layout_9",
+      "type": "FRAME",
+      "name": "list-section",
+      "x": 16,
+      "y": 340,
+      "width": 358,
+      "height": 100,
+      "children": []
+    }
+  ],
+  "frames": [
+    {
+      "id": "layout_1",
+      "name": "List Screen"
+    },
+    {
+      "id": "layout_2",
+      "name": "header-section"
+    },
+    {
+      "id": "layout_4",
+      "name": "filter-section"
+    },
+    {
+      "id": "layout_7",
+      "name": "action-section"
+    },
+    {
+      "id": "layout_9",
+      "name": "list-section"
+    }
+  ],
+  "components": [
+    {
+      "id": "layout_5",
+      "name": "Open",
+      "component": "FilterButton",
+      "variant": {
+        "variant": "selected",
+        "size": "md",
+        "state": "default",
+        "selected": true
+      }
+    },
+    {
+      "id": "layout_6",
+      "name": "Closed",
+      "component": "FilterButton",
+      "variant": {
+        "variant": "unselected",
+        "size": "md",
+        "state": "default",
+        "selected": false
+      }
+    },
+    {
+      "id": "layout_8",
+      "name": "Create item",
+      "component": "Button",
+      "variant": {
+        "variant": "primary",
+        "size": "md",
+        "state": "default"
+      }
+    }
+  ],
+  "variables": {
+    "layout_3.text.color": "semantic.text.primary",
+    "layout_5.container.background": "Semantic/action/primary",
+    "layout_5.container.border": "Semantic/action/primary",
+    "layout_5.label.color": "Semantic/action/onPrimary",
+    "layout_6.container.background": "Semantic/surface/subtle",
+    "layout_6.container.border": "Semantic/border/default",
+    "layout_6.label.color": "Semantic/text/secondary",
+    "layout_8.container.background": "Semantic/action/primary",
+    "layout_8.container.border": "Semantic/action/primary",
+    "layout_8.label.color": "Semantic/action/onPrimary"
+  },
+  "styles": {
+    "layout_3.text": "text/heading/xl"
+  },
+  "modes": {
+    "brand": "core",
+    "theme": "core"
+  },
+  "metadata": {
+    "source": "miterlab-figma-generator",
+    "version": "0.1.0",
+    "generatedAt": "2026-03-16T05:29:43.837Z"
+  }
+}

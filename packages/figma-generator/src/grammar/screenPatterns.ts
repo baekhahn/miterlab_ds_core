@@ -11,10 +11,10 @@ export interface ScreenPattern {
 export const screenPatterns: Record<ScreenType, ScreenPattern> = {
   login: {
     key: "login",
-    requiredSections: ["header", "form", "footer"],
-    optionalSections: ["action"],
+    requiredSections: ["header", "form", "action"],
+    optionalSections: ["footer"],
     expectedComponents: ["title", "subtitle", "email-input", "password-input", "primary-action", "helper-text"],
-    layoutFlow: ["header", "form", "footer"]
+    layoutFlow: ["header", "form", "action", "footer"]
   },
   settings: {
     key: "settings",

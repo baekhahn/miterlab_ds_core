@@ -1,5 +1,6 @@
 import { load } from "js-yaml";
 import type { FigmaNode } from "../types/figmaNode";
+import { layoutRules } from "../grammar/layoutRules";
 import { resolveToken, type TokenResolveContext } from "../tokens/resolveToken";
 
 interface ParsedSpec {
@@ -61,18 +62,30 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
     variables[slotProperty] = resolved.variable;
   }
 
+  const resolvedSize = input.size ?? spec.sizes?.[0] ?? "md";
+  const defaultHeight =
+    resolvedSize === "sm"
+      ? layoutRules.controlHeights.sm
+      : resolvedSize === "lg"
+        ? layoutRules.controlHeights.lg
+        : layoutRules.controlHeights.md;
+  const defaultWidth =
+    spec.component === "FilterButton"
+      ? layoutRules.contentWidth.narrow
+      : layoutRules.contentWidth.form;
+
   return {
     id: `node_${Math.random().toString(36).slice(2, 10)}`,
     type: "INSTANCE",
     name: input.name ?? spec.component,
     x: input.x ?? 0,
     y: input.y ?? 0,
-    width: input.width ?? (input.size === "sm" ? 120 : input.size === "lg" ? 180 : 144),
-    height: input.height ?? (spec.component === "Input" ? 40 : 44),
+    width: input.width ?? defaultWidth,
+    height: input.height ?? defaultHeight,
     component: spec.component,
     variant: {
       variant: input.variant ?? variantKey,
-      size: input.size ?? spec.sizes?.[0] ?? "md",
+      size: resolvedSize,
       state: stateKey,
       ...(typeof input.selected === "boolean" ? { selected: input.selected } : {})
     },

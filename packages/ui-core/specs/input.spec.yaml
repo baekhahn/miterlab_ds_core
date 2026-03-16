@@ -5,6 +5,11 @@ model:
   axes: [variant, size, state]
 variants: [default]
 sizes: [sm, md]
+sizeDefaults:
+  sm:
+    height: 40
+  md:
+    height: 40
 states: [default, focus, disabled, error]
 slots: [field, value, placeholder]
 semanticMapping:
@@ -31,3 +36,4 @@ semanticMapping:
       value.color: semantic.text.primary
 notes:
   - helper/error text layout is handled by field wrapper pattern
+  - core backbone target keeps default field height at 40px with 12px field gap

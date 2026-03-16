@@ -8,7 +8,7 @@ interface PlacementRule {
 export const componentPlacementRules: Record<ComponentIntent, PlacementRule> = {
   title: { section: "header", order: 10 },
   subtitle: { section: "header", order: 20 },
-  "helper-text": { section: "footer", order: 10 },
+  "helper-text": { section: "form", order: 40 },
   "email-input": { section: "form", order: 10 },
   "password-input": { section: "form", order: 20 },
   "text-input": { section: "form", order: 30 },

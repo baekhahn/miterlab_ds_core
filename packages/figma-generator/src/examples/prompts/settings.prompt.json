@@ -1,7 +1,7 @@
 {
   "screen": "settings",
   "purpose": "profile and preferences update",
-  "theme": "pulse",
+  "theme": "core",
   "density": "comfortable",
   "sections": ["header", "form", "action"],
   "primaryAction": "save changes",

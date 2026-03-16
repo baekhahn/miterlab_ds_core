@@ -1,12 +1,12 @@
 {
-  "screen": "login",
+  "screen": "settings",
   "theme": "core",
   "sectionsCreated": [
     "header",
     "form",
     "action"
   ],
-  "componentCount": 3,
+  "componentCount": 4,
   "nodeCount": 10,
   "warnings": [],
   "evaluationScore": 100,

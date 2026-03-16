@@ -1,14 +1,14 @@
 {
   "document": {
-    "name": "login screen",
-    "screen": "login",
+    "name": "settings screen",
+    "screen": "settings",
     "theme": "core"
   },
   "nodes": [
     {
       "id": "layout_1",
       "type": "FRAME",
-      "name": "Login Screen",
+      "name": "Settings Screen",
       "x": 0,
       "y": 0,
       "width": 390,
@@ -31,7 +31,7 @@
               "y": 40,
               "width": 358,
               "height": 40,
-              "text": "Welcome Back",
+              "text": "Settings",
               "variables": {
                 "text.color": "semantic.text.primary"
               },
@@ -47,7 +47,7 @@
               "y": 40,
               "width": 358,
               "height": 24,
-              "text": "Sign in to continue",
+              "text": "Manage account preferences",
               "variables": {
                 "text.color": "semantic.text.secondary"
               },
@@ -69,7 +69,7 @@
             {
               "id": "layout_6",
               "type": "INSTANCE",
-              "name": "Email",
+              "name": "DisplayName",
               "x": 16,
               "y": 148,
               "width": 358,
@@ -90,7 +90,7 @@
             {
               "id": "layout_7",
               "type": "INSTANCE",
-              "name": "Password",
+              "name": "Timezone",
               "x": 16,
               "y": 148,
               "width": 358,
@@ -107,40 +107,24 @@
                 "value.color": "Semantic/text/primary",
                 "placeholder.color": "Semantic/text/muted"
               }
-            },
-            {
-              "id": "layout_8",
-              "type": "TEXT",
-              "name": "Text 6",
-              "x": 16,
-              "y": 148,
-              "width": 358,
-              "height": 24,
-              "text": "Need help signing in?",
-              "variables": {
-                "text.color": "semantic.text.secondary"
-              },
-              "style": {
-                "text": "text/body/md"
-              }
             }
           ]
         },
         {
-          "id": "layout_9",
+          "id": "layout_8",
           "type": "FRAME",
           "name": "action-section",
           "x": 16,
-          "y": 332,
+          "y": 292,
           "width": 358,
           "height": 100,
           "children": [
             {
-              "id": "layout_10",
+              "id": "layout_9",
               "type": "INSTANCE",
-              "name": "Sign in",
+              "name": "Save changes",
               "x": 16,
-              "y": 332,
+              "y": 292,
               "width": 358,
               "height": 48,
               "component": "Button",
@@ -154,7 +138,28 @@
                 "container.border": "Semantic/action/primary",
                 "label.color": "Semantic/action/onPrimary"
               },
-              "text": "Sign in"
+              "text": "Save changes"
+            },
+            {
+              "id": "layout_10",
+              "type": "INSTANCE",
+              "name": "Cancel",
+              "x": 16,
+              "y": 292,
+              "width": 358,
+              "height": 48,
+              "component": "Button",
+              "variant": {
+                "variant": "neutral",
+                "size": "md",
+                "state": "default"
+              },
+              "variables": {
+                "container.background": "Semantic/action/neutral",
+                "container.border": "Semantic/border/default",
+                "label.color": "Semantic/text/primary"
+              },
+              "text": "Cancel"
             }
           ]
         }
@@ -177,7 +182,7 @@
           "y": 40,
           "width": 358,
           "height": 40,
-          "text": "Welcome Back",
+          "text": "Settings",
           "variables": {
             "text.color": "semantic.text.primary"
           },
@@ -193,7 +198,7 @@
           "y": 40,
           "width": 358,
           "height": 24,
-          "text": "Sign in to continue",
+          "text": "Manage account preferences",
           "variables": {
             "text.color": "semantic.text.secondary"
           },
@@ -211,7 +216,7 @@
       "y": 40,
       "width": 358,
       "height": 40,
-      "text": "Welcome Back",
+      "text": "Settings",
       "variables": {
         "text.color": "semantic.text.primary"
       },
@@ -227,7 +232,7 @@
       "y": 40,
       "width": 358,
       "height": 24,
-      "text": "Sign in to continue",
+      "text": "Manage account preferences",
       "variables": {
         "text.color": "semantic.text.secondary"
       },
@@ -247,7 +252,7 @@
         {
           "id": "layout_6",
           "type": "INSTANCE",
-          "name": "Email",
+          "name": "DisplayName",
           "x": 16,
           "y": 148,
           "width": 358,
@@ -268,7 +273,7 @@
         {
           "id": "layout_7",
           "type": "INSTANCE",
-          "name": "Password",
+          "name": "Timezone",
           "x": 16,
           "y": 148,
           "width": 358,
@@ -285,29 +290,13 @@
             "value.color": "Semantic/text/primary",
             "placeholder.color": "Semantic/text/muted"
           }
-        },
-        {
-          "id": "layout_8",
-          "type": "TEXT",
-          "name": "Text 6",
-          "x": 16,
-          "y": 148,
-          "width": 358,
-          "height": 24,
-          "text": "Need help signing in?",
-          "variables": {
-            "text.color": "semantic.text.secondary"
-          },
-          "style": {
-            "text": "text/body/md"
-          }
         }
       ]
     },
     {
       "id": "layout_6",
       "type": "INSTANCE",
-      "name": "Email",
+      "name": "DisplayName",
       "x": 16,
       "y": 148,
       "width": 358,
@@ -328,7 +317,7 @@
     {
       "id": "layout_7",
       "type": "INSTANCE",
-      "name": "Password",
+      "name": "Timezone",
       "x": 16,
       "y": 148,
       "width": 358,
@@ -348,35 +337,19 @@
     },
     {
       "id": "layout_8",
-      "type": "TEXT",
-      "name": "Text 6",
-      "x": 16,
-      "y": 148,
-      "width": 358,
-      "height": 24,
-      "text": "Need help signing in?",
-      "variables": {
-        "text.color": "semantic.text.secondary"
-      },
-      "style": {
-        "text": "text/body/md"
-      }
-    },
-    {
-      "id": "layout_9",
       "type": "FRAME",
       "name": "action-section",
       "x": 16,
-      "y": 332,
+      "y": 292,
       "width": 358,
       "height": 100,
       "children": [
         {
-          "id": "layout_10",
+          "id": "layout_9",
           "type": "INSTANCE",
-          "name": "Sign in",
+          "name": "Save changes",
           "x": 16,
-          "y": 332,
+          "y": 292,
           "width": 358,
           "height": 48,
           "component": "Button",
@@ -390,16 +363,37 @@
             "container.border": "Semantic/action/primary",
             "label.color": "Semantic/action/onPrimary"
           },
-          "text": "Sign in"
+          "text": "Save changes"
+        },
+        {
+          "id": "layout_10",
+          "type": "INSTANCE",
+          "name": "Cancel",
+          "x": 16,
+          "y": 292,
+          "width": 358,
+          "height": 48,
+          "component": "Button",
+          "variant": {
+            "variant": "neutral",
+            "size": "md",
+            "state": "default"
+          },
+          "variables": {
+            "container.background": "Semantic/action/neutral",
+            "container.border": "Semantic/border/default",
+            "label.color": "Semantic/text/primary"
+          },
+          "text": "Cancel"
         }
       ]
     },
     {
-      "id": "layout_10",
+      "id": "layout_9",
       "type": "INSTANCE",
-      "name": "Sign in",
+      "name": "Save changes",
       "x": 16,
-      "y": 332,
+      "y": 292,
       "width": 358,
       "height": 48,
       "component": "Button",
@@ -413,13 +407,34 @@
         "container.border": "Semantic/action/primary",
         "label.color": "Semantic/action/onPrimary"
       },
-      "text": "Sign in"
+      "text": "Save changes"
+    },
+    {
+      "id": "layout_10",
+      "type": "INSTANCE",
+      "name": "Cancel",
+      "x": 16,
+      "y": 292,
+      "width": 358,
+      "height": 48,
+      "component": "Button",
+      "variant": {
+        "variant": "neutral",
+        "size": "md",
+        "state": "default"
+      },
+      "variables": {
+        "container.background": "Semantic/action/neutral",
+        "container.border": "Semantic/border/default",
+        "label.color": "Semantic/text/primary"
+      },
+      "text": "Cancel"
     }
   ],
   "frames": [
     {
       "id": "layout_1",
-      "name": "Login Screen"
+      "name": "Settings Screen"
     },
     {
       "id": "layout_2",
@@ -430,14 +445,14 @@
       "name": "form-section"
     },
     {
-      "id": "layout_9",
+      "id": "layout_8",
       "name": "action-section"
     }
   ],
   "components": [
     {
       "id": "layout_6",
-      "name": "Email",
+      "name": "DisplayName",
       "component": "Input",
       "variant": {
         "variant": "default",
@@ -447,7 +462,7 @@
     },
     {
       "id": "layout_7",
-      "name": "Password",
+      "name": "Timezone",
       "component": "Input",
       "variant": {
         "variant": "default",
@@ -456,11 +471,21 @@
       }
     },
     {
-      "id": "layout_10",
-      "name": "Sign in",
+      "id": "layout_9",
+      "name": "Save changes",
       "component": "Button",
       "variant": {
         "variant": "primary",
+        "size": "md",
+        "state": "default"
+      }
+    },
+    {
+      "id": "layout_10",
+      "name": "Cancel",
+      "component": "Button",
+      "variant": {
+        "variant": "neutral",
         "size": "md",
         "state": "default"
       }
@@ -477,15 +502,16 @@
     "layout_7.field.border": "Semantic/border/default",
     "layout_7.value.color": "Semantic/text/primary",
     "layout_7.placeholder.color": "Semantic/text/muted",
-    "layout_8.text.color": "semantic.text.secondary",
-    "layout_10.container.background": "Semantic/action/primary",
-    "layout_10.container.border": "Semantic/action/primary",
-    "layout_10.label.color": "Semantic/action/onPrimary"
+    "layout_9.container.background": "Semantic/action/primary",
+    "layout_9.container.border": "Semantic/action/primary",
+    "layout_9.label.color": "Semantic/action/onPrimary",
+    "layout_10.container.background": "Semantic/action/neutral",
+    "layout_10.container.border": "Semantic/border/default",
+    "layout_10.label.color": "Semantic/text/primary"
   },
   "styles": {
     "layout_3.text": "text/heading/xl",
-    "layout_4.text": "text/body/lg",
-    "layout_8.text": "text/body/md"
+    "layout_4.text": "text/body/lg"
   },
   "modes": {
     "brand": "core",

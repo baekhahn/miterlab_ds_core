@@ -8,9 +8,9 @@ export const foundationTypography = {
     xs: "12px",
     sm: "14px",
     md: "16px",
-    lg: "18px",
-    xl: "20px",
-    xxl: "24px"
+    lg: "20px",
+    xl: "24px",
+    xxl: "32px"
   },
   fontWeight: {
     regular: 400,
@@ -19,8 +19,8 @@ export const foundationTypography = {
     bold: 700
   },
   lineHeight: {
-    tight: 1.2,
+    tight: 1.25,
     normal: 1.5,
-    relaxed: 1.7
+    relaxed: 1.6
   }
 } as const;

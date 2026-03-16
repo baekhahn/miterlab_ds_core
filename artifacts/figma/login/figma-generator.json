@@ -13,41 +13,41 @@
           "id": "layout_2",
           "type": "FRAME",
           "name": "header-section",
-          "x": 24,
-          "y": 32,
-          "width": 360,
+          "x": 16,
+          "y": 40,
+          "width": 358,
           "height": 100,
           "children": [
             {
               "id": "layout_3",
               "type": "TEXT",
               "name": "Text 1",
-              "x": 24,
-              "y": 32,
-              "width": 240,
-              "height": 24,
+              "x": 16,
+              "y": 40,
+              "width": 358,
+              "height": 40,
               "text": "Welcome Back",
               "variables": {
                 "text.color": "semantic.text.primary"
               },
               "style": {
-                "text": "text/heading/lg"
+                "text": "text/heading/xl"
               }
             },
             {
               "id": "layout_4",
               "type": "TEXT",
               "name": "Text 2",
-              "x": 24,
-              "y": 32,
-              "width": 240,
+              "x": 16,
+              "y": 40,
+              "width": 358,
               "height": 24,
               "text": "Sign in to continue",
               "variables": {
                 "text.color": "semantic.text.secondary"
               },
               "style": {
-                "text": "text/body/md"
+                "text": "text/body/lg"
               }
             }
           ]
@@ -56,19 +56,19 @@
           "id": "layout_5",
           "type": "FRAME",
           "name": "form-section",
-          "x": 24,
-          "y": 124,
-          "width": 360,
+          "x": 16,
+          "y": 148,
+          "width": 358,
           "height": 100,
           "children": [
             {
               "id": "layout_6",
               "type": "INSTANCE",
-              "name": "email",
-              "x": 24,
-              "y": 124,
-              "width": 144,
-              "height": 40,
+              "name": "Email",
+              "x": 16,
+              "y": 148,
+              "width": 358,
+              "height": 48,
               "component": "Input",
               "variant": {
                 "variant": "default",
@@ -85,11 +85,11 @@
             {
               "id": "layout_7",
               "type": "INSTANCE",
-              "name": "password",
-              "x": 24,
-              "y": 124,
-              "width": 144,
-              "height": 40,
+              "name": "Password",
+              "x": 16,
+              "y": 148,
+              "width": 358,
+              "height": 48,
               "component": "Input",
               "variant": {
                 "variant": "default",
@@ -102,25 +102,14 @@
                 "value.color": "Semantic/text/primary",
                 "placeholder.color": "Semantic/text/muted"
               }
-            }
-          ]
-        },
-        {
-          "id": "layout_8",
-          "type": "FRAME",
-          "name": "footer-section",
-          "x": 24,
-          "y": 248,
-          "width": 360,
-          "height": 100,
-          "children": [
+            },
             {
-              "id": "layout_9",
+              "id": "layout_8",
               "type": "TEXT",
               "name": "Text 6",
-              "x": 24,
-              "y": 248,
-              "width": 240,
+              "x": 16,
+              "y": 148,
+              "width": 358,
               "height": 24,
               "text": "Need help signing in?",
               "variables": {
@@ -133,22 +122,22 @@
           ]
         },
         {
-          "id": "layout_10",
+          "id": "layout_9",
           "type": "FRAME",
           "name": "action-section",
-          "x": 24,
-          "y": 316,
-          "width": 360,
+          "x": 16,
+          "y": 332,
+          "width": 358,
           "height": 100,
           "children": [
             {
-              "id": "layout_11",
+              "id": "layout_10",
               "type": "INSTANCE",
-              "name": "Button 5",
-              "x": 24,
-              "y": 316,
-              "width": 144,
-              "height": 44,
+              "name": "Sign in",
+              "x": 16,
+              "y": 332,
+              "width": 358,
+              "height": 48,
               "component": "Button",
               "variant": {
                 "variant": "primary",
@@ -170,41 +159,41 @@
       "id": "layout_2",
       "type": "FRAME",
       "name": "header-section",
-      "x": 24,
-      "y": 32,
-      "width": 360,
+      "x": 16,
+      "y": 40,
+      "width": 358,
       "height": 100,
       "children": [
         {
           "id": "layout_3",
           "type": "TEXT",
           "name": "Text 1",
-          "x": 24,
-          "y": 32,
-          "width": 240,
-          "height": 24,
+          "x": 16,
+          "y": 40,
+          "width": 358,
+          "height": 40,
           "text": "Welcome Back",
           "variables": {
             "text.color": "semantic.text.primary"
           },
           "style": {
-            "text": "text/heading/lg"
+            "text": "text/heading/xl"
           }
         },
         {
           "id": "layout_4",
           "type": "TEXT",
           "name": "Text 2",
-          "x": 24,
-          "y": 32,
-          "width": 240,
+          "x": 16,
+          "y": 40,
+          "width": 358,
           "height": 24,
           "text": "Sign in to continue",
           "variables": {
             "text.color": "semantic.text.secondary"
           },
           "style": {
-            "text": "text/body/md"
+            "text": "text/body/lg"
           }
         }
       ]
@@ -213,51 +202,51 @@
       "id": "layout_3",
       "type": "TEXT",
       "name": "Text 1",
-      "x": 24,
-      "y": 32,
-      "width": 240,
-      "height": 24,
+      "x": 16,
+      "y": 40,
+      "width": 358,
+      "height": 40,
       "text": "Welcome Back",
       "variables": {
         "text.color": "semantic.text.primary"
       },
       "style": {
-        "text": "text/heading/lg"
+        "text": "text/heading/xl"
       }
     },
     {
       "id": "layout_4",
       "type": "TEXT",
       "name": "Text 2",
-      "x": 24,
-      "y": 32,
-      "width": 240,
+      "x": 16,
+      "y": 40,
+      "width": 358,
       "height": 24,
       "text": "Sign in to continue",
       "variables": {
         "text.color": "semantic.text.secondary"
       },
       "style": {
-        "text": "text/body/md"
+        "text": "text/body/lg"
       }
     },
     {
       "id": "layout_5",
       "type": "FRAME",
       "name": "form-section",
-      "x": 24,
-      "y": 124,
-      "width": 360,
+      "x": 16,
+      "y": 148,
+      "width": 358,
       "height": 100,
       "children": [
         {
           "id": "layout_6",
           "type": "INSTANCE",
-          "name": "email",
-          "x": 24,
-          "y": 124,
-          "width": 144,
-          "height": 40,
+          "name": "Email",
+          "x": 16,
+          "y": 148,
+          "width": 358,
+          "height": 48,
           "component": "Input",
           "variant": {
             "variant": "default",
@@ -274,11 +263,11 @@
         {
           "id": "layout_7",
           "type": "INSTANCE",
-          "name": "password",
-          "x": 24,
-          "y": 124,
-          "width": 144,
-          "height": 40,
+          "name": "Password",
+          "x": 16,
+          "y": 148,
+          "width": 358,
+          "height": 48,
           "component": "Input",
           "variant": {
             "variant": "default",
@@ -291,17 +280,33 @@
             "value.color": "Semantic/text/primary",
             "placeholder.color": "Semantic/text/muted"
           }
+        },
+        {
+          "id": "layout_8",
+          "type": "TEXT",
+          "name": "Text 6",
+          "x": 16,
+          "y": 148,
+          "width": 358,
+          "height": 24,
+          "text": "Need help signing in?",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/md"
+          }
         }
       ]
     },
     {
       "id": "layout_6",
       "type": "INSTANCE",
-      "name": "email",
-      "x": 24,
-      "y": 124,
-      "width": 144,
-      "height": 40,
+      "name": "Email",
+      "x": 16,
+      "y": 148,
+      "width": 358,
+      "height": 48,
       "component": "Input",
       "variant": {
         "variant": "default",
@@ -318,11 +323,11 @@
     {
       "id": "layout_7",
       "type": "INSTANCE",
-      "name": "password",
-      "x": 24,
-      "y": 124,
-      "width": 144,
-      "height": 40,
+      "name": "Password",
+      "x": 16,
+      "y": 148,
+      "width": 358,
+      "height": 48,
       "component": "Input",
       "variant": {
         "variant": "default",
@@ -338,38 +343,11 @@
     },
     {
       "id": "layout_8",
-      "type": "FRAME",
-      "name": "footer-section",
-      "x": 24,
-      "y": 248,
-      "width": 360,
-      "height": 100,
-      "children": [
-        {
-          "id": "layout_9",
-          "type": "TEXT",
-          "name": "Text 6",
-          "x": 24,
-          "y": 248,
-          "width": 240,
-          "height": 24,
-          "text": "Need help signing in?",
-          "variables": {
-            "text.color": "semantic.text.secondary"
-          },
-          "style": {
-            "text": "text/body/md"
-          }
-        }
-      ]
-    },
-    {
-      "id": "layout_9",
       "type": "TEXT",
       "name": "Text 6",
-      "x": 24,
-      "y": 248,
-      "width": 240,
+      "x": 16,
+      "y": 148,
+      "width": 358,
       "height": 24,
       "text": "Need help signing in?",
       "variables": {
@@ -380,22 +358,22 @@
       }
     },
     {
-      "id": "layout_10",
+      "id": "layout_9",
       "type": "FRAME",
       "name": "action-section",
-      "x": 24,
-      "y": 316,
-      "width": 360,
+      "x": 16,
+      "y": 332,
+      "width": 358,
       "height": 100,
       "children": [
         {
-          "id": "layout_11",
+          "id": "layout_10",
           "type": "INSTANCE",
-          "name": "Button 5",
-          "x": 24,
-          "y": 316,
-          "width": 144,
-          "height": 44,
+          "name": "Sign in",
+          "x": 16,
+          "y": 332,
+          "width": 358,
+          "height": 48,
           "component": "Button",
           "variant": {
             "variant": "primary",
@@ -412,13 +390,13 @@
       ]
     },
     {
-      "id": "layout_11",
+      "id": "layout_10",
       "type": "INSTANCE",
-      "name": "Button 5",
-      "x": 24,
-      "y": 316,
-      "width": 144,
-      "height": 44,
+      "name": "Sign in",
+      "x": 16,
+      "y": 332,
+      "width": 358,
+      "height": 48,
       "component": "Button",
       "variant": {
         "variant": "primary",
@@ -434,9 +412,9 @@
     }
   ],
   "styles": {
-    "layout_3.text": "text/heading/lg",
-    "layout_4.text": "text/body/md",
-    "layout_9.text": "text/body/md"
+    "layout_3.text": "text/heading/xl",
+    "layout_4.text": "text/body/lg",
+    "layout_8.text": "text/body/md"
   },
   "variables": {
     "layout_3.text.color": "semantic.text.primary",
@@ -449,10 +427,10 @@
     "layout_7.field.border": "Semantic/border/default",
     "layout_7.value.color": "Semantic/text/primary",
     "layout_7.placeholder.color": "Semantic/text/muted",
-    "layout_9.text.color": "semantic.text.secondary",
-    "layout_11.container.background": "Semantic/action/primary",
-    "layout_11.container.border": "Semantic/action/primary",
-    "layout_11.label.color": "Semantic/action/onPrimary"
+    "layout_8.text.color": "semantic.text.secondary",
+    "layout_10.container.background": "Semantic/action/primary",
+    "layout_10.container.border": "Semantic/action/primary",
+    "layout_10.label.color": "Semantic/action/onPrimary"
   },
   "components": {
     "layout_6": {
@@ -469,7 +447,7 @@
         "state": "default"
       }
     },
-    "layout_11": {
+    "layout_10": {
       "variants": {
         "variant": "primary",
         "size": "md",

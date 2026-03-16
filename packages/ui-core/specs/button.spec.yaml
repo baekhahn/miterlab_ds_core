@@ -5,6 +5,13 @@ model:
   axes: [variant, size, state]
 variants: [primary, neutral, ghost]
 sizes: [sm, md, lg]
+sizeDefaults:
+  sm:
+    height: 40
+  md:
+    height: 40
+  lg:
+    height: 48
 states: [default, hover, pressed, disabled, focus]
 slots: [container, label]
 semanticMapping:
@@ -68,3 +75,4 @@ semanticMapping:
 notes:
   - component must consume semantic tokens only
   - no direct brand or foundation token usage
+  - core backbone target keeps primary button at 40px by default and 48px for large emphasis
