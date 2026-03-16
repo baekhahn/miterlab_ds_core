@@ -1,5 +1,25 @@
 "use strict";
 (() => {
+  var __defProp = Object.defineProperty;
+  var __defProps = Object.defineProperties;
+  var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+  var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __propIsEnum = Object.prototype.propertyIsEnumerable;
+  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+  var __spreadValues = (a, b) => {
+    for (var prop in b || (b = {}))
+      if (__hasOwnProp.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    if (__getOwnPropSymbols)
+      for (var prop of __getOwnPropSymbols(b)) {
+        if (__propIsEnum.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      }
+    return a;
+  };
+  var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+
   // src/api/fetchPayload.ts
   var fetchPayload = async (bridgeUrl, screen, theme) => {
     const response = await fetch(`${bridgeUrl}/generate-screen`, {
@@ -49,7 +69,7 @@
     await loadDefaultFont();
     const text = figma.createText();
     text.name = node.name;
-    text.characters = node.text ?? "";
+    text.characters = typeof node.text === "string" ? node.text : "";
     text.x = node.x;
     text.y = node.y;
     text.resize(Math.max(1, node.width), Math.max(1, node.height));
@@ -83,7 +103,7 @@
     if (!root) {
       throw new Error("Payload has no root node");
     }
-    const frame = createFrameNode({ ...root, name: `${payload.document.name} (${payload.document.theme})` });
+    const frame = createFrameNode(__spreadProps(__spreadValues({}, root), { name: `${payload.document.name} (${payload.document.theme})` }));
     figma.currentPage.appendChild(frame);
     let createdNodeCount = 1;
     if (root.children && root.children.length > 0) {
