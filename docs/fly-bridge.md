@@ -11,7 +11,7 @@
 ```bash
 npm run bridge:dev
 ```
-기본 URL: `http://127.0.0.1:8787`
+기본 URL: `http://localhost:8787`
 
 ## Fly Prep
 - 배포 설정 파일: `fly.toml`

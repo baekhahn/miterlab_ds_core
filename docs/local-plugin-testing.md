@@ -12,7 +12,7 @@ npm run plugin:build
 
 ## 3) Figma Desktop에서 플러그인 로드
 - Development plugin으로 `apps/figma-plugin/manifest.json` 선택
-- 실행 후 Bridge URL(`http://127.0.0.1:8787`) 입력
+- 실행 후 Bridge URL(`http://localhost:8787`) 입력
 - `screen=login`, `theme=alpha`로 Generate
 
 ## 4) 확인

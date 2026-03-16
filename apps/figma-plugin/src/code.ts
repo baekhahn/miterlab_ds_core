@@ -17,7 +17,7 @@ const uiHtml = `
   <body>
     <div class="row">
       <label>Bridge URL</label>
-      <input id="bridgeUrl" value="http://127.0.0.1:8787" />
+      <input id="bridgeUrl" value="http://localhost:8787" />
     </div>
     <div class="row">
       <label>Screen</label>
