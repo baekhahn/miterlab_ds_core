@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx src/server.ts",
+    "dev": "sh -c 'if command -v tsx >/dev/null 2>&1; then tsx src/server.ts; else node ../../node_modules/.pnpm/tsx@4.21.0/node_modules/tsx/dist/cli.mjs src/server.ts; fi'",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
     "typecheck": "tsc -p tsconfig.json --noEmit"
