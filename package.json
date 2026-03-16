@@ -11,6 +11,8 @@
   "scripts": {
     "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
+    "figma:dev": "node scripts/figma-dev.mjs",
+    "figma:restart": "bash ./start-figma-local.command",
     "bridge:dev": "npm run dev -w @miterlab/figma-bridge",
     "bridge:build": "npm run build -w @miterlab/figma-bridge",
     "bridge:start": "npm run start -w @miterlab/figma-bridge",
