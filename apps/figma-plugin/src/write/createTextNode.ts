@@ -1,6 +1,6 @@
 import type { FigmaWriteNode } from "../../../../shared/contracts/figmaWritePayload";
 
-const loadDefaultFont = async () => {
+export const loadDefaultFont = async () => {
   await figma.loadFontAsync({ family: "Inter", style: "Regular" });
 };
 

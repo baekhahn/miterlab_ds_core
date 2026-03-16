@@ -58,6 +58,18 @@
     frame.resize(Math.max(1, node.width), Math.max(1, node.height));
     frame.x = node.x;
     frame.y = node.y;
+    if (node.name.endsWith("-section")) {
+      frame.fills = [];
+      frame.strokes = [];
+      frame.clipsContent = false;
+      frame.layoutMode = "VERTICAL";
+      frame.primaryAxisSizingMode = "AUTO";
+      frame.counterAxisSizingMode = "FIXED";
+      frame.itemSpacing = 12;
+    } else {
+      frame.fills = [{ type: "SOLID", color: { r: 1, g: 1, b: 1 } }];
+      frame.strokes = [];
+    }
     return frame;
   };
 
@@ -76,6 +88,91 @@
     return text;
   };
 
+  // src/write/createInstanceNode.ts
+  var rgb = (hex) => {
+    const normalized = hex.replace("#", "");
+    const bigint = Number.parseInt(normalized, 16);
+    return {
+      r: (bigint >> 16 & 255) / 255,
+      g: (bigint >> 8 & 255) / 255,
+      b: (bigint & 255) / 255
+    };
+  };
+  var addLabel = async (frame, textValue, color, align = "MIN") => {
+    await loadDefaultFont();
+    const text = figma.createText();
+    text.characters = textValue;
+    text.fontSize = 16;
+    text.fills = [{ type: "SOLID", color: rgb(color) }];
+    text.layoutAlign = "STRETCH";
+    text.textAlignHorizontal = align === "CENTER" ? "CENTER" : "LEFT";
+    frame.appendChild(text);
+  };
+  var createInputNode = async (node) => {
+    const frame = figma.createFrame();
+    frame.name = node.name;
+    frame.resize(Math.max(220, node.width), Math.max(40, node.height));
+    frame.x = node.x;
+    frame.y = node.y;
+    frame.layoutMode = "HORIZONTAL";
+    frame.primaryAxisAlignItems = "MIN";
+    frame.counterAxisAlignItems = "CENTER";
+    frame.paddingLeft = 14;
+    frame.paddingRight = 14;
+    frame.itemSpacing = 8;
+    frame.cornerRadius = 10;
+    frame.strokes = [{ type: "SOLID", color: rgb("#D1D5DB") }];
+    frame.strokeWeight = 1;
+    frame.fills = [{ type: "SOLID", color: rgb("#FFFFFF") }];
+    await addLabel(frame, node.text || "Input", "#111827");
+    return frame;
+  };
+  var createButtonNode = async (node) => {
+    const frame = figma.createFrame();
+    frame.name = node.name;
+    frame.resize(Math.max(220, node.width), Math.max(44, node.height));
+    frame.x = node.x;
+    frame.y = node.y;
+    frame.layoutMode = "HORIZONTAL";
+    frame.primaryAxisAlignItems = "CENTER";
+    frame.counterAxisAlignItems = "CENTER";
+    frame.paddingLeft = 16;
+    frame.paddingRight = 16;
+    frame.itemSpacing = 8;
+    frame.cornerRadius = 10;
+    frame.strokes = [];
+    frame.fills = [{ type: "SOLID", color: rgb("#2563EB") }];
+    await addLabel(frame, node.text || "Action", "#FFFFFF", "CENTER");
+    return frame;
+  };
+  var createGenericInstanceNode = async (node) => {
+    const frame = figma.createFrame();
+    frame.name = node.name;
+    frame.resize(Math.max(220, node.width), Math.max(40, node.height));
+    frame.x = node.x;
+    frame.y = node.y;
+    frame.layoutMode = "HORIZONTAL";
+    frame.primaryAxisAlignItems = "MIN";
+    frame.counterAxisAlignItems = "CENTER";
+    frame.paddingLeft = 14;
+    frame.paddingRight = 14;
+    frame.cornerRadius = 10;
+    frame.strokes = [{ type: "SOLID", color: rgb("#CBD5E1") }];
+    frame.strokeWeight = 1;
+    frame.fills = [{ type: "SOLID", color: rgb("#F8FAFC") }];
+    await addLabel(frame, node.text || node.component || "Component", "#0F172A");
+    return frame;
+  };
+  var createInstanceNode = async (node) => {
+    if (node.component === "Input") {
+      return await createInputNode(node);
+    }
+    if (node.component === "Button") {
+      return await createButtonNode(node);
+    }
+    return await createGenericInstanceNode(node);
+  };
+
   // src/write/renderPayload.ts
   var toSceneNode = async (node) => {
     if (node.type === "TEXT") {
@@ -84,13 +181,24 @@
     if (node.type === "FRAME" || node.type === "GROUP") {
       return createFrameNode(node);
     }
+    if (node.type === "INSTANCE" || node.type === "COMPONENT") {
+      return await createInstanceNode(node);
+    }
     return createContainerNode(node);
+  };
+  var positionChildInSection = (parent, child, index) => {
+    if (!parent.name.endsWith("-section")) {
+      return;
+    }
+    child.x = 0;
+    child.y = index * 56;
   };
   var renderChildren = async (parent, children) => {
     let count = 0;
-    for (const child of children) {
+    for (const [index, child] of children.entries()) {
       const next = await toSceneNode(child);
       parent.appendChild(next);
+      positionChildInSection(parent, next, index);
       count += 1;
       if (child.children && child.children.length > 0 && next.type === "FRAME") {
         count += await renderChildren(next, child.children);

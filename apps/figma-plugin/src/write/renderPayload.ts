@@ -1,6 +1,7 @@
 import type { FigmaWriteNode, FigmaWritePayload } from "../../../../shared/contracts/figmaWritePayload";
 import { createContainerNode } from "./createContainerNode";
 import { createFrameNode } from "./createFrameNode";
+import { createInstanceNode } from "./createInstanceNode";
 import { createTextNode } from "./createTextNode";
 import type { PluginWriteResult } from "../types";
 
@@ -13,15 +14,30 @@ const toSceneNode = async (node: FigmaWriteNode): Promise<SceneNode> => {
     return createFrameNode(node);
   }
 
+  if (node.type === "INSTANCE" || node.type === "COMPONENT") {
+    return await createInstanceNode(node);
+  }
+
   return createContainerNode(node);
+};
+
+const positionChildInSection = (parent: FrameNode, child: SceneNode, index: number) => {
+  if (!parent.name.endsWith("-section")) {
+    return;
+  }
+
+  // Section payloads currently preserve semantic order better than absolute child y values.
+  child.x = 0;
+  child.y = index * 56;
 };
 
 const renderChildren = async (parent: FrameNode, children: FigmaWriteNode[]): Promise<number> => {
   let count = 0;
 
-  for (const child of children) {
+  for (const [index, child] of children.entries()) {
     const next = await toSceneNode(child);
     parent.appendChild(next);
+    positionChildInSection(parent, next, index);
     count += 1;
 
     if (child.children && child.children.length > 0 && next.type === "FRAME") {
