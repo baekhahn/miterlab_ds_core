@@ -1,7 +1,7 @@
 {
   "nodes": [
     {
-      "id": "layout_1",
+      "id": "layout_64",
       "type": "FRAME",
       "name": "Login Screen",
       "x": 0,
@@ -10,7 +10,7 @@
       "height": 844,
       "children": [
         {
-          "id": "layout_2",
+          "id": "layout_65",
           "type": "FRAME",
           "name": "header-section",
           "x": 16,
@@ -19,54 +19,38 @@
           "height": 100,
           "children": [
             {
-              "id": "layout_3",
+              "id": "layout_66",
               "type": "TEXT",
               "name": "Text 1",
               "x": 16,
               "y": 40,
               "width": 358,
               "height": 40,
-              "text": "Welcome Back",
+              "text": "Welcome back",
               "variables": {
                 "text.color": "semantic.text.primary"
               },
               "style": {
                 "text": "text/heading/xl"
               }
-            },
-            {
-              "id": "layout_4",
-              "type": "TEXT",
-              "name": "Text 2",
-              "x": 16,
-              "y": 40,
-              "width": 358,
-              "height": 24,
-              "text": "Sign in to continue",
-              "variables": {
-                "text.color": "semantic.text.secondary"
-              },
-              "style": {
-                "text": "text/body/lg"
-              }
             }
           ]
         },
         {
-          "id": "layout_5",
+          "id": "layout_67",
           "type": "FRAME",
           "name": "form-section",
           "x": 16,
-          "y": 148,
+          "y": 116,
           "width": 358,
           "height": 100,
           "children": [
             {
-              "id": "layout_6",
+              "id": "layout_68",
               "type": "INSTANCE",
               "name": "Email",
               "x": 16,
-              "y": 148,
+              "y": 116,
               "width": 358,
               "height": 48,
               "component": "Input",
@@ -80,14 +64,15 @@
                 "field.border": "Semantic/border/default",
                 "value.color": "Semantic/text/primary",
                 "placeholder.color": "Semantic/text/muted"
-              }
+              },
+              "text": "Email"
             },
             {
-              "id": "layout_7",
+              "id": "layout_69",
               "type": "INSTANCE",
               "name": "Password",
               "x": 16,
-              "y": 148,
+              "y": 116,
               "width": 358,
               "height": 48,
               "component": "Input",
@@ -101,41 +86,26 @@
                 "field.border": "Semantic/border/default",
                 "value.color": "Semantic/text/primary",
                 "placeholder.color": "Semantic/text/muted"
-              }
-            },
-            {
-              "id": "layout_8",
-              "type": "TEXT",
-              "name": "Text 6",
-              "x": 16,
-              "y": 148,
-              "width": 358,
-              "height": 24,
-              "text": "Need help signing in?",
-              "variables": {
-                "text.color": "semantic.text.secondary"
               },
-              "style": {
-                "text": "text/body/md"
-              }
+              "text": "Password"
             }
           ]
         },
         {
-          "id": "layout_9",
+          "id": "layout_70",
           "type": "FRAME",
           "name": "action-section",
           "x": 16,
-          "y": 332,
+          "y": 260,
           "width": 358,
           "height": 100,
           "children": [
             {
-              "id": "layout_10",
+              "id": "layout_71",
               "type": "INSTANCE",
               "name": "Sign in",
               "x": 16,
-              "y": 332,
+              "y": 260,
               "width": 358,
               "height": 48,
               "component": "Button",
@@ -156,7 +126,7 @@
       ]
     },
     {
-      "id": "layout_2",
+      "id": "layout_65",
       "type": "FRAME",
       "name": "header-section",
       "x": 16,
@@ -165,48 +135,32 @@
       "height": 100,
       "children": [
         {
-          "id": "layout_3",
+          "id": "layout_66",
           "type": "TEXT",
           "name": "Text 1",
           "x": 16,
           "y": 40,
           "width": 358,
           "height": 40,
-          "text": "Welcome Back",
+          "text": "Welcome back",
           "variables": {
             "text.color": "semantic.text.primary"
           },
           "style": {
             "text": "text/heading/xl"
           }
-        },
-        {
-          "id": "layout_4",
-          "type": "TEXT",
-          "name": "Text 2",
-          "x": 16,
-          "y": 40,
-          "width": 358,
-          "height": 24,
-          "text": "Sign in to continue",
-          "variables": {
-            "text.color": "semantic.text.secondary"
-          },
-          "style": {
-            "text": "text/body/lg"
-          }
         }
       ]
     },
     {
-      "id": "layout_3",
+      "id": "layout_66",
       "type": "TEXT",
       "name": "Text 1",
       "x": 16,
       "y": 40,
       "width": 358,
       "height": 40,
-      "text": "Welcome Back",
+      "text": "Welcome back",
       "variables": {
         "text.color": "semantic.text.primary"
       },
@@ -215,36 +169,20 @@
       }
     },
     {
-      "id": "layout_4",
-      "type": "TEXT",
-      "name": "Text 2",
-      "x": 16,
-      "y": 40,
-      "width": 358,
-      "height": 24,
-      "text": "Sign in to continue",
-      "variables": {
-        "text.color": "semantic.text.secondary"
-      },
-      "style": {
-        "text": "text/body/lg"
-      }
-    },
-    {
-      "id": "layout_5",
+      "id": "layout_67",
       "type": "FRAME",
       "name": "form-section",
       "x": 16,
-      "y": 148,
+      "y": 116,
       "width": 358,
       "height": 100,
       "children": [
         {
-          "id": "layout_6",
+          "id": "layout_68",
           "type": "INSTANCE",
           "name": "Email",
           "x": 16,
-          "y": 148,
+          "y": 116,
           "width": 358,
           "height": 48,
           "component": "Input",
@@ -258,14 +196,15 @@
             "field.border": "Semantic/border/default",
             "value.color": "Semantic/text/primary",
             "placeholder.color": "Semantic/text/muted"
-          }
+          },
+          "text": "Email"
         },
         {
-          "id": "layout_7",
+          "id": "layout_69",
           "type": "INSTANCE",
           "name": "Password",
           "x": 16,
-          "y": 148,
+          "y": 116,
           "width": 358,
           "height": 48,
           "component": "Input",
@@ -279,32 +218,17 @@
             "field.border": "Semantic/border/default",
             "value.color": "Semantic/text/primary",
             "placeholder.color": "Semantic/text/muted"
-          }
-        },
-        {
-          "id": "layout_8",
-          "type": "TEXT",
-          "name": "Text 6",
-          "x": 16,
-          "y": 148,
-          "width": 358,
-          "height": 24,
-          "text": "Need help signing in?",
-          "variables": {
-            "text.color": "semantic.text.secondary"
           },
-          "style": {
-            "text": "text/body/md"
-          }
+          "text": "Password"
         }
       ]
     },
     {
-      "id": "layout_6",
+      "id": "layout_68",
       "type": "INSTANCE",
       "name": "Email",
       "x": 16,
-      "y": 148,
+      "y": 116,
       "width": 358,
       "height": 48,
       "component": "Input",
@@ -318,14 +242,15 @@
         "field.border": "Semantic/border/default",
         "value.color": "Semantic/text/primary",
         "placeholder.color": "Semantic/text/muted"
-      }
+      },
+      "text": "Email"
     },
     {
-      "id": "layout_7",
+      "id": "layout_69",
       "type": "INSTANCE",
       "name": "Password",
       "x": 16,
-      "y": 148,
+      "y": 116,
       "width": 358,
       "height": 48,
       "component": "Input",
@@ -339,39 +264,24 @@
         "field.border": "Semantic/border/default",
         "value.color": "Semantic/text/primary",
         "placeholder.color": "Semantic/text/muted"
-      }
-    },
-    {
-      "id": "layout_8",
-      "type": "TEXT",
-      "name": "Text 6",
-      "x": 16,
-      "y": 148,
-      "width": 358,
-      "height": 24,
-      "text": "Need help signing in?",
-      "variables": {
-        "text.color": "semantic.text.secondary"
       },
-      "style": {
-        "text": "text/body/md"
-      }
+      "text": "Password"
     },
     {
-      "id": "layout_9",
+      "id": "layout_70",
       "type": "FRAME",
       "name": "action-section",
       "x": 16,
-      "y": 332,
+      "y": 260,
       "width": 358,
       "height": 100,
       "children": [
         {
-          "id": "layout_10",
+          "id": "layout_71",
           "type": "INSTANCE",
           "name": "Sign in",
           "x": 16,
-          "y": 332,
+          "y": 260,
           "width": 358,
           "height": 48,
           "component": "Button",
@@ -390,11 +300,11 @@
       ]
     },
     {
-      "id": "layout_10",
+      "id": "layout_71",
       "type": "INSTANCE",
       "name": "Sign in",
       "x": 16,
-      "y": 332,
+      "y": 260,
       "width": 358,
       "height": 48,
       "component": "Button",
@@ -412,42 +322,38 @@
     }
   ],
   "styles": {
-    "layout_3.text": "text/heading/xl",
-    "layout_4.text": "text/body/lg",
-    "layout_8.text": "text/body/md"
+    "layout_66.text": "text/heading/xl"
   },
   "variables": {
-    "layout_3.text.color": "semantic.text.primary",
-    "layout_4.text.color": "semantic.text.secondary",
-    "layout_6.field.background": "Semantic/surface/default",
-    "layout_6.field.border": "Semantic/border/default",
-    "layout_6.value.color": "Semantic/text/primary",
-    "layout_6.placeholder.color": "Semantic/text/muted",
-    "layout_7.field.background": "Semantic/surface/default",
-    "layout_7.field.border": "Semantic/border/default",
-    "layout_7.value.color": "Semantic/text/primary",
-    "layout_7.placeholder.color": "Semantic/text/muted",
-    "layout_8.text.color": "semantic.text.secondary",
-    "layout_10.container.background": "Semantic/action/primary",
-    "layout_10.container.border": "Semantic/action/primary",
-    "layout_10.label.color": "Semantic/action/onPrimary"
+    "layout_66.text.color": "semantic.text.primary",
+    "layout_68.field.background": "Semantic/surface/default",
+    "layout_68.field.border": "Semantic/border/default",
+    "layout_68.value.color": "Semantic/text/primary",
+    "layout_68.placeholder.color": "Semantic/text/muted",
+    "layout_69.field.background": "Semantic/surface/default",
+    "layout_69.field.border": "Semantic/border/default",
+    "layout_69.value.color": "Semantic/text/primary",
+    "layout_69.placeholder.color": "Semantic/text/muted",
+    "layout_71.container.background": "Semantic/action/primary",
+    "layout_71.container.border": "Semantic/action/primary",
+    "layout_71.label.color": "Semantic/action/onPrimary"
   },
   "components": {
-    "layout_6": {
+    "layout_68": {
       "variants": {
         "variant": "default",
         "size": "md",
         "state": "default"
       }
     },
-    "layout_7": {
+    "layout_69": {
       "variants": {
         "variant": "default",
         "size": "md",
         "state": "default"
       }
     },
-    "layout_10": {
+    "layout_71": {
       "variants": {
         "variant": "primary",
         "size": "md",

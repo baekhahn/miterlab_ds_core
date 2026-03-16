@@ -8,10 +8,21 @@ sizes: [sm, md, lg]
 sizeDefaults:
   sm:
     height: 40
+    paddingX: 14
+    radius: 10
   md:
     height: 40
+    paddingX: 16
+    radius: 10
   lg:
     height: 48
+    paddingX: 20
+    radius: 12
+internalLayout:
+  labelAlignX: center
+  labelAlignY: center
+  minWidth: 88
+  opticalOffsetY: -1
 states: [default, hover, pressed, disabled, focus]
 slots: [container, label]
 semanticMapping:
@@ -76,3 +87,4 @@ notes:
   - component must consume semantic tokens only
   - no direct brand or foundation token usage
   - core backbone target keeps primary button at 40px by default and 48px for large emphasis
+  - label must feel optically centered, not only mathematically centered

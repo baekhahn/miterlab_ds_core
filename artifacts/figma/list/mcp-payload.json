@@ -30,7 +30,7 @@
               "x": 16,
               "y": 40,
               "width": 358,
-              "height": 40,
+              "height": 32,
               "text": "Items",
               "variables": {
                 "text.color": "semantic.text.primary"
@@ -57,7 +57,7 @@
               "x": 16,
               "y": 116,
               "width": 320,
-              "height": 48,
+              "height": 40,
               "component": "FilterButton",
               "variant": {
                 "variant": "selected",
@@ -79,7 +79,7 @@
               "x": 16,
               "y": 116,
               "width": 320,
-              "height": 48,
+              "height": 40,
               "component": "FilterButton",
               "variant": {
                 "variant": "unselected",
@@ -101,7 +101,7 @@
           "type": "FRAME",
           "name": "action-section",
           "x": 16,
-          "y": 260,
+          "y": 244,
           "width": 358,
           "height": 100,
           "children": [
@@ -110,9 +110,9 @@
               "type": "INSTANCE",
               "name": "Create item",
               "x": 16,
-              "y": 260,
+              "y": 244,
               "width": 358,
-              "height": 48,
+              "height": 40,
               "component": "Button",
               "variant": {
                 "variant": "primary",
@@ -133,7 +133,7 @@
           "type": "FRAME",
           "name": "list-section",
           "x": 16,
-          "y": 340,
+          "y": 320,
           "width": 358,
           "height": 100,
           "children": []
@@ -156,7 +156,7 @@
           "x": 16,
           "y": 40,
           "width": 358,
-          "height": 40,
+          "height": 32,
           "text": "Items",
           "variables": {
             "text.color": "semantic.text.primary"
@@ -174,7 +174,7 @@
       "x": 16,
       "y": 40,
       "width": 358,
-      "height": 40,
+      "height": 32,
       "text": "Items",
       "variables": {
         "text.color": "semantic.text.primary"
@@ -199,7 +199,7 @@
           "x": 16,
           "y": 116,
           "width": 320,
-          "height": 48,
+          "height": 40,
           "component": "FilterButton",
           "variant": {
             "variant": "selected",
@@ -221,7 +221,7 @@
           "x": 16,
           "y": 116,
           "width": 320,
-          "height": 48,
+          "height": 40,
           "component": "FilterButton",
           "variant": {
             "variant": "unselected",
@@ -245,7 +245,7 @@
       "x": 16,
       "y": 116,
       "width": 320,
-      "height": 48,
+      "height": 40,
       "component": "FilterButton",
       "variant": {
         "variant": "selected",
@@ -267,7 +267,7 @@
       "x": 16,
       "y": 116,
       "width": 320,
-      "height": 48,
+      "height": 40,
       "component": "FilterButton",
       "variant": {
         "variant": "unselected",
@@ -287,7 +287,7 @@
       "type": "FRAME",
       "name": "action-section",
       "x": 16,
-      "y": 260,
+      "y": 244,
       "width": 358,
       "height": 100,
       "children": [
@@ -296,9 +296,9 @@
           "type": "INSTANCE",
           "name": "Create item",
           "x": 16,
-          "y": 260,
+          "y": 244,
           "width": 358,
-          "height": 48,
+          "height": 40,
           "component": "Button",
           "variant": {
             "variant": "primary",
@@ -319,9 +319,9 @@
       "type": "INSTANCE",
       "name": "Create item",
       "x": 16,
-      "y": 260,
+      "y": 244,
       "width": 358,
-      "height": 48,
+      "height": 40,
       "component": "Button",
       "variant": {
         "variant": "primary",
@@ -340,7 +340,7 @@
       "type": "FRAME",
       "name": "list-section",
       "x": 16,
-      "y": 340,
+      "y": 320,
       "width": 358,
       "height": 100,
       "children": []
@@ -424,6 +424,6 @@
   "metadata": {
     "source": "miterlab-figma-generator",
     "version": "0.1.0",
-    "generatedAt": "2026-03-16T05:29:43.837Z"
+    "generatedAt": "2026-03-16T05:39:13.061Z"
   }
 }

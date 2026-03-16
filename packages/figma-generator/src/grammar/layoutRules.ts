@@ -43,12 +43,27 @@ export const layoutRules = {
     narrow: 320
   },
   controlHeights: {
-    sm: 40,
-    md: 48,
-    lg: 56
+    sm: 32,
+    md: 40,
+    lg: 48
+  },
+  controlInsets: {
+    buttonX: 16,
+    buttonXLg: 20,
+    inputX: 14,
+    chipX: 12
+  },
+  controlRadius: {
+    button: 10,
+    input: 10,
+    chip: 16
+  },
+  controlMinWidth: {
+    button: 88,
+    chip: 64
   },
   textHeights: {
-    title: 40,
+    title: 32,
     subtitle: 24,
     body: 24,
     label: 20,

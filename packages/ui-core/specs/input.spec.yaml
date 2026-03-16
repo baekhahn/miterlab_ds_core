@@ -8,8 +8,17 @@ sizes: [sm, md]
 sizeDefaults:
   sm:
     height: 40
+    paddingX: 12
+    radius: 10
   md:
     height: 40
+    paddingX: 14
+    radius: 10
+internalLayout:
+  textAlignX: start
+  textAlignY: center
+  opticalInsetTop: 0
+  placeholderTone: muted
 states: [default, focus, disabled, error]
 slots: [field, value, placeholder]
 semanticMapping:
@@ -37,3 +46,4 @@ semanticMapping:
 notes:
   - helper/error text layout is handled by field wrapper pattern
   - core backbone target keeps default field height at 40px with 12px field gap
+  - field text inset should feel balanced before any theme overlay

@@ -1,6 +1,6 @@
 {
   "type": "frame",
-  "name": "Login Screen",
+  "name": "Dashboard Screen",
   "width": 390,
   "height": 844,
   "children": [
@@ -11,53 +11,62 @@
       "y": 40,
       "width": 358,
       "direction": "vertical",
-      "gap": 12,
+      "gap": 8,
       "children": [
         {
           "type": "text",
           "name": "Text 1",
-          "content": "Welcome back",
+          "content": "Overview",
           "width": 358,
-          "height": 40,
+          "height": 32,
           "textStyle": "text/heading/xl",
           "colorToken": "semantic.text.primary"
+        },
+        {
+          "type": "text",
+          "name": "Text 2",
+          "content": "Weekly highlights",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
         }
       ]
     },
     {
       "type": "stack",
-      "name": "form-section",
+      "name": "filter-section",
       "x": 16,
-      "y": 116,
+      "y": 128,
       "width": 358,
       "direction": "vertical",
-      "gap": 16,
+      "gap": 12,
       "children": [
         {
           "type": "component",
-          "name": "Email",
-          "component": "input",
+          "name": "Active",
+          "component": "filter-button",
           "props": {
-            "variant": "default",
             "size": "md",
-            "state": "default"
+            "state": "default",
+            "selected": true
           },
-          "width": 358,
-          "height": 48,
-          "label": "Email"
+          "width": 320,
+          "height": 40,
+          "label": "Active"
         },
         {
           "type": "component",
-          "name": "Password",
-          "component": "input",
+          "name": "Archived",
+          "component": "filter-button",
           "props": {
-            "variant": "default",
             "size": "md",
-            "state": "default"
+            "state": "default",
+            "selected": false
           },
-          "width": 358,
-          "height": 48,
-          "label": "Password"
+          "width": 320,
+          "height": 40,
+          "label": "Archived"
         }
       ]
     },
@@ -65,14 +74,14 @@
       "type": "stack",
       "name": "action-section",
       "x": 16,
-      "y": 260,
+      "y": 244,
       "width": 358,
       "direction": "vertical",
-      "gap": 24,
+      "gap": 16,
       "children": [
         {
           "type": "component",
-          "name": "Sign in",
+          "name": "New report",
           "component": "button",
           "props": {
             "variant": "primary",
@@ -80,10 +89,20 @@
             "state": "default"
           },
           "width": 358,
-          "height": 48,
-          "label": "Sign in"
+          "height": 40,
+          "label": "New report"
         }
       ]
+    },
+    {
+      "type": "stack",
+      "name": "content-section",
+      "x": 16,
+      "y": 312,
+      "width": 358,
+      "direction": "vertical",
+      "gap": 12,
+      "children": []
     }
   ]
 }

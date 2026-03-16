@@ -1,13 +1,14 @@
 {
-  "screen": "login",
+  "screen": "dashboard",
   "theme": "core",
   "sectionsCreated": [
     "header",
-    "form",
-    "action"
+    "filter",
+    "action",
+    "content"
   ],
   "componentCount": 3,
-  "nodeCount": 8,
+  "nodeCount": 10,
   "warnings": [],
   "evaluationScore": 100,
   "passed": true,

@@ -1,7 +1,7 @@
 {
   "screen": "dashboard",
   "purpose": "team metrics overview",
-  "theme": "projectA",
+  "theme": "core",
   "density": "compact",
   "sections": ["header", "filter", "content", "action"],
   "primaryAction": "new report",
@@ -12,6 +12,6 @@
     { "type": "text", "intent": "subtitle", "label": "Weekly highlights" },
     { "type": "filter-button", "intent": "filter-action", "label": "Active", "selected": true },
     { "type": "filter-button", "intent": "filter-action", "label": "Archived", "selected": false },
-    { "type": "button", "intent": "primary-action", "variant": "neutral", "label": "New report" }
+    { "type": "button", "intent": "primary-action", "variant": "primary", "label": "New report" }
   ]
 }

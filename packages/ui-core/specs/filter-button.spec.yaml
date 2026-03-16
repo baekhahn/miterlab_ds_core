@@ -5,6 +5,20 @@ model:
   axes: [selected, size, state]
 selected: [false, true]
 sizes: [sm, md]
+sizeDefaults:
+  sm:
+    height: 28
+    paddingX: 10
+    radius: 14
+  md:
+    height: 32
+    paddingX: 12
+    radius: 16
+internalLayout:
+  labelAlignX: center
+  labelAlignY: center
+  minWidth: 64
+  opticalOffsetY: -1
 states: [default, hover, disabled, focus]
 slots: [container, label]
 semanticMapping:
@@ -40,3 +54,4 @@ semanticMapping:
       container.focusRing: semantic.focus.ring
 notes:
   - keep interaction minimal: selected/unselected only
+  - filter button should read as a compact product chip, not a mini button

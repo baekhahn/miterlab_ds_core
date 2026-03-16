@@ -21,15 +21,6 @@
           "height": 40,
           "textStyle": "text/heading/xl",
           "colorToken": "semantic.text.primary"
-        },
-        {
-          "type": "text",
-          "name": "Text 2",
-          "content": "Manage account preferences",
-          "width": 358,
-          "height": 24,
-          "textStyle": "text/body/lg",
-          "colorToken": "semantic.text.secondary"
         }
       ]
     },
@@ -37,14 +28,14 @@
       "type": "stack",
       "name": "form-section",
       "x": 16,
-      "y": 148,
+      "y": 116,
       "width": 358,
       "direction": "vertical",
       "gap": 16,
       "children": [
         {
           "type": "component",
-          "name": "DisplayName",
+          "name": "Workspace name",
           "component": "input",
           "props": {
             "variant": "default",
@@ -52,19 +43,8 @@
             "state": "default"
           },
           "width": 358,
-          "height": 48
-        },
-        {
-          "type": "component",
-          "name": "Timezone",
-          "component": "input",
-          "props": {
-            "variant": "default",
-            "size": "md",
-            "state": "default"
-          },
-          "width": 358,
-          "height": 48
+          "height": 48,
+          "label": "Workspace name"
         }
       ]
     },
@@ -72,7 +52,7 @@
       "type": "stack",
       "name": "action-section",
       "x": 16,
-      "y": 292,
+      "y": 196,
       "width": 358,
       "direction": "vertical",
       "gap": 24,
@@ -89,19 +69,6 @@
           "width": 358,
           "height": 48,
           "label": "Save changes"
-        },
-        {
-          "type": "component",
-          "name": "Cancel",
-          "component": "button",
-          "props": {
-            "variant": "neutral",
-            "size": "md",
-            "state": "default"
-          },
-          "width": 358,
-          "height": 48,
-          "label": "Cancel"
         }
       ]
     }

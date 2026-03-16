@@ -8,6 +8,8 @@ interface ParsedSpec {
   variants?: string[];
   sizes?: string[];
   states?: string[];
+  sizeDefaults?: Record<string, Record<string, number>>;
+  internalLayout?: Record<string, unknown>;
   semanticMapping: Record<string, Record<string, Record<string, string>>>;
 }
 
@@ -63,16 +65,23 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
   }
 
   const resolvedSize = input.size ?? spec.sizes?.[0] ?? "md";
+  const specHeight = spec.sizeDefaults?.[resolvedSize]?.height;
   const defaultHeight =
+    typeof specHeight === "number"
+      ? specHeight
+      :
     resolvedSize === "sm"
       ? layoutRules.controlHeights.sm
       : resolvedSize === "lg"
         ? layoutRules.controlHeights.lg
         : layoutRules.controlHeights.md;
-  const defaultWidth =
-    spec.component === "FilterButton"
-      ? layoutRules.contentWidth.narrow
-      : layoutRules.contentWidth.form;
+  const filterButtonWidth = (() => {
+    const label = input.label ?? input.name ?? "Filter";
+    const horizontalPadding = layoutRules.controlInsets.chipX * 2;
+    const estimatedTextWidth = Math.max(32, label.length * 8);
+    return Math.max(layoutRules.controlMinWidth.chip, estimatedTextWidth + horizontalPadding);
+  })();
+  const defaultWidth = spec.component === "FilterButton" ? filterButtonWidth : layoutRules.contentWidth.form;
 
   return {
     id: `node_${Math.random().toString(36).slice(2, 10)}`,

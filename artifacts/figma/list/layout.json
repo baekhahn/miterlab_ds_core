@@ -18,7 +18,7 @@
           "name": "Text 1",
           "content": "Items",
           "width": 358,
-          "height": 40,
+          "height": 32,
           "textStyle": "text/heading/xl",
           "colorToken": "semantic.text.primary"
         }
@@ -43,7 +43,7 @@
             "selected": true
           },
           "width": 320,
-          "height": 48,
+          "height": 40,
           "label": "Open"
         },
         {
@@ -56,7 +56,7 @@
             "selected": false
           },
           "width": 320,
-          "height": 48,
+          "height": 40,
           "label": "Closed"
         }
       ]
@@ -65,7 +65,7 @@
       "type": "stack",
       "name": "action-section",
       "x": 16,
-      "y": 260,
+      "y": 244,
       "width": 358,
       "direction": "vertical",
       "gap": 24,
@@ -80,7 +80,7 @@
             "state": "default"
           },
           "width": 358,
-          "height": 48,
+          "height": 40,
           "label": "Create item"
         }
       ]
@@ -89,7 +89,7 @@
       "type": "stack",
       "name": "list-section",
       "x": 16,
-      "y": 340,
+      "y": 320,
       "width": 358,
       "direction": "vertical",
       "gap": 16,
