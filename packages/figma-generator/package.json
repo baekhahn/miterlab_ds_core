@@ -1,0 +1,34 @@
+{
+  "name": "@miterlab/figma-generator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "generate": "tsx src/testing/runGeneration.ts",
+    "generate:login": "tsx src/testing/runGeneration.ts login",
+    "generate:settings": "tsx src/testing/runGeneration.ts settings",
+    "generate:dashboard": "tsx src/testing/runGeneration.ts dashboard",
+    "generate:filter-list": "tsx src/testing/runGeneration.ts filter-list",
+    "execute:login": "tsx src/testing/executePromptFile.ts login",
+    "execute:settings": "tsx src/testing/executePromptFile.ts settings",
+    "execute:dashboard": "tsx src/testing/executePromptFile.ts dashboard",
+    "execute:filter-list": "tsx src/testing/executePromptFile.ts filter-list",
+    "mcp:probe:readonly": "tsx src/examples/mcp/readOnlyProbe.ts",
+    "mcp:probe:writable": "tsx src/examples/mcp/writeCapabilityProbe.ts"
+  },
+  "dependencies": {
+    "@miterlab/tokens": "file:../tokens",
+    "@miterlab/themes": "file:../themes",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.10.1",
+    "tsx": "^4.20.3",
+    "typescript": "^5.6.3"
+  }
+}

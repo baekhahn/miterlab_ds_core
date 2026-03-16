@@ -1,0 +1,70 @@
+component: Button
+status: draft
+purpose: trigger key actions in product flows
+model:
+  axes: [variant, size, state]
+variants: [primary, neutral, ghost]
+sizes: [sm, md, lg]
+states: [default, hover, pressed, disabled, focus]
+slots: [container, label]
+semanticMapping:
+  primary:
+    default:
+      container.background: semantic.action.primary
+      container.border: semantic.action.primary
+      label.color: semantic.action.onPrimary
+    hover:
+      container.background: semantic.action.primaryHover
+      container.border: semantic.action.primaryHover
+      label.color: semantic.action.onPrimary
+    pressed:
+      container.background: semantic.action.primaryPressed
+      container.border: semantic.action.primaryPressed
+      label.color: semantic.action.onPrimary
+    disabled:
+      container.background: semantic.action.disabled
+      container.border: semantic.action.disabled
+      label.color: semantic.text.muted
+    focus:
+      container.focusRing: semantic.focus.ring
+  neutral:
+    default:
+      container.background: semantic.action.neutral
+      container.border: semantic.border.default
+      label.color: semantic.text.primary
+    hover:
+      container.background: semantic.action.neutralHover
+      container.border: semantic.border.default
+      label.color: semantic.text.primary
+    pressed:
+      container.background: semantic.action.neutralPressed
+      container.border: semantic.border.strong
+      label.color: semantic.text.primary
+    disabled:
+      container.background: semantic.action.disabled
+      container.border: semantic.border.subtle
+      label.color: semantic.text.muted
+    focus:
+      container.focusRing: semantic.focus.ring
+  ghost:
+    default:
+      container.background: semantic.surface.default
+      container.border: semantic.surface.default
+      label.color: semantic.text.secondary
+    hover:
+      container.background: semantic.surface.subtle
+      container.border: semantic.surface.subtle
+      label.color: semantic.text.primary
+    pressed:
+      container.background: semantic.action.neutral
+      container.border: semantic.action.neutral
+      label.color: semantic.text.primary
+    disabled:
+      container.background: semantic.surface.default
+      container.border: semantic.surface.default
+      label.color: semantic.text.muted
+    focus:
+      container.focusRing: semantic.focus.ring
+notes:
+  - component must consume semantic tokens only
+  - no direct brand or foundation token usage

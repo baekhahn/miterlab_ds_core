@@ -1,0 +1,100 @@
+{
+  "type": "frame",
+  "name": "Login Screen",
+  "width": 390,
+  "height": 844,
+  "children": [
+    {
+      "type": "stack",
+      "name": "header-section",
+      "x": 24,
+      "y": 32,
+      "direction": "vertical",
+      "gap": 8,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 1",
+          "content": "Welcome Back",
+          "textStyle": "text/heading/lg",
+          "colorToken": "semantic.text.primary"
+        },
+        {
+          "type": "text",
+          "name": "Text 2",
+          "content": "Sign in to continue",
+          "textStyle": "text/body/md",
+          "colorToken": "semantic.text.secondary"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "form-section",
+      "x": 24,
+      "y": 124,
+      "direction": "vertical",
+      "gap": 12,
+      "children": [
+        {
+          "type": "component",
+          "name": "email",
+          "component": "input",
+          "props": {
+            "variant": "default",
+            "size": "md",
+            "state": "default"
+          }
+        },
+        {
+          "type": "component",
+          "name": "password",
+          "component": "input",
+          "props": {
+            "variant": "default",
+            "size": "md",
+            "state": "default"
+          }
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "footer-section",
+      "x": 24,
+      "y": 248,
+      "direction": "vertical",
+      "gap": 12,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 6",
+          "content": "Need help signing in?",
+          "textStyle": "text/body/md",
+          "colorToken": "semantic.text.secondary"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "action-section",
+      "x": 24,
+      "y": 316,
+      "direction": "vertical",
+      "gap": 12,
+      "children": [
+        {
+          "type": "component",
+          "name": "Button 5",
+          "component": "button",
+          "props": {
+            "variant": "primary",
+            "size": "md",
+            "state": "default"
+          },
+          "label": "Sign in"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+component: Input
+status: draft
+purpose: capture single-line text input
+model:
+  axes: [variant, size, state]
+variants: [default]
+sizes: [sm, md]
+states: [default, focus, disabled, error]
+slots: [field, value, placeholder]
+semanticMapping:
+  default:
+    default:
+      field.background: semantic.surface.default
+      field.border: semantic.border.default
+      value.color: semantic.text.primary
+      placeholder.color: semantic.text.muted
+    focus:
+      field.background: semantic.surface.default
+      field.border: semantic.border.strong
+      field.focusRing: semantic.focus.ring
+      value.color: semantic.text.primary
+    disabled:
+      field.background: semantic.surface.subtle
+      field.border: semantic.border.subtle
+      value.color: semantic.text.muted
+      placeholder.color: semantic.text.muted
+    error:
+      field.background: semantic.surface.default
+      field.border: semantic.status.critical
+      field.focusRing: semantic.status.critical
+      value.color: semantic.text.primary
+notes:
+  - helper/error text layout is handled by field wrapper pattern

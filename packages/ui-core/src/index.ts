@@ -1,0 +1,1 @@
+export { componentTaxonomy } from "./taxonomy";

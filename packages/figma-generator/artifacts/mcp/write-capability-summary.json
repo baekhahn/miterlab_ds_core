@@ -1,0 +1,5 @@
+{
+  "mode": "readOnly",
+  "writableTools": [],
+  "note": "No create/update tool is exposed by this MCP server. Write generation is unavailable in current endpoint."
+}

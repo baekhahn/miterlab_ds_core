@@ -1,0 +1,17 @@
+component: Modal
+status: draft
+purpose: focused task or confirmation overlay
+props:
+  size: [sm, md, lg]
+  dismissible: boolean
+  footerType: [none, singleAction, dualAction]
+states: [default, open, closing]
+tokenUsage:
+  panelBg: semantic.surface.elevated
+  panelText: semantic.text.primary
+  backdrop: semantic.background.inverse
+  border: semantic.border.default
+  shadow: foundation.shadow.lg
+notes:
+  - destructive confirmation uses danger tone actions
+  - avoid deep modal stacks

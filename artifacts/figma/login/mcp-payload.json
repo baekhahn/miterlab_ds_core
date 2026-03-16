@@ -1,0 +1,525 @@
+{
+  "document": {
+    "name": "login screen",
+    "screen": "login",
+    "theme": "alpha"
+  },
+  "nodes": [
+    {
+      "id": "layout_1",
+      "type": "FRAME",
+      "name": "Login Screen",
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844,
+      "children": [
+        {
+          "id": "layout_2",
+          "type": "FRAME",
+          "name": "header-section",
+          "x": 24,
+          "y": 32,
+          "width": 360,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_3",
+              "type": "TEXT",
+              "name": "Text 1",
+              "x": 24,
+              "y": 32,
+              "width": 240,
+              "height": 24,
+              "text": "Welcome Back",
+              "variables": {
+                "text.color": "semantic.text.primary"
+              },
+              "style": {
+                "text": "text/heading/lg"
+              }
+            },
+            {
+              "id": "layout_4",
+              "type": "TEXT",
+              "name": "Text 2",
+              "x": 24,
+              "y": 32,
+              "width": 240,
+              "height": 24,
+              "text": "Sign in to continue",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_5",
+          "type": "FRAME",
+          "name": "form-section",
+          "x": 24,
+          "y": 124,
+          "width": 360,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_6",
+              "type": "INSTANCE",
+              "name": "email",
+              "x": 24,
+              "y": 124,
+              "width": 144,
+              "height": 40,
+              "component": "Input",
+              "variant": {
+                "variant": "default",
+                "size": "md",
+                "state": "default"
+              },
+              "variables": {
+                "field.background": "Semantic/surface/default",
+                "field.border": "Semantic/border/default",
+                "value.color": "Semantic/text/primary",
+                "placeholder.color": "Semantic/text/muted"
+              }
+            },
+            {
+              "id": "layout_7",
+              "type": "INSTANCE",
+              "name": "password",
+              "x": 24,
+              "y": 124,
+              "width": 144,
+              "height": 40,
+              "component": "Input",
+              "variant": {
+                "variant": "default",
+                "size": "md",
+                "state": "default"
+              },
+              "variables": {
+                "field.background": "Semantic/surface/default",
+                "field.border": "Semantic/border/default",
+                "value.color": "Semantic/text/primary",
+                "placeholder.color": "Semantic/text/muted"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_8",
+          "type": "FRAME",
+          "name": "footer-section",
+          "x": 24,
+          "y": 248,
+          "width": 360,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_9",
+              "type": "TEXT",
+              "name": "Text 6",
+              "x": 24,
+              "y": 248,
+              "width": 240,
+              "height": 24,
+              "text": "Need help signing in?",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/md"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_10",
+          "type": "FRAME",
+          "name": "action-section",
+          "x": 24,
+          "y": 316,
+          "width": 360,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_11",
+              "type": "INSTANCE",
+              "name": "Button 5",
+              "x": 24,
+              "y": 316,
+              "width": 144,
+              "height": 44,
+              "component": "Button",
+              "variant": {
+                "variant": "primary",
+                "size": "md",
+                "state": "default"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Sign in"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_2",
+      "type": "FRAME",
+      "name": "header-section",
+      "x": 24,
+      "y": 32,
+      "width": 360,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_3",
+          "type": "TEXT",
+          "name": "Text 1",
+          "x": 24,
+          "y": 32,
+          "width": 240,
+          "height": 24,
+          "text": "Welcome Back",
+          "variables": {
+            "text.color": "semantic.text.primary"
+          },
+          "style": {
+            "text": "text/heading/lg"
+          }
+        },
+        {
+          "id": "layout_4",
+          "type": "TEXT",
+          "name": "Text 2",
+          "x": 24,
+          "y": 32,
+          "width": 240,
+          "height": 24,
+          "text": "Sign in to continue",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/md"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_3",
+      "type": "TEXT",
+      "name": "Text 1",
+      "x": 24,
+      "y": 32,
+      "width": 240,
+      "height": 24,
+      "text": "Welcome Back",
+      "variables": {
+        "text.color": "semantic.text.primary"
+      },
+      "style": {
+        "text": "text/heading/lg"
+      }
+    },
+    {
+      "id": "layout_4",
+      "type": "TEXT",
+      "name": "Text 2",
+      "x": 24,
+      "y": 32,
+      "width": 240,
+      "height": 24,
+      "text": "Sign in to continue",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/md"
+      }
+    },
+    {
+      "id": "layout_5",
+      "type": "FRAME",
+      "name": "form-section",
+      "x": 24,
+      "y": 124,
+      "width": 360,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_6",
+          "type": "INSTANCE",
+          "name": "email",
+          "x": 24,
+          "y": 124,
+          "width": 144,
+          "height": 40,
+          "component": "Input",
+          "variant": {
+            "variant": "default",
+            "size": "md",
+            "state": "default"
+          },
+          "variables": {
+            "field.background": "Semantic/surface/default",
+            "field.border": "Semantic/border/default",
+            "value.color": "Semantic/text/primary",
+            "placeholder.color": "Semantic/text/muted"
+          }
+        },
+        {
+          "id": "layout_7",
+          "type": "INSTANCE",
+          "name": "password",
+          "x": 24,
+          "y": 124,
+          "width": 144,
+          "height": 40,
+          "component": "Input",
+          "variant": {
+            "variant": "default",
+            "size": "md",
+            "state": "default"
+          },
+          "variables": {
+            "field.background": "Semantic/surface/default",
+            "field.border": "Semantic/border/default",
+            "value.color": "Semantic/text/primary",
+            "placeholder.color": "Semantic/text/muted"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_6",
+      "type": "INSTANCE",
+      "name": "email",
+      "x": 24,
+      "y": 124,
+      "width": 144,
+      "height": 40,
+      "component": "Input",
+      "variant": {
+        "variant": "default",
+        "size": "md",
+        "state": "default"
+      },
+      "variables": {
+        "field.background": "Semantic/surface/default",
+        "field.border": "Semantic/border/default",
+        "value.color": "Semantic/text/primary",
+        "placeholder.color": "Semantic/text/muted"
+      }
+    },
+    {
+      "id": "layout_7",
+      "type": "INSTANCE",
+      "name": "password",
+      "x": 24,
+      "y": 124,
+      "width": 144,
+      "height": 40,
+      "component": "Input",
+      "variant": {
+        "variant": "default",
+        "size": "md",
+        "state": "default"
+      },
+      "variables": {
+        "field.background": "Semantic/surface/default",
+        "field.border": "Semantic/border/default",
+        "value.color": "Semantic/text/primary",
+        "placeholder.color": "Semantic/text/muted"
+      }
+    },
+    {
+      "id": "layout_8",
+      "type": "FRAME",
+      "name": "footer-section",
+      "x": 24,
+      "y": 248,
+      "width": 360,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_9",
+          "type": "TEXT",
+          "name": "Text 6",
+          "x": 24,
+          "y": 248,
+          "width": 240,
+          "height": 24,
+          "text": "Need help signing in?",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/md"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_9",
+      "type": "TEXT",
+      "name": "Text 6",
+      "x": 24,
+      "y": 248,
+      "width": 240,
+      "height": 24,
+      "text": "Need help signing in?",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/md"
+      }
+    },
+    {
+      "id": "layout_10",
+      "type": "FRAME",
+      "name": "action-section",
+      "x": 24,
+      "y": 316,
+      "width": 360,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_11",
+          "type": "INSTANCE",
+          "name": "Button 5",
+          "x": 24,
+          "y": 316,
+          "width": 144,
+          "height": 44,
+          "component": "Button",
+          "variant": {
+            "variant": "primary",
+            "size": "md",
+            "state": "default"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Sign in"
+        }
+      ]
+    },
+    {
+      "id": "layout_11",
+      "type": "INSTANCE",
+      "name": "Button 5",
+      "x": 24,
+      "y": 316,
+      "width": 144,
+      "height": 44,
+      "component": "Button",
+      "variant": {
+        "variant": "primary",
+        "size": "md",
+        "state": "default"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Sign in"
+    }
+  ],
+  "frames": [
+    {
+      "id": "layout_1",
+      "name": "Login Screen"
+    },
+    {
+      "id": "layout_2",
+      "name": "header-section"
+    },
+    {
+      "id": "layout_5",
+      "name": "form-section"
+    },
+    {
+      "id": "layout_8",
+      "name": "footer-section"
+    },
+    {
+      "id": "layout_10",
+      "name": "action-section"
+    }
+  ],
+  "components": [
+    {
+      "id": "layout_6",
+      "name": "email",
+      "component": "Input",
+      "variant": {
+        "variant": "default",
+        "size": "md",
+        "state": "default"
+      }
+    },
+    {
+      "id": "layout_7",
+      "name": "password",
+      "component": "Input",
+      "variant": {
+        "variant": "default",
+        "size": "md",
+        "state": "default"
+      }
+    },
+    {
+      "id": "layout_11",
+      "name": "Button 5",
+      "component": "Button",
+      "variant": {
+        "variant": "primary",
+        "size": "md",
+        "state": "default"
+      }
+    }
+  ],
+  "variables": {
+    "layout_3.text.color": "semantic.text.primary",
+    "layout_4.text.color": "semantic.text.secondary",
+    "layout_6.field.background": "Semantic/surface/default",
+    "layout_6.field.border": "Semantic/border/default",
+    "layout_6.value.color": "Semantic/text/primary",
+    "layout_6.placeholder.color": "Semantic/text/muted",
+    "layout_7.field.background": "Semantic/surface/default",
+    "layout_7.field.border": "Semantic/border/default",
+    "layout_7.value.color": "Semantic/text/primary",
+    "layout_7.placeholder.color": "Semantic/text/muted",
+    "layout_9.text.color": "semantic.text.secondary",
+    "layout_11.container.background": "Semantic/action/primary",
+    "layout_11.container.border": "Semantic/action/primary",
+    "layout_11.label.color": "Semantic/action/onPrimary"
+  },
+  "styles": {
+    "layout_3.text": "text/heading/lg",
+    "layout_4.text": "text/body/md",
+    "layout_9.text": "text/body/md"
+  },
+  "modes": {
+    "brand": "alpha",
+    "theme": "alpha"
+  },
+  "metadata": {
+    "source": "miterlab-figma-generator",
+    "version": "0.1.0",
+    "generatedAt": "2026-03-16T04:24:52.869Z"
+  }
+}

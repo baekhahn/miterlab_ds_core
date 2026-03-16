@@ -1,0 +1,33 @@
+{
+  "name": "miterlab-core-design-system",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Lightweight, scalable core design system for Miterlab",
+  "packageManager": "npm@10.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "bridge:dev": "npm run dev -w @miterlab/figma-bridge",
+    "bridge:build": "npm run build -w @miterlab/figma-bridge",
+    "bridge:start": "npm run start -w @miterlab/figma-bridge",
+    "plugin:build": "npm run build -w @miterlab/figma-plugin",
+    "plugin:typecheck": "npm run typecheck -w @miterlab/figma-plugin",
+    "generate:login": "npm run generate:login -w @miterlab/figma-generator",
+    "generate:settings": "npm run generate:settings -w @miterlab/figma-generator",
+    "generate:dashboard": "npm run generate:dashboard -w @miterlab/figma-generator",
+    "generate:filter-list": "npm run generate:filter-list -w @miterlab/figma-generator",
+    "execute:login": "npm run execute:login -w @miterlab/figma-generator",
+    "execute:settings": "npm run execute:settings -w @miterlab/figma-generator",
+    "execute:dashboard": "npm run execute:dashboard -w @miterlab/figma-generator",
+    "execute:filter-list": "npm run execute:filter-list -w @miterlab/figma-generator",
+    "mcp:probe:readonly": "npm run mcp:probe:readonly -w @miterlab/figma-generator",
+    "mcp:probe:writable": "npm run mcp:probe:writable -w @miterlab/figma-generator"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

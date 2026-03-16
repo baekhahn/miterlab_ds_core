@@ -1,0 +1,58 @@
+{
+  "screen": "login",
+  "theme": "alpha",
+  "sectionsCreated": [
+    "header",
+    "form",
+    "footer",
+    "action"
+  ],
+  "componentCount": 3,
+  "nodeCount": 11,
+  "warnings": [
+    "Component node name should start with uppercase: 'email'",
+    "Component node name should start with uppercase: 'password'"
+  ],
+  "evaluationScore": 92,
+  "passed": true,
+  "payloadValidation": {
+    "valid": true,
+    "errors": [],
+    "warnings": []
+  },
+  "evaluation": {
+    "score": 92,
+    "passed": true,
+    "warnings": [
+      {
+        "level": "warning",
+        "code": "component_naming",
+        "message": "Component node name should start with uppercase: 'email'",
+        "affectedComponents": [
+          "email"
+        ]
+      },
+      {
+        "level": "warning",
+        "code": "component_naming",
+        "message": "Component node name should start with uppercase: 'password'",
+        "affectedComponents": [
+          "password"
+        ]
+      }
+    ],
+    "errors": [],
+    "improvementSuggestions": [
+      {
+        "code": "component_naming",
+        "message": "컴포넌트 노드 이름을 Pascal/Title 시작 형태로 통일해 주세요."
+      }
+    ],
+    "affectedNodes": [],
+    "affectedComponents": [
+      "email",
+      "password"
+    ],
+    "summary": "QA passed with score 92. 2 warning(s) found."
+  }
+}

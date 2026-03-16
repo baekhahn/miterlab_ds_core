@@ -1,0 +1,16 @@
+component: Tabs
+status: draft
+purpose: switch between peer content views
+props:
+  type: [line, pills]
+  size: [sm, md]
+  fullWidth: boolean
+states: [default, hover, active, focus, disabled]
+tokenUsage:
+  text: semantic.text.secondary
+  textActive: semantic.text.primary
+  indicator: semantic.action.primary
+  border: semantic.border.default
+notes:
+  - no nested tabs in v1
+  - mobile overflow behavior should be documented in patterns

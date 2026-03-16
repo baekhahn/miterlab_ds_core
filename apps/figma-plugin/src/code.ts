@@ -1,0 +1,75 @@
+import { fetchPayload } from "./api/fetchPayload";
+import { renderPayload } from "./write/renderPayload";
+import type { PluginUiMessage } from "./types";
+
+const uiHtml = `
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 16px; }
+      .row { margin-bottom: 8px; }
+      input, select, button { width: 100%; padding: 8px; box-sizing: border-box; }
+      button { cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      <label>Bridge URL</label>
+      <input id="bridgeUrl" value="http://127.0.0.1:8787" />
+    </div>
+    <div class="row">
+      <label>Screen</label>
+      <select id="screen">
+        <option value="login">login</option>
+        <option value="settings">settings</option>
+        <option value="dashboard">dashboard</option>
+        <option value="filter-list">filter-list</option>
+      </select>
+    </div>
+    <div class="row">
+      <label>Theme</label>
+      <input id="theme" value="alpha" />
+    </div>
+    <div class="row">
+      <button id="generate">Generate in Figma</button>
+    </div>
+    <script>
+      const btn = document.getElementById("generate");
+      btn.onclick = () => {
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: "generate",
+              bridgeUrl: document.getElementById("bridgeUrl").value,
+              screen: document.getElementById("screen").value,
+              theme: document.getElementById("theme").value
+            }
+          },
+          "*"
+        );
+      };
+    </script>
+  </body>
+</html>
+`;
+
+figma.showUI(uiHtml, {
+  width: 320,
+  height: 260,
+  title: "Miterlab Figma Writer"
+});
+
+figma.ui.onmessage = async (message: PluginUiMessage) => {
+  if (message.type !== "generate") return;
+
+  try {
+    const payload = await fetchPayload(message.bridgeUrl, message.screen, message.theme);
+    const result = await renderPayload(payload);
+
+    figma.notify(`Generated ${result.createdFrameName} (${result.createdNodeCount} nodes)`);
+  } catch (error) {
+    figma.notify(`Generation failed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+};
