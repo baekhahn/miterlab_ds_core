@@ -43,7 +43,7 @@ module.exports = {
     {
       type: "category",
       label: "Schema",
-      items: ["schema/index", "schema/axes-and-props", "schema/metrics-and-tokens"]
+      items: ["schema/index", "schema/schema-contract", "schema/axes-and-props", "schema/metrics-and-tokens"]
     },
     {
       type: "category",
@@ -65,11 +65,15 @@ module.exports = {
       label: "Freeze Review",
       items: [
         "freeze-review/status",
+        "freeze-review/status-rule",
         "freeze-review/p1-scope",
         "freeze-review/parity-table",
+        "freeze-review/parity-rule",
         "freeze-review/parity-contract",
+        "freeze-review/inspection-rule",
         "freeze-review/inspection-contract",
         "freeze-review/inspection-contract-pack",
+        "freeze-review/freeze-rule",
         "freeze-review/token-contract"
       ]
     }
