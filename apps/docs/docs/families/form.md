@@ -135,10 +135,84 @@ Field grouping and validation baseline for Ant Design Mobile Form behavior.
 | `--border-bottom` | cssVar | Official CSS variable contract |
 | `--prefix-width` | cssVar | Official CSS variable contract |
 
+## Variant Axes Table
+
+### Form
+
+| Axis / prop | Type | Allowed values | Notes |
+| --- | --- | --- | --- |
+| `form` | `formInstance` | TODO | General prop contract. |
+| `initialValues` | `object` | TODO | General prop contract. |
+| `name` | `string` | TODO | General prop contract. |
+| `preserve` | `boolean` | `false`, `true` | General prop contract. |
+| `validateMessages` | `object` | TODO | General prop contract. |
+| `validateTrigger` | `string` | TODO | General prop contract. |
+| `onFieldsChange` | `function` | TODO | General prop contract. |
+| `onFinish` | `function` | TODO | General prop contract. |
+| `onFinishFailed` | `function` | TODO | General prop contract. |
+| `onValuesChange` | `function` | TODO | General prop contract. |
+| `children` | `reactNode` | TODO | General prop contract. |
+| `footer` | `reactNode` | TODO | General prop contract. |
+| `mode` | `string` | `default`, `card` | General prop contract. |
+| `layout` | `string` | `vertical`, `horizontal` | General prop contract. |
+| `requiredMarkStyle` | `string` | `asterisk`, `text-required`, `text-optional`, `none` | General prop contract. |
+| `label` | `reactNode` | TODO | General prop contract. |
+| `help` | `reactNode` | TODO | General prop contract. |
+| `helpIcon` | `reactNode` | TODO | General prop contract. |
+| `hasFeedback` | `boolean` | `false`, `true` | General prop contract. |
+| `required` | `boolean` | `false`, `true` | General prop contract. |
+| `noStyle` | `boolean` | `false`, `true` | General prop contract. |
+| `disabled` | `boolean` | `false`, `true` | General prop contract. |
+| `hidden` | `boolean` | `false`, `true` | General prop contract. |
+| `childElementPosition` | `string` | `normal`, `right` | General prop contract. |
+| `extra` | `reactNode` | TODO | General prop contract. |
+| `clickable` | `boolean` | `false`, `true` | General prop contract. |
+| `arrow` | `boolean`, `reactNode` | `false`, `true`, `reactNode` | General prop contract. |
+| `arrowIcon` | `boolean`, `reactNode` | `false`, `true`, `reactNode` | General prop contract. |
+| `description` | `reactNode` | TODO | General prop contract. |
+| `dependencies` | `array` | TODO | General prop contract. |
+| `valuePropName` | `string` | TODO | General prop contract. |
+| `rules` | `array` | TODO | General prop contract. |
+| `messageVariables` | `object` | TODO | General prop contract. |
+| `trigger` | `string` | TODO | General prop contract. |
+| `shouldUpdate` | `boolean`, `function` | `false`, `true`, `function` | General prop contract. |
+| `initialValue` | `any` | TODO | General prop contract. |
+| `getValueFromEvent` | `function` | TODO | General prop contract. |
+| `getValueProps` | `function` | TODO | General prop contract. |
+| `normalize` | `function` | TODO | General prop contract. |
+| `validateFirst` | `boolean` | `false`, `true` | General prop contract. |
+| `onClick` | `function` | TODO | General prop contract. |
+| `--border-inner` | `string` | TODO | Official CSS variable contract. |
+| `--border-top` | `string` | TODO | Official CSS variable contract. |
+| `--border-bottom` | `string` | TODO | Official CSS variable contract. |
+| `--prefix-width` | `string` | TODO | Official CSS variable contract. |
+
+## Inspection Mapping
+
+- Inspection row `Layout` verifies `layout=vertical|horizontal` and `mode=default|card`.
+- Inspection row `Field Semantics` verifies `label`, `help`, `description`, and `required`.
+- Inspection row `Item States` verifies `item.error`, `item.warning`, `item.disabled`, and `item.hidden`.
+
+## State Mapping
+
+### Form
+
+| State | Expectation |
+| --- | --- |
+| `item.default` | Declared in spec state group `item`. |
+| `item.hidden` | Declared in spec state group `item`. |
+| `item.disabled` | Declared in spec state group `item`. |
+| `item.error` | Declared in spec state group `item`. |
+| `item.warning` | Declared in spec state group `item`. |
+
 ## Render Expectations
 
 - Form layout, mode, and item state must remain explicit in payload and renderer.
 - Help, extra, feedback, and required indicators must preserve the spec contract.
+
+## Current Runtime Gaps
+
+- none
 
 ## Failure Cases
 

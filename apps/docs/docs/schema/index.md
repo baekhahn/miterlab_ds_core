@@ -42,3 +42,5 @@ The frozen Ant-based specs are the source of truth for the current core runtime.
 | `paddingLG` | `12px / 11px` | component-derived | large control horizontal/vertical padding from Button |
 | `controlHeight` | content-driven or `24px` wrapper min-height | component-derived | Button is content-driven; Input wrapper min-height is `24px` |
 | `lineHeight` | `1.4` Button / `1.5` Input | component-derived | line-height varies by component family |
+| `motionDuration` | not exposed by name | TODO | no direct Ant Mobile 5.x token name in theme-default.less |
+| `motionEase` | not exposed by name | TODO | no direct Ant Mobile 5.x token name in theme-default.less |

@@ -217,6 +217,11 @@ const familyContracts = {
     ]
   },
   tabs: {
+    inspectionMapping: [
+      "Inspection row `Line Modes` verifies `activeLineMode=auto|full|fixed`.",
+      "Inspection row `Direction and Scroll` verifies `direction` and `autoScroll` behavior.",
+      "Inspection row `Disabled Tabs` verifies `tab.disabled` remains visually distinct."
+    ],
     renderExpectations: [
       "Active line width and placement must follow `activeLineMode`.",
       "Disabled tabs must preserve layout while suppressing active styling.",
@@ -229,6 +234,11 @@ const familyContracts = {
     ]
   },
   "list-cell": {
+    inspectionMapping: [
+      "Inspection row `List Modes` verifies `mode=default|card`.",
+      "Inspection row `Cell Content` verifies `prefix`, `extra`, `description`, and `arrowIcon`.",
+      "Inspection row `Clickable States` verifies `clickable`, `disabled`, and `item.active` behavior."
+    ],
     renderExpectations: [
       "List mode and cell clickable states must remain visible in row treatment.",
       "Prefix, extra, description, and arrow areas must preserve spacing metrics."
@@ -240,6 +250,11 @@ const familyContracts = {
     ]
   },
   overlay: {
+    inspectionMapping: [
+      "Inspection row `Dialog` verifies `visible`, `title`, `content`, `actions`, and close behavior.",
+      "Inspection row `Popup` verifies `position`, `showCloseButton`, and `closeOnSwipe`.",
+      "Inspection row `Toast` verifies `icon` and `position` combinations."
+    ],
     renderExpectations: [
       "Dialog, popup, and toast overlays must keep family-specific positions and action regions.",
       "Visible and hidden states must remain separate in payload and write logic."
@@ -251,6 +266,16 @@ const familyContracts = {
     ]
   },
   navigation: {
+    inspectionMapping: [
+      "Inspection row `NavBar` verifies `backIcon`, `right`, and title content.",
+      "Inspection row `TabBar` verifies `activeKey`, item icon/title, and `safeArea`.",
+      "Inspection row `TabBar Active Item` verifies `item.active` remains visible."
+    ],
+    stateMapping: [
+      ["nav.default", "NavBar has no explicit public state group in the frozen spec; rendering is prop-driven from the default layout."],
+      ["item.default", "TabBar item uses the default navigation item appearance."],
+      ["item.active", "TabBar item active state must keep the selected token and icon/title emphasis."]
+    ],
     renderExpectations: [
       "NavBar top layout and TabBar bottom layout must remain family-specific.",
       "Active navigation item state must remain visible for TabBar."
@@ -262,6 +287,11 @@ const familyContracts = {
     ]
   },
   form: {
+    inspectionMapping: [
+      "Inspection row `Layout` verifies `layout=vertical|horizontal` and `mode=default|card`.",
+      "Inspection row `Field Semantics` verifies `label`, `help`, `description`, and `required`.",
+      "Inspection row `Item States` verifies `item.error`, `item.warning`, `item.disabled`, and `item.hidden`."
+    ],
     renderExpectations: [
       "Form layout, mode, and item state must remain explicit in payload and renderer.",
       "Help, extra, feedback, and required indicators must preserve the spec contract."
@@ -302,7 +332,9 @@ const antTokenContractRows = [
   ["`paddingMD`", "`12px / 7px`", "component-derived", "middle control horizontal/vertical padding from Button"],
   ["`paddingLG`", "`12px / 11px`", "component-derived", "large control horizontal/vertical padding from Button"],
   ["`controlHeight`", "content-driven or `24px` wrapper min-height", "component-derived", "Button is content-driven; Input wrapper min-height is `24px`"],
-  ["`lineHeight`", "`1.4` Button / `1.5` Input", "component-derived", "line-height varies by component family"]
+  ["`lineHeight`", "`1.4` Button / `1.5` Input", "component-derived", "line-height varies by component family"],
+  ["`motionDuration`", "not exposed by name", "TODO", "no direct Ant Mobile 5.x token name in theme-default.less"],
+  ["`motionEase`", "not exposed by name", "TODO", "no direct Ant Mobile 5.x token name in theme-default.less"]
 ];
 
 const officialComponentData = {
@@ -524,8 +556,8 @@ function markdownTable(headers, rows) {
   return [header, divider, body].join("\n");
 }
 
-function toBulletList(items) {
-  return items.length ? items.map((item) => `- ${item}`).join("\n") : "- TODO";
+function toBulletList(items, emptyLabel = "TODO") {
+  return items.length ? items.map((item) => `- ${item}`).join("\n") : `- ${emptyLabel}`;
 }
 
 function collectSemanticTokens(value, output = new Set()) {
@@ -845,7 +877,11 @@ function stateTable(spec, familyId) {
     : spec.states
       ? Object.entries(spec.states).flatMap(([group, values]) => asArray(values).map((state) => [`${group}.${state}`, `Declared in spec state group \`${group}\`.`]))
       : [];
-  const rows = manual.length ? manual.map(([state, expectation]) => [`\`${state}\``, expectation]) : specStates.map(([state, expectation]) => [`\`${state}\``, expectation]);
+  const rows = manual.length
+    ? manual.map(([state, expectation]) => [`\`${state}\``, expectation])
+    : specStates.length
+      ? specStates.map(([state, expectation]) => [`\`${state}\``, expectation])
+      : [["`state.none`", "This component has no explicit public state group in the frozen spec. Rendering remains prop-driven."]];
   return markdownTable(["State", "Expectation"], rows);
 }
 
@@ -982,7 +1018,11 @@ ${toBulletList(contract.unsupportedNotes || [])}`);
       );
     } else {
       extraSections.push(
+        `## Variant Axes Table\n\n${family.specs.map((spec) => `### ${spec.component}\n\n${componentAxesTable(spec)}`).join("\n\n")}`,
+        `## Inspection Mapping\n\n${toBulletList(contract.inspectionMapping || [], "none")}`,
+        `## State Mapping\n\n${family.specs.map((spec) => `### ${spec.component}\n\n${stateTable(spec, family.id)}`).join("\n\n")}`,
         `## Render Expectations\n\n${toBulletList(contract.renderExpectations || [])}`,
+        `## Current Runtime Gaps\n\n${toBulletList(contract.runtimeGaps || [], "none")}`,
         `## Failure Cases\n\n${toBulletList(contract.failureCases || [])}`
       );
     }
@@ -1248,6 +1288,7 @@ ${families
 function buildRuntimeDocs(families) {
   const buttonFamily = families.find((family) => family.id === "button");
   const exampleNode = findFirstComponentNode(buttonFamily.payload.nodes, "Button") || buttonFamily.payload.nodes[0];
+  const exampleNodeTree = buttonFamily.payload.nodes.slice(0, 3);
 
   writeDoc(
     "runtime/index.md",
@@ -1266,6 +1307,20 @@ Runtime documentation describes what the Figma plugin expects from the generated
 - Plugin mapping uses family component names directly.
 - Metrics and token references are resolved from the payload node style and variables.
 - Canvas verification remains a separate phase from local parity verification.
+
+## Runtime Contract Fields
+
+${markdownTable(
+  ["Payload field", "Required contract", "Current note"],
+  [
+    ["`\u0064ocument`", "Must preserve screen identity and theme for the write session.", "Used directly by plugin write entry points."],
+    ["`\u006eode.component`", "Must match the frozen family runtime name exactly.", "No aliasing or family flattening is allowed."],
+    ["`\u006eode.variant`", "Must preserve frozen prop names and values.", "Button/Input remain blocked until token-path parity is complete."],
+    ["`\u006eode.style`", "Must carry frozen metrics required for visible parity.", "Plugin must not replace these with generic presets."],
+    ["`\u006eode.variables`", "Must carry documented token references for the family.", "Button/Input still use semantic paths in runtime output today."],
+    ["`\u006eode.children`", "Must preserve hierarchy for nested frames, text, and instances.", "Used for section, row, and child component layout."]
+  ]
+)}
 `
   );
 
@@ -1311,10 +1366,10 @@ ${codeBlock("json", truncateJson(buttonFamily.payload.nodes.slice(0, 3), 1400))}
 
 ## Token Mapping Rules
 
-- \`variables\` should preserve semantic token paths emitted by the generator.
+- \`variables\` must preserve the token contract emitted by the generator for the family.
 - CSS variable props remain part of the contract when present in the spec.
 - Token remapping outside the family contract is not allowed in the runtime layer.
-- Button and Input still require runtime token alignment from semantic paths to the official documented token contract.
+- Button and Input still require runtime token alignment from current semantic paths to the documented Ant-level token contract.
 `
   );
 
@@ -1331,12 +1386,33 @@ ${codeBlock("json", truncateJson(buttonFamily.payload.nodes.slice(0, 3), 1400))}
 4. Trigger plugin write into the current document when a writable path is available.
 5. Review the canvas output during Phase B freeze review.
 
+## Payload Example
+
+${codeBlock("json", truncateJson({ document: buttonFamily.payload.document, node: exampleNode }))}
+
+## Node Tree Example
+
+${codeBlock("json", truncateJson(exampleNodeTree, 1200))}
+
 ## Payload To Canvas Mapping
 
 - Spec defines the legal props, states, metrics, and token references.
 - Generator serializes those values into payload \`variant\`, \`style\`, and \`variables\` fields.
 - Plugin converts payload nodes into Figma frames, text nodes, and instances.
 - Canvas review validates that visible output still matches the documented contract.
+
+## Mapping Rules
+
+${markdownTable(
+  ["Contract area", "Rule", "Current status"],
+  [
+    ["Variant mapping", "Payload `variant` keys must remain identical to frozen spec prop names.", "Verified for families with mismatch count `0`."],
+    ["State mapping", "State differences must remain encoded through official props or explicit spec state groups.", "Canvas verification still pending for all families."],
+    ["Metrics mapping", "Payload `style` values must preserve frozen metrics and visible family differences.", "Button/Input remain under review for runtime parity."],
+    ["Token mapping", "Payload `variables` must point to the documented token contract without ad hoc remapping.", "Button/Input token path parity is still pending."],
+    ["Node mapping", "Plugin must map payload node types to frames, text, and instances without family flattening.", "Plugin build is verified; live canvas write remains pending."]
+  ]
+)}
 
 ## Current Limitations
 

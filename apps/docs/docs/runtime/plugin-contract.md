@@ -145,7 +145,7 @@ The plugin expects a payload that conforms to the shared Figma write contract.
 
 ## Token Mapping Rules
 
-- `variables` should preserve semantic token paths emitted by the generator.
+- `variables` must preserve the token contract emitted by the generator for the family.
 - CSS variable props remain part of the contract when present in the spec.
 - Token remapping outside the family contract is not allowed in the runtime layer.
-- Button and Input still require runtime token alignment from semantic paths to the official documented token contract.
+- Button and Input still require runtime token alignment from current semantic paths to the documented Ant-level token contract.

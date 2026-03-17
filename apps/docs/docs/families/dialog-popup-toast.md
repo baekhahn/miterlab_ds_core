@@ -208,10 +208,119 @@ Overlay and transient messaging baseline for Ant Design Mobile dialog, popup, an
 | --- | --- | --- |
 | `--size` | cssVar | Official CSS variable contract |
 
+## Variant Axes Table
+
+### Dialog
+
+| Axis / prop | Type | Allowed values | Notes |
+| --- | --- | --- | --- |
+| `afterClose` | `function` | TODO | General prop contract. |
+| `afterShow` | `function` | TODO | General prop contract. |
+| `bodyClassName` | `string` | TODO | General prop contract. |
+| `bodyStyle` | `object` | TODO | General prop contract. |
+| `destroyOnClose` | `boolean` | `false`, `true` | General prop contract. |
+| `disableBodyScroll` | `boolean` | `false`, `true` | General prop contract. |
+| `forceRender` | `boolean` | `false`, `true` | General prop contract. |
+| `getContainer` | `function` | TODO | General prop contract. |
+| `maskClassName` | `string` | TODO | General prop contract. |
+| `maskStyle` | `object` | TODO | General prop contract. |
+| `stopPropagation` | `array` | TODO | General prop contract. |
+| `visible` | `boolean` | `false`, `true` | General prop contract. |
+| `image` | `string` | TODO | General prop contract. |
+| `header` | `reactNode` | TODO | General prop contract. |
+| `title` | `reactNode` | TODO | General prop contract. |
+| `content` | `reactNode` | TODO | General prop contract. |
+| `actions` | `array` | TODO | General prop contract. |
+| `onAction` | `function` | TODO | General prop contract. |
+| `onClose` | `function` | TODO | General prop contract. |
+| `closeOnAction` | `boolean` | `false`, `true` | General prop contract. |
+| `closeOnMaskClick` | `boolean` | `false`, `true` | General prop contract. |
+| `--background-color` | `string` | TODO | Official CSS variable contract. |
+| `--border-radius` | `string` | TODO | Official CSS variable contract. |
+| `--max-width` | `string` | TODO | Official CSS variable contract. |
+| `--min-width` | `string` | TODO | Official CSS variable contract. |
+| `--z-index` | `string` | TODO | Official CSS variable contract. |
+
+### Popup
+
+| Axis / prop | Type | Allowed values | Notes |
+| --- | --- | --- | --- |
+| `afterClose` | `function` | TODO | General prop contract. |
+| `afterShow` | `function` | TODO | General prop contract. |
+| `bodyClassName` | `string` | TODO | General prop contract. |
+| `bodyStyle` | `object` | TODO | General prop contract. |
+| `closeOnMaskClick` | `boolean` | `false`, `true` | General prop contract. |
+| `closeIcon` | `reactNode` | TODO | General prop contract. |
+| `destroyOnClose` | `boolean` | `false`, `true` | General prop contract. |
+| `disableBodyScroll` | `boolean` | `false`, `true` | General prop contract. |
+| `forceRender` | `boolean` | `false`, `true` | General prop contract. |
+| `getContainer` | `function` | TODO | General prop contract. |
+| `mask` | `boolean` | `false`, `true` | General prop contract. |
+| `maskClassName` | `string` | TODO | General prop contract. |
+| `maskStyle` | `object` | TODO | General prop contract. |
+| `onClick` | `function` | TODO | General prop contract. |
+| `onClose` | `function` | TODO | General prop contract. |
+| `onMaskClick` | `function` | TODO | General prop contract. |
+| `showCloseButton` | `boolean` | `false`, `true` | General prop contract. |
+| `stopPropagation` | `array` | TODO | General prop contract. |
+| `visible` | `boolean` | `false`, `true` | General prop contract. |
+| `children` | `reactNode` | TODO | General prop contract. |
+| `position` | `string` | `bottom`, `top`, `left`, `right` | General prop contract. |
+| `closeOnSwipe` | `boolean` | `false`, `true` | General prop contract. |
+| `--z-index` | `string` | TODO | Official CSS variable contract. |
+
+### Toast
+
+| Axis / prop | Type | Allowed values | Notes |
+| --- | --- | --- | --- |
+| `afterClose` | `function` | TODO | General prop contract. |
+| `maskStyle` | `object` | TODO | General prop contract. |
+| `maskClassName` | `string` | TODO | General prop contract. |
+| `maskClickable` | `boolean` | `false`, `true` | General prop contract. |
+| `content` | `reactNode` | TODO | General prop contract. |
+| `icon` | `string`, `reactNode` | `success`, `fail`, `loading`, `reactNode` | General prop contract. |
+| `duration` | `number` | TODO | General prop contract. |
+| `position` | `string` | `top`, `bottom`, `center` | General prop contract. |
+| `getContainer` | `function` | TODO | General prop contract. |
+| `stopPropagation` | `array` | TODO | General prop contract. |
+
+## Inspection Mapping
+
+- Inspection row `Dialog` verifies `visible`, `title`, `content`, `actions`, and close behavior.
+- Inspection row `Popup` verifies `position`, `showCloseButton`, and `closeOnSwipe`.
+- Inspection row `Toast` verifies `icon` and `position` combinations.
+
+## State Mapping
+
+### Dialog
+
+| State | Expectation |
+| --- | --- |
+| `dialog.hidden` | Declared in spec state group `dialog`. |
+| `dialog.visible` | Declared in spec state group `dialog`. |
+
+### Popup
+
+| State | Expectation |
+| --- | --- |
+| `popup.hidden` | Declared in spec state group `popup`. |
+| `popup.visible` | Declared in spec state group `popup`. |
+
+### Toast
+
+| State | Expectation |
+| --- | --- |
+| `toast.visible` | Declared in spec state group `toast`. |
+| `toast.hidden` | Declared in spec state group `toast`. |
+
 ## Render Expectations
 
 - Dialog, popup, and toast overlays must keep family-specific positions and action regions.
 - Visible and hidden states must remain separate in payload and write logic.
+
+## Current Runtime Gaps
+
+- none
 
 ## Failure Cases
 

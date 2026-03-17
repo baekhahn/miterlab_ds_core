@@ -91,7 +91,7 @@ Structured list and row presentation baseline for Ant Design Mobile List and Cel
 
 | State | Expectation |
 | --- | --- |
-| TODO | TODO |
+| `state.none` | This component has no explicit public state group in the frozen spec. Rendering remains prop-driven. |
 
 ### Metrics
 
@@ -155,10 +155,76 @@ Structured list and row presentation baseline for Ant Design Mobile List and Cel
 | `--align-items` | cssVar | Official CSS variable contract |
 | `--active-background-color` | cssVar | Official CSS variable contract |
 
+## Variant Axes Table
+
+### List
+
+| Axis / prop | Type | Allowed values | Notes |
+| --- | --- | --- | --- |
+| `header` | `reactNode` | TODO | General prop contract. |
+| `mode` | `string` | `default`, `card` | General prop contract. |
+| `children` | `reactNode` | TODO | General prop contract. |
+| `--active-background-color` | `string` | TODO | Official CSS variable contract. |
+| `--align-items` | `string` | TODO | Official CSS variable contract. |
+| `--border-bottom` | `string` | TODO | Official CSS variable contract. |
+| `--border-inner` | `string` | TODO | Official CSS variable contract. |
+| `--border-top` | `string` | TODO | Official CSS variable contract. |
+| `--extra-max-width` | `string` | TODO | Official CSS variable contract. |
+| `--font-size` | `string` | TODO | Official CSS variable contract. |
+| `--header-font-size` | `string` | TODO | Official CSS variable contract. |
+| `--padding-left` | `string` | TODO | Official CSS variable contract. |
+| `--padding-right` | `string` | TODO | Official CSS variable contract. |
+| `--prefix-padding-right` | `string` | TODO | Official CSS variable contract. |
+| `--prefix-width` | `string` | TODO | Official CSS variable contract. |
+
+### Cell
+
+| Axis / prop | Type | Allowed values | Notes |
+| --- | --- | --- | --- |
+| `title` | `reactNode` | TODO | General prop contract. |
+| `children` | `reactNode` | TODO | General prop contract. |
+| `description` | `reactNode` | TODO | General prop contract. |
+| `prefix` | `reactNode` | TODO | General prop contract. |
+| `extra` | `reactNode` | TODO | General prop contract. |
+| `clickable` | `boolean` | `false`, `true` | General prop contract. |
+| `arrowIcon` | `boolean`, `reactNode` | `false`, `true`, `reactNode` | General prop contract. |
+| `disabled` | `boolean` | `false`, `true` | General prop contract. |
+| `onClick` | `function` | TODO | General prop contract. |
+| `arrow` | `boolean`, `reactNode` | `false`, `true`, `reactNode` | General prop contract. |
+| `--prefix-width` | `string` | TODO | Official CSS variable contract. |
+| `--align-items` | `string` | TODO | Official CSS variable contract. |
+| `--active-background-color` | `string` | TODO | Official CSS variable contract. |
+
+## Inspection Mapping
+
+- Inspection row `List Modes` verifies `mode=default|card`.
+- Inspection row `Cell Content` verifies `prefix`, `extra`, `description`, and `arrowIcon`.
+- Inspection row `Clickable States` verifies `clickable`, `disabled`, and `item.active` behavior.
+
+## State Mapping
+
+### List
+
+| State | Expectation |
+| --- | --- |
+| `state.none` | This component has no explicit public state group in the frozen spec. Rendering remains prop-driven. |
+
+### Cell
+
+| State | Expectation |
+| --- | --- |
+| `item.default` | Declared in spec state group `item`. |
+| `item.disabled` | Declared in spec state group `item`. |
+| `item.active` | Declared in spec state group `item`. |
+
 ## Render Expectations
 
 - List mode and cell clickable states must remain visible in row treatment.
 - Prefix, extra, description, and arrow areas must preserve spacing metrics.
+
+## Current Runtime Gaps
+
+- none
 
 ## Failure Cases
 

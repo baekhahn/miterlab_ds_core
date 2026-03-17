@@ -107,11 +107,53 @@ Primary segmented navigation baseline for Ant Design Mobile Tabs behavior.
 | `--active-line-color` | cssVar | default `var(--adm-color-primary)` in official tabs.less |
 | `--active-title-color` | cssVar | default `var(--adm-color-primary)` in official tabs.less |
 
+## Variant Axes Table
+
+### Tabs
+
+| Axis / prop | Type | Allowed values | Notes |
+| --- | --- | --- | --- |
+| `activeKey` | `string` | `string`, `null` | General prop contract. |
+| `defaultActiveKey` | `string` | `string`, `null` | General prop contract. |
+| `activeLineMode` | `string` | `auto`, `full`, `fixed` | General prop contract. |
+| `stretch` | `boolean` | `false`, `true` | General prop contract. |
+| `onChange` | `function` | TODO | General prop contract. |
+| `children` | `reactNode` | TODO | General prop contract. |
+| `direction` | `string` | `ltr`, `rtl` | General prop contract. |
+| `autoScroll` | `boolean` | `false`, `true` | General prop contract. |
+| `--fixed-active-line-width` | `string` | TODO | Official CSS variable contract. |
+| `--active-line-height` | `string` | TODO | Official CSS variable contract. |
+| `--active-line-border-radius` | `string` | TODO | Official CSS variable contract. |
+| `--title-font-size` | `string` | TODO | Official CSS variable contract. |
+| `--content-padding` | `string` | TODO | Official CSS variable contract. |
+| `--active-title-color` | `string` | TODO | Official CSS variable contract. |
+| `--active-line-color` | `string` | TODO | Official CSS variable contract. |
+
+## Inspection Mapping
+
+- Inspection row `Line Modes` verifies `activeLineMode=auto|full|fixed`.
+- Inspection row `Direction and Scroll` verifies `direction` and `autoScroll` behavior.
+- Inspection row `Disabled Tabs` verifies `tab.disabled` remains visually distinct.
+
+## State Mapping
+
+### Tabs
+
+| State | Expectation |
+| --- | --- |
+| `tab.default` | Declared in spec state group `tab`. |
+| `tab.active` | Declared in spec state group `tab`. |
+| `tab.disabled` | Declared in spec state group `tab`. |
+
 ## Render Expectations
 
 - Active line width and placement must follow `activeLineMode`.
 - Disabled tabs must preserve layout while suppressing active styling.
 - Content padding must remain aligned with `--content-padding` and metrics.
+
+## Current Runtime Gaps
+
+- none
 
 ## Failure Cases
 

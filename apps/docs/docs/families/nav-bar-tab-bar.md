@@ -81,7 +81,9 @@ Top and bottom navigation baseline for Ant Design Mobile navigation components.
 
 | State | Expectation |
 | --- | --- |
-| TODO | TODO |
+| `nav.default` | NavBar has no explicit public state group in the frozen spec; rendering is prop-driven from the default layout. |
+| `item.default` | TabBar item uses the default navigation item appearance. |
+| `item.active` | TabBar item active state must keep the selected token and icon/title emphasis. |
 
 ### Metrics
 
@@ -114,8 +116,9 @@ Top and bottom navigation baseline for Ant Design Mobile navigation components.
 
 | State | Expectation |
 | --- | --- |
-| `item.default` | Declared in spec state group `item`. |
-| `item.active` | Declared in spec state group `item`. |
+| `nav.default` | NavBar has no explicit public state group in the frozen spec; rendering is prop-driven from the default layout. |
+| `item.default` | TabBar item uses the default navigation item appearance. |
+| `item.active` | TabBar item active state must keep the selected token and icon/title emphasis. |
 
 ### Metrics
 
@@ -132,10 +135,64 @@ Top and bottom navigation baseline for Ant Design Mobile navigation components.
 | `colorPrimary` | antToken | active item color is `var(--adm-color-primary)` in official tab-bar.less |
 | `colorTextSecondary` | antToken | inactive item color is `var(--adm-color-text-secondary)` in official tab-bar.less |
 
+## Variant Axes Table
+
+### NavBar
+
+| Axis / prop | Type | Allowed values | Notes |
+| --- | --- | --- | --- |
+| `back` | `reactNode` | TODO | General prop contract. |
+| `backIcon` | `boolean`, `reactNode` | `false`, `true`, `reactNode` | General prop contract. |
+| `backArrow` | `boolean`, `reactNode` | `false`, `true`, `reactNode` | General prop contract. |
+| `left` | `reactNode` | TODO | General prop contract. |
+| `right` | `reactNode` | TODO | General prop contract. |
+| `onBack` | `function` | TODO | General prop contract. |
+| `children` | `reactNode` | TODO | General prop contract. |
+| `--height` | `string` | TODO | Official CSS variable contract. |
+| `--border-bottom` | `string` | TODO | Official CSS variable contract. |
+
+### TabBar
+
+| Axis / prop | Type | Allowed values | Notes |
+| --- | --- | --- | --- |
+| `activeKey` | `string` | TODO | General prop contract. |
+| `defaultActiveKey` | `string` | TODO | General prop contract. |
+| `onChange` | `function` | TODO | General prop contract. |
+| `safeArea` | `boolean` | `false`, `true` | General prop contract. |
+| `children` | `reactNode` | TODO | General prop contract. |
+
+## Inspection Mapping
+
+- Inspection row `NavBar` verifies `backIcon`, `right`, and title content.
+- Inspection row `TabBar` verifies `activeKey`, item icon/title, and `safeArea`.
+- Inspection row `TabBar Active Item` verifies `item.active` remains visible.
+
+## State Mapping
+
+### NavBar
+
+| State | Expectation |
+| --- | --- |
+| `nav.default` | NavBar has no explicit public state group in the frozen spec; rendering is prop-driven from the default layout. |
+| `item.default` | TabBar item uses the default navigation item appearance. |
+| `item.active` | TabBar item active state must keep the selected token and icon/title emphasis. |
+
+### TabBar
+
+| State | Expectation |
+| --- | --- |
+| `nav.default` | NavBar has no explicit public state group in the frozen spec; rendering is prop-driven from the default layout. |
+| `item.default` | TabBar item uses the default navigation item appearance. |
+| `item.active` | TabBar item active state must keep the selected token and icon/title emphasis. |
+
 ## Render Expectations
 
 - NavBar top layout and TabBar bottom layout must remain family-specific.
 - Active navigation item state must remain visible for TabBar.
+
+## Current Runtime Gaps
+
+- none
 
 ## Failure Cases
 
