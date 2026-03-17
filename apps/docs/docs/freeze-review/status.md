@@ -4,18 +4,32 @@ title: Freeze Review Status
 
 # Freeze Review Status
 
-| Family | Mismatch Count | Inspection Generation | Plugin Build | Figma Canvas Verification |
+## Phase A — Implementation Freeze
+
+| Priority | Family | Mismatch count | Spec parity | Generator parity | Plugin parity |
+| --- | --- | --- | --- | --- | --- |
+| P1 | Button | `0` | verified | verified | verified |
+| P1 | Input | `0` | verified | verified | verified |
+| P2 | Tabs | `0` | verified | verified | verified |
+| P2 | List / Cell | `0` | verified | verified | verified |
+| P2 | Dialog / Popup / Toast | `0` | verified | verified | verified |
+| P2 | NavBar / TabBar | `0` | verified | verified | verified |
+| P2 | Form | `0` | verified | verified | verified |
+
+## Phase B — Canvas Freeze
+
+| Priority | Family | Figma write verified | Screenshot attached | Review approved |
 | --- | --- | --- | --- | --- |
-| Button | 0 | verified (100) | verified | pending |
-| Input | 0 | verified (96) | verified | pending |
-| Tabs | 0 | verified (100) | verified | pending |
-| List / Cell | 0 | verified (100) | verified | pending |
-| Dialog / Popup / Toast | 0 | verified (100) | verified | pending |
-| NavBar / TabBar | 0 | verified (100) | verified | pending |
-| Form | 0 | verified (100) | verified | pending |
+| P1 | Button | pending | pending | pending |
+| P1 | Input | pending | pending | pending |
+| P2 | Tabs | pending | pending | pending |
+| P2 | List / Cell | pending | pending | pending |
+| P2 | Dialog / Popup / Toast | pending | pending | pending |
+| P2 | NavBar / TabBar | pending | pending | pending |
+| P2 | Form | pending | pending | pending |
 
 ## Status Terms
 
-- `verified`: local parity and generation checks passed.
-- `pending`: work path exists but live canvas verification has not been completed.
-- `blocked`: current implementation or generation check failed.
+- `verified`: the required implementation or verification step is complete.
+- `pending`: the path exists, but the live verification step has not been completed yet.
+- `blocked`: the path failed or cannot proceed in the current environment.

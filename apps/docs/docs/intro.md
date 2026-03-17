@@ -1,14 +1,18 @@
 ---
-title: Core Design System Docs
+title: Miterlab AI Design System
 slug: /
 ---
 
-# Core Design System Docs
+# Miterlab AI Design System
 
-This site is the internal source of truth for the current frozen core design system state.
+This documentation site records the current frozen core runtime state: family contracts, schema, generation flow, runtime expectations, and freeze review status.
 
-- Source baseline: Ant Design Mobile component APIs
-- Source files: `packages/ui-core/specs`
-- Parity files: `artifacts/parity`
-- Inspection outputs: `artifacts/figma/*/summary.json`
-- Plugin write path: `apps/figma-plugin/src/write/createInstanceNode.ts`
+## Current Coverage
+
+- Button
+- Input
+- Tabs
+- List / Cell
+- Dialog / Popup / Toast
+- NavBar / TabBar
+- Form

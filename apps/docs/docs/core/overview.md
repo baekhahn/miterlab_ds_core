@@ -4,19 +4,11 @@ title: Core Overview
 
 # Core Overview
 
-## Scope
+This site is the internal source-of-truth documentation for the frozen core runtime.
 
-- Frozen component schema and parity status only
-- No marketing showcase
-- No theme expansion
-- No architecture redesign
+## Core Rules
 
-## Source Of Truth
-
-- Ant Design Mobile docs and component APIs
-- Frozen spec files in `packages/ui-core/specs`
-- Parity artifacts in `artifacts/parity`
-
-## Current Runtime Chain
-
-`spec -> generator -> inspection payload -> plugin renderer -> Figma canvas`
+- Ant Design Mobile API is the source baseline for the current frozen families.
+- Spec is the source of truth for props, states, metrics, and tokens.
+- Generator and plugin must adapt to the frozen spec, not the reverse.
+- Figma canvas is an output verification step, not a schema source.

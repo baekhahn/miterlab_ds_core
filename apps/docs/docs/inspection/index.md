@@ -4,7 +4,14 @@ title: Inspection
 
 # Inspection
 
-Inspection screens are family-specific verification screens, not product screens.
+Inspection output is the runtime validation layer between frozen specs and Figma canvas output.
 
-- Source prompts live under `packages/figma-generator/src/examples/*Family`
-- Summaries live under `artifacts/figma/*/summary.json`
+| Family | Inspection screen | Score | Passed | Warnings |
+| --- | --- | --- | --- | --- |
+| Button | `button-inspection` | `100` | `true` | none |
+| Input | `input-inspection` | `96` | `true` | No primary action button found |
+| Tabs | `tabs-inspection` | `100` | `true` | none |
+| List / Cell | `list-cell-inspection` | `100` | `true` | none |
+| Dialog / Popup / Toast | `overlay-inspection` | `100` | `true` | none |
+| NavBar / TabBar | `navigation-inspection` | `100` | `true` | none |
+| Form | `form-inspection` | `100` | `true` | none |
