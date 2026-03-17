@@ -22,6 +22,26 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Contracts",
+      items: [
+        "contracts/button.contract",
+        "contracts/input.contract",
+        "contracts/tabs.contract",
+        "contracts/list.contract",
+        "contracts/cell.contract",
+        "contracts/form.contract",
+        "contracts/dialog.contract",
+        "contracts/popup.contract",
+        "contracts/toast.contract",
+        "contracts/navbar.contract",
+        "contracts/tabbar.contract",
+        "contracts/checkbox.contract",
+        "contracts/radio.contract",
+        "contracts/switch.contract"
+      ]
+    },
+    {
+      type: "category",
       label: "Schema",
       items: ["schema/index", "schema/axes-and-props", "schema/metrics-and-tokens"]
     },
