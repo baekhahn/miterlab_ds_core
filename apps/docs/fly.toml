@@ -1,4 +1,4 @@
-app = "miterlab-core-docs"
+app = "mads"
 primary_region = "nrt"
 
 [build]

@@ -1,13 +1,13 @@
 // @ts-check
 
 const config = {
-  title: "Core Design System Docs",
+  title: "Miterlab AI Design System",
   tagline: "Frozen core schema, parity, and runtime reference",
   favicon: "img/favicon.ico",
-  url: "http://localhost",
+  url: "https://mads.fly.dev",
   baseUrl: "/",
   organizationName: "miterlab",
-  projectName: "core-design-system-docs",
+  projectName: "mads",
   onBrokenLinks: "throw",
   markdown: {
     hooks: {
@@ -37,7 +37,7 @@ const config = {
   ],
   themeConfig: {
     navbar: {
-      title: "Core DS Docs",
+      title: "Miterlab AI Design System",
       items: [
         { to: "/", label: "Docs", position: "left" },
         { to: "/freeze-review/status", label: "Freeze Review", position: "left" }
