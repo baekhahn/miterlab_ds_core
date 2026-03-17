@@ -67,6 +67,7 @@ module.exports = {
         "freeze-review/status",
         "freeze-review/status-rule",
         "freeze-review/p1-scope",
+        "freeze-review/p1-parity-table",
         "freeze-review/parity-table",
         "freeze-review/parity-rule",
         "freeze-review/parity-contract",
