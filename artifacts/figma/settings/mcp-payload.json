@@ -1,0 +1,731 @@
+{
+  "document": {
+    "name": "settings screen",
+    "screen": "settings",
+    "theme": "core"
+  },
+  "nodes": [
+    {
+      "id": "layout_1",
+      "type": "FRAME",
+      "name": "Settings Screen",
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 884,
+      "children": [
+        {
+          "id": "layout_2",
+          "type": "FRAME",
+          "name": "header-section",
+          "x": 16,
+          "y": 40,
+          "width": 358,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_3",
+              "type": "TEXT",
+              "name": "Text 1",
+              "x": 16,
+              "y": 40,
+              "width": 358,
+              "height": 32,
+              "text": "Settings",
+              "variables": {
+                "text.color": "semantic.text.primary"
+              },
+              "style": {
+                "text": "text/heading/xl",
+                "fill": "#1F2430"
+              }
+            },
+            {
+              "id": "layout_4",
+              "type": "TEXT",
+              "name": "Text 2",
+              "x": 16,
+              "y": 40,
+              "width": 358,
+              "height": 24,
+              "text": "Manage account preferences",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/lg",
+                "fill": "#5F6A7B"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_5",
+          "type": "FRAME",
+          "name": "form-section",
+          "x": 16,
+          "y": 140,
+          "width": 358,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_6",
+              "type": "INSTANCE",
+              "name": "DisplayName",
+              "x": 16,
+              "y": 140,
+              "width": 358,
+              "height": 40,
+              "component": "Input",
+              "style": {
+                "fill": "#FFFFFF",
+                "stroke": "#E0E6EE",
+                "text": "#1F2430",
+                "radius": 8,
+                "paddingX": 14,
+                "paddingY": 9,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "variant": "default",
+                "tone": "default",
+                "size": "md",
+                "state": "default"
+              },
+              "variables": {
+                "field.background": "Semantic/surface/default",
+                "field.border": "Semantic/border/default",
+                "value.color": "Semantic/text/primary",
+                "placeholder.color": "Semantic/text/muted"
+              }
+            },
+            {
+              "id": "layout_7",
+              "type": "INSTANCE",
+              "name": "Timezone",
+              "x": 16,
+              "y": 140,
+              "width": 358,
+              "height": 40,
+              "component": "Input",
+              "style": {
+                "fill": "#FFFFFF",
+                "stroke": "#E0E6EE",
+                "text": "#1F2430",
+                "radius": 8,
+                "paddingX": 14,
+                "paddingY": 9,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "variant": "default",
+                "tone": "default",
+                "size": "md",
+                "state": "default"
+              },
+              "variables": {
+                "field.background": "Semantic/surface/default",
+                "field.border": "Semantic/border/default",
+                "value.color": "Semantic/text/primary",
+                "placeholder.color": "Semantic/text/muted"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_8",
+          "type": "FRAME",
+          "name": "action-section",
+          "x": 16,
+          "y": 268,
+          "width": 358,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_9",
+              "type": "INSTANCE",
+              "name": "Save changes",
+              "x": 16,
+              "y": 268,
+              "width": 358,
+              "height": 40,
+              "component": "Button",
+              "style": {
+                "fill": "#12141A",
+                "stroke": "#12141A",
+                "text": "#FFFFFF",
+                "radius": 8,
+                "paddingX": 16,
+                "paddingY": 10,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "medium",
+                "minWidth": 80
+              },
+              "variant": {
+                "variant": "primary",
+                "tone": "default",
+                "size": "md",
+                "state": "default"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Save changes"
+            },
+            {
+              "id": "layout_10",
+              "type": "INSTANCE",
+              "name": "Cancel",
+              "x": 16,
+              "y": 268,
+              "width": 88,
+              "height": 40,
+              "component": "Button",
+              "style": {
+                "fill": "#FFFFFF",
+                "stroke": "#E0E6EE",
+                "text": "#1F2430",
+                "radius": 8,
+                "paddingX": 16,
+                "paddingY": 10,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "medium",
+                "minWidth": 80
+              },
+              "variant": {
+                "variant": "neutral",
+                "tone": "default",
+                "size": "md",
+                "state": "default"
+              },
+              "variables": {
+                "container.background": "Semantic/action/secondary",
+                "container.border": "Semantic/border/default",
+                "label.color": "Semantic/text/primary"
+              },
+              "text": "Cancel"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_2",
+      "type": "FRAME",
+      "name": "header-section",
+      "x": 16,
+      "y": 40,
+      "width": 358,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_3",
+          "type": "TEXT",
+          "name": "Text 1",
+          "x": 16,
+          "y": 40,
+          "width": 358,
+          "height": 32,
+          "text": "Settings",
+          "variables": {
+            "text.color": "semantic.text.primary"
+          },
+          "style": {
+            "text": "text/heading/xl",
+            "fill": "#1F2430"
+          }
+        },
+        {
+          "id": "layout_4",
+          "type": "TEXT",
+          "name": "Text 2",
+          "x": 16,
+          "y": 40,
+          "width": 358,
+          "height": 24,
+          "text": "Manage account preferences",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/lg",
+            "fill": "#5F6A7B"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_3",
+      "type": "TEXT",
+      "name": "Text 1",
+      "x": 16,
+      "y": 40,
+      "width": 358,
+      "height": 32,
+      "text": "Settings",
+      "variables": {
+        "text.color": "semantic.text.primary"
+      },
+      "style": {
+        "text": "text/heading/xl",
+        "fill": "#1F2430"
+      }
+    },
+    {
+      "id": "layout_4",
+      "type": "TEXT",
+      "name": "Text 2",
+      "x": 16,
+      "y": 40,
+      "width": 358,
+      "height": 24,
+      "text": "Manage account preferences",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/lg",
+        "fill": "#5F6A7B"
+      }
+    },
+    {
+      "id": "layout_5",
+      "type": "FRAME",
+      "name": "form-section",
+      "x": 16,
+      "y": 140,
+      "width": 358,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_6",
+          "type": "INSTANCE",
+          "name": "DisplayName",
+          "x": 16,
+          "y": 140,
+          "width": 358,
+          "height": 40,
+          "component": "Input",
+          "style": {
+            "fill": "#FFFFFF",
+            "stroke": "#E0E6EE",
+            "text": "#1F2430",
+            "radius": 8,
+            "paddingX": 14,
+            "paddingY": 9,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "variant": "default",
+            "tone": "default",
+            "size": "md",
+            "state": "default"
+          },
+          "variables": {
+            "field.background": "Semantic/surface/default",
+            "field.border": "Semantic/border/default",
+            "value.color": "Semantic/text/primary",
+            "placeholder.color": "Semantic/text/muted"
+          }
+        },
+        {
+          "id": "layout_7",
+          "type": "INSTANCE",
+          "name": "Timezone",
+          "x": 16,
+          "y": 140,
+          "width": 358,
+          "height": 40,
+          "component": "Input",
+          "style": {
+            "fill": "#FFFFFF",
+            "stroke": "#E0E6EE",
+            "text": "#1F2430",
+            "radius": 8,
+            "paddingX": 14,
+            "paddingY": 9,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "variant": "default",
+            "tone": "default",
+            "size": "md",
+            "state": "default"
+          },
+          "variables": {
+            "field.background": "Semantic/surface/default",
+            "field.border": "Semantic/border/default",
+            "value.color": "Semantic/text/primary",
+            "placeholder.color": "Semantic/text/muted"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_6",
+      "type": "INSTANCE",
+      "name": "DisplayName",
+      "x": 16,
+      "y": 140,
+      "width": 358,
+      "height": 40,
+      "component": "Input",
+      "style": {
+        "fill": "#FFFFFF",
+        "stroke": "#E0E6EE",
+        "text": "#1F2430",
+        "radius": 8,
+        "paddingX": 14,
+        "paddingY": 9,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "variant": "default",
+        "tone": "default",
+        "size": "md",
+        "state": "default"
+      },
+      "variables": {
+        "field.background": "Semantic/surface/default",
+        "field.border": "Semantic/border/default",
+        "value.color": "Semantic/text/primary",
+        "placeholder.color": "Semantic/text/muted"
+      }
+    },
+    {
+      "id": "layout_7",
+      "type": "INSTANCE",
+      "name": "Timezone",
+      "x": 16,
+      "y": 140,
+      "width": 358,
+      "height": 40,
+      "component": "Input",
+      "style": {
+        "fill": "#FFFFFF",
+        "stroke": "#E0E6EE",
+        "text": "#1F2430",
+        "radius": 8,
+        "paddingX": 14,
+        "paddingY": 9,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "variant": "default",
+        "tone": "default",
+        "size": "md",
+        "state": "default"
+      },
+      "variables": {
+        "field.background": "Semantic/surface/default",
+        "field.border": "Semantic/border/default",
+        "value.color": "Semantic/text/primary",
+        "placeholder.color": "Semantic/text/muted"
+      }
+    },
+    {
+      "id": "layout_8",
+      "type": "FRAME",
+      "name": "action-section",
+      "x": 16,
+      "y": 268,
+      "width": 358,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_9",
+          "type": "INSTANCE",
+          "name": "Save changes",
+          "x": 16,
+          "y": 268,
+          "width": 358,
+          "height": 40,
+          "component": "Button",
+          "style": {
+            "fill": "#12141A",
+            "stroke": "#12141A",
+            "text": "#FFFFFF",
+            "radius": 8,
+            "paddingX": 16,
+            "paddingY": 10,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "medium",
+            "minWidth": 80
+          },
+          "variant": {
+            "variant": "primary",
+            "tone": "default",
+            "size": "md",
+            "state": "default"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Save changes"
+        },
+        {
+          "id": "layout_10",
+          "type": "INSTANCE",
+          "name": "Cancel",
+          "x": 16,
+          "y": 268,
+          "width": 88,
+          "height": 40,
+          "component": "Button",
+          "style": {
+            "fill": "#FFFFFF",
+            "stroke": "#E0E6EE",
+            "text": "#1F2430",
+            "radius": 8,
+            "paddingX": 16,
+            "paddingY": 10,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "medium",
+            "minWidth": 80
+          },
+          "variant": {
+            "variant": "neutral",
+            "tone": "default",
+            "size": "md",
+            "state": "default"
+          },
+          "variables": {
+            "container.background": "Semantic/action/secondary",
+            "container.border": "Semantic/border/default",
+            "label.color": "Semantic/text/primary"
+          },
+          "text": "Cancel"
+        }
+      ]
+    },
+    {
+      "id": "layout_9",
+      "type": "INSTANCE",
+      "name": "Save changes",
+      "x": 16,
+      "y": 268,
+      "width": 358,
+      "height": 40,
+      "component": "Button",
+      "style": {
+        "fill": "#12141A",
+        "stroke": "#12141A",
+        "text": "#FFFFFF",
+        "radius": 8,
+        "paddingX": 16,
+        "paddingY": 10,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "medium",
+        "minWidth": 80
+      },
+      "variant": {
+        "variant": "primary",
+        "tone": "default",
+        "size": "md",
+        "state": "default"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Save changes"
+    },
+    {
+      "id": "layout_10",
+      "type": "INSTANCE",
+      "name": "Cancel",
+      "x": 16,
+      "y": 268,
+      "width": 88,
+      "height": 40,
+      "component": "Button",
+      "style": {
+        "fill": "#FFFFFF",
+        "stroke": "#E0E6EE",
+        "text": "#1F2430",
+        "radius": 8,
+        "paddingX": 16,
+        "paddingY": 10,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "medium",
+        "minWidth": 80
+      },
+      "variant": {
+        "variant": "neutral",
+        "tone": "default",
+        "size": "md",
+        "state": "default"
+      },
+      "variables": {
+        "container.background": "Semantic/action/secondary",
+        "container.border": "Semantic/border/default",
+        "label.color": "Semantic/text/primary"
+      },
+      "text": "Cancel"
+    }
+  ],
+  "frames": [
+    {
+      "id": "layout_1",
+      "name": "Settings Screen"
+    },
+    {
+      "id": "layout_2",
+      "name": "header-section"
+    },
+    {
+      "id": "layout_5",
+      "name": "form-section"
+    },
+    {
+      "id": "layout_8",
+      "name": "action-section"
+    }
+  ],
+  "components": [
+    {
+      "id": "layout_6",
+      "name": "DisplayName",
+      "component": "Input",
+      "variant": {
+        "variant": "default",
+        "tone": "default",
+        "size": "md",
+        "state": "default"
+      }
+    },
+    {
+      "id": "layout_7",
+      "name": "Timezone",
+      "component": "Input",
+      "variant": {
+        "variant": "default",
+        "tone": "default",
+        "size": "md",
+        "state": "default"
+      }
+    },
+    {
+      "id": "layout_9",
+      "name": "Save changes",
+      "component": "Button",
+      "variant": {
+        "variant": "primary",
+        "tone": "default",
+        "size": "md",
+        "state": "default"
+      }
+    },
+    {
+      "id": "layout_10",
+      "name": "Cancel",
+      "component": "Button",
+      "variant": {
+        "variant": "neutral",
+        "tone": "default",
+        "size": "md",
+        "state": "default"
+      }
+    }
+  ],
+  "variables": {
+    "layout_3.text.color": "semantic.text.primary",
+    "layout_4.text.color": "semantic.text.secondary",
+    "layout_6.field.background": "Semantic/surface/default",
+    "layout_6.field.border": "Semantic/border/default",
+    "layout_6.value.color": "Semantic/text/primary",
+    "layout_6.placeholder.color": "Semantic/text/muted",
+    "layout_7.field.background": "Semantic/surface/default",
+    "layout_7.field.border": "Semantic/border/default",
+    "layout_7.value.color": "Semantic/text/primary",
+    "layout_7.placeholder.color": "Semantic/text/muted",
+    "layout_9.container.background": "Semantic/action/primary",
+    "layout_9.container.border": "Semantic/action/primary",
+    "layout_9.label.color": "Semantic/action/onPrimary",
+    "layout_10.container.background": "Semantic/action/secondary",
+    "layout_10.container.border": "Semantic/border/default",
+    "layout_10.label.color": "Semantic/text/primary"
+  },
+  "styles": {
+    "layout_3.text": "text/heading/xl",
+    "layout_3.fill": "#1F2430",
+    "layout_4.text": "text/body/lg",
+    "layout_4.fill": "#5F6A7B",
+    "layout_6.fill": "#FFFFFF",
+    "layout_6.stroke": "#E0E6EE",
+    "layout_6.text": "#1F2430",
+    "layout_6.effect": "undefined",
+    "layout_6.radius": "8",
+    "layout_6.paddingX": "14",
+    "layout_6.paddingY": "9",
+    "layout_6.fontSize": "15",
+    "layout_6.lineHeight": "22",
+    "layout_6.fontWeight": "regular",
+    "layout_6.minWidth": "undefined",
+    "layout_7.fill": "#FFFFFF",
+    "layout_7.stroke": "#E0E6EE",
+    "layout_7.text": "#1F2430",
+    "layout_7.effect": "undefined",
+    "layout_7.radius": "8",
+    "layout_7.paddingX": "14",
+    "layout_7.paddingY": "9",
+    "layout_7.fontSize": "15",
+    "layout_7.lineHeight": "22",
+    "layout_7.fontWeight": "regular",
+    "layout_7.minWidth": "undefined",
+    "layout_9.fill": "#12141A",
+    "layout_9.stroke": "#12141A",
+    "layout_9.text": "#FFFFFF",
+    "layout_9.effect": "undefined",
+    "layout_9.radius": "8",
+    "layout_9.paddingX": "16",
+    "layout_9.paddingY": "10",
+    "layout_9.fontSize": "14",
+    "layout_9.lineHeight": "20",
+    "layout_9.fontWeight": "medium",
+    "layout_9.minWidth": "80",
+    "layout_10.fill": "#FFFFFF",
+    "layout_10.stroke": "#E0E6EE",
+    "layout_10.text": "#1F2430",
+    "layout_10.effect": "undefined",
+    "layout_10.radius": "8",
+    "layout_10.paddingX": "16",
+    "layout_10.paddingY": "10",
+    "layout_10.fontSize": "14",
+    "layout_10.lineHeight": "20",
+    "layout_10.fontWeight": "medium",
+    "layout_10.minWidth": "80"
+  },
+  "modes": {
+    "brand": "core",
+    "theme": "core"
+  },
+  "metadata": {
+    "source": "miterlab-figma-generator",
+    "version": "0.1.0",
+    "generatedAt": "2026-03-16T08:06:11.314Z"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "family": "Button",
+  "beforeFixMismatchCount": 2,
+  "afterFixMismatchCount": 0,
+  "rows": [
+    {
+      "family": "Button",
+      "officialSpecField": "color, fill, size, shape, block, loading, loadingText, disabled, type",
+      "currentImplementationLocation": "packages/ui-core/src/registry.ts",
+      "mismatchType": "flattened",
+      "requiredFix": "Replace custom variant-based registry metadata with official Button prop metadata.",
+      "status": "resolved"
+    },
+    {
+      "family": "Button",
+      "officialSpecField": "Button inspection must use official Button props only",
+      "currentImplementationLocation": "packages/figma-generator/src/examples/buttonFamily/createButtonInspectionPrompt.ts",
+      "mismatchType": "renamed",
+      "requiredFix": "Remove icon-button/text-button inspection path and emit official Button prop cases only.",
+      "status": "resolved"
+    }
+  ]
+}

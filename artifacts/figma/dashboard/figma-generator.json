@@ -1,0 +1,343 @@
+{
+  "nodes": [
+    {
+      "id": "layout_28",
+      "type": "FRAME",
+      "name": "Dashboard Screen",
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 884,
+      "children": [
+        {
+          "id": "layout_29",
+          "type": "FRAME",
+          "name": "header-section",
+          "x": 16,
+          "y": 40,
+          "width": 358,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_30",
+              "type": "TEXT",
+              "name": "Text 1",
+              "x": 16,
+              "y": 40,
+              "width": 358,
+              "height": 32,
+              "text": "대시보드",
+              "variables": {
+                "text.color": "semantic.text.primary"
+              },
+              "style": {
+                "text": "text/heading/xl",
+                "fill": "#1F2430"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_31",
+          "type": "FRAME",
+          "name": "filter-section",
+          "x": 16,
+          "y": 116,
+          "width": 358,
+          "height": 100,
+          "children": []
+        },
+        {
+          "id": "layout_32",
+          "type": "FRAME",
+          "name": "action-section",
+          "x": 16,
+          "y": 192,
+          "width": 358,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_33",
+              "type": "INSTANCE",
+              "name": "생성",
+              "x": 16,
+              "y": 192,
+              "width": 358,
+              "height": 40,
+              "component": "Button",
+              "style": {
+                "fill": "#2E6CFF",
+                "stroke": "#2E6CFF",
+                "text": "#FFFFFF",
+                "radius": 10,
+                "paddingX": 20,
+                "paddingY": 9,
+                "gap": 5,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "medium",
+                "minWidth": 72
+              },
+              "variant": {
+                "variant": "solid-primary",
+                "tone": "default",
+                "size": "md",
+                "state": "default"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "생성"
+            }
+          ]
+        },
+        {
+          "id": "layout_34",
+          "type": "FRAME",
+          "name": "content-section",
+          "x": 16,
+          "y": 268,
+          "width": 358,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_35",
+              "type": "TEXT",
+              "name": "Text 2",
+              "x": 16,
+              "y": 268,
+              "width": 358,
+              "height": 24,
+              "text": "버튼 중심 페이지 초안",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/lg",
+                "fill": "#5F6A7B"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_29",
+      "type": "FRAME",
+      "name": "header-section",
+      "x": 16,
+      "y": 40,
+      "width": 358,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_30",
+          "type": "TEXT",
+          "name": "Text 1",
+          "x": 16,
+          "y": 40,
+          "width": 358,
+          "height": 32,
+          "text": "대시보드",
+          "variables": {
+            "text.color": "semantic.text.primary"
+          },
+          "style": {
+            "text": "text/heading/xl",
+            "fill": "#1F2430"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_30",
+      "type": "TEXT",
+      "name": "Text 1",
+      "x": 16,
+      "y": 40,
+      "width": 358,
+      "height": 32,
+      "text": "대시보드",
+      "variables": {
+        "text.color": "semantic.text.primary"
+      },
+      "style": {
+        "text": "text/heading/xl",
+        "fill": "#1F2430"
+      }
+    },
+    {
+      "id": "layout_31",
+      "type": "FRAME",
+      "name": "filter-section",
+      "x": 16,
+      "y": 116,
+      "width": 358,
+      "height": 100,
+      "children": []
+    },
+    {
+      "id": "layout_32",
+      "type": "FRAME",
+      "name": "action-section",
+      "x": 16,
+      "y": 192,
+      "width": 358,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_33",
+          "type": "INSTANCE",
+          "name": "생성",
+          "x": 16,
+          "y": 192,
+          "width": 358,
+          "height": 40,
+          "component": "Button",
+          "style": {
+            "fill": "#2E6CFF",
+            "stroke": "#2E6CFF",
+            "text": "#FFFFFF",
+            "radius": 10,
+            "paddingX": 20,
+            "paddingY": 9,
+            "gap": 5,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "medium",
+            "minWidth": 72
+          },
+          "variant": {
+            "variant": "solid-primary",
+            "tone": "default",
+            "size": "md",
+            "state": "default"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "생성"
+        }
+      ]
+    },
+    {
+      "id": "layout_33",
+      "type": "INSTANCE",
+      "name": "생성",
+      "x": 16,
+      "y": 192,
+      "width": 358,
+      "height": 40,
+      "component": "Button",
+      "style": {
+        "fill": "#2E6CFF",
+        "stroke": "#2E6CFF",
+        "text": "#FFFFFF",
+        "radius": 10,
+        "paddingX": 20,
+        "paddingY": 9,
+        "gap": 5,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "medium",
+        "minWidth": 72
+      },
+      "variant": {
+        "variant": "solid-primary",
+        "tone": "default",
+        "size": "md",
+        "state": "default"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "생성"
+    },
+    {
+      "id": "layout_34",
+      "type": "FRAME",
+      "name": "content-section",
+      "x": 16,
+      "y": 268,
+      "width": 358,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_35",
+          "type": "TEXT",
+          "name": "Text 2",
+          "x": 16,
+          "y": 268,
+          "width": 358,
+          "height": 24,
+          "text": "버튼 중심 페이지 초안",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/lg",
+            "fill": "#5F6A7B"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_35",
+      "type": "TEXT",
+      "name": "Text 2",
+      "x": 16,
+      "y": 268,
+      "width": 358,
+      "height": 24,
+      "text": "버튼 중심 페이지 초안",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/lg",
+        "fill": "#5F6A7B"
+      }
+    }
+  ],
+  "styles": {
+    "layout_30.text": "text/heading/xl",
+    "layout_30.fill": "#1F2430",
+    "layout_33.fill": "#2E6CFF",
+    "layout_33.stroke": "#2E6CFF",
+    "layout_33.text": "#FFFFFF",
+    "layout_33.effect": "undefined",
+    "layout_33.radius": "10",
+    "layout_33.paddingX": "20",
+    "layout_33.paddingY": "9",
+    "layout_33.gap": "5",
+    "layout_33.fontSize": "14",
+    "layout_33.lineHeight": "20",
+    "layout_33.fontWeight": "medium",
+    "layout_33.minWidth": "72",
+    "layout_35.text": "text/body/lg",
+    "layout_35.fill": "#5F6A7B"
+  },
+  "variables": {
+    "layout_30.text.color": "semantic.text.primary",
+    "layout_33.container.background": "Semantic/action/primary",
+    "layout_33.container.border": "Semantic/action/primary",
+    "layout_33.label.color": "Semantic/action/onPrimary",
+    "layout_35.text.color": "semantic.text.secondary"
+  },
+  "components": {
+    "layout_33": {
+      "variants": {
+        "variant": "solid-primary",
+        "tone": "default",
+        "size": "md",
+        "state": "default"
+      }
+    }
+  }
+}

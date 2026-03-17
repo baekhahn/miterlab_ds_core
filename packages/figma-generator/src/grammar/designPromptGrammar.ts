@@ -1,0 +1,312 @@
+export type ScreenType =
+  | "core-families"
+  | "button-inspection"
+  | "input-inspection"
+  | "tabs-inspection"
+  | "list-cell-inspection"
+  | "overlay-inspection"
+  | "navigation-inspection"
+  | "form-inspection"
+  | "catalog"
+  | "playground"
+  | "login"
+  | "settings"
+  | "list"
+  | "dashboard"
+  | "detail"
+  | "filter-panel"
+  | "empty-state"
+  | "modal-form";
+
+export type LayoutDensity = "comfortable" | "compact";
+export type ScreenState = "empty" | "loading" | "filled" | "error";
+export type DataComplexity = "low" | "medium" | "high";
+
+export type SectionKey =
+  | "header"
+  | "filter"
+  | "content"
+  | "form"
+  | "list"
+  | "detail"
+  | "action"
+  | "footer"
+  | "empty"
+  | "modal";
+
+export type ComponentIntent =
+  | "title"
+  | "subtitle"
+  | "helper-text"
+  | "email-input"
+  | "password-input"
+  | "text-input"
+  | "primary-action"
+  | "secondary-action"
+  | "filter-action"
+  | "status-text";
+
+export type DesignPromptComponentType = "text" | "input" | "button" | "filter-button";
+export type ExtendedDesignPromptComponentType =
+  | DesignPromptComponentType
+  | "textarea"
+  | "select"
+  | "check-mark"
+  | "checkbox"
+  | "radio"
+  | "switch"
+  | "tabs"
+  | "tab"
+  | "modal"
+  | "dialog"
+  | "snackbar"
+  | "menu"
+  | "popup"
+  | "bottom-sheet"
+  | "tag"
+  | "badge"
+  | "chip"
+  | "icon-button"
+  | "text-button"
+  | "action-area"
+  | "pagination"
+  | "pagination-dots"
+  | "page-counter"
+  | "list"
+  | "cell"
+  | "nav-bar"
+  | "tab-bar"
+  | "form"
+  | "table"
+  | "list-cell"
+  | "list-row"
+  | "list-card"
+  | "empty-state"
+  | "fallback-view"
+  | "toast"
+  | "alert"
+  | "section-message"
+  | "push-badge"
+  | "form-field"
+  | "label"
+  | "divider"
+  | "card"
+  | "container"
+  | "toolbar"
+  | "section-header"
+  | "thumbnail"
+  | "avatar"
+  | "avatar-group"
+  | "content-badge"
+  | "play-badge"
+  | "accordion"
+  | "segmented-control"
+  | "skeleton"
+  | "spinner"
+  | "loading"
+  | "progress"
+  | "progress-indicator"
+  | "progress-tracker"
+  | "sheet"
+  | "table-row"
+  | "metadata-row"
+  | "popover"
+  | "tooltip"
+  | "panel"
+  | "top-navigation"
+  | "bottom-navigation"
+  | "category"
+  | "autocomplete"
+  | "text-field"
+  | "text-area"
+  | "search-field"
+  | "slider"
+  | "date-picker"
+  | "time-picker"
+  | "framed-style";
+
+export interface GrammarComponent {
+  type?: ExtendedDesignPromptComponentType | string;
+  component?: ExtendedDesignPromptComponentType;
+  name?: string;
+  label?: string;
+  value?: string;
+  defaultValue?: string;
+  placeholder?: string;
+  role?: string;
+  header?: string;
+  mode?: "default" | "card";
+  layout?: "vertical" | "horizontal";
+  intent?: ComponentIntent;
+  section?: SectionKey;
+  variant?: string;
+  color?: "default" | "primary" | "success" | "warning" | "danger";
+  fill?: "solid" | "outline" | "none";
+  shape?: "default" | "rounded" | "rectangular";
+  block?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  clearable?: boolean;
+  tone?: "default" | "success" | "warning" | "danger" | "info";
+  size?: "mini" | "small" | "middle" | "large" | "sm" | "md" | "lg";
+  state?: "default" | "hover" | "pressed" | "disabled" | "focus" | "error" | "positive" | "readOnly" | "selected" | "active" | "open" | "closing" | "loading";
+  selected?: boolean;
+  iconOnly?: boolean;
+  fullWidth?: boolean;
+  loading?: boolean | "auto";
+  loadingText?: string;
+  loadingIcon?: string;
+  iconPosition?: "left" | "right";
+  onClick?: string;
+  children?: string;
+  title?: string;
+  description?: string;
+  prefix?: string;
+  extra?: string;
+  help?: string;
+  footer?: string;
+  left?: string;
+  right?: string;
+  back?: string;
+  clickable?: boolean;
+  arrowIcon?: boolean | string;
+  arrow?: boolean | string;
+  onMouseDown?: string;
+  onMouseUp?: string;
+  onTouchStart?: string;
+  onTouchEnd?: string;
+  id?: string;
+  form?: string;
+  "--text-color"?: string;
+  "--background-color"?: string;
+  "--border-radius"?: string;
+  "--border-width"?: string;
+  "--border-style"?: string;
+  "--border-color"?: string;
+  maxLength?: number;
+  minLength?: number;
+  autoComplete?: string;
+  autoFocus?: boolean;
+  pattern?: string;
+  inputMode?: string;
+  onFocus?: string;
+  onBlur?: string;
+  onPaste?: string;
+  autoCapitalize?: string;
+  autoCorrect?: string;
+  onKeyDown?: string;
+  onKeyUp?: string;
+  onCompositionStart?: string;
+  onCompositionEnd?: string;
+  step?: number;
+  enterKeyHint?: string;
+  onChange?: string;
+  clearIcon?: string;
+  onlyShowClearWhenFocus?: boolean;
+  onClear?: string;
+  onEnterPress?: string;
+  min?: number;
+  max?: number;
+  visible?: boolean;
+  image?: string;
+  content?: string;
+  actions?: string;
+  onAction?: string;
+  onClose?: string;
+  closeOnAction?: boolean;
+  closeOnMaskClick?: boolean;
+  position?: "top" | "bottom" | "left" | "right" | "center";
+  closeOnSwipe?: boolean;
+  showCloseButton?: boolean;
+  mask?: boolean;
+  icon?: "success" | "fail" | "loading" | string;
+  duration?: number;
+  maskClickable?: boolean;
+  backIcon?: boolean | string;
+  backArrow?: boolean | string;
+  onBack?: string;
+  activeKey?: string;
+  defaultActiveKey?: string;
+  safeArea?: boolean;
+  badge?: string;
+  required?: boolean;
+  hidden?: boolean;
+  childElementPosition?: "normal" | "right";
+  hasFeedback?: boolean;
+  noStyle?: boolean;
+  activeLineMode?: "auto" | "full" | "fixed";
+  stretch?: boolean;
+  direction?: "ltr" | "rtl";
+  autoScroll?: boolean;
+  forceRender?: boolean;
+  destroyOnClose?: boolean;
+  "--fixed-active-line-width"?: string;
+  "--active-line-height"?: string;
+  "--active-line-border-radius"?: string;
+  "--title-font-size"?: string;
+  "--content-padding"?: string;
+  "--active-title-color"?: string;
+  "--active-line-color"?: string;
+  "--active-background-color"?: string;
+  "--align-items"?: string;
+  "--border-bottom"?: string;
+  "--border-inner"?: string;
+  "--border-top"?: string;
+  "--extra-max-width"?: string;
+  "--font-size"?: string;
+  "--header-font-size"?: string;
+  "--padding-left"?: string;
+  "--padding-right"?: string;
+  "--prefix-padding-right"?: string;
+  "--prefix-width"?: string;
+  "--height"?: string;
+  "--z-index"?: string;
+  "--max-width"?: string;
+  "--min-width"?: string;
+}
+
+export const resolveComponentType = (component: GrammarComponent): ExtendedDesignPromptComponentType => {
+  const resolved = component.component ?? component.type;
+  if (!resolved) {
+    throw new Error("component type is required");
+  }
+  return resolved as ExtendedDesignPromptComponentType;
+};
+
+export interface GrammarDesignPrompt {
+  screen: ScreenType | string;
+  purpose?: string;
+  theme: string;
+  density?: LayoutDensity;
+  sections?: SectionKey[];
+  primaryAction?: string;
+  secondaryAction?: string;
+  dataComplexity?: DataComplexity;
+  state?: ScreenState;
+  components: GrammarComponent[];
+}
+
+export const normalizePrompt = (prompt: GrammarDesignPrompt): Required<Omit<GrammarDesignPrompt, "sections" | "purpose" | "primaryAction" | "secondaryAction">> & Pick<GrammarDesignPrompt, "sections" | "purpose" | "primaryAction" | "secondaryAction"> => {
+  return {
+    ...prompt,
+    density: prompt.density ?? "comfortable",
+    state: prompt.state ?? "filled",
+    dataComplexity: prompt.dataComplexity ?? "low",
+    components: prompt.components ?? []
+  };
+};
+
+export const validatePromptGrammar = (prompt: GrammarDesignPrompt): { valid: boolean; errors: string[] } => {
+  const errors: string[] = [];
+
+  if (!prompt.screen) errors.push("screen is required");
+  if (!prompt.theme) errors.push("theme is required");
+  if (!Array.isArray(prompt.components)) errors.push("components must be an array");
+  if ((prompt.components ?? []).length === 0) errors.push("components cannot be empty");
+
+  for (const [idx, component] of (prompt.components ?? []).entries()) {
+    if (!component.component && !component.type) errors.push(`components[${idx}].component or components[${idx}].type is required`);
+  }
+
+  return { valid: errors.length === 0, errors };
+};

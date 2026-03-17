@@ -1,0 +1,47 @@
+{
+  "family": "Form",
+  "beforeFixMismatchCount": 5,
+  "afterFixMismatchCount": 0,
+  "rows": [
+    {
+      "family": "Form",
+      "officialSpecField": "FormProps and FormItemProps",
+      "currentImplementationLocation": "packages/ui-core/src/registry.ts",
+      "mismatchType": "missing",
+      "requiredFix": "Add explicit Form registry entry with official prop metadata.",
+      "status": "resolved"
+    },
+    {
+      "family": "Form",
+      "officialSpecField": "mode, layout, footer, label, help, required, childElementPosition",
+      "currentImplementationLocation": "packages/figma-generator/src/layout/fromDesignPrompt.ts; packages/figma-generator/src/components/mapComponent.ts",
+      "mismatchType": "unsupported",
+      "requiredFix": "Add family-specific mapping for Form and FormItem official props.",
+      "status": "resolved"
+    },
+    {
+      "family": "Form",
+      "officialSpecField": "Form container and FormItem write path",
+      "currentImplementationLocation": "apps/figma-plugin/src/write/createInstanceNode.ts",
+      "mismatchType": "flattened",
+      "requiredFix": "Replace generic surface rendering for FormField with Form and FormItem-specific rendering.",
+      "status": "resolved"
+    },
+    {
+      "family": "Form",
+      "officialSpecField": "form-inspection output",
+      "currentImplementationLocation": "packages/figma-generator/src/examples/prompts",
+      "mismatchType": "missing",
+      "requiredFix": "Add a minimal form inspection prompt and run path.",
+      "status": "resolved"
+    },
+    {
+      "family": "Form",
+      "officialSpecField": "prompt component registration",
+      "currentImplementationLocation": "packages/figma-generator/src/grammar/designPromptGrammar.ts",
+      "mismatchType": "unsupported",
+      "requiredFix": "Add direct prompt component support for form.",
+      "status": "resolved"
+    }
+  ]
+}

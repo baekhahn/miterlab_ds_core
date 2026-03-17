@@ -1,0 +1,21 @@
+:root {
+  --ifm-color-primary: #0f4c81;
+  --ifm-color-primary-dark: #0d4474;
+  --ifm-color-primary-darker: #0c406d;
+  --ifm-color-primary-light: #11548e;
+  --ifm-color-primary-lighter: #125895;
+  --ifm-background-color: #f7f8fa;
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-heading-color: #1f2430;
+  --ifm-font-color-base: #344054;
+  --ifm-code-font-size: 95%;
+}
+
+.table-of-contents {
+  font-size: 0.9rem;
+}
+
+main article table {
+  display: table;
+  width: 100%;
+}

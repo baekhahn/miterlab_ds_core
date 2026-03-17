@@ -1,0 +1,15 @@
+app = "miterlab-figma-bridge"
+primary_region = "nrt"
+
+[build]
+
+[env]
+  PORT = "8080"
+  BRIDGE_DEFAULT_THEME = "core"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0

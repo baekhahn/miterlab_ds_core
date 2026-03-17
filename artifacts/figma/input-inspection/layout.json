@@ -1,0 +1,213 @@
+{
+  "type": "frame",
+  "name": "Input inspection Screen",
+  "width": 1440,
+  "height": 1240,
+  "children": [
+    {
+      "type": "stack",
+      "name": "header-section",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 12,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 1",
+          "content": "Input Inspection",
+          "width": 358,
+          "height": 32,
+          "textStyle": "text/heading/xl",
+          "colorToken": "semantic.text.primary"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "content-section",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 16,
+      "children": []
+    },
+    {
+      "type": "stack",
+      "name": "form-section",
+      "x": 48,
+      "y": 192,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 16,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 2",
+          "content": "Text Values",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
+        },
+        {
+          "type": "stack",
+          "name": "form-row-1",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Placeholder",
+              "component": "input",
+              "props": {
+                "placeholder": "Type here"
+              },
+              "width": 320,
+              "height": 42,
+              "label": "Placeholder"
+            },
+            {
+              "type": "component",
+              "name": "Value",
+              "component": "input",
+              "props": {
+                "value": "Current value"
+              },
+              "width": 320,
+              "height": 42,
+              "label": "Value"
+            },
+            {
+              "type": "component",
+              "name": "Default Value",
+              "component": "input",
+              "props": {
+                "defaultValue": "Seed value"
+              },
+              "width": 320,
+              "height": 42,
+              "label": "Default Value"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "Text 6",
+          "content": "Interaction Props",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
+        },
+        {
+          "type": "stack",
+          "name": "form-row-2",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Disabled",
+              "component": "input",
+              "props": {
+                "placeholder": "Disabled placeholder",
+                "disabled": true
+              },
+              "width": 320,
+              "height": 42,
+              "label": "Disabled"
+            },
+            {
+              "type": "component",
+              "name": "Read Only",
+              "component": "input",
+              "props": {
+                "readOnly": true,
+                "value": "Read only"
+              },
+              "width": 320,
+              "height": 42,
+              "label": "Read Only"
+            },
+            {
+              "type": "component",
+              "name": "Clearable",
+              "component": "input",
+              "props": {
+                "value": "Clear me",
+                "clearable": true
+              },
+              "width": 320,
+              "height": 42,
+              "label": "Clearable"
+            }
+          ]
+        },
+        {
+          "type": "stack",
+          "name": "form-row-3",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Clear On Focus",
+              "component": "input",
+              "props": {
+                "value": "Focus clear",
+                "clearable": true,
+                "onlyShowClearWhenFocus": true
+              },
+              "width": 320,
+              "height": 42,
+              "label": "Clear On Focus"
+            },
+            {
+              "type": "component",
+              "name": "Password",
+              "component": "input",
+              "props": {
+                "type": "password",
+                "value": "secret123"
+              },
+              "width": 320,
+              "height": 42,
+              "label": "Password"
+            },
+            {
+              "type": "component",
+              "name": "Number",
+              "component": "input",
+              "props": {
+                "type": "number",
+                "step": 1,
+                "value": "12",
+                "min": 0,
+                "max": 20
+              },
+              "width": 320,
+              "height": 42,
+              "label": "Number"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "action-section",
+      "x": 48,
+      "y": 456,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 24,
+      "children": []
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+component: Cell
+status: draft
+purpose: freeze Ant Design Mobile ListItem props as the core cell schema
+props:
+  title: reactNode
+  children: reactNode
+  description: reactNode
+  prefix: reactNode
+  extra: reactNode
+  clickable: [false, true]
+  arrowIcon: [false, true, reactNode]
+  disabled: [false, true]
+  onClick: function
+  arrow: [false, true, reactNode]
+  --prefix-width: string
+  --align-items: string
+  --active-background-color: string
+variants:
+  clickable: [false, true]
+  arrowIcon: [false, true, reactNode]
+states:
+  item: [default, disabled, active]
+metrics:
+  contentPaddingY: 12px
+  extraPaddingLeft: 12px
+  arrowMarginLeft: 4px
+  arrowFontSize: 19px
+tokens:
+  cssVars:
+    - --prefix-width
+    - --align-items
+    - --active-background-color
+notes:
+  - source schema is Ant Design Mobile ListItemProps
+  - deprecated field `arrow` is retained because it exists in the official API

@@ -1,0 +1,41 @@
+component: Popup
+status: draft
+purpose: freeze Ant Design Mobile PopupProps as the core popup schema
+props:
+  afterClose: function
+  afterShow: function
+  bodyClassName: string
+  bodyStyle: object
+  closeOnMaskClick: [false, true]
+  closeIcon: reactNode
+  destroyOnClose: [false, true]
+  disableBodyScroll: [false, true]
+  forceRender: [false, true]
+  getContainer: function
+  mask: [false, true]
+  maskClassName: string
+  maskStyle: object
+  onClick: function
+  onClose: function
+  onMaskClick: function
+  showCloseButton: [false, true]
+  stopPropagation: array
+  visible: [false, true]
+  children: reactNode
+  position: [bottom, top, left, right]
+  closeOnSwipe: [false, true]
+  --z-index: string
+variants:
+  position: [bottom, top, left, right]
+  closeOnSwipe: [false, true]
+states:
+  popup: [hidden, visible]
+metrics:
+  closeIconOffset: 8px
+  closeIconPadding: 4px
+  closeIconSize: 18px
+tokens:
+  cssVars:
+    - --z-index
+notes:
+  - source schema is Ant Design Mobile PopupProps

@@ -1,0 +1,20 @@
+export const semanticAction = {
+  primary: "{brand.primary}",
+  primaryHover: "{brand.primaryHover}",
+  primaryPressed: "{brand.primaryPressed}",
+  secondary: "{foundation.color.white}",
+  secondaryHover: "{foundation.color.slate50}",
+  secondaryPressed: "{foundation.color.slate100}",
+  ghost: "{foundation.color.white}",
+  ghostHover: "{foundation.color.slate100}",
+  ghostPressed: "{foundation.color.slate200}",
+  danger: "{foundation.color.red500}",
+  dangerHover: "{foundation.color.red600}",
+  dangerPressed: "{foundation.color.red700}",
+  neutral: "{foundation.color.slate100}",
+  neutralHover: "{foundation.color.slate200}",
+  neutralPressed: "{foundation.color.slate300}",
+  onPrimary: "{foundation.color.white}",
+  onDanger: "{foundation.color.white}",
+  disabled: "{foundation.color.slate200}"
+} as const;

@@ -1,0 +1,23 @@
+{
+  "family": "Input",
+  "beforeFixMismatchCount": 2,
+  "afterFixMismatchCount": 0,
+  "rows": [
+    {
+      "family": "Input",
+      "officialSpecField": "value, defaultValue, placeholder, disabled, readOnly, clearable, onlyShowClearWhenFocus, type, min, max, step",
+      "currentImplementationLocation": "packages/ui-core/src/registry.ts",
+      "mismatchType": "altered",
+      "requiredFix": "Replace custom size/state registry metadata with official Input prop metadata.",
+      "status": "resolved"
+    },
+    {
+      "family": "Input",
+      "officialSpecField": "Input inspection must use official Input props only",
+      "currentImplementationLocation": "packages/figma-generator/src/examples/inputFamily/createInputInspectionPrompt.ts",
+      "mismatchType": "dropped",
+      "requiredFix": "Remove extracted custom fields and build inspection prompt from official Input props only.",
+      "status": "resolved"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "mode": "readOnly",
+  "summary": "MCP server is read-only. Payload generation is complete; execution fallback collected metadata/context only.",
+  "readOnlyToolResult": {
+    "content": [
+      {
+        "type": "text",
+        "text": "<canvas id=\"213:2\" name=\"Page 4\" x=\"0\" y=\"0\" width=\"0\" height=\"0\" />"
+      },
+      {
+        "type": "text",
+        "text": "IMPORTANT: After you call this tool, you MUST call get_design_context if trying to implement the design, since this tool only returns metadata. If you do not call get_design_context, the agent will not be able to implement the design."
+      }
+    ]
+  },
+  "payloadDocument": null
+}

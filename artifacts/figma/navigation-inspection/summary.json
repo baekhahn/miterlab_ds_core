@@ -1,0 +1,29 @@
+{
+  "screen": "navigation-inspection",
+  "theme": "core",
+  "sectionsCreated": [
+    "header",
+    "content",
+    "footer"
+  ],
+  "componentCount": 2,
+  "nodeCount": 10,
+  "warnings": [],
+  "evaluationScore": 100,
+  "passed": true,
+  "payloadValidation": {
+    "valid": true,
+    "errors": [],
+    "warnings": []
+  },
+  "evaluation": {
+    "score": 100,
+    "passed": true,
+    "warnings": [],
+    "errors": [],
+    "improvementSuggestions": [],
+    "affectedNodes": [],
+    "affectedComponents": [],
+    "summary": "QA passed with score 100. 0 warning(s) found."
+  }
+}

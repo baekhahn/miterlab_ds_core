@@ -1,0 +1,11 @@
+{
+  "screen": "login",
+  "theme": "core",
+  "components": [
+    { "type": "text", "role": "title", "label": "Welcome Back" },
+    { "type": "text", "role": "subtitle", "label": "Sign in to continue" },
+    { "type": "input", "name": "email", "size": "md", "state": "default" },
+    { "type": "input", "name": "password", "size": "md", "state": "default" },
+    { "type": "button", "name": "signIn", "variant": "primary", "size": "md", "state": "default", "label": "Sign in" }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "family": "Tabs",
+  "beforeFixMismatchCount": 4,
+  "afterFixMismatchCount": 0,
+  "rows": [
+    {
+      "family": "Tabs",
+      "officialSpecField": "activeKey, defaultActiveKey, activeLineMode, stretch, onChange, direction, autoScroll",
+      "currentImplementationLocation": "packages/ui-core/src/registry.ts",
+      "mismatchType": "flattened",
+      "requiredFix": "Replace custom variant/size/state registry metadata with official Tabs prop metadata.",
+      "status": "resolved"
+    },
+    {
+      "family": "Tabs",
+      "officialSpecField": "activeLineMode, stretch, direction, autoScroll",
+      "currentImplementationLocation": "packages/figma-generator/src/layout/fromDesignPrompt.ts; packages/figma-generator/src/components/mapComponent.ts",
+      "mismatchType": "missing",
+      "requiredFix": "Map official Tabs props into payload instead of custom variant/state fields.",
+      "status": "resolved"
+    },
+    {
+      "family": "Tabs",
+      "officialSpecField": "Tab disabled and active-line behavior",
+      "currentImplementationLocation": "apps/figma-plugin/src/write/createInstanceNode.ts",
+      "mismatchType": "flattened",
+      "requiredFix": "Render Tabs from official props instead of generic tabs/pagination preset.",
+      "status": "resolved"
+    },
+    {
+      "family": "Tabs",
+      "officialSpecField": "tabs-inspection output",
+      "currentImplementationLocation": "packages/figma-generator/src/examples/prompts",
+      "mismatchType": "missing",
+      "requiredFix": "Add a minimal tabs inspection prompt and run path.",
+      "status": "resolved"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+component: Modal
+status: draft
+purpose: focused task or confirmation overlay
+model:
+  axes: [variant, size, state]
+variants: [default]
+sizes: [sm, md, lg]
+sizeDefaults:
+  sm:
+    height: 220
+    paddingX: 16
+    radius: 16
+  md:
+    height: 280
+    paddingX: 20
+    radius: 16
+  lg:
+    height: 360
+    paddingX: 24
+    radius: 16
+internalLayout:
+  headerGap: 12
+  bodyGap: 16
+  footerGap: 20
+  backdropInset: 24
+states: [default, open, closing]
+slots: [backdrop, panel, header, body, footer]
+semanticMapping:
+  default:
+    default:
+      backdrop.background: semantic.background.inverse
+      panel.background: semantic.surface.raised
+      panel.border: semantic.border.subtle
+      header.color: semantic.text.primary
+      body.color: semantic.text.secondary
+      footer.color: semantic.text.primary
+    open:
+      backdrop.background: semantic.background.inverse
+      panel.background: semantic.surface.raised
+      panel.border: semantic.border.subtle
+      header.color: semantic.text.primary
+      body.color: semantic.text.secondary
+      footer.color: semantic.text.primary
+    closing:
+      backdrop.background: semantic.background.inverse
+      panel.background: semantic.surface.raised
+      panel.border: semantic.border.subtle
+      header.color: semantic.text.primary
+      body.color: semantic.text.secondary
+      footer.color: semantic.text.primary
+notes:
+  - core modal uses the same container padding rhythm as card and dialog, with a larger shell

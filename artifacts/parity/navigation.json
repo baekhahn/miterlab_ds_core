@@ -1,0 +1,47 @@
+{
+  "family": "NavBar / TabBar",
+  "beforeFixMismatchCount": 5,
+  "afterFixMismatchCount": 0,
+  "rows": [
+    {
+      "family": "NavBar / TabBar",
+      "officialSpecField": "NavBarProps and TabBarProps",
+      "currentImplementationLocation": "packages/ui-core/src/registry.ts",
+      "mismatchType": "missing",
+      "requiredFix": "Add explicit NavBar and TabBar registry entries with official prop metadata.",
+      "status": "resolved"
+    },
+    {
+      "family": "NavBar / TabBar",
+      "officialSpecField": "back, backIcon, left, right, activeKey, safeArea, item badge",
+      "currentImplementationLocation": "packages/figma-generator/src/layout/fromDesignPrompt.ts; packages/figma-generator/src/components/mapComponent.ts",
+      "mismatchType": "unsupported",
+      "requiredFix": "Add family-specific mapping for NavBar and TabBar official props.",
+      "status": "resolved"
+    },
+    {
+      "family": "NavBar / TabBar",
+      "officialSpecField": "NavBar and TabBar write path",
+      "currentImplementationLocation": "apps/figma-plugin/src/write/createInstanceNode.ts",
+      "mismatchType": "flattened",
+      "requiredFix": "Stop routing navigation families through generic tabs presets and render family-specific layouts.",
+      "status": "resolved"
+    },
+    {
+      "family": "NavBar / TabBar",
+      "officialSpecField": "navigation-inspection output",
+      "currentImplementationLocation": "packages/figma-generator/src/examples/prompts",
+      "mismatchType": "missing",
+      "requiredFix": "Add a minimal navigation inspection prompt and run path.",
+      "status": "resolved"
+    },
+    {
+      "family": "NavBar / TabBar",
+      "officialSpecField": "prompt component registration",
+      "currentImplementationLocation": "packages/figma-generator/src/grammar/designPromptGrammar.ts",
+      "mismatchType": "unsupported",
+      "requiredFix": "Add direct prompt component support for nav-bar and tab-bar types.",
+      "status": "resolved"
+    }
+  ]
+}

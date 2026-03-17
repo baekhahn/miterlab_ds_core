@@ -1,0 +1,39 @@
+{
+  "family": "List / Cell",
+  "beforeFixMismatchCount": 4,
+  "afterFixMismatchCount": 0,
+  "rows": [
+    {
+      "family": "List / Cell",
+      "officialSpecField": "ListProps and ListItemProps",
+      "currentImplementationLocation": "packages/ui-core/src/registry.ts",
+      "mismatchType": "renamed",
+      "requiredFix": "Register List and Cell with official prop metadata and stop relying on ListCell-only custom entry.",
+      "status": "resolved"
+    },
+    {
+      "family": "List / Cell",
+      "officialSpecField": "header, mode, title, description, prefix, extra, clickable, arrowIcon, disabled",
+      "currentImplementationLocation": "packages/figma-generator/src/layout/fromDesignPrompt.ts; packages/figma-generator/src/components/mapComponent.ts",
+      "mismatchType": "unsupported",
+      "requiredFix": "Add family-specific mapping for List and Cell official props.",
+      "status": "resolved"
+    },
+    {
+      "family": "List / Cell",
+      "officialSpecField": "List and Cell visual slots",
+      "currentImplementationLocation": "apps/figma-plugin/src/write/createInstanceNode.ts",
+      "mismatchType": "flattened",
+      "requiredFix": "Replace generic surface rendering with List and Cell-specific write logic.",
+      "status": "resolved"
+    },
+    {
+      "family": "List / Cell",
+      "officialSpecField": "list-cell-inspection output",
+      "currentImplementationLocation": "packages/figma-generator/src/examples/prompts",
+      "mismatchType": "missing",
+      "requiredFix": "Add a minimal list/cell inspection prompt and run path.",
+      "status": "resolved"
+    }
+  ]
+}

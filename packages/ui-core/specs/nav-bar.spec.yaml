@@ -1,0 +1,29 @@
+component: NavBar
+status: draft
+purpose: freeze Ant Design Mobile NavBarProps as the core navigation bar schema
+props:
+  back: reactNode
+  backIcon: [false, true, reactNode]
+  backArrow: [false, true, reactNode]
+  left: reactNode
+  right: reactNode
+  onBack: function
+  children: reactNode
+  --height: string
+  --border-bottom: string
+variants:
+  backIcon: [false, true, reactNode]
+states: []
+metrics:
+  height: 45px
+  paddingX: 12px
+  backMarginRight: 16px
+  backPaddingY: 6px
+  backArrowSize: 24px
+tokens:
+  cssVars:
+    - --height
+    - --border-bottom
+notes:
+  - source schema is Ant Design Mobile NavBarProps
+  - deprecated field `backArrow` is retained because it exists in the official API

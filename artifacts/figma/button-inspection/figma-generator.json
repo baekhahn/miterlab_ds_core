@@ -1,0 +1,2509 @@
+{
+  "nodes": [
+    {
+      "id": "layout_1",
+      "type": "FRAME",
+      "name": "Button inspection Screen",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 1240,
+      "children": [
+        {
+          "id": "layout_2",
+          "type": "FRAME",
+          "name": "header-section",
+          "x": 48,
+          "y": 40,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_3",
+              "type": "TEXT",
+              "name": "Text 1",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 32,
+              "text": "Button Inspection",
+              "variables": {
+                "text.color": "semantic.text.primary"
+              },
+              "style": {
+                "text": "text/heading/xl",
+                "fill": "#1F2430"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_4",
+          "type": "FRAME",
+          "name": "content-section",
+          "x": 48,
+          "y": 116,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_5",
+              "type": "TEXT",
+              "name": "Text 2",
+              "x": 48,
+              "y": 116,
+              "width": 358,
+              "height": 24,
+              "text": "Sizes",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/lg",
+                "fill": "#5F6A7B"
+              }
+            },
+            {
+              "id": "layout_6",
+              "type": "FRAME",
+              "name": "content-row-1",
+              "x": 48,
+              "y": 116,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_7",
+                  "type": "INSTANCE",
+                  "name": "Mini",
+                  "x": 48,
+                  "y": 116,
+                  "width": 92,
+                  "height": 28,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#2E6CFF",
+                    "stroke": "#2E6CFF",
+                    "text": "#FFFFFF",
+                    "radius": 8,
+                    "paddingX": 10,
+                    "paddingY": 5,
+                    "gap": 4,
+                    "fontSize": 13,
+                    "lineHeight": 18,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "primary",
+                    "fill": "solid",
+                    "size": "mini"
+                  },
+                  "variables": {
+                    "container.background": "Semantic/action/primary",
+                    "container.border": "Semantic/action/primary",
+                    "label.color": "Semantic/action/onPrimary"
+                  },
+                  "text": "Mini"
+                },
+                {
+                  "id": "layout_8",
+                  "type": "INSTANCE",
+                  "name": "Small",
+                  "x": 48,
+                  "y": 116,
+                  "width": 108,
+                  "height": 32,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#2E6CFF",
+                    "stroke": "#2E6CFF",
+                    "text": "#FFFFFF",
+                    "radius": 10,
+                    "paddingX": 12,
+                    "paddingY": 7,
+                    "gap": 4,
+                    "fontSize": 13,
+                    "lineHeight": 18,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "primary",
+                    "fill": "solid",
+                    "size": "small"
+                  },
+                  "variables": {
+                    "container.background": "Semantic/action/primary",
+                    "container.border": "Semantic/action/primary",
+                    "label.color": "Semantic/action/onPrimary"
+                  },
+                  "text": "Small"
+                },
+                {
+                  "id": "layout_9",
+                  "type": "INSTANCE",
+                  "name": "Middle",
+                  "x": 48,
+                  "y": 116,
+                  "width": 128,
+                  "height": 36,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#2E6CFF",
+                    "stroke": "#2E6CFF",
+                    "text": "#FFFFFF",
+                    "radius": 12,
+                    "paddingX": 16,
+                    "paddingY": 8,
+                    "gap": 6,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "primary",
+                    "fill": "solid",
+                    "size": "middle"
+                  },
+                  "variables": {
+                    "container.background": "Semantic/action/primary",
+                    "container.border": "Semantic/action/primary",
+                    "label.color": "Semantic/action/onPrimary"
+                  },
+                  "text": "Middle"
+                },
+                {
+                  "id": "layout_10",
+                  "type": "INSTANCE",
+                  "name": "Large",
+                  "x": 48,
+                  "y": 116,
+                  "width": 156,
+                  "height": 44,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#2E6CFF",
+                    "stroke": "#2E6CFF",
+                    "text": "#FFFFFF",
+                    "radius": 14,
+                    "paddingX": 20,
+                    "paddingY": 10,
+                    "gap": 6,
+                    "fontSize": 17,
+                    "lineHeight": 24,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "primary",
+                    "fill": "solid",
+                    "size": "large"
+                  },
+                  "variables": {
+                    "container.background": "Semantic/action/primary",
+                    "container.border": "Semantic/action/primary",
+                    "label.color": "Semantic/action/onPrimary"
+                  },
+                  "text": "Large"
+                }
+              ]
+            },
+            {
+              "id": "layout_11",
+              "type": "TEXT",
+              "name": "Text 7",
+              "x": 48,
+              "y": 116,
+              "width": 358,
+              "height": 24,
+              "text": "Color and Fill",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/lg",
+                "fill": "#5F6A7B"
+              }
+            },
+            {
+              "id": "layout_12",
+              "type": "FRAME",
+              "name": "content-row-2",
+              "x": 48,
+              "y": 116,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_13",
+                  "type": "INSTANCE",
+                  "name": "Primary Solid",
+                  "x": 48,
+                  "y": 116,
+                  "width": 128,
+                  "height": 36,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#2E6CFF",
+                    "stroke": "#2E6CFF",
+                    "text": "#FFFFFF",
+                    "radius": 12,
+                    "paddingX": 16,
+                    "paddingY": 8,
+                    "gap": 6,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "primary",
+                    "fill": "solid",
+                    "size": "middle"
+                  },
+                  "variables": {
+                    "container.background": "Semantic/action/primary",
+                    "container.border": "Semantic/action/primary",
+                    "label.color": "Semantic/action/onPrimary"
+                  },
+                  "text": "Primary Solid"
+                },
+                {
+                  "id": "layout_14",
+                  "type": "INSTANCE",
+                  "name": "Default Outline",
+                  "x": 48,
+                  "y": 116,
+                  "width": 128,
+                  "height": 36,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#FFFFFF",
+                    "stroke": "#E0E6EE",
+                    "text": "#1F2430",
+                    "radius": 12,
+                    "paddingX": 16,
+                    "paddingY": 8,
+                    "gap": 6,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "default",
+                    "fill": "outline",
+                    "size": "middle"
+                  },
+                  "variables": {
+                    "container.background": "Semantic/surface/default",
+                    "container.border": "Semantic/border/default",
+                    "label.color": "Semantic/text/primary"
+                  },
+                  "text": "Default Outline"
+                },
+                {
+                  "id": "layout_15",
+                  "type": "INSTANCE",
+                  "name": "Danger None",
+                  "x": 48,
+                  "y": 116,
+                  "width": 128,
+                  "height": 36,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#FFFFFF",
+                    "stroke": "#FFFFFF",
+                    "text": "#D34B4B",
+                    "radius": 12,
+                    "paddingX": 16,
+                    "paddingY": 8,
+                    "gap": 6,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "danger",
+                    "fill": "none",
+                    "size": "middle"
+                  },
+                  "variables": {
+                    "container.background": "Semantic/surface/default",
+                    "container.border": "Semantic/surface/default",
+                    "label.color": "Semantic/status/critical"
+                  },
+                  "text": "Danger None"
+                }
+              ]
+            },
+            {
+              "id": "layout_16",
+              "type": "TEXT",
+              "name": "Text 11",
+              "x": 48,
+              "y": 116,
+              "width": 358,
+              "height": 24,
+              "text": "Shape and States",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/lg",
+                "fill": "#5F6A7B"
+              }
+            },
+            {
+              "id": "layout_17",
+              "type": "FRAME",
+              "name": "content-row-3",
+              "x": 48,
+              "y": 116,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_18",
+                  "type": "INSTANCE",
+                  "name": "Default",
+                  "x": 48,
+                  "y": 116,
+                  "width": 128,
+                  "height": 36,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#2E6CFF",
+                    "stroke": "#2E6CFF",
+                    "text": "#FFFFFF",
+                    "radius": 12,
+                    "paddingX": 16,
+                    "paddingY": 8,
+                    "gap": 6,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "primary",
+                    "fill": "solid",
+                    "shape": "default",
+                    "size": "middle"
+                  },
+                  "variables": {
+                    "container.background": "Semantic/action/primary",
+                    "container.border": "Semantic/action/primary",
+                    "label.color": "Semantic/action/onPrimary"
+                  },
+                  "text": "Default"
+                },
+                {
+                  "id": "layout_19",
+                  "type": "INSTANCE",
+                  "name": "Rounded",
+                  "x": 48,
+                  "y": 116,
+                  "width": 128,
+                  "height": 36,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#2E6CFF",
+                    "stroke": "#2E6CFF",
+                    "text": "#FFFFFF",
+                    "radius": 999,
+                    "paddingX": 16,
+                    "paddingY": 8,
+                    "gap": 6,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "primary",
+                    "fill": "solid",
+                    "shape": "rounded",
+                    "size": "middle"
+                  },
+                  "variables": {
+                    "container.background": "Semantic/action/primary",
+                    "container.border": "Semantic/action/primary",
+                    "label.color": "Semantic/action/onPrimary"
+                  },
+                  "text": "Rounded"
+                },
+                {
+                  "id": "layout_20",
+                  "type": "INSTANCE",
+                  "name": "Rectangular",
+                  "x": 48,
+                  "y": 116,
+                  "width": 128,
+                  "height": 36,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#2E6CFF",
+                    "stroke": "#2E6CFF",
+                    "text": "#FFFFFF",
+                    "radius": 8,
+                    "paddingX": 16,
+                    "paddingY": 8,
+                    "gap": 6,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "primary",
+                    "fill": "solid",
+                    "shape": "rectangular",
+                    "size": "middle"
+                  },
+                  "variables": {
+                    "container.background": "Semantic/action/primary",
+                    "container.border": "Semantic/action/primary",
+                    "label.color": "Semantic/action/onPrimary"
+                  },
+                  "text": "Rectangular"
+                },
+                {
+                  "id": "layout_21",
+                  "type": "INSTANCE",
+                  "name": "Loading",
+                  "x": 48,
+                  "y": 116,
+                  "width": 128,
+                  "height": 36,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#2458D9",
+                    "stroke": "#2458D9",
+                    "text": "#FFFFFF",
+                    "radius": 12,
+                    "paddingX": 16,
+                    "paddingY": 8,
+                    "gap": 6,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "primary",
+                    "fill": "solid",
+                    "size": "middle",
+                    "loading": true,
+                    "loadingText": "Loading"
+                  },
+                  "variables": {
+                    "container.background": "Semantic/action/primaryHover",
+                    "container.border": "Semantic/action/primaryHover",
+                    "label.color": "Semantic/action/onPrimary"
+                  },
+                  "text": "Loading"
+                },
+                {
+                  "id": "layout_22",
+                  "type": "INSTANCE",
+                  "name": "Disabled",
+                  "x": 48,
+                  "y": 116,
+                  "width": 128,
+                  "height": 36,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#E0E6EE",
+                    "stroke": "#E0E6EE",
+                    "text": "#7E8A9C",
+                    "radius": 12,
+                    "paddingX": 16,
+                    "paddingY": 8,
+                    "gap": 6,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "primary",
+                    "fill": "solid",
+                    "size": "middle",
+                    "disabled": true
+                  },
+                  "variables": {
+                    "container.background": "Semantic/action/disabled",
+                    "container.border": "Semantic/action/disabled",
+                    "label.color": "Semantic/text/muted"
+                  },
+                  "text": "Disabled"
+                },
+                {
+                  "id": "layout_23",
+                  "type": "INSTANCE",
+                  "name": "Block",
+                  "x": 48,
+                  "y": 116,
+                  "width": 358,
+                  "height": 44,
+                  "component": "Button",
+                  "style": {
+                    "fill": "#2E6CFF",
+                    "stroke": "#2E6CFF",
+                    "text": "#FFFFFF",
+                    "radius": 14,
+                    "paddingX": 20,
+                    "paddingY": 10,
+                    "gap": 6,
+                    "fontSize": 17,
+                    "lineHeight": 24,
+                    "fontWeight": "medium",
+                    "minWidth": 64
+                  },
+                  "variant": {
+                    "color": "primary",
+                    "fill": "solid",
+                    "size": "large",
+                    "block": true
+                  },
+                  "variables": {
+                    "container.background": "Semantic/action/primary",
+                    "container.border": "Semantic/action/primary",
+                    "label.color": "Semantic/action/onPrimary"
+                  },
+                  "text": "Block"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layout_24",
+          "type": "FRAME",
+          "name": "form-section",
+          "x": 48,
+          "y": 420,
+          "width": 1320,
+          "height": 100,
+          "children": []
+        },
+        {
+          "id": "layout_25",
+          "type": "FRAME",
+          "name": "action-section",
+          "x": 48,
+          "y": 496,
+          "width": 1320,
+          "height": 100,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "layout_2",
+      "type": "FRAME",
+      "name": "header-section",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_3",
+          "type": "TEXT",
+          "name": "Text 1",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 32,
+          "text": "Button Inspection",
+          "variables": {
+            "text.color": "semantic.text.primary"
+          },
+          "style": {
+            "text": "text/heading/xl",
+            "fill": "#1F2430"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_3",
+      "type": "TEXT",
+      "name": "Text 1",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 32,
+      "text": "Button Inspection",
+      "variables": {
+        "text.color": "semantic.text.primary"
+      },
+      "style": {
+        "text": "text/heading/xl",
+        "fill": "#1F2430"
+      }
+    },
+    {
+      "id": "layout_4",
+      "type": "FRAME",
+      "name": "content-section",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_5",
+          "type": "TEXT",
+          "name": "Text 2",
+          "x": 48,
+          "y": 116,
+          "width": 358,
+          "height": 24,
+          "text": "Sizes",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/lg",
+            "fill": "#5F6A7B"
+          }
+        },
+        {
+          "id": "layout_6",
+          "type": "FRAME",
+          "name": "content-row-1",
+          "x": 48,
+          "y": 116,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_7",
+              "type": "INSTANCE",
+              "name": "Mini",
+              "x": 48,
+              "y": 116,
+              "width": 92,
+              "height": 28,
+              "component": "Button",
+              "style": {
+                "fill": "#2E6CFF",
+                "stroke": "#2E6CFF",
+                "text": "#FFFFFF",
+                "radius": 8,
+                "paddingX": 10,
+                "paddingY": 5,
+                "gap": 4,
+                "fontSize": 13,
+                "lineHeight": 18,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "primary",
+                "fill": "solid",
+                "size": "mini"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Mini"
+            },
+            {
+              "id": "layout_8",
+              "type": "INSTANCE",
+              "name": "Small",
+              "x": 48,
+              "y": 116,
+              "width": 108,
+              "height": 32,
+              "component": "Button",
+              "style": {
+                "fill": "#2E6CFF",
+                "stroke": "#2E6CFF",
+                "text": "#FFFFFF",
+                "radius": 10,
+                "paddingX": 12,
+                "paddingY": 7,
+                "gap": 4,
+                "fontSize": 13,
+                "lineHeight": 18,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "primary",
+                "fill": "solid",
+                "size": "small"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Small"
+            },
+            {
+              "id": "layout_9",
+              "type": "INSTANCE",
+              "name": "Middle",
+              "x": 48,
+              "y": 116,
+              "width": 128,
+              "height": 36,
+              "component": "Button",
+              "style": {
+                "fill": "#2E6CFF",
+                "stroke": "#2E6CFF",
+                "text": "#FFFFFF",
+                "radius": 12,
+                "paddingX": 16,
+                "paddingY": 8,
+                "gap": 6,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "primary",
+                "fill": "solid",
+                "size": "middle"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Middle"
+            },
+            {
+              "id": "layout_10",
+              "type": "INSTANCE",
+              "name": "Large",
+              "x": 48,
+              "y": 116,
+              "width": 156,
+              "height": 44,
+              "component": "Button",
+              "style": {
+                "fill": "#2E6CFF",
+                "stroke": "#2E6CFF",
+                "text": "#FFFFFF",
+                "radius": 14,
+                "paddingX": 20,
+                "paddingY": 10,
+                "gap": 6,
+                "fontSize": 17,
+                "lineHeight": 24,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "primary",
+                "fill": "solid",
+                "size": "large"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Large"
+            }
+          ]
+        },
+        {
+          "id": "layout_11",
+          "type": "TEXT",
+          "name": "Text 7",
+          "x": 48,
+          "y": 116,
+          "width": 358,
+          "height": 24,
+          "text": "Color and Fill",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/lg",
+            "fill": "#5F6A7B"
+          }
+        },
+        {
+          "id": "layout_12",
+          "type": "FRAME",
+          "name": "content-row-2",
+          "x": 48,
+          "y": 116,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_13",
+              "type": "INSTANCE",
+              "name": "Primary Solid",
+              "x": 48,
+              "y": 116,
+              "width": 128,
+              "height": 36,
+              "component": "Button",
+              "style": {
+                "fill": "#2E6CFF",
+                "stroke": "#2E6CFF",
+                "text": "#FFFFFF",
+                "radius": 12,
+                "paddingX": 16,
+                "paddingY": 8,
+                "gap": 6,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "primary",
+                "fill": "solid",
+                "size": "middle"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Primary Solid"
+            },
+            {
+              "id": "layout_14",
+              "type": "INSTANCE",
+              "name": "Default Outline",
+              "x": 48,
+              "y": 116,
+              "width": 128,
+              "height": 36,
+              "component": "Button",
+              "style": {
+                "fill": "#FFFFFF",
+                "stroke": "#E0E6EE",
+                "text": "#1F2430",
+                "radius": 12,
+                "paddingX": 16,
+                "paddingY": 8,
+                "gap": 6,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "default",
+                "fill": "outline",
+                "size": "middle"
+              },
+              "variables": {
+                "container.background": "Semantic/surface/default",
+                "container.border": "Semantic/border/default",
+                "label.color": "Semantic/text/primary"
+              },
+              "text": "Default Outline"
+            },
+            {
+              "id": "layout_15",
+              "type": "INSTANCE",
+              "name": "Danger None",
+              "x": 48,
+              "y": 116,
+              "width": 128,
+              "height": 36,
+              "component": "Button",
+              "style": {
+                "fill": "#FFFFFF",
+                "stroke": "#FFFFFF",
+                "text": "#D34B4B",
+                "radius": 12,
+                "paddingX": 16,
+                "paddingY": 8,
+                "gap": 6,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "danger",
+                "fill": "none",
+                "size": "middle"
+              },
+              "variables": {
+                "container.background": "Semantic/surface/default",
+                "container.border": "Semantic/surface/default",
+                "label.color": "Semantic/status/critical"
+              },
+              "text": "Danger None"
+            }
+          ]
+        },
+        {
+          "id": "layout_16",
+          "type": "TEXT",
+          "name": "Text 11",
+          "x": 48,
+          "y": 116,
+          "width": 358,
+          "height": 24,
+          "text": "Shape and States",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/lg",
+            "fill": "#5F6A7B"
+          }
+        },
+        {
+          "id": "layout_17",
+          "type": "FRAME",
+          "name": "content-row-3",
+          "x": 48,
+          "y": 116,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_18",
+              "type": "INSTANCE",
+              "name": "Default",
+              "x": 48,
+              "y": 116,
+              "width": 128,
+              "height": 36,
+              "component": "Button",
+              "style": {
+                "fill": "#2E6CFF",
+                "stroke": "#2E6CFF",
+                "text": "#FFFFFF",
+                "radius": 12,
+                "paddingX": 16,
+                "paddingY": 8,
+                "gap": 6,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "primary",
+                "fill": "solid",
+                "shape": "default",
+                "size": "middle"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Default"
+            },
+            {
+              "id": "layout_19",
+              "type": "INSTANCE",
+              "name": "Rounded",
+              "x": 48,
+              "y": 116,
+              "width": 128,
+              "height": 36,
+              "component": "Button",
+              "style": {
+                "fill": "#2E6CFF",
+                "stroke": "#2E6CFF",
+                "text": "#FFFFFF",
+                "radius": 999,
+                "paddingX": 16,
+                "paddingY": 8,
+                "gap": 6,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "primary",
+                "fill": "solid",
+                "shape": "rounded",
+                "size": "middle"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Rounded"
+            },
+            {
+              "id": "layout_20",
+              "type": "INSTANCE",
+              "name": "Rectangular",
+              "x": 48,
+              "y": 116,
+              "width": 128,
+              "height": 36,
+              "component": "Button",
+              "style": {
+                "fill": "#2E6CFF",
+                "stroke": "#2E6CFF",
+                "text": "#FFFFFF",
+                "radius": 8,
+                "paddingX": 16,
+                "paddingY": 8,
+                "gap": 6,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "primary",
+                "fill": "solid",
+                "shape": "rectangular",
+                "size": "middle"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Rectangular"
+            },
+            {
+              "id": "layout_21",
+              "type": "INSTANCE",
+              "name": "Loading",
+              "x": 48,
+              "y": 116,
+              "width": 128,
+              "height": 36,
+              "component": "Button",
+              "style": {
+                "fill": "#2458D9",
+                "stroke": "#2458D9",
+                "text": "#FFFFFF",
+                "radius": 12,
+                "paddingX": 16,
+                "paddingY": 8,
+                "gap": 6,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "primary",
+                "fill": "solid",
+                "size": "middle",
+                "loading": true,
+                "loadingText": "Loading"
+              },
+              "variables": {
+                "container.background": "Semantic/action/primaryHover",
+                "container.border": "Semantic/action/primaryHover",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Loading"
+            },
+            {
+              "id": "layout_22",
+              "type": "INSTANCE",
+              "name": "Disabled",
+              "x": 48,
+              "y": 116,
+              "width": 128,
+              "height": 36,
+              "component": "Button",
+              "style": {
+                "fill": "#E0E6EE",
+                "stroke": "#E0E6EE",
+                "text": "#7E8A9C",
+                "radius": 12,
+                "paddingX": 16,
+                "paddingY": 8,
+                "gap": 6,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "primary",
+                "fill": "solid",
+                "size": "middle",
+                "disabled": true
+              },
+              "variables": {
+                "container.background": "Semantic/action/disabled",
+                "container.border": "Semantic/action/disabled",
+                "label.color": "Semantic/text/muted"
+              },
+              "text": "Disabled"
+            },
+            {
+              "id": "layout_23",
+              "type": "INSTANCE",
+              "name": "Block",
+              "x": 48,
+              "y": 116,
+              "width": 358,
+              "height": 44,
+              "component": "Button",
+              "style": {
+                "fill": "#2E6CFF",
+                "stroke": "#2E6CFF",
+                "text": "#FFFFFF",
+                "radius": 14,
+                "paddingX": 20,
+                "paddingY": 10,
+                "gap": 6,
+                "fontSize": 17,
+                "lineHeight": 24,
+                "fontWeight": "medium",
+                "minWidth": 64
+              },
+              "variant": {
+                "color": "primary",
+                "fill": "solid",
+                "size": "large",
+                "block": true
+              },
+              "variables": {
+                "container.background": "Semantic/action/primary",
+                "container.border": "Semantic/action/primary",
+                "label.color": "Semantic/action/onPrimary"
+              },
+              "text": "Block"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_5",
+      "type": "TEXT",
+      "name": "Text 2",
+      "x": 48,
+      "y": 116,
+      "width": 358,
+      "height": 24,
+      "text": "Sizes",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/lg",
+        "fill": "#5F6A7B"
+      }
+    },
+    {
+      "id": "layout_6",
+      "type": "FRAME",
+      "name": "content-row-1",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_7",
+          "type": "INSTANCE",
+          "name": "Mini",
+          "x": 48,
+          "y": 116,
+          "width": 92,
+          "height": 28,
+          "component": "Button",
+          "style": {
+            "fill": "#2E6CFF",
+            "stroke": "#2E6CFF",
+            "text": "#FFFFFF",
+            "radius": 8,
+            "paddingX": 10,
+            "paddingY": 5,
+            "gap": 4,
+            "fontSize": 13,
+            "lineHeight": 18,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "primary",
+            "fill": "solid",
+            "size": "mini"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Mini"
+        },
+        {
+          "id": "layout_8",
+          "type": "INSTANCE",
+          "name": "Small",
+          "x": 48,
+          "y": 116,
+          "width": 108,
+          "height": 32,
+          "component": "Button",
+          "style": {
+            "fill": "#2E6CFF",
+            "stroke": "#2E6CFF",
+            "text": "#FFFFFF",
+            "radius": 10,
+            "paddingX": 12,
+            "paddingY": 7,
+            "gap": 4,
+            "fontSize": 13,
+            "lineHeight": 18,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "primary",
+            "fill": "solid",
+            "size": "small"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Small"
+        },
+        {
+          "id": "layout_9",
+          "type": "INSTANCE",
+          "name": "Middle",
+          "x": 48,
+          "y": 116,
+          "width": 128,
+          "height": 36,
+          "component": "Button",
+          "style": {
+            "fill": "#2E6CFF",
+            "stroke": "#2E6CFF",
+            "text": "#FFFFFF",
+            "radius": 12,
+            "paddingX": 16,
+            "paddingY": 8,
+            "gap": 6,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "primary",
+            "fill": "solid",
+            "size": "middle"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Middle"
+        },
+        {
+          "id": "layout_10",
+          "type": "INSTANCE",
+          "name": "Large",
+          "x": 48,
+          "y": 116,
+          "width": 156,
+          "height": 44,
+          "component": "Button",
+          "style": {
+            "fill": "#2E6CFF",
+            "stroke": "#2E6CFF",
+            "text": "#FFFFFF",
+            "radius": 14,
+            "paddingX": 20,
+            "paddingY": 10,
+            "gap": 6,
+            "fontSize": 17,
+            "lineHeight": 24,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "primary",
+            "fill": "solid",
+            "size": "large"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Large"
+        }
+      ]
+    },
+    {
+      "id": "layout_7",
+      "type": "INSTANCE",
+      "name": "Mini",
+      "x": 48,
+      "y": 116,
+      "width": 92,
+      "height": 28,
+      "component": "Button",
+      "style": {
+        "fill": "#2E6CFF",
+        "stroke": "#2E6CFF",
+        "text": "#FFFFFF",
+        "radius": 8,
+        "paddingX": 10,
+        "paddingY": 5,
+        "gap": 4,
+        "fontSize": 13,
+        "lineHeight": 18,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "mini"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Mini"
+    },
+    {
+      "id": "layout_8",
+      "type": "INSTANCE",
+      "name": "Small",
+      "x": 48,
+      "y": 116,
+      "width": 108,
+      "height": 32,
+      "component": "Button",
+      "style": {
+        "fill": "#2E6CFF",
+        "stroke": "#2E6CFF",
+        "text": "#FFFFFF",
+        "radius": 10,
+        "paddingX": 12,
+        "paddingY": 7,
+        "gap": 4,
+        "fontSize": 13,
+        "lineHeight": 18,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "small"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Small"
+    },
+    {
+      "id": "layout_9",
+      "type": "INSTANCE",
+      "name": "Middle",
+      "x": 48,
+      "y": 116,
+      "width": 128,
+      "height": 36,
+      "component": "Button",
+      "style": {
+        "fill": "#2E6CFF",
+        "stroke": "#2E6CFF",
+        "text": "#FFFFFF",
+        "radius": 12,
+        "paddingX": 16,
+        "paddingY": 8,
+        "gap": 6,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "middle"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Middle"
+    },
+    {
+      "id": "layout_10",
+      "type": "INSTANCE",
+      "name": "Large",
+      "x": 48,
+      "y": 116,
+      "width": 156,
+      "height": 44,
+      "component": "Button",
+      "style": {
+        "fill": "#2E6CFF",
+        "stroke": "#2E6CFF",
+        "text": "#FFFFFF",
+        "radius": 14,
+        "paddingX": 20,
+        "paddingY": 10,
+        "gap": 6,
+        "fontSize": 17,
+        "lineHeight": 24,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "large"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Large"
+    },
+    {
+      "id": "layout_11",
+      "type": "TEXT",
+      "name": "Text 7",
+      "x": 48,
+      "y": 116,
+      "width": 358,
+      "height": 24,
+      "text": "Color and Fill",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/lg",
+        "fill": "#5F6A7B"
+      }
+    },
+    {
+      "id": "layout_12",
+      "type": "FRAME",
+      "name": "content-row-2",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_13",
+          "type": "INSTANCE",
+          "name": "Primary Solid",
+          "x": 48,
+          "y": 116,
+          "width": 128,
+          "height": 36,
+          "component": "Button",
+          "style": {
+            "fill": "#2E6CFF",
+            "stroke": "#2E6CFF",
+            "text": "#FFFFFF",
+            "radius": 12,
+            "paddingX": 16,
+            "paddingY": 8,
+            "gap": 6,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "primary",
+            "fill": "solid",
+            "size": "middle"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Primary Solid"
+        },
+        {
+          "id": "layout_14",
+          "type": "INSTANCE",
+          "name": "Default Outline",
+          "x": 48,
+          "y": 116,
+          "width": 128,
+          "height": 36,
+          "component": "Button",
+          "style": {
+            "fill": "#FFFFFF",
+            "stroke": "#E0E6EE",
+            "text": "#1F2430",
+            "radius": 12,
+            "paddingX": 16,
+            "paddingY": 8,
+            "gap": 6,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "default",
+            "fill": "outline",
+            "size": "middle"
+          },
+          "variables": {
+            "container.background": "Semantic/surface/default",
+            "container.border": "Semantic/border/default",
+            "label.color": "Semantic/text/primary"
+          },
+          "text": "Default Outline"
+        },
+        {
+          "id": "layout_15",
+          "type": "INSTANCE",
+          "name": "Danger None",
+          "x": 48,
+          "y": 116,
+          "width": 128,
+          "height": 36,
+          "component": "Button",
+          "style": {
+            "fill": "#FFFFFF",
+            "stroke": "#FFFFFF",
+            "text": "#D34B4B",
+            "radius": 12,
+            "paddingX": 16,
+            "paddingY": 8,
+            "gap": 6,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "danger",
+            "fill": "none",
+            "size": "middle"
+          },
+          "variables": {
+            "container.background": "Semantic/surface/default",
+            "container.border": "Semantic/surface/default",
+            "label.color": "Semantic/status/critical"
+          },
+          "text": "Danger None"
+        }
+      ]
+    },
+    {
+      "id": "layout_13",
+      "type": "INSTANCE",
+      "name": "Primary Solid",
+      "x": 48,
+      "y": 116,
+      "width": 128,
+      "height": 36,
+      "component": "Button",
+      "style": {
+        "fill": "#2E6CFF",
+        "stroke": "#2E6CFF",
+        "text": "#FFFFFF",
+        "radius": 12,
+        "paddingX": 16,
+        "paddingY": 8,
+        "gap": 6,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "middle"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Primary Solid"
+    },
+    {
+      "id": "layout_14",
+      "type": "INSTANCE",
+      "name": "Default Outline",
+      "x": 48,
+      "y": 116,
+      "width": 128,
+      "height": 36,
+      "component": "Button",
+      "style": {
+        "fill": "#FFFFFF",
+        "stroke": "#E0E6EE",
+        "text": "#1F2430",
+        "radius": 12,
+        "paddingX": 16,
+        "paddingY": 8,
+        "gap": 6,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "default",
+        "fill": "outline",
+        "size": "middle"
+      },
+      "variables": {
+        "container.background": "Semantic/surface/default",
+        "container.border": "Semantic/border/default",
+        "label.color": "Semantic/text/primary"
+      },
+      "text": "Default Outline"
+    },
+    {
+      "id": "layout_15",
+      "type": "INSTANCE",
+      "name": "Danger None",
+      "x": 48,
+      "y": 116,
+      "width": 128,
+      "height": 36,
+      "component": "Button",
+      "style": {
+        "fill": "#FFFFFF",
+        "stroke": "#FFFFFF",
+        "text": "#D34B4B",
+        "radius": 12,
+        "paddingX": 16,
+        "paddingY": 8,
+        "gap": 6,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "danger",
+        "fill": "none",
+        "size": "middle"
+      },
+      "variables": {
+        "container.background": "Semantic/surface/default",
+        "container.border": "Semantic/surface/default",
+        "label.color": "Semantic/status/critical"
+      },
+      "text": "Danger None"
+    },
+    {
+      "id": "layout_16",
+      "type": "TEXT",
+      "name": "Text 11",
+      "x": 48,
+      "y": 116,
+      "width": 358,
+      "height": 24,
+      "text": "Shape and States",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/lg",
+        "fill": "#5F6A7B"
+      }
+    },
+    {
+      "id": "layout_17",
+      "type": "FRAME",
+      "name": "content-row-3",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_18",
+          "type": "INSTANCE",
+          "name": "Default",
+          "x": 48,
+          "y": 116,
+          "width": 128,
+          "height": 36,
+          "component": "Button",
+          "style": {
+            "fill": "#2E6CFF",
+            "stroke": "#2E6CFF",
+            "text": "#FFFFFF",
+            "radius": 12,
+            "paddingX": 16,
+            "paddingY": 8,
+            "gap": 6,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "primary",
+            "fill": "solid",
+            "shape": "default",
+            "size": "middle"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Default"
+        },
+        {
+          "id": "layout_19",
+          "type": "INSTANCE",
+          "name": "Rounded",
+          "x": 48,
+          "y": 116,
+          "width": 128,
+          "height": 36,
+          "component": "Button",
+          "style": {
+            "fill": "#2E6CFF",
+            "stroke": "#2E6CFF",
+            "text": "#FFFFFF",
+            "radius": 999,
+            "paddingX": 16,
+            "paddingY": 8,
+            "gap": 6,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "primary",
+            "fill": "solid",
+            "shape": "rounded",
+            "size": "middle"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Rounded"
+        },
+        {
+          "id": "layout_20",
+          "type": "INSTANCE",
+          "name": "Rectangular",
+          "x": 48,
+          "y": 116,
+          "width": 128,
+          "height": 36,
+          "component": "Button",
+          "style": {
+            "fill": "#2E6CFF",
+            "stroke": "#2E6CFF",
+            "text": "#FFFFFF",
+            "radius": 8,
+            "paddingX": 16,
+            "paddingY": 8,
+            "gap": 6,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "primary",
+            "fill": "solid",
+            "shape": "rectangular",
+            "size": "middle"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Rectangular"
+        },
+        {
+          "id": "layout_21",
+          "type": "INSTANCE",
+          "name": "Loading",
+          "x": 48,
+          "y": 116,
+          "width": 128,
+          "height": 36,
+          "component": "Button",
+          "style": {
+            "fill": "#2458D9",
+            "stroke": "#2458D9",
+            "text": "#FFFFFF",
+            "radius": 12,
+            "paddingX": 16,
+            "paddingY": 8,
+            "gap": 6,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "primary",
+            "fill": "solid",
+            "size": "middle",
+            "loading": true,
+            "loadingText": "Loading"
+          },
+          "variables": {
+            "container.background": "Semantic/action/primaryHover",
+            "container.border": "Semantic/action/primaryHover",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Loading"
+        },
+        {
+          "id": "layout_22",
+          "type": "INSTANCE",
+          "name": "Disabled",
+          "x": 48,
+          "y": 116,
+          "width": 128,
+          "height": 36,
+          "component": "Button",
+          "style": {
+            "fill": "#E0E6EE",
+            "stroke": "#E0E6EE",
+            "text": "#7E8A9C",
+            "radius": 12,
+            "paddingX": 16,
+            "paddingY": 8,
+            "gap": 6,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "primary",
+            "fill": "solid",
+            "size": "middle",
+            "disabled": true
+          },
+          "variables": {
+            "container.background": "Semantic/action/disabled",
+            "container.border": "Semantic/action/disabled",
+            "label.color": "Semantic/text/muted"
+          },
+          "text": "Disabled"
+        },
+        {
+          "id": "layout_23",
+          "type": "INSTANCE",
+          "name": "Block",
+          "x": 48,
+          "y": 116,
+          "width": 358,
+          "height": 44,
+          "component": "Button",
+          "style": {
+            "fill": "#2E6CFF",
+            "stroke": "#2E6CFF",
+            "text": "#FFFFFF",
+            "radius": 14,
+            "paddingX": 20,
+            "paddingY": 10,
+            "gap": 6,
+            "fontSize": 17,
+            "lineHeight": 24,
+            "fontWeight": "medium",
+            "minWidth": 64
+          },
+          "variant": {
+            "color": "primary",
+            "fill": "solid",
+            "size": "large",
+            "block": true
+          },
+          "variables": {
+            "container.background": "Semantic/action/primary",
+            "container.border": "Semantic/action/primary",
+            "label.color": "Semantic/action/onPrimary"
+          },
+          "text": "Block"
+        }
+      ]
+    },
+    {
+      "id": "layout_18",
+      "type": "INSTANCE",
+      "name": "Default",
+      "x": 48,
+      "y": 116,
+      "width": 128,
+      "height": 36,
+      "component": "Button",
+      "style": {
+        "fill": "#2E6CFF",
+        "stroke": "#2E6CFF",
+        "text": "#FFFFFF",
+        "radius": 12,
+        "paddingX": 16,
+        "paddingY": 8,
+        "gap": 6,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "primary",
+        "fill": "solid",
+        "shape": "default",
+        "size": "middle"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Default"
+    },
+    {
+      "id": "layout_19",
+      "type": "INSTANCE",
+      "name": "Rounded",
+      "x": 48,
+      "y": 116,
+      "width": 128,
+      "height": 36,
+      "component": "Button",
+      "style": {
+        "fill": "#2E6CFF",
+        "stroke": "#2E6CFF",
+        "text": "#FFFFFF",
+        "radius": 999,
+        "paddingX": 16,
+        "paddingY": 8,
+        "gap": 6,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "primary",
+        "fill": "solid",
+        "shape": "rounded",
+        "size": "middle"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Rounded"
+    },
+    {
+      "id": "layout_20",
+      "type": "INSTANCE",
+      "name": "Rectangular",
+      "x": 48,
+      "y": 116,
+      "width": 128,
+      "height": 36,
+      "component": "Button",
+      "style": {
+        "fill": "#2E6CFF",
+        "stroke": "#2E6CFF",
+        "text": "#FFFFFF",
+        "radius": 8,
+        "paddingX": 16,
+        "paddingY": 8,
+        "gap": 6,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "primary",
+        "fill": "solid",
+        "shape": "rectangular",
+        "size": "middle"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Rectangular"
+    },
+    {
+      "id": "layout_21",
+      "type": "INSTANCE",
+      "name": "Loading",
+      "x": 48,
+      "y": 116,
+      "width": 128,
+      "height": 36,
+      "component": "Button",
+      "style": {
+        "fill": "#2458D9",
+        "stroke": "#2458D9",
+        "text": "#FFFFFF",
+        "radius": 12,
+        "paddingX": 16,
+        "paddingY": 8,
+        "gap": 6,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "middle",
+        "loading": true,
+        "loadingText": "Loading"
+      },
+      "variables": {
+        "container.background": "Semantic/action/primaryHover",
+        "container.border": "Semantic/action/primaryHover",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Loading"
+    },
+    {
+      "id": "layout_22",
+      "type": "INSTANCE",
+      "name": "Disabled",
+      "x": 48,
+      "y": 116,
+      "width": 128,
+      "height": 36,
+      "component": "Button",
+      "style": {
+        "fill": "#E0E6EE",
+        "stroke": "#E0E6EE",
+        "text": "#7E8A9C",
+        "radius": 12,
+        "paddingX": 16,
+        "paddingY": 8,
+        "gap": 6,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "middle",
+        "disabled": true
+      },
+      "variables": {
+        "container.background": "Semantic/action/disabled",
+        "container.border": "Semantic/action/disabled",
+        "label.color": "Semantic/text/muted"
+      },
+      "text": "Disabled"
+    },
+    {
+      "id": "layout_23",
+      "type": "INSTANCE",
+      "name": "Block",
+      "x": 48,
+      "y": 116,
+      "width": 358,
+      "height": 44,
+      "component": "Button",
+      "style": {
+        "fill": "#2E6CFF",
+        "stroke": "#2E6CFF",
+        "text": "#FFFFFF",
+        "radius": 14,
+        "paddingX": 20,
+        "paddingY": 10,
+        "gap": 6,
+        "fontSize": 17,
+        "lineHeight": 24,
+        "fontWeight": "medium",
+        "minWidth": 64
+      },
+      "variant": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "large",
+        "block": true
+      },
+      "variables": {
+        "container.background": "Semantic/action/primary",
+        "container.border": "Semantic/action/primary",
+        "label.color": "Semantic/action/onPrimary"
+      },
+      "text": "Block"
+    },
+    {
+      "id": "layout_24",
+      "type": "FRAME",
+      "name": "form-section",
+      "x": 48,
+      "y": 420,
+      "width": 1320,
+      "height": 100,
+      "children": []
+    },
+    {
+      "id": "layout_25",
+      "type": "FRAME",
+      "name": "action-section",
+      "x": 48,
+      "y": 496,
+      "width": 1320,
+      "height": 100,
+      "children": []
+    }
+  ],
+  "styles": {
+    "layout_3.text": "text/heading/xl",
+    "layout_3.fill": "#1F2430",
+    "layout_5.text": "text/body/lg",
+    "layout_5.fill": "#5F6A7B",
+    "layout_7.fill": "#2E6CFF",
+    "layout_7.stroke": "#2E6CFF",
+    "layout_7.text": "#FFFFFF",
+    "layout_7.effect": "undefined",
+    "layout_7.radius": "8",
+    "layout_7.paddingX": "10",
+    "layout_7.paddingY": "5",
+    "layout_7.gap": "4",
+    "layout_7.fontSize": "13",
+    "layout_7.lineHeight": "18",
+    "layout_7.fontWeight": "medium",
+    "layout_7.minWidth": "64",
+    "layout_8.fill": "#2E6CFF",
+    "layout_8.stroke": "#2E6CFF",
+    "layout_8.text": "#FFFFFF",
+    "layout_8.effect": "undefined",
+    "layout_8.radius": "10",
+    "layout_8.paddingX": "12",
+    "layout_8.paddingY": "7",
+    "layout_8.gap": "4",
+    "layout_8.fontSize": "13",
+    "layout_8.lineHeight": "18",
+    "layout_8.fontWeight": "medium",
+    "layout_8.minWidth": "64",
+    "layout_9.fill": "#2E6CFF",
+    "layout_9.stroke": "#2E6CFF",
+    "layout_9.text": "#FFFFFF",
+    "layout_9.effect": "undefined",
+    "layout_9.radius": "12",
+    "layout_9.paddingX": "16",
+    "layout_9.paddingY": "8",
+    "layout_9.gap": "6",
+    "layout_9.fontSize": "15",
+    "layout_9.lineHeight": "22",
+    "layout_9.fontWeight": "medium",
+    "layout_9.minWidth": "64",
+    "layout_10.fill": "#2E6CFF",
+    "layout_10.stroke": "#2E6CFF",
+    "layout_10.text": "#FFFFFF",
+    "layout_10.effect": "undefined",
+    "layout_10.radius": "14",
+    "layout_10.paddingX": "20",
+    "layout_10.paddingY": "10",
+    "layout_10.gap": "6",
+    "layout_10.fontSize": "17",
+    "layout_10.lineHeight": "24",
+    "layout_10.fontWeight": "medium",
+    "layout_10.minWidth": "64",
+    "layout_11.text": "text/body/lg",
+    "layout_11.fill": "#5F6A7B",
+    "layout_13.fill": "#2E6CFF",
+    "layout_13.stroke": "#2E6CFF",
+    "layout_13.text": "#FFFFFF",
+    "layout_13.effect": "undefined",
+    "layout_13.radius": "12",
+    "layout_13.paddingX": "16",
+    "layout_13.paddingY": "8",
+    "layout_13.gap": "6",
+    "layout_13.fontSize": "15",
+    "layout_13.lineHeight": "22",
+    "layout_13.fontWeight": "medium",
+    "layout_13.minWidth": "64",
+    "layout_14.fill": "#FFFFFF",
+    "layout_14.stroke": "#E0E6EE",
+    "layout_14.text": "#1F2430",
+    "layout_14.effect": "undefined",
+    "layout_14.radius": "12",
+    "layout_14.paddingX": "16",
+    "layout_14.paddingY": "8",
+    "layout_14.gap": "6",
+    "layout_14.fontSize": "15",
+    "layout_14.lineHeight": "22",
+    "layout_14.fontWeight": "medium",
+    "layout_14.minWidth": "64",
+    "layout_15.fill": "#FFFFFF",
+    "layout_15.stroke": "#FFFFFF",
+    "layout_15.text": "#D34B4B",
+    "layout_15.effect": "undefined",
+    "layout_15.radius": "12",
+    "layout_15.paddingX": "16",
+    "layout_15.paddingY": "8",
+    "layout_15.gap": "6",
+    "layout_15.fontSize": "15",
+    "layout_15.lineHeight": "22",
+    "layout_15.fontWeight": "medium",
+    "layout_15.minWidth": "64",
+    "layout_16.text": "text/body/lg",
+    "layout_16.fill": "#5F6A7B",
+    "layout_18.fill": "#2E6CFF",
+    "layout_18.stroke": "#2E6CFF",
+    "layout_18.text": "#FFFFFF",
+    "layout_18.effect": "undefined",
+    "layout_18.radius": "12",
+    "layout_18.paddingX": "16",
+    "layout_18.paddingY": "8",
+    "layout_18.gap": "6",
+    "layout_18.fontSize": "15",
+    "layout_18.lineHeight": "22",
+    "layout_18.fontWeight": "medium",
+    "layout_18.minWidth": "64",
+    "layout_19.fill": "#2E6CFF",
+    "layout_19.stroke": "#2E6CFF",
+    "layout_19.text": "#FFFFFF",
+    "layout_19.effect": "undefined",
+    "layout_19.radius": "999",
+    "layout_19.paddingX": "16",
+    "layout_19.paddingY": "8",
+    "layout_19.gap": "6",
+    "layout_19.fontSize": "15",
+    "layout_19.lineHeight": "22",
+    "layout_19.fontWeight": "medium",
+    "layout_19.minWidth": "64",
+    "layout_20.fill": "#2E6CFF",
+    "layout_20.stroke": "#2E6CFF",
+    "layout_20.text": "#FFFFFF",
+    "layout_20.effect": "undefined",
+    "layout_20.radius": "8",
+    "layout_20.paddingX": "16",
+    "layout_20.paddingY": "8",
+    "layout_20.gap": "6",
+    "layout_20.fontSize": "15",
+    "layout_20.lineHeight": "22",
+    "layout_20.fontWeight": "medium",
+    "layout_20.minWidth": "64",
+    "layout_21.fill": "#2458D9",
+    "layout_21.stroke": "#2458D9",
+    "layout_21.text": "#FFFFFF",
+    "layout_21.effect": "undefined",
+    "layout_21.radius": "12",
+    "layout_21.paddingX": "16",
+    "layout_21.paddingY": "8",
+    "layout_21.gap": "6",
+    "layout_21.fontSize": "15",
+    "layout_21.lineHeight": "22",
+    "layout_21.fontWeight": "medium",
+    "layout_21.minWidth": "64",
+    "layout_22.fill": "#E0E6EE",
+    "layout_22.stroke": "#E0E6EE",
+    "layout_22.text": "#7E8A9C",
+    "layout_22.effect": "undefined",
+    "layout_22.radius": "12",
+    "layout_22.paddingX": "16",
+    "layout_22.paddingY": "8",
+    "layout_22.gap": "6",
+    "layout_22.fontSize": "15",
+    "layout_22.lineHeight": "22",
+    "layout_22.fontWeight": "medium",
+    "layout_22.minWidth": "64",
+    "layout_23.fill": "#2E6CFF",
+    "layout_23.stroke": "#2E6CFF",
+    "layout_23.text": "#FFFFFF",
+    "layout_23.effect": "undefined",
+    "layout_23.radius": "14",
+    "layout_23.paddingX": "20",
+    "layout_23.paddingY": "10",
+    "layout_23.gap": "6",
+    "layout_23.fontSize": "17",
+    "layout_23.lineHeight": "24",
+    "layout_23.fontWeight": "medium",
+    "layout_23.minWidth": "64"
+  },
+  "variables": {
+    "layout_3.text.color": "semantic.text.primary",
+    "layout_5.text.color": "semantic.text.secondary",
+    "layout_7.container.background": "Semantic/action/primary",
+    "layout_7.container.border": "Semantic/action/primary",
+    "layout_7.label.color": "Semantic/action/onPrimary",
+    "layout_8.container.background": "Semantic/action/primary",
+    "layout_8.container.border": "Semantic/action/primary",
+    "layout_8.label.color": "Semantic/action/onPrimary",
+    "layout_9.container.background": "Semantic/action/primary",
+    "layout_9.container.border": "Semantic/action/primary",
+    "layout_9.label.color": "Semantic/action/onPrimary",
+    "layout_10.container.background": "Semantic/action/primary",
+    "layout_10.container.border": "Semantic/action/primary",
+    "layout_10.label.color": "Semantic/action/onPrimary",
+    "layout_11.text.color": "semantic.text.secondary",
+    "layout_13.container.background": "Semantic/action/primary",
+    "layout_13.container.border": "Semantic/action/primary",
+    "layout_13.label.color": "Semantic/action/onPrimary",
+    "layout_14.container.background": "Semantic/surface/default",
+    "layout_14.container.border": "Semantic/border/default",
+    "layout_14.label.color": "Semantic/text/primary",
+    "layout_15.container.background": "Semantic/surface/default",
+    "layout_15.container.border": "Semantic/surface/default",
+    "layout_15.label.color": "Semantic/status/critical",
+    "layout_16.text.color": "semantic.text.secondary",
+    "layout_18.container.background": "Semantic/action/primary",
+    "layout_18.container.border": "Semantic/action/primary",
+    "layout_18.label.color": "Semantic/action/onPrimary",
+    "layout_19.container.background": "Semantic/action/primary",
+    "layout_19.container.border": "Semantic/action/primary",
+    "layout_19.label.color": "Semantic/action/onPrimary",
+    "layout_20.container.background": "Semantic/action/primary",
+    "layout_20.container.border": "Semantic/action/primary",
+    "layout_20.label.color": "Semantic/action/onPrimary",
+    "layout_21.container.background": "Semantic/action/primaryHover",
+    "layout_21.container.border": "Semantic/action/primaryHover",
+    "layout_21.label.color": "Semantic/action/onPrimary",
+    "layout_22.container.background": "Semantic/action/disabled",
+    "layout_22.container.border": "Semantic/action/disabled",
+    "layout_22.label.color": "Semantic/text/muted",
+    "layout_23.container.background": "Semantic/action/primary",
+    "layout_23.container.border": "Semantic/action/primary",
+    "layout_23.label.color": "Semantic/action/onPrimary"
+  },
+  "components": {
+    "layout_7": {
+      "variants": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "mini"
+      }
+    },
+    "layout_8": {
+      "variants": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "small"
+      }
+    },
+    "layout_9": {
+      "variants": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "middle"
+      }
+    },
+    "layout_10": {
+      "variants": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "large"
+      }
+    },
+    "layout_13": {
+      "variants": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "middle"
+      }
+    },
+    "layout_14": {
+      "variants": {
+        "color": "default",
+        "fill": "outline",
+        "size": "middle"
+      }
+    },
+    "layout_15": {
+      "variants": {
+        "color": "danger",
+        "fill": "none",
+        "size": "middle"
+      }
+    },
+    "layout_18": {
+      "variants": {
+        "color": "primary",
+        "fill": "solid",
+        "shape": "default",
+        "size": "middle"
+      }
+    },
+    "layout_19": {
+      "variants": {
+        "color": "primary",
+        "fill": "solid",
+        "shape": "rounded",
+        "size": "middle"
+      }
+    },
+    "layout_20": {
+      "variants": {
+        "color": "primary",
+        "fill": "solid",
+        "shape": "rectangular",
+        "size": "middle"
+      }
+    },
+    "layout_21": {
+      "variants": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "middle",
+        "loading": true,
+        "loadingText": "Loading"
+      }
+    },
+    "layout_22": {
+      "variants": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "middle",
+        "disabled": true
+      }
+    },
+    "layout_23": {
+      "variants": {
+        "color": "primary",
+        "fill": "solid",
+        "size": "large",
+        "block": true
+      }
+    }
+  }
+}

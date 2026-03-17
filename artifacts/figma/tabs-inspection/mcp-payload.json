@@ -1,0 +1,1137 @@
+{
+  "document": {
+    "name": "tabs-inspection screen",
+    "screen": "tabs-inspection",
+    "theme": "core"
+  },
+  "nodes": [
+    {
+      "id": "layout_1",
+      "type": "FRAME",
+      "name": "Tabs inspection Screen",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 1240,
+      "children": [
+        {
+          "id": "layout_2",
+          "type": "FRAME",
+          "name": "header-section",
+          "x": 48,
+          "y": 40,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_3",
+              "type": "TEXT",
+              "name": "Text 1",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 32,
+              "text": "Tabs Inspection",
+              "variables": {
+                "text.color": "semantic.text.primary"
+              },
+              "style": {
+                "text": "text/heading/xl",
+                "fill": "#1F2430"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_4",
+          "type": "FRAME",
+          "name": "content-section",
+          "x": 48,
+          "y": 116,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_5",
+              "type": "TEXT",
+              "name": "Text 2",
+              "x": 48,
+              "y": 116,
+              "width": 358,
+              "height": 24,
+              "text": "Tabs Props",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/lg",
+                "fill": "#5F6A7B"
+              }
+            },
+            {
+              "id": "layout_6",
+              "type": "FRAME",
+              "name": "content-row-1",
+              "x": 48,
+              "y": 116,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_7",
+                  "type": "INSTANCE",
+                  "name": "Auto Line",
+                  "x": 48,
+                  "y": 116,
+                  "width": 320,
+                  "height": 92,
+                  "component": "Tabs",
+                  "style": {
+                    "paddingY": 10,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "medium"
+                  },
+                  "variant": {
+                    "activeKey": "activity",
+                    "activeLineMode": "auto",
+                    "children": "overview:Overview|activity:Activity|settings:Settings"
+                  },
+                  "variables": {},
+                  "text": "overview:Overview|activity:Activity|settings:Settings"
+                },
+                {
+                  "id": "layout_8",
+                  "type": "INSTANCE",
+                  "name": "Full Line Stretch",
+                  "x": 48,
+                  "y": 116,
+                  "width": 320,
+                  "height": 92,
+                  "component": "Tabs",
+                  "style": {
+                    "paddingY": 10,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "medium"
+                  },
+                  "variant": {
+                    "activeKey": "home",
+                    "activeLineMode": "full",
+                    "stretch": true,
+                    "children": "home:Home|search:Search|library:Library"
+                  },
+                  "variables": {},
+                  "text": "home:Home|search:Search|library:Library"
+                },
+                {
+                  "id": "layout_9",
+                  "type": "INSTANCE",
+                  "name": "Fixed Line RTL",
+                  "x": 48,
+                  "y": 116,
+                  "width": 320,
+                  "height": 92,
+                  "component": "Tabs",
+                  "style": {
+                    "paddingY": 10,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "medium"
+                  },
+                  "variant": {
+                    "defaultActiveKey": "three",
+                    "activeLineMode": "fixed",
+                    "children": "one:One|two:Two|three:Three",
+                    "direction": "rtl",
+                    "autoScroll": true
+                  },
+                  "variables": {},
+                  "text": "one:One|two:Two|three:Three"
+                }
+              ]
+            },
+            {
+              "id": "layout_10",
+              "type": "TEXT",
+              "name": "Text 6",
+              "x": 48,
+              "y": 116,
+              "width": 358,
+              "height": 24,
+              "text": "Tab Props",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/lg",
+                "fill": "#5F6A7B"
+              }
+            },
+            {
+              "id": "layout_11",
+              "type": "FRAME",
+              "name": "content-row-2",
+              "x": 48,
+              "y": 116,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_12",
+                  "type": "INSTANCE",
+                  "name": "Enabled Tab",
+                  "x": 48,
+                  "y": 116,
+                  "width": 120,
+                  "height": 40,
+                  "component": "Tab",
+                  "style": {
+                    "paddingY": 10,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "medium"
+                  },
+                  "variant": {
+                    "title": "Enabled Tab",
+                    "children": "Enabled tab body"
+                  },
+                  "variables": {},
+                  "text": "Enabled Tab"
+                },
+                {
+                  "id": "layout_13",
+                  "type": "INSTANCE",
+                  "name": "Disabled Tab",
+                  "x": 48,
+                  "y": 116,
+                  "width": 120,
+                  "height": 40,
+                  "component": "Tab",
+                  "style": {
+                    "paddingY": 10,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "medium"
+                  },
+                  "variant": {
+                    "title": "Disabled Tab",
+                    "disabled": true,
+                    "children": "Disabled tab body"
+                  },
+                  "variables": {},
+                  "text": "Disabled Tab"
+                },
+                {
+                  "id": "layout_14",
+                  "type": "INSTANCE",
+                  "name": "Force Render",
+                  "x": 48,
+                  "y": 116,
+                  "width": 120,
+                  "height": 40,
+                  "component": "Tab",
+                  "style": {
+                    "paddingY": 10,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "medium"
+                  },
+                  "variant": {
+                    "title": "Force Render",
+                    "forceRender": true,
+                    "children": "Rendered immediately"
+                  },
+                  "variables": {},
+                  "text": "Force Render"
+                },
+                {
+                  "id": "layout_15",
+                  "type": "INSTANCE",
+                  "name": "Destroy On Close",
+                  "x": 48,
+                  "y": 116,
+                  "width": 120,
+                  "height": 40,
+                  "component": "Tab",
+                  "style": {
+                    "paddingY": 10,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "medium"
+                  },
+                  "variant": {
+                    "title": "Destroy On Close",
+                    "destroyOnClose": true,
+                    "children": "Destroyed when hidden"
+                  },
+                  "variables": {},
+                  "text": "Destroy On Close"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_2",
+      "type": "FRAME",
+      "name": "header-section",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_3",
+          "type": "TEXT",
+          "name": "Text 1",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 32,
+          "text": "Tabs Inspection",
+          "variables": {
+            "text.color": "semantic.text.primary"
+          },
+          "style": {
+            "text": "text/heading/xl",
+            "fill": "#1F2430"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_3",
+      "type": "TEXT",
+      "name": "Text 1",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 32,
+      "text": "Tabs Inspection",
+      "variables": {
+        "text.color": "semantic.text.primary"
+      },
+      "style": {
+        "text": "text/heading/xl",
+        "fill": "#1F2430"
+      }
+    },
+    {
+      "id": "layout_4",
+      "type": "FRAME",
+      "name": "content-section",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_5",
+          "type": "TEXT",
+          "name": "Text 2",
+          "x": 48,
+          "y": 116,
+          "width": 358,
+          "height": 24,
+          "text": "Tabs Props",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/lg",
+            "fill": "#5F6A7B"
+          }
+        },
+        {
+          "id": "layout_6",
+          "type": "FRAME",
+          "name": "content-row-1",
+          "x": 48,
+          "y": 116,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_7",
+              "type": "INSTANCE",
+              "name": "Auto Line",
+              "x": 48,
+              "y": 116,
+              "width": 320,
+              "height": 92,
+              "component": "Tabs",
+              "style": {
+                "paddingY": 10,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "medium"
+              },
+              "variant": {
+                "activeKey": "activity",
+                "activeLineMode": "auto",
+                "children": "overview:Overview|activity:Activity|settings:Settings"
+              },
+              "variables": {},
+              "text": "overview:Overview|activity:Activity|settings:Settings"
+            },
+            {
+              "id": "layout_8",
+              "type": "INSTANCE",
+              "name": "Full Line Stretch",
+              "x": 48,
+              "y": 116,
+              "width": 320,
+              "height": 92,
+              "component": "Tabs",
+              "style": {
+                "paddingY": 10,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "medium"
+              },
+              "variant": {
+                "activeKey": "home",
+                "activeLineMode": "full",
+                "stretch": true,
+                "children": "home:Home|search:Search|library:Library"
+              },
+              "variables": {},
+              "text": "home:Home|search:Search|library:Library"
+            },
+            {
+              "id": "layout_9",
+              "type": "INSTANCE",
+              "name": "Fixed Line RTL",
+              "x": 48,
+              "y": 116,
+              "width": 320,
+              "height": 92,
+              "component": "Tabs",
+              "style": {
+                "paddingY": 10,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "medium"
+              },
+              "variant": {
+                "defaultActiveKey": "three",
+                "activeLineMode": "fixed",
+                "children": "one:One|two:Two|three:Three",
+                "direction": "rtl",
+                "autoScroll": true
+              },
+              "variables": {},
+              "text": "one:One|two:Two|three:Three"
+            }
+          ]
+        },
+        {
+          "id": "layout_10",
+          "type": "TEXT",
+          "name": "Text 6",
+          "x": 48,
+          "y": 116,
+          "width": 358,
+          "height": 24,
+          "text": "Tab Props",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/lg",
+            "fill": "#5F6A7B"
+          }
+        },
+        {
+          "id": "layout_11",
+          "type": "FRAME",
+          "name": "content-row-2",
+          "x": 48,
+          "y": 116,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_12",
+              "type": "INSTANCE",
+              "name": "Enabled Tab",
+              "x": 48,
+              "y": 116,
+              "width": 120,
+              "height": 40,
+              "component": "Tab",
+              "style": {
+                "paddingY": 10,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "medium"
+              },
+              "variant": {
+                "title": "Enabled Tab",
+                "children": "Enabled tab body"
+              },
+              "variables": {},
+              "text": "Enabled Tab"
+            },
+            {
+              "id": "layout_13",
+              "type": "INSTANCE",
+              "name": "Disabled Tab",
+              "x": 48,
+              "y": 116,
+              "width": 120,
+              "height": 40,
+              "component": "Tab",
+              "style": {
+                "paddingY": 10,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "medium"
+              },
+              "variant": {
+                "title": "Disabled Tab",
+                "disabled": true,
+                "children": "Disabled tab body"
+              },
+              "variables": {},
+              "text": "Disabled Tab"
+            },
+            {
+              "id": "layout_14",
+              "type": "INSTANCE",
+              "name": "Force Render",
+              "x": 48,
+              "y": 116,
+              "width": 120,
+              "height": 40,
+              "component": "Tab",
+              "style": {
+                "paddingY": 10,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "medium"
+              },
+              "variant": {
+                "title": "Force Render",
+                "forceRender": true,
+                "children": "Rendered immediately"
+              },
+              "variables": {},
+              "text": "Force Render"
+            },
+            {
+              "id": "layout_15",
+              "type": "INSTANCE",
+              "name": "Destroy On Close",
+              "x": 48,
+              "y": 116,
+              "width": 120,
+              "height": 40,
+              "component": "Tab",
+              "style": {
+                "paddingY": 10,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "medium"
+              },
+              "variant": {
+                "title": "Destroy On Close",
+                "destroyOnClose": true,
+                "children": "Destroyed when hidden"
+              },
+              "variables": {},
+              "text": "Destroy On Close"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_5",
+      "type": "TEXT",
+      "name": "Text 2",
+      "x": 48,
+      "y": 116,
+      "width": 358,
+      "height": 24,
+      "text": "Tabs Props",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/lg",
+        "fill": "#5F6A7B"
+      }
+    },
+    {
+      "id": "layout_6",
+      "type": "FRAME",
+      "name": "content-row-1",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_7",
+          "type": "INSTANCE",
+          "name": "Auto Line",
+          "x": 48,
+          "y": 116,
+          "width": 320,
+          "height": 92,
+          "component": "Tabs",
+          "style": {
+            "paddingY": 10,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "medium"
+          },
+          "variant": {
+            "activeKey": "activity",
+            "activeLineMode": "auto",
+            "children": "overview:Overview|activity:Activity|settings:Settings"
+          },
+          "variables": {},
+          "text": "overview:Overview|activity:Activity|settings:Settings"
+        },
+        {
+          "id": "layout_8",
+          "type": "INSTANCE",
+          "name": "Full Line Stretch",
+          "x": 48,
+          "y": 116,
+          "width": 320,
+          "height": 92,
+          "component": "Tabs",
+          "style": {
+            "paddingY": 10,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "medium"
+          },
+          "variant": {
+            "activeKey": "home",
+            "activeLineMode": "full",
+            "stretch": true,
+            "children": "home:Home|search:Search|library:Library"
+          },
+          "variables": {},
+          "text": "home:Home|search:Search|library:Library"
+        },
+        {
+          "id": "layout_9",
+          "type": "INSTANCE",
+          "name": "Fixed Line RTL",
+          "x": 48,
+          "y": 116,
+          "width": 320,
+          "height": 92,
+          "component": "Tabs",
+          "style": {
+            "paddingY": 10,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "medium"
+          },
+          "variant": {
+            "defaultActiveKey": "three",
+            "activeLineMode": "fixed",
+            "children": "one:One|two:Two|three:Three",
+            "direction": "rtl",
+            "autoScroll": true
+          },
+          "variables": {},
+          "text": "one:One|two:Two|three:Three"
+        }
+      ]
+    },
+    {
+      "id": "layout_7",
+      "type": "INSTANCE",
+      "name": "Auto Line",
+      "x": 48,
+      "y": 116,
+      "width": 320,
+      "height": 92,
+      "component": "Tabs",
+      "style": {
+        "paddingY": 10,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "medium"
+      },
+      "variant": {
+        "activeKey": "activity",
+        "activeLineMode": "auto",
+        "children": "overview:Overview|activity:Activity|settings:Settings"
+      },
+      "variables": {},
+      "text": "overview:Overview|activity:Activity|settings:Settings"
+    },
+    {
+      "id": "layout_8",
+      "type": "INSTANCE",
+      "name": "Full Line Stretch",
+      "x": 48,
+      "y": 116,
+      "width": 320,
+      "height": 92,
+      "component": "Tabs",
+      "style": {
+        "paddingY": 10,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "medium"
+      },
+      "variant": {
+        "activeKey": "home",
+        "activeLineMode": "full",
+        "stretch": true,
+        "children": "home:Home|search:Search|library:Library"
+      },
+      "variables": {},
+      "text": "home:Home|search:Search|library:Library"
+    },
+    {
+      "id": "layout_9",
+      "type": "INSTANCE",
+      "name": "Fixed Line RTL",
+      "x": 48,
+      "y": 116,
+      "width": 320,
+      "height": 92,
+      "component": "Tabs",
+      "style": {
+        "paddingY": 10,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "medium"
+      },
+      "variant": {
+        "defaultActiveKey": "three",
+        "activeLineMode": "fixed",
+        "children": "one:One|two:Two|three:Three",
+        "direction": "rtl",
+        "autoScroll": true
+      },
+      "variables": {},
+      "text": "one:One|two:Two|three:Three"
+    },
+    {
+      "id": "layout_10",
+      "type": "TEXT",
+      "name": "Text 6",
+      "x": 48,
+      "y": 116,
+      "width": 358,
+      "height": 24,
+      "text": "Tab Props",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/lg",
+        "fill": "#5F6A7B"
+      }
+    },
+    {
+      "id": "layout_11",
+      "type": "FRAME",
+      "name": "content-row-2",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_12",
+          "type": "INSTANCE",
+          "name": "Enabled Tab",
+          "x": 48,
+          "y": 116,
+          "width": 120,
+          "height": 40,
+          "component": "Tab",
+          "style": {
+            "paddingY": 10,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "medium"
+          },
+          "variant": {
+            "title": "Enabled Tab",
+            "children": "Enabled tab body"
+          },
+          "variables": {},
+          "text": "Enabled Tab"
+        },
+        {
+          "id": "layout_13",
+          "type": "INSTANCE",
+          "name": "Disabled Tab",
+          "x": 48,
+          "y": 116,
+          "width": 120,
+          "height": 40,
+          "component": "Tab",
+          "style": {
+            "paddingY": 10,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "medium"
+          },
+          "variant": {
+            "title": "Disabled Tab",
+            "disabled": true,
+            "children": "Disabled tab body"
+          },
+          "variables": {},
+          "text": "Disabled Tab"
+        },
+        {
+          "id": "layout_14",
+          "type": "INSTANCE",
+          "name": "Force Render",
+          "x": 48,
+          "y": 116,
+          "width": 120,
+          "height": 40,
+          "component": "Tab",
+          "style": {
+            "paddingY": 10,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "medium"
+          },
+          "variant": {
+            "title": "Force Render",
+            "forceRender": true,
+            "children": "Rendered immediately"
+          },
+          "variables": {},
+          "text": "Force Render"
+        },
+        {
+          "id": "layout_15",
+          "type": "INSTANCE",
+          "name": "Destroy On Close",
+          "x": 48,
+          "y": 116,
+          "width": 120,
+          "height": 40,
+          "component": "Tab",
+          "style": {
+            "paddingY": 10,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "medium"
+          },
+          "variant": {
+            "title": "Destroy On Close",
+            "destroyOnClose": true,
+            "children": "Destroyed when hidden"
+          },
+          "variables": {},
+          "text": "Destroy On Close"
+        }
+      ]
+    },
+    {
+      "id": "layout_12",
+      "type": "INSTANCE",
+      "name": "Enabled Tab",
+      "x": 48,
+      "y": 116,
+      "width": 120,
+      "height": 40,
+      "component": "Tab",
+      "style": {
+        "paddingY": 10,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "medium"
+      },
+      "variant": {
+        "title": "Enabled Tab",
+        "children": "Enabled tab body"
+      },
+      "variables": {},
+      "text": "Enabled Tab"
+    },
+    {
+      "id": "layout_13",
+      "type": "INSTANCE",
+      "name": "Disabled Tab",
+      "x": 48,
+      "y": 116,
+      "width": 120,
+      "height": 40,
+      "component": "Tab",
+      "style": {
+        "paddingY": 10,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "medium"
+      },
+      "variant": {
+        "title": "Disabled Tab",
+        "disabled": true,
+        "children": "Disabled tab body"
+      },
+      "variables": {},
+      "text": "Disabled Tab"
+    },
+    {
+      "id": "layout_14",
+      "type": "INSTANCE",
+      "name": "Force Render",
+      "x": 48,
+      "y": 116,
+      "width": 120,
+      "height": 40,
+      "component": "Tab",
+      "style": {
+        "paddingY": 10,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "medium"
+      },
+      "variant": {
+        "title": "Force Render",
+        "forceRender": true,
+        "children": "Rendered immediately"
+      },
+      "variables": {},
+      "text": "Force Render"
+    },
+    {
+      "id": "layout_15",
+      "type": "INSTANCE",
+      "name": "Destroy On Close",
+      "x": 48,
+      "y": 116,
+      "width": 120,
+      "height": 40,
+      "component": "Tab",
+      "style": {
+        "paddingY": 10,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "medium"
+      },
+      "variant": {
+        "title": "Destroy On Close",
+        "destroyOnClose": true,
+        "children": "Destroyed when hidden"
+      },
+      "variables": {},
+      "text": "Destroy On Close"
+    }
+  ],
+  "frames": [
+    {
+      "id": "layout_1",
+      "name": "Tabs inspection Screen"
+    },
+    {
+      "id": "layout_2",
+      "name": "header-section"
+    },
+    {
+      "id": "layout_4",
+      "name": "content-section"
+    },
+    {
+      "id": "layout_6",
+      "name": "content-row-1"
+    },
+    {
+      "id": "layout_11",
+      "name": "content-row-2"
+    }
+  ],
+  "components": [
+    {
+      "id": "layout_7",
+      "name": "Auto Line",
+      "component": "Tabs",
+      "variant": {
+        "activeKey": "activity",
+        "activeLineMode": "auto",
+        "children": "overview:Overview|activity:Activity|settings:Settings"
+      }
+    },
+    {
+      "id": "layout_8",
+      "name": "Full Line Stretch",
+      "component": "Tabs",
+      "variant": {
+        "activeKey": "home",
+        "activeLineMode": "full",
+        "stretch": true,
+        "children": "home:Home|search:Search|library:Library"
+      }
+    },
+    {
+      "id": "layout_9",
+      "name": "Fixed Line RTL",
+      "component": "Tabs",
+      "variant": {
+        "defaultActiveKey": "three",
+        "activeLineMode": "fixed",
+        "children": "one:One|two:Two|three:Three",
+        "direction": "rtl",
+        "autoScroll": true
+      }
+    },
+    {
+      "id": "layout_12",
+      "name": "Enabled Tab",
+      "component": "Tab",
+      "variant": {
+        "title": "Enabled Tab",
+        "children": "Enabled tab body"
+      }
+    },
+    {
+      "id": "layout_13",
+      "name": "Disabled Tab",
+      "component": "Tab",
+      "variant": {
+        "title": "Disabled Tab",
+        "disabled": true,
+        "children": "Disabled tab body"
+      }
+    },
+    {
+      "id": "layout_14",
+      "name": "Force Render",
+      "component": "Tab",
+      "variant": {
+        "title": "Force Render",
+        "forceRender": true,
+        "children": "Rendered immediately"
+      }
+    },
+    {
+      "id": "layout_15",
+      "name": "Destroy On Close",
+      "component": "Tab",
+      "variant": {
+        "title": "Destroy On Close",
+        "destroyOnClose": true,
+        "children": "Destroyed when hidden"
+      }
+    }
+  ],
+  "variables": {
+    "layout_3.text.color": "semantic.text.primary",
+    "layout_5.text.color": "semantic.text.secondary",
+    "layout_10.text.color": "semantic.text.secondary"
+  },
+  "styles": {
+    "layout_3.text": "text/heading/xl",
+    "layout_3.fill": "#1F2430",
+    "layout_5.text": "text/body/lg",
+    "layout_5.fill": "#5F6A7B",
+    "layout_7.fill": "undefined",
+    "layout_7.stroke": "undefined",
+    "layout_7.text": "undefined",
+    "layout_7.effect": "undefined",
+    "layout_7.radius": "undefined",
+    "layout_7.paddingX": "undefined",
+    "layout_7.paddingY": "10",
+    "layout_7.gap": "undefined",
+    "layout_7.fontSize": "14",
+    "layout_7.lineHeight": "20",
+    "layout_7.fontWeight": "medium",
+    "layout_7.minWidth": "undefined",
+    "layout_8.fill": "undefined",
+    "layout_8.stroke": "undefined",
+    "layout_8.text": "undefined",
+    "layout_8.effect": "undefined",
+    "layout_8.radius": "undefined",
+    "layout_8.paddingX": "undefined",
+    "layout_8.paddingY": "10",
+    "layout_8.gap": "undefined",
+    "layout_8.fontSize": "14",
+    "layout_8.lineHeight": "20",
+    "layout_8.fontWeight": "medium",
+    "layout_8.minWidth": "undefined",
+    "layout_9.fill": "undefined",
+    "layout_9.stroke": "undefined",
+    "layout_9.text": "undefined",
+    "layout_9.effect": "undefined",
+    "layout_9.radius": "undefined",
+    "layout_9.paddingX": "undefined",
+    "layout_9.paddingY": "10",
+    "layout_9.gap": "undefined",
+    "layout_9.fontSize": "14",
+    "layout_9.lineHeight": "20",
+    "layout_9.fontWeight": "medium",
+    "layout_9.minWidth": "undefined",
+    "layout_10.text": "text/body/lg",
+    "layout_10.fill": "#5F6A7B",
+    "layout_12.fill": "undefined",
+    "layout_12.stroke": "undefined",
+    "layout_12.text": "undefined",
+    "layout_12.effect": "undefined",
+    "layout_12.radius": "undefined",
+    "layout_12.paddingX": "undefined",
+    "layout_12.paddingY": "10",
+    "layout_12.gap": "undefined",
+    "layout_12.fontSize": "14",
+    "layout_12.lineHeight": "20",
+    "layout_12.fontWeight": "medium",
+    "layout_12.minWidth": "undefined",
+    "layout_13.fill": "undefined",
+    "layout_13.stroke": "undefined",
+    "layout_13.text": "undefined",
+    "layout_13.effect": "undefined",
+    "layout_13.radius": "undefined",
+    "layout_13.paddingX": "undefined",
+    "layout_13.paddingY": "10",
+    "layout_13.gap": "undefined",
+    "layout_13.fontSize": "14",
+    "layout_13.lineHeight": "20",
+    "layout_13.fontWeight": "medium",
+    "layout_13.minWidth": "undefined",
+    "layout_14.fill": "undefined",
+    "layout_14.stroke": "undefined",
+    "layout_14.text": "undefined",
+    "layout_14.effect": "undefined",
+    "layout_14.radius": "undefined",
+    "layout_14.paddingX": "undefined",
+    "layout_14.paddingY": "10",
+    "layout_14.gap": "undefined",
+    "layout_14.fontSize": "14",
+    "layout_14.lineHeight": "20",
+    "layout_14.fontWeight": "medium",
+    "layout_14.minWidth": "undefined",
+    "layout_15.fill": "undefined",
+    "layout_15.stroke": "undefined",
+    "layout_15.text": "undefined",
+    "layout_15.effect": "undefined",
+    "layout_15.radius": "undefined",
+    "layout_15.paddingX": "undefined",
+    "layout_15.paddingY": "10",
+    "layout_15.gap": "undefined",
+    "layout_15.fontSize": "14",
+    "layout_15.lineHeight": "20",
+    "layout_15.fontWeight": "medium",
+    "layout_15.minWidth": "undefined"
+  },
+  "modes": {
+    "brand": "core",
+    "theme": "core"
+  },
+  "metadata": {
+    "source": "miterlab-figma-generator",
+    "version": "0.1.0",
+    "generatedAt": "2026-03-17T13:31:34.341Z"
+  }
+}

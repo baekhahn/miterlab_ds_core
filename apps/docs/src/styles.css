@@ -1,0 +1,135 @@
+:root {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --line: #e0e6ee;
+  --text: #1f2430;
+  --muted: #5f6a7b;
+  --brand: #2e6cff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  border-right: 1px solid var(--line);
+  background: var(--surface);
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.brand {
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.nav-group {
+  margin-bottom: 18px;
+}
+
+.nav-title {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nav-link {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: #eef1f5;
+}
+
+.main {
+  padding: 28px;
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.page h1,
+.page h2,
+.page h3 {
+  margin-top: 0;
+}
+
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  background: #fcfdff;
+}
+
+.code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #12141a;
+  color: #f7f8fa;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .main {
+    padding: 16px;
+  }
+
+  .page {
+    padding: 16px;
+  }
+
+  .spec-grid {
+    grid-template-columns: 1fr;
+  }
+}

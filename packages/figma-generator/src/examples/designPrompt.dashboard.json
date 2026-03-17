@@ -1,0 +1,11 @@
+{
+  "screen": "dashboard",
+  "theme": "projectA",
+  "components": [
+    { "type": "text", "role": "title", "label": "Overview" },
+    { "type": "text", "role": "subtitle", "label": "Team metrics at a glance" },
+    { "type": "filter-button", "name": "activeFilter", "size": "md", "state": "default", "selected": true, "label": "Active" },
+    { "type": "filter-button", "name": "archivedFilter", "size": "md", "state": "default", "selected": false, "label": "Archived" },
+    { "type": "button", "name": "newReport", "variant": "neutral", "size": "md", "state": "default", "label": "New report" }
+  ]
+}

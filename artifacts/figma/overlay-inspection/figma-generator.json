@@ -1,0 +1,614 @@
+{
+  "nodes": [
+    {
+      "id": "layout_1",
+      "type": "FRAME",
+      "name": "Overlay inspection Screen",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 1240,
+      "children": [
+        {
+          "id": "layout_2",
+          "type": "FRAME",
+          "name": "header-section",
+          "x": 48,
+          "y": 40,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_3",
+              "type": "TEXT",
+              "name": "Text 1",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 32,
+              "text": "Overlay Inspection",
+              "variables": {
+                "text.color": "semantic.text.primary"
+              },
+              "style": {
+                "text": "text/heading/xl",
+                "fill": "#1F2430"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_4",
+          "type": "FRAME",
+          "name": "modal-section",
+          "x": 48,
+          "y": 116,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_5",
+              "type": "TEXT",
+              "name": "Text 2",
+              "x": 48,
+              "y": 116,
+              "width": 358,
+              "height": 24,
+              "text": "Dialog / Popup / Toast",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/lg",
+                "fill": "#5F6A7B"
+              }
+            },
+            {
+              "id": "layout_6",
+              "type": "FRAME",
+              "name": "modal-row-1",
+              "x": 48,
+              "y": 116,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_7",
+                  "type": "INSTANCE",
+                  "name": "Delete file",
+                  "x": 48,
+                  "y": 116,
+                  "width": 320,
+                  "height": 220,
+                  "component": "Dialog",
+                  "style": {
+                    "paddingY": 9,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "regular"
+                  },
+                  "variant": {
+                    "visible": true,
+                    "title": "Delete file",
+                    "content": "This action cannot be undone.",
+                    "actions": "Cancel|Delete",
+                    "closeOnMaskClick": true
+                  },
+                  "variables": {},
+                  "text": "Delete file"
+                },
+                {
+                  "id": "layout_8",
+                  "type": "INSTANCE",
+                  "name": "Bottom Popup",
+                  "x": 48,
+                  "y": 116,
+                  "width": 358,
+                  "height": 240,
+                  "component": "Popup",
+                  "style": {
+                    "paddingY": 9,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "regular"
+                  },
+                  "variant": {
+                    "visible": true,
+                    "position": "bottom",
+                    "showCloseButton": true,
+                    "children": "Popup content"
+                  },
+                  "variables": {},
+                  "text": "Popup content"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layout_9",
+          "type": "FRAME",
+          "name": "action-section",
+          "x": 48,
+          "y": 228,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_10",
+              "type": "FRAME",
+              "name": "action-row-1",
+              "x": 48,
+              "y": 228,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_11",
+                  "type": "INSTANCE",
+                  "name": "Saved toast",
+                  "x": 48,
+                  "y": 228,
+                  "width": 220,
+                  "height": 72,
+                  "component": "Toast",
+                  "style": {
+                    "paddingY": 9,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "regular"
+                  },
+                  "variant": {
+                    "content": "Saved successfully",
+                    "icon": "success",
+                    "duration": 2000,
+                    "position": "bottom"
+                  },
+                  "variables": {},
+                  "text": "Saved successfully"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_2",
+      "type": "FRAME",
+      "name": "header-section",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_3",
+          "type": "TEXT",
+          "name": "Text 1",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 32,
+          "text": "Overlay Inspection",
+          "variables": {
+            "text.color": "semantic.text.primary"
+          },
+          "style": {
+            "text": "text/heading/xl",
+            "fill": "#1F2430"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_3",
+      "type": "TEXT",
+      "name": "Text 1",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 32,
+      "text": "Overlay Inspection",
+      "variables": {
+        "text.color": "semantic.text.primary"
+      },
+      "style": {
+        "text": "text/heading/xl",
+        "fill": "#1F2430"
+      }
+    },
+    {
+      "id": "layout_4",
+      "type": "FRAME",
+      "name": "modal-section",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_5",
+          "type": "TEXT",
+          "name": "Text 2",
+          "x": 48,
+          "y": 116,
+          "width": 358,
+          "height": 24,
+          "text": "Dialog / Popup / Toast",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/lg",
+            "fill": "#5F6A7B"
+          }
+        },
+        {
+          "id": "layout_6",
+          "type": "FRAME",
+          "name": "modal-row-1",
+          "x": 48,
+          "y": 116,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_7",
+              "type": "INSTANCE",
+              "name": "Delete file",
+              "x": 48,
+              "y": 116,
+              "width": 320,
+              "height": 220,
+              "component": "Dialog",
+              "style": {
+                "paddingY": 9,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "visible": true,
+                "title": "Delete file",
+                "content": "This action cannot be undone.",
+                "actions": "Cancel|Delete",
+                "closeOnMaskClick": true
+              },
+              "variables": {},
+              "text": "Delete file"
+            },
+            {
+              "id": "layout_8",
+              "type": "INSTANCE",
+              "name": "Bottom Popup",
+              "x": 48,
+              "y": 116,
+              "width": 358,
+              "height": 240,
+              "component": "Popup",
+              "style": {
+                "paddingY": 9,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "visible": true,
+                "position": "bottom",
+                "showCloseButton": true,
+                "children": "Popup content"
+              },
+              "variables": {},
+              "text": "Popup content"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_5",
+      "type": "TEXT",
+      "name": "Text 2",
+      "x": 48,
+      "y": 116,
+      "width": 358,
+      "height": 24,
+      "text": "Dialog / Popup / Toast",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/lg",
+        "fill": "#5F6A7B"
+      }
+    },
+    {
+      "id": "layout_6",
+      "type": "FRAME",
+      "name": "modal-row-1",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_7",
+          "type": "INSTANCE",
+          "name": "Delete file",
+          "x": 48,
+          "y": 116,
+          "width": 320,
+          "height": 220,
+          "component": "Dialog",
+          "style": {
+            "paddingY": 9,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "visible": true,
+            "title": "Delete file",
+            "content": "This action cannot be undone.",
+            "actions": "Cancel|Delete",
+            "closeOnMaskClick": true
+          },
+          "variables": {},
+          "text": "Delete file"
+        },
+        {
+          "id": "layout_8",
+          "type": "INSTANCE",
+          "name": "Bottom Popup",
+          "x": 48,
+          "y": 116,
+          "width": 358,
+          "height": 240,
+          "component": "Popup",
+          "style": {
+            "paddingY": 9,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "visible": true,
+            "position": "bottom",
+            "showCloseButton": true,
+            "children": "Popup content"
+          },
+          "variables": {},
+          "text": "Popup content"
+        }
+      ]
+    },
+    {
+      "id": "layout_7",
+      "type": "INSTANCE",
+      "name": "Delete file",
+      "x": 48,
+      "y": 116,
+      "width": 320,
+      "height": 220,
+      "component": "Dialog",
+      "style": {
+        "paddingY": 9,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "visible": true,
+        "title": "Delete file",
+        "content": "This action cannot be undone.",
+        "actions": "Cancel|Delete",
+        "closeOnMaskClick": true
+      },
+      "variables": {},
+      "text": "Delete file"
+    },
+    {
+      "id": "layout_8",
+      "type": "INSTANCE",
+      "name": "Bottom Popup",
+      "x": 48,
+      "y": 116,
+      "width": 358,
+      "height": 240,
+      "component": "Popup",
+      "style": {
+        "paddingY": 9,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "visible": true,
+        "position": "bottom",
+        "showCloseButton": true,
+        "children": "Popup content"
+      },
+      "variables": {},
+      "text": "Popup content"
+    },
+    {
+      "id": "layout_9",
+      "type": "FRAME",
+      "name": "action-section",
+      "x": 48,
+      "y": 228,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_10",
+          "type": "FRAME",
+          "name": "action-row-1",
+          "x": 48,
+          "y": 228,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_11",
+              "type": "INSTANCE",
+              "name": "Saved toast",
+              "x": 48,
+              "y": 228,
+              "width": 220,
+              "height": 72,
+              "component": "Toast",
+              "style": {
+                "paddingY": 9,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "content": "Saved successfully",
+                "icon": "success",
+                "duration": 2000,
+                "position": "bottom"
+              },
+              "variables": {},
+              "text": "Saved successfully"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_10",
+      "type": "FRAME",
+      "name": "action-row-1",
+      "x": 48,
+      "y": 228,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_11",
+          "type": "INSTANCE",
+          "name": "Saved toast",
+          "x": 48,
+          "y": 228,
+          "width": 220,
+          "height": 72,
+          "component": "Toast",
+          "style": {
+            "paddingY": 9,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "content": "Saved successfully",
+            "icon": "success",
+            "duration": 2000,
+            "position": "bottom"
+          },
+          "variables": {},
+          "text": "Saved successfully"
+        }
+      ]
+    },
+    {
+      "id": "layout_11",
+      "type": "INSTANCE",
+      "name": "Saved toast",
+      "x": 48,
+      "y": 228,
+      "width": 220,
+      "height": 72,
+      "component": "Toast",
+      "style": {
+        "paddingY": 9,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "content": "Saved successfully",
+        "icon": "success",
+        "duration": 2000,
+        "position": "bottom"
+      },
+      "variables": {},
+      "text": "Saved successfully"
+    }
+  ],
+  "styles": {
+    "layout_3.text": "text/heading/xl",
+    "layout_3.fill": "#1F2430",
+    "layout_5.text": "text/body/lg",
+    "layout_5.fill": "#5F6A7B",
+    "layout_7.fill": "undefined",
+    "layout_7.stroke": "undefined",
+    "layout_7.text": "undefined",
+    "layout_7.effect": "undefined",
+    "layout_7.radius": "undefined",
+    "layout_7.paddingX": "undefined",
+    "layout_7.paddingY": "9",
+    "layout_7.gap": "undefined",
+    "layout_7.fontSize": "15",
+    "layout_7.lineHeight": "22",
+    "layout_7.fontWeight": "regular",
+    "layout_7.minWidth": "undefined",
+    "layout_8.fill": "undefined",
+    "layout_8.stroke": "undefined",
+    "layout_8.text": "undefined",
+    "layout_8.effect": "undefined",
+    "layout_8.radius": "undefined",
+    "layout_8.paddingX": "undefined",
+    "layout_8.paddingY": "9",
+    "layout_8.gap": "undefined",
+    "layout_8.fontSize": "15",
+    "layout_8.lineHeight": "22",
+    "layout_8.fontWeight": "regular",
+    "layout_8.minWidth": "undefined",
+    "layout_11.fill": "undefined",
+    "layout_11.stroke": "undefined",
+    "layout_11.text": "undefined",
+    "layout_11.effect": "undefined",
+    "layout_11.radius": "undefined",
+    "layout_11.paddingX": "undefined",
+    "layout_11.paddingY": "9",
+    "layout_11.gap": "undefined",
+    "layout_11.fontSize": "15",
+    "layout_11.lineHeight": "22",
+    "layout_11.fontWeight": "regular",
+    "layout_11.minWidth": "undefined"
+  },
+  "variables": {
+    "layout_3.text.color": "semantic.text.primary",
+    "layout_5.text.color": "semantic.text.secondary"
+  },
+  "components": {
+    "layout_7": {
+      "variants": {
+        "visible": true,
+        "title": "Delete file",
+        "content": "This action cannot be undone.",
+        "actions": "Cancel|Delete",
+        "closeOnMaskClick": true
+      }
+    },
+    "layout_8": {
+      "variants": {
+        "visible": true,
+        "position": "bottom",
+        "showCloseButton": true,
+        "children": "Popup content"
+      }
+    },
+    "layout_11": {
+      "variants": {
+        "content": "Saved successfully",
+        "icon": "success",
+        "duration": 2000,
+        "position": "bottom"
+      }
+    }
+  }
+}

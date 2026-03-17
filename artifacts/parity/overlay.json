@@ -1,0 +1,39 @@
+{
+  "family": "Dialog / Popup / Toast",
+  "beforeFixMismatchCount": 4,
+  "afterFixMismatchCount": 0,
+  "rows": [
+    {
+      "family": "Dialog / Popup / Toast",
+      "officialSpecField": "DialogProps, PopupProps, ToastShowProps",
+      "currentImplementationLocation": "packages/ui-core/src/registry.ts",
+      "mismatchType": "flattened",
+      "requiredFix": "Replace custom size/tone/variant overlay metadata with official prop metadata.",
+      "status": "resolved"
+    },
+    {
+      "family": "Dialog / Popup / Toast",
+      "officialSpecField": "visible, position, actions, icon, duration, closeOnMaskClick",
+      "currentImplementationLocation": "packages/figma-generator/src/layout/fromDesignPrompt.ts; packages/figma-generator/src/components/mapComponent.ts",
+      "mismatchType": "missing",
+      "requiredFix": "Map official overlay props into payload instead of generic variant/tone fields.",
+      "status": "resolved"
+    },
+    {
+      "family": "Dialog / Popup / Toast",
+      "officialSpecField": "Dialog / Popup / Toast family-specific rendering",
+      "currentImplementationLocation": "apps/figma-plugin/src/write/createInstanceNode.ts",
+      "mismatchType": "flattened",
+      "requiredFix": "Replace generic surface and status renderers with official family-specific rendering.",
+      "status": "resolved"
+    },
+    {
+      "family": "Dialog / Popup / Toast",
+      "officialSpecField": "overlay-inspection output",
+      "currentImplementationLocation": "packages/figma-generator/src/examples/prompts",
+      "mismatchType": "missing",
+      "requiredFix": "Add a minimal overlay inspection prompt and run path.",
+      "status": "resolved"
+    }
+  ]
+}

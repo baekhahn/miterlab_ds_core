@@ -1,0 +1,68 @@
+component: Input
+status: draft
+purpose: freeze Ant Design Mobile InputProps as the source schema for core input
+props:
+  maxLength: number
+  minLength: number
+  autoComplete: string
+  autoFocus: [false, true]
+  pattern: string
+  inputMode: string
+  type: string
+  name: string
+  onFocus: function
+  onBlur: function
+  onPaste: function
+  autoCapitalize: string
+  autoCorrect: string
+  onKeyDown: function
+  onKeyUp: function
+  onCompositionStart: function
+  onCompositionEnd: function
+  onClick: function
+  step: number
+  id: string
+  placeholder: string
+  readOnly: [false, true]
+  disabled: [false, true]
+  enterKeyHint: string
+  value: string
+  defaultValue: string
+  onChange: function
+  clearable: [false, true]
+  clearIcon: reactNode
+  onlyShowClearWhenFocus: [false, true]
+  onClear: function
+  onEnterPress: function
+  min: number
+  max: number
+  role: string
+defaults:
+  height: 42
+  paddingX: 14
+  paddingY: 10
+  radius: 12
+internalLayout:
+  minWidth: 220
+  textAlignX: start
+  textAlignY: center
+slots: [field, value, placeholder, action]
+semanticMapping:
+  default:
+    default:
+      field.background: semantic.surface.default
+      field.border: semantic.border.default
+      value.color: semantic.text.primary
+      placeholder.color: semantic.text.muted
+    disabled:
+      field.background: semantic.surface.subtle
+      field.border: semantic.border.subtle
+      value.color: semantic.text.muted
+      placeholder.color: semantic.text.muted
+    readOnly:
+      field.background: semantic.surface.subtle
+      field.border: semantic.border.default
+      value.color: semantic.text.secondary
+      placeholder.color: semantic.text.muted
+notes:
+  - source schema is Ant Design Mobile InputProps

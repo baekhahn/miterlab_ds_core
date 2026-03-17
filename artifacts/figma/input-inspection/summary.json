@@ -1,0 +1,43 @@
+{
+  "screen": "input-inspection",
+  "theme": "core",
+  "sectionsCreated": [
+    "header",
+    "content",
+    "form",
+    "action"
+  ],
+  "componentCount": 9,
+  "nodeCount": 20,
+  "warnings": [
+    "No primary action button found"
+  ],
+  "evaluationScore": 96,
+  "passed": true,
+  "payloadValidation": {
+    "valid": true,
+    "errors": [],
+    "warnings": []
+  },
+  "evaluation": {
+    "score": 96,
+    "passed": true,
+    "warnings": [
+      {
+        "level": "warning",
+        "code": "missing_primary_action",
+        "message": "No primary action button found"
+      }
+    ],
+    "errors": [],
+    "improvementSuggestions": [
+      {
+        "code": "missing_primary_action",
+        "message": "action 영역에 primary 버튼을 추가해 주세요."
+      }
+    ],
+    "affectedNodes": [],
+    "affectedComponents": [],
+    "summary": "QA passed with score 96. 1 warning(s) found."
+  }
+}

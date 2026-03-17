@@ -1,0 +1,143 @@
+{
+  "type": "frame",
+  "name": "List cell inspection Screen",
+  "width": 1440,
+  "height": 1240,
+  "children": [
+    {
+      "type": "stack",
+      "name": "header-section",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 12,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 1",
+          "content": "List / Cell Inspection",
+          "width": 358,
+          "height": 32,
+          "textStyle": "text/heading/xl",
+          "colorToken": "semantic.text.primary"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "list-section",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 16,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 2",
+          "content": "List Props",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
+        },
+        {
+          "type": "stack",
+          "name": "list-row-1",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Default List",
+              "component": "list",
+              "props": {
+                "header": "Settings",
+                "mode": "default",
+                "children": "General|Notifications|Privacy"
+              },
+              "width": 358,
+              "height": 160,
+              "label": "Default List"
+            },
+            {
+              "type": "component",
+              "name": "Card List",
+              "component": "list",
+              "props": {
+                "header": "Account",
+                "mode": "card",
+                "children": "Profile|Billing|Security"
+              },
+              "width": 358,
+              "height": 184,
+              "label": "Card List"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "Text 5",
+          "content": "Cell Props",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
+        },
+        {
+          "type": "stack",
+          "name": "list-row-2",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Basic Cell",
+              "component": "cell",
+              "props": {
+                "title": "Basic Cell",
+                "description": "Default description",
+                "extra": "Extra"
+              },
+              "width": 358,
+              "height": 72,
+              "label": "Basic Cell"
+            },
+            {
+              "type": "component",
+              "name": "Clickable Cell",
+              "component": "cell",
+              "props": {
+                "title": "Clickable Cell",
+                "prefix": "P",
+                "extra": "More",
+                "clickable": true,
+                "arrowIcon": true
+              },
+              "width": 358,
+              "height": 56,
+              "label": "Clickable Cell"
+            },
+            {
+              "type": "component",
+              "name": "Disabled Cell",
+              "component": "cell",
+              "props": {
+                "title": "Disabled Cell",
+                "description": "Unavailable",
+                "disabled": true,
+                "arrow": true
+              },
+              "width": 358,
+              "height": 72,
+              "label": "Disabled Cell"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

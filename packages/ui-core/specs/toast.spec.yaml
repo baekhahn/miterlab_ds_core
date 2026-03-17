@@ -1,0 +1,31 @@
+component: Toast
+status: draft
+purpose: freeze Ant Design Mobile ToastShowProps as the core toast schema
+props:
+  afterClose: function
+  maskStyle: object
+  maskClassName: string
+  maskClickable: [false, true]
+  content: reactNode
+  icon: [success, fail, loading, reactNode]
+  duration: number
+  position: [top, bottom, center]
+  getContainer: function
+  stopPropagation: array
+variants:
+  icon: [success, fail, loading, reactNode]
+  position: [top, bottom, center]
+states:
+  toast: [visible, hidden]
+metrics:
+  maxWidth: 204px
+  radius: 8px
+  textPadding: 12px
+  iconPaddingY: 35px
+  iconPaddingX: 12px
+  iconSize: 36px
+tokens:
+  cssVars:
+    - --size
+notes:
+  - source schema is Ant Design Mobile ToastShowProps

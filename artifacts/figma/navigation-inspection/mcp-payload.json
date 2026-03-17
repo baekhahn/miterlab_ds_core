@@ -1,0 +1,534 @@
+{
+  "document": {
+    "name": "navigation-inspection screen",
+    "screen": "navigation-inspection",
+    "theme": "core"
+  },
+  "nodes": [
+    {
+      "id": "layout_1",
+      "type": "FRAME",
+      "name": "Navigation inspection Screen",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 1240,
+      "children": [
+        {
+          "id": "layout_2",
+          "type": "FRAME",
+          "name": "header-section",
+          "x": 48,
+          "y": 40,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_3",
+              "type": "TEXT",
+              "name": "Text 1",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 32,
+              "text": "Navigation Inspection",
+              "variables": {
+                "text.color": "semantic.text.primary"
+              },
+              "style": {
+                "text": "text/heading/xl",
+                "fill": "#1F2430"
+              }
+            },
+            {
+              "id": "layout_4",
+              "type": "FRAME",
+              "name": "header-row-1",
+              "x": 48,
+              "y": 40,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_5",
+                  "type": "INSTANCE",
+                  "name": "NavBar",
+                  "x": 48,
+                  "y": 40,
+                  "width": 358,
+                  "height": 45,
+                  "component": "NavBar",
+                  "style": {
+                    "paddingY": 9,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "regular"
+                  },
+                  "variant": {
+                    "backIcon": true,
+                    "right": "Edit",
+                    "children": "Page title"
+                  },
+                  "variables": {},
+                  "text": "Page title"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layout_6",
+          "type": "FRAME",
+          "name": "content-section",
+          "x": 48,
+          "y": 156,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_7",
+              "type": "TEXT",
+              "name": "Text 3",
+              "x": 48,
+              "y": 156,
+              "width": 358,
+              "height": 24,
+              "text": "TabBar Props",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/lg",
+                "fill": "#5F6A7B"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_8",
+          "type": "FRAME",
+          "name": "footer-section",
+          "x": 48,
+          "y": 232,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_9",
+              "type": "FRAME",
+              "name": "footer-row-1",
+              "x": 48,
+              "y": 232,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_10",
+                  "type": "INSTANCE",
+                  "name": "TabBar",
+                  "x": 48,
+                  "y": 232,
+                  "width": 358,
+                  "height": 64,
+                  "component": "TabBar",
+                  "style": {
+                    "paddingY": 9,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "regular"
+                  },
+                  "variant": {
+                    "activeKey": "home",
+                    "safeArea": true,
+                    "children": "home:Home|search:Search|profile:Profile",
+                    "badge": "3"
+                  },
+                  "variables": {},
+                  "text": "home:Home|search:Search|profile:Profile"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_2",
+      "type": "FRAME",
+      "name": "header-section",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_3",
+          "type": "TEXT",
+          "name": "Text 1",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 32,
+          "text": "Navigation Inspection",
+          "variables": {
+            "text.color": "semantic.text.primary"
+          },
+          "style": {
+            "text": "text/heading/xl",
+            "fill": "#1F2430"
+          }
+        },
+        {
+          "id": "layout_4",
+          "type": "FRAME",
+          "name": "header-row-1",
+          "x": 48,
+          "y": 40,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_5",
+              "type": "INSTANCE",
+              "name": "NavBar",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 45,
+              "component": "NavBar",
+              "style": {
+                "paddingY": 9,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "backIcon": true,
+                "right": "Edit",
+                "children": "Page title"
+              },
+              "variables": {},
+              "text": "Page title"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_3",
+      "type": "TEXT",
+      "name": "Text 1",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 32,
+      "text": "Navigation Inspection",
+      "variables": {
+        "text.color": "semantic.text.primary"
+      },
+      "style": {
+        "text": "text/heading/xl",
+        "fill": "#1F2430"
+      }
+    },
+    {
+      "id": "layout_4",
+      "type": "FRAME",
+      "name": "header-row-1",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_5",
+          "type": "INSTANCE",
+          "name": "NavBar",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 45,
+          "component": "NavBar",
+          "style": {
+            "paddingY": 9,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "backIcon": true,
+            "right": "Edit",
+            "children": "Page title"
+          },
+          "variables": {},
+          "text": "Page title"
+        }
+      ]
+    },
+    {
+      "id": "layout_5",
+      "type": "INSTANCE",
+      "name": "NavBar",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 45,
+      "component": "NavBar",
+      "style": {
+        "paddingY": 9,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "backIcon": true,
+        "right": "Edit",
+        "children": "Page title"
+      },
+      "variables": {},
+      "text": "Page title"
+    },
+    {
+      "id": "layout_6",
+      "type": "FRAME",
+      "name": "content-section",
+      "x": 48,
+      "y": 156,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_7",
+          "type": "TEXT",
+          "name": "Text 3",
+          "x": 48,
+          "y": 156,
+          "width": 358,
+          "height": 24,
+          "text": "TabBar Props",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/lg",
+            "fill": "#5F6A7B"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_7",
+      "type": "TEXT",
+      "name": "Text 3",
+      "x": 48,
+      "y": 156,
+      "width": 358,
+      "height": 24,
+      "text": "TabBar Props",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/lg",
+        "fill": "#5F6A7B"
+      }
+    },
+    {
+      "id": "layout_8",
+      "type": "FRAME",
+      "name": "footer-section",
+      "x": 48,
+      "y": 232,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_9",
+          "type": "FRAME",
+          "name": "footer-row-1",
+          "x": 48,
+          "y": 232,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_10",
+              "type": "INSTANCE",
+              "name": "TabBar",
+              "x": 48,
+              "y": 232,
+              "width": 358,
+              "height": 64,
+              "component": "TabBar",
+              "style": {
+                "paddingY": 9,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "activeKey": "home",
+                "safeArea": true,
+                "children": "home:Home|search:Search|profile:Profile",
+                "badge": "3"
+              },
+              "variables": {},
+              "text": "home:Home|search:Search|profile:Profile"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_9",
+      "type": "FRAME",
+      "name": "footer-row-1",
+      "x": 48,
+      "y": 232,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_10",
+          "type": "INSTANCE",
+          "name": "TabBar",
+          "x": 48,
+          "y": 232,
+          "width": 358,
+          "height": 64,
+          "component": "TabBar",
+          "style": {
+            "paddingY": 9,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "activeKey": "home",
+            "safeArea": true,
+            "children": "home:Home|search:Search|profile:Profile",
+            "badge": "3"
+          },
+          "variables": {},
+          "text": "home:Home|search:Search|profile:Profile"
+        }
+      ]
+    },
+    {
+      "id": "layout_10",
+      "type": "INSTANCE",
+      "name": "TabBar",
+      "x": 48,
+      "y": 232,
+      "width": 358,
+      "height": 64,
+      "component": "TabBar",
+      "style": {
+        "paddingY": 9,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "activeKey": "home",
+        "safeArea": true,
+        "children": "home:Home|search:Search|profile:Profile",
+        "badge": "3"
+      },
+      "variables": {},
+      "text": "home:Home|search:Search|profile:Profile"
+    }
+  ],
+  "frames": [
+    {
+      "id": "layout_1",
+      "name": "Navigation inspection Screen"
+    },
+    {
+      "id": "layout_2",
+      "name": "header-section"
+    },
+    {
+      "id": "layout_4",
+      "name": "header-row-1"
+    },
+    {
+      "id": "layout_6",
+      "name": "content-section"
+    },
+    {
+      "id": "layout_8",
+      "name": "footer-section"
+    },
+    {
+      "id": "layout_9",
+      "name": "footer-row-1"
+    }
+  ],
+  "components": [
+    {
+      "id": "layout_5",
+      "name": "NavBar",
+      "component": "NavBar",
+      "variant": {
+        "backIcon": true,
+        "right": "Edit",
+        "children": "Page title"
+      }
+    },
+    {
+      "id": "layout_10",
+      "name": "TabBar",
+      "component": "TabBar",
+      "variant": {
+        "activeKey": "home",
+        "safeArea": true,
+        "children": "home:Home|search:Search|profile:Profile",
+        "badge": "3"
+      }
+    }
+  ],
+  "variables": {
+    "layout_3.text.color": "semantic.text.primary",
+    "layout_7.text.color": "semantic.text.secondary"
+  },
+  "styles": {
+    "layout_3.text": "text/heading/xl",
+    "layout_3.fill": "#1F2430",
+    "layout_5.fill": "undefined",
+    "layout_5.stroke": "undefined",
+    "layout_5.text": "undefined",
+    "layout_5.effect": "undefined",
+    "layout_5.radius": "undefined",
+    "layout_5.paddingX": "undefined",
+    "layout_5.paddingY": "9",
+    "layout_5.gap": "undefined",
+    "layout_5.fontSize": "15",
+    "layout_5.lineHeight": "22",
+    "layout_5.fontWeight": "regular",
+    "layout_5.minWidth": "undefined",
+    "layout_7.text": "text/body/lg",
+    "layout_7.fill": "#5F6A7B",
+    "layout_10.fill": "undefined",
+    "layout_10.stroke": "undefined",
+    "layout_10.text": "undefined",
+    "layout_10.effect": "undefined",
+    "layout_10.radius": "undefined",
+    "layout_10.paddingX": "undefined",
+    "layout_10.paddingY": "9",
+    "layout_10.gap": "undefined",
+    "layout_10.fontSize": "15",
+    "layout_10.lineHeight": "22",
+    "layout_10.fontWeight": "regular",
+    "layout_10.minWidth": "undefined"
+  },
+  "modes": {
+    "brand": "core",
+    "theme": "core"
+  },
+  "metadata": {
+    "source": "miterlab-figma-generator",
+    "version": "0.1.0",
+    "generatedAt": "2026-03-17T13:40:30.704Z"
+  }
+}

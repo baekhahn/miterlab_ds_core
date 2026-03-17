@@ -1,0 +1,120 @@
+{
+  "type": "frame",
+  "name": "Overlay inspection Screen",
+  "width": 1440,
+  "height": 1240,
+  "children": [
+    {
+      "type": "stack",
+      "name": "header-section",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 12,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 1",
+          "content": "Overlay Inspection",
+          "width": 358,
+          "height": 32,
+          "textStyle": "text/heading/xl",
+          "colorToken": "semantic.text.primary"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "modal-section",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 16,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 2",
+          "content": "Dialog / Popup / Toast",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
+        },
+        {
+          "type": "stack",
+          "name": "modal-row-1",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Delete file",
+              "component": "dialog",
+              "props": {
+                "visible": true,
+                "title": "Delete file",
+                "content": "This action cannot be undone.",
+                "actions": "Cancel|Delete",
+                "closeOnMaskClick": true
+              },
+              "width": 320,
+              "height": 220,
+              "label": "Delete file"
+            },
+            {
+              "type": "component",
+              "name": "Bottom Popup",
+              "component": "popup",
+              "props": {
+                "visible": true,
+                "position": "bottom",
+                "showCloseButton": true,
+                "children": "Popup content"
+              },
+              "width": 358,
+              "height": 240,
+              "label": "Bottom Popup"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "action-section",
+      "x": 48,
+      "y": 228,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 24,
+      "children": [
+        {
+          "type": "stack",
+          "name": "action-row-1",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Saved toast",
+              "component": "toast",
+              "props": {
+                "content": "Saved successfully",
+                "icon": "success",
+                "duration": 2000,
+                "position": "bottom"
+              },
+              "width": 220,
+              "height": 72,
+              "label": "Saved toast"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

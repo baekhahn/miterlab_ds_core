@@ -1,0 +1,168 @@
+{
+  "type": "frame",
+  "name": "Tabs inspection Screen",
+  "width": 1440,
+  "height": 1240,
+  "children": [
+    {
+      "type": "stack",
+      "name": "header-section",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 12,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 1",
+          "content": "Tabs Inspection",
+          "width": 358,
+          "height": 32,
+          "textStyle": "text/heading/xl",
+          "colorToken": "semantic.text.primary"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "content-section",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 16,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 2",
+          "content": "Tabs Props",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
+        },
+        {
+          "type": "stack",
+          "name": "content-row-1",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Auto Line",
+              "component": "tabs",
+              "props": {
+                "activeKey": "activity",
+                "activeLineMode": "auto",
+                "children": "overview:Overview|activity:Activity|settings:Settings"
+              },
+              "width": 320,
+              "height": 92,
+              "label": "Auto Line"
+            },
+            {
+              "type": "component",
+              "name": "Full Line Stretch",
+              "component": "tabs",
+              "props": {
+                "activeKey": "home",
+                "activeLineMode": "full",
+                "stretch": true,
+                "children": "home:Home|search:Search|library:Library"
+              },
+              "width": 320,
+              "height": 92,
+              "label": "Full Line Stretch"
+            },
+            {
+              "type": "component",
+              "name": "Fixed Line RTL",
+              "component": "tabs",
+              "props": {
+                "defaultActiveKey": "three",
+                "activeLineMode": "fixed",
+                "children": "one:One|two:Two|three:Three",
+                "direction": "rtl",
+                "autoScroll": true
+              },
+              "width": 320,
+              "height": 92,
+              "label": "Fixed Line RTL"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "Text 6",
+          "content": "Tab Props",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
+        },
+        {
+          "type": "stack",
+          "name": "content-row-2",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Enabled Tab",
+              "component": "tab",
+              "props": {
+                "title": "Enabled Tab",
+                "children": "Enabled tab body"
+              },
+              "width": 120,
+              "height": 40,
+              "label": "Enabled Tab"
+            },
+            {
+              "type": "component",
+              "name": "Disabled Tab",
+              "component": "tab",
+              "props": {
+                "title": "Disabled Tab",
+                "disabled": true,
+                "children": "Disabled tab body"
+              },
+              "width": 120,
+              "height": 40,
+              "label": "Disabled Tab"
+            },
+            {
+              "type": "component",
+              "name": "Force Render",
+              "component": "tab",
+              "props": {
+                "title": "Force Render",
+                "forceRender": true,
+                "children": "Rendered immediately"
+              },
+              "width": 120,
+              "height": 40,
+              "label": "Force Render"
+            },
+            {
+              "type": "component",
+              "name": "Destroy On Close",
+              "component": "tab",
+              "props": {
+                "title": "Destroy On Close",
+                "destroyOnClose": true,
+                "children": "Destroyed when hidden"
+              },
+              "width": 120,
+              "height": 40,
+              "label": "Destroy On Close"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "type": "frame",
+  "name": "Login Screen",
+  "width": 390,
+  "height": 884,
+  "children": [
+    {
+      "type": "stack",
+      "name": "header-section",
+      "x": 16,
+      "y": 40,
+      "width": 358,
+      "direction": "vertical",
+      "gap": 12,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 1",
+          "content": "로그인",
+          "width": 358,
+          "height": 32,
+          "textStyle": "text/heading/xl",
+          "colorToken": "semantic.text.primary"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "form-section",
+      "x": 16,
+      "y": 116,
+      "width": 358,
+      "direction": "vertical",
+      "gap": 16,
+      "children": [
+        {
+          "type": "component",
+          "name": "아이디",
+          "component": "input",
+          "props": {
+            "variant": "default",
+            "tone": "default",
+            "size": "md",
+            "state": "default"
+          },
+          "width": 358,
+          "height": 40,
+          "label": "아이디"
+        },
+        {
+          "type": "component",
+          "name": "비밀번호 ••••",
+          "component": "input",
+          "props": {
+            "variant": "default",
+            "tone": "default",
+            "size": "md",
+            "state": "default"
+          },
+          "width": 358,
+          "height": 40,
+          "label": "비밀번호 ••••"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "action-section",
+      "x": 16,
+      "y": 244,
+      "width": 358,
+      "direction": "vertical",
+      "gap": 24,
+      "children": [
+        {
+          "type": "component",
+          "name": "Primary 스타일로 텍스트는 \"로그인\" 넣어",
+          "component": "button",
+          "props": {
+            "variant": "solid-primary",
+            "tone": "default",
+            "size": "md",
+            "state": "default",
+            "iconOnly": false,
+            "fullWidth": true,
+            "loading": false
+          },
+          "width": 358,
+          "height": 40,
+          "label": "primary 스타일로 텍스트는 \"로그인\" 넣어"
+        }
+      ]
+    }
+  ]
+}

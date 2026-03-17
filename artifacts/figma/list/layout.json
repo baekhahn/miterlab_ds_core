@@ -1,0 +1,90 @@
+{
+  "type": "frame",
+  "name": "List Screen",
+  "width": 390,
+  "height": 884,
+  "children": [
+    {
+      "type": "stack",
+      "name": "header-section",
+      "x": 16,
+      "y": 40,
+      "width": 358,
+      "direction": "vertical",
+      "gap": 12,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 1",
+          "content": "Items",
+          "width": 358,
+          "height": 32,
+          "textStyle": "text/heading/xl",
+          "colorToken": "semantic.text.primary"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "filter-section",
+      "x": 16,
+      "y": 116,
+      "width": 358,
+      "direction": "vertical",
+      "gap": 16,
+      "children": [
+        {
+          "type": "component",
+          "name": "Active",
+          "component": "filter-button",
+          "props": {
+            "size": "md",
+            "state": "default",
+            "selected": true
+          },
+          "width": 320,
+          "height": 32,
+          "label": "Active"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "action-section",
+      "x": 16,
+      "y": 192,
+      "width": 358,
+      "direction": "vertical",
+      "gap": 24,
+      "children": [
+        {
+          "type": "component",
+          "name": "New item",
+          "component": "button",
+          "props": {
+            "variant": "primary",
+            "tone": "default",
+            "size": "md",
+            "state": "default",
+            "iconOnly": false,
+            "fullWidth": false,
+            "loading": false
+          },
+          "width": 358,
+          "height": 40,
+          "label": "New item"
+        }
+      ]
+    },
+    {
+      "type": "stack",
+      "name": "list-section",
+      "x": 16,
+      "y": 268,
+      "width": 358,
+      "direction": "vertical",
+      "gap": 16,
+      "children": []
+    }
+  ]
+}

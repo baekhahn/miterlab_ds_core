@@ -1,0 +1,462 @@
+{
+  "document": {
+    "name": "form-inspection screen",
+    "screen": "form-inspection",
+    "theme": "core"
+  },
+  "nodes": [
+    {
+      "id": "layout_1",
+      "type": "FRAME",
+      "name": "Form inspection Screen",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 1240,
+      "children": [
+        {
+          "id": "layout_2",
+          "type": "FRAME",
+          "name": "header-section",
+          "x": 48,
+          "y": 40,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_3",
+              "type": "TEXT",
+              "name": "Text 1",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 32,
+              "text": "Form Inspection",
+              "variables": {
+                "text.color": "semantic.text.primary"
+              },
+              "style": {
+                "text": "text/heading/xl",
+                "fill": "#1F2430"
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout_4",
+          "type": "FRAME",
+          "name": "form-section",
+          "x": 48,
+          "y": 116,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_5",
+              "type": "FRAME",
+              "name": "form-row-1",
+              "x": 48,
+              "y": 116,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_6",
+                  "type": "INSTANCE",
+                  "name": "Email",
+                  "x": 48,
+                  "y": 116,
+                  "width": 358,
+                  "height": 280,
+                  "component": "Form",
+                  "style": {
+                    "paddingY": 9,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "regular"
+                  },
+                  "variant": {
+                    "footer": "Submit",
+                    "mode": "default",
+                    "layout": "vertical",
+                    "label": "Email",
+                    "help": "We will never share your email.",
+                    "required": true,
+                    "childElementPosition": "normal",
+                    "description": "Primary account email"
+                  },
+                  "variables": {},
+                  "text": "Email"
+                },
+                {
+                  "id": "layout_7",
+                  "type": "INSTANCE",
+                  "name": "Phone",
+                  "x": 48,
+                  "y": 116,
+                  "width": 358,
+                  "height": 240,
+                  "component": "Form",
+                  "style": {
+                    "paddingY": 9,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "regular"
+                  },
+                  "variant": {
+                    "mode": "card",
+                    "layout": "horizontal",
+                    "label": "Phone",
+                    "help": "Optional",
+                    "childElementPosition": "right",
+                    "extra": "Verified",
+                    "clickable": true,
+                    "arrowIcon": true
+                  },
+                  "variables": {},
+                  "text": "Phone"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_2",
+      "type": "FRAME",
+      "name": "header-section",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_3",
+          "type": "TEXT",
+          "name": "Text 1",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 32,
+          "text": "Form Inspection",
+          "variables": {
+            "text.color": "semantic.text.primary"
+          },
+          "style": {
+            "text": "text/heading/xl",
+            "fill": "#1F2430"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layout_3",
+      "type": "TEXT",
+      "name": "Text 1",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 32,
+      "text": "Form Inspection",
+      "variables": {
+        "text.color": "semantic.text.primary"
+      },
+      "style": {
+        "text": "text/heading/xl",
+        "fill": "#1F2430"
+      }
+    },
+    {
+      "id": "layout_4",
+      "type": "FRAME",
+      "name": "form-section",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_5",
+          "type": "FRAME",
+          "name": "form-row-1",
+          "x": 48,
+          "y": 116,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_6",
+              "type": "INSTANCE",
+              "name": "Email",
+              "x": 48,
+              "y": 116,
+              "width": 358,
+              "height": 280,
+              "component": "Form",
+              "style": {
+                "paddingY": 9,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "footer": "Submit",
+                "mode": "default",
+                "layout": "vertical",
+                "label": "Email",
+                "help": "We will never share your email.",
+                "required": true,
+                "childElementPosition": "normal",
+                "description": "Primary account email"
+              },
+              "variables": {},
+              "text": "Email"
+            },
+            {
+              "id": "layout_7",
+              "type": "INSTANCE",
+              "name": "Phone",
+              "x": 48,
+              "y": 116,
+              "width": 358,
+              "height": 240,
+              "component": "Form",
+              "style": {
+                "paddingY": 9,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "mode": "card",
+                "layout": "horizontal",
+                "label": "Phone",
+                "help": "Optional",
+                "childElementPosition": "right",
+                "extra": "Verified",
+                "clickable": true,
+                "arrowIcon": true
+              },
+              "variables": {},
+              "text": "Phone"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_5",
+      "type": "FRAME",
+      "name": "form-row-1",
+      "x": 48,
+      "y": 116,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_6",
+          "type": "INSTANCE",
+          "name": "Email",
+          "x": 48,
+          "y": 116,
+          "width": 358,
+          "height": 280,
+          "component": "Form",
+          "style": {
+            "paddingY": 9,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "footer": "Submit",
+            "mode": "default",
+            "layout": "vertical",
+            "label": "Email",
+            "help": "We will never share your email.",
+            "required": true,
+            "childElementPosition": "normal",
+            "description": "Primary account email"
+          },
+          "variables": {},
+          "text": "Email"
+        },
+        {
+          "id": "layout_7",
+          "type": "INSTANCE",
+          "name": "Phone",
+          "x": 48,
+          "y": 116,
+          "width": 358,
+          "height": 240,
+          "component": "Form",
+          "style": {
+            "paddingY": 9,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "mode": "card",
+            "layout": "horizontal",
+            "label": "Phone",
+            "help": "Optional",
+            "childElementPosition": "right",
+            "extra": "Verified",
+            "clickable": true,
+            "arrowIcon": true
+          },
+          "variables": {},
+          "text": "Phone"
+        }
+      ]
+    },
+    {
+      "id": "layout_6",
+      "type": "INSTANCE",
+      "name": "Email",
+      "x": 48,
+      "y": 116,
+      "width": 358,
+      "height": 280,
+      "component": "Form",
+      "style": {
+        "paddingY": 9,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "footer": "Submit",
+        "mode": "default",
+        "layout": "vertical",
+        "label": "Email",
+        "help": "We will never share your email.",
+        "required": true,
+        "childElementPosition": "normal",
+        "description": "Primary account email"
+      },
+      "variables": {},
+      "text": "Email"
+    },
+    {
+      "id": "layout_7",
+      "type": "INSTANCE",
+      "name": "Phone",
+      "x": 48,
+      "y": 116,
+      "width": 358,
+      "height": 240,
+      "component": "Form",
+      "style": {
+        "paddingY": 9,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "mode": "card",
+        "layout": "horizontal",
+        "label": "Phone",
+        "help": "Optional",
+        "childElementPosition": "right",
+        "extra": "Verified",
+        "clickable": true,
+        "arrowIcon": true
+      },
+      "variables": {},
+      "text": "Phone"
+    }
+  ],
+  "frames": [
+    {
+      "id": "layout_1",
+      "name": "Form inspection Screen"
+    },
+    {
+      "id": "layout_2",
+      "name": "header-section"
+    },
+    {
+      "id": "layout_4",
+      "name": "form-section"
+    },
+    {
+      "id": "layout_5",
+      "name": "form-row-1"
+    }
+  ],
+  "components": [
+    {
+      "id": "layout_6",
+      "name": "Email",
+      "component": "Form",
+      "variant": {
+        "footer": "Submit",
+        "mode": "default",
+        "layout": "vertical",
+        "label": "Email",
+        "help": "We will never share your email.",
+        "required": true,
+        "childElementPosition": "normal",
+        "description": "Primary account email"
+      }
+    },
+    {
+      "id": "layout_7",
+      "name": "Phone",
+      "component": "Form",
+      "variant": {
+        "mode": "card",
+        "layout": "horizontal",
+        "label": "Phone",
+        "help": "Optional",
+        "childElementPosition": "right",
+        "extra": "Verified",
+        "clickable": true,
+        "arrowIcon": true
+      }
+    }
+  ],
+  "variables": {
+    "layout_3.text.color": "semantic.text.primary"
+  },
+  "styles": {
+    "layout_3.text": "text/heading/xl",
+    "layout_3.fill": "#1F2430",
+    "layout_6.fill": "undefined",
+    "layout_6.stroke": "undefined",
+    "layout_6.text": "undefined",
+    "layout_6.effect": "undefined",
+    "layout_6.radius": "undefined",
+    "layout_6.paddingX": "undefined",
+    "layout_6.paddingY": "9",
+    "layout_6.gap": "undefined",
+    "layout_6.fontSize": "15",
+    "layout_6.lineHeight": "22",
+    "layout_6.fontWeight": "regular",
+    "layout_6.minWidth": "undefined",
+    "layout_7.fill": "undefined",
+    "layout_7.stroke": "undefined",
+    "layout_7.text": "undefined",
+    "layout_7.effect": "undefined",
+    "layout_7.radius": "undefined",
+    "layout_7.paddingX": "undefined",
+    "layout_7.paddingY": "9",
+    "layout_7.gap": "undefined",
+    "layout_7.fontSize": "15",
+    "layout_7.lineHeight": "22",
+    "layout_7.fontWeight": "regular",
+    "layout_7.minWidth": "undefined"
+  },
+  "modes": {
+    "brand": "core",
+    "theme": "core"
+  },
+  "metadata": {
+    "source": "miterlab-figma-generator",
+    "version": "0.1.0",
+    "generatedAt": "2026-03-17T13:40:49.881Z"
+  }
+}

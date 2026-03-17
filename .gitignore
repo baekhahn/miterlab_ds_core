@@ -1,0 +1,7 @@
+node_modules
+.pnpm-store
+dist
+.DS_Store
+.cache
+apps/docs/.docusaurus
+apps/docs/build

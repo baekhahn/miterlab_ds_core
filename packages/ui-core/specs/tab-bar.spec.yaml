@@ -1,0 +1,28 @@
+component: TabBar
+status: draft
+purpose: freeze Ant Design Mobile TabBarProps and TabBarItemProps as the core tab bar schema
+props:
+  activeKey: string
+  defaultActiveKey: string
+  onChange: function
+  safeArea: [false, true]
+  children: reactNode
+itemProps:
+  icon: [reactNode, function]
+  title: [reactNode, function]
+  badge: reactNode
+  onClick: function
+variants:
+  safeArea: [false, true]
+states:
+  item: [default, active]
+metrics:
+  minHeight: 48px
+  itemPaddingY: 4px
+  itemPaddingX: 8px
+  iconSize: 24px
+  titleLineHeight: 15px
+tokens:
+  cssVars: []
+notes:
+  - source schema is Ant Design Mobile TabBarProps and TabBarItemProps

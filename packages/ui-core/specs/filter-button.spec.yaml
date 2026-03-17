@@ -1,0 +1,62 @@
+component: FilterButton
+status: draft
+purpose: toggle list filters in compact toolbars
+model:
+  axes: [selected, size, state]
+selected: [false, true]
+sizes: [sm, md, lg]
+sizeDefaults:
+  sm:
+    height: 28
+    paddingX: 10
+    radius: 16
+  md:
+    height: 32
+    paddingX: 12
+    radius: 16
+  lg:
+    height: 40
+    paddingX: 16
+    radius: 16
+internalLayout:
+  labelAlignX: center
+  labelAlignY: center
+  minWidth: 64
+  opticalOffsetY: -1
+states: [default, hover, disabled, focus]
+slots: [container, label]
+semanticMapping:
+  unselected:
+    default:
+      container.background: semantic.surface.subtle
+      container.border: semantic.border.default
+      label.color: semantic.text.secondary
+    hover:
+      container.background: semantic.action.neutralHover
+      container.border: semantic.border.strong
+      label.color: semantic.text.primary
+    disabled:
+      container.background: semantic.surface.subtle
+      container.border: semantic.border.subtle
+      label.color: semantic.text.muted
+    focus:
+      container.focusRing: semantic.focus.ring
+  selected:
+    default:
+      container.background: semantic.action.primary
+      container.border: semantic.action.primary
+      label.color: semantic.action.onPrimary
+    hover:
+      container.background: semantic.action.primaryHover
+      container.border: semantic.action.primaryHover
+      label.color: semantic.action.onPrimary
+    disabled:
+      container.background: semantic.action.disabled
+      container.border: semantic.action.disabled
+      label.color: semantic.text.muted
+    focus:
+      container.focusRing: semantic.focus.ring
+notes:
+  - keep interaction minimal: selected/unselected only
+  - filter button should read as a compact product chip, not a mini button
+  - selected and unselected states must be clearly distinguishable in catalog

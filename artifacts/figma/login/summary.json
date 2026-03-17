@@ -1,0 +1,67 @@
+{
+  "screen": "login",
+  "theme": "core",
+  "sectionsCreated": [
+    "header",
+    "form",
+    "action"
+  ],
+  "componentCount": 3,
+  "nodeCount": 8,
+  "warnings": [
+    "No primary action button found",
+    "Component node name should start with uppercase: '아이디'",
+    "Component node name should start with uppercase: '비밀번호 ••••'"
+  ],
+  "evaluationScore": 88,
+  "passed": true,
+  "payloadValidation": {
+    "valid": true,
+    "errors": [],
+    "warnings": []
+  },
+  "evaluation": {
+    "score": 88,
+    "passed": true,
+    "warnings": [
+      {
+        "level": "warning",
+        "code": "missing_primary_action",
+        "message": "No primary action button found"
+      },
+      {
+        "level": "warning",
+        "code": "component_naming",
+        "message": "Component node name should start with uppercase: '아이디'",
+        "affectedComponents": [
+          "아이디"
+        ]
+      },
+      {
+        "level": "warning",
+        "code": "component_naming",
+        "message": "Component node name should start with uppercase: '비밀번호 ••••'",
+        "affectedComponents": [
+          "비밀번호 ••••"
+        ]
+      }
+    ],
+    "errors": [],
+    "improvementSuggestions": [
+      {
+        "code": "missing_primary_action",
+        "message": "action 영역에 primary 버튼을 추가해 주세요."
+      },
+      {
+        "code": "component_naming",
+        "message": "컴포넌트 노드 이름을 Pascal/Title 시작 형태로 통일해 주세요."
+      }
+    ],
+    "affectedNodes": [],
+    "affectedComponents": [
+      "아이디",
+      "비밀번호 ••••"
+    ],
+    "summary": "QA passed with score 88. 3 warning(s) found."
+  }
+}

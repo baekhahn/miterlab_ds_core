@@ -1,0 +1,30 @@
+{
+  "screen": "button-inspection",
+  "theme": "core",
+  "sectionsCreated": [
+    "header",
+    "content",
+    "form",
+    "action"
+  ],
+  "componentCount": 13,
+  "nodeCount": 25,
+  "warnings": [],
+  "evaluationScore": 100,
+  "passed": true,
+  "payloadValidation": {
+    "valid": true,
+    "errors": [],
+    "warnings": []
+  },
+  "evaluation": {
+    "score": 100,
+    "passed": true,
+    "warnings": [],
+    "errors": [],
+    "improvementSuggestions": [],
+    "affectedNodes": [],
+    "affectedComponents": [],
+    "summary": "QA passed with score 100. 0 warning(s) found."
+  }
+}

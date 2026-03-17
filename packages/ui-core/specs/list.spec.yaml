@@ -1,0 +1,44 @@
+component: List
+status: draft
+purpose: freeze Ant Design Mobile List props as the core list schema
+props:
+  header: reactNode
+  mode: [default, card]
+  children: reactNode
+  --active-background-color: string
+  --align-items: string
+  --border-bottom: string
+  --border-inner: string
+  --border-top: string
+  --extra-max-width: string
+  --font-size: string
+  --header-font-size: string
+  --padding-left: string
+  --padding-right: string
+  --prefix-padding-right: string
+  --prefix-width: string
+variants:
+  mode: [default, card]
+states: []
+metrics:
+  cardMargin: 12px
+  cardRadius: 8px
+  headerPaddingY: 8px
+  itemContentPaddingY: 12px
+  itemExtraPaddingLeft: 12px
+tokens:
+  cssVars:
+    - --active-background-color
+    - --align-items
+    - --border-bottom
+    - --border-inner
+    - --border-top
+    - --extra-max-width
+    - --font-size
+    - --header-font-size
+    - --padding-left
+    - --padding-right
+    - --prefix-padding-right
+    - --prefix-width
+notes:
+  - source schema is Ant Design Mobile ListProps

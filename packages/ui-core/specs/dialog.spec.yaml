@@ -1,0 +1,51 @@
+component: Dialog
+status: draft
+purpose: freeze Ant Design Mobile DialogProps as the core dialog schema
+props:
+  afterClose: function
+  afterShow: function
+  bodyClassName: string
+  bodyStyle: object
+  destroyOnClose: [false, true]
+  disableBodyScroll: [false, true]
+  forceRender: [false, true]
+  getContainer: function
+  maskClassName: string
+  maskStyle: object
+  stopPropagation: array
+  visible: [false, true]
+  image: string
+  header: reactNode
+  title: reactNode
+  content: reactNode
+  actions: array
+  onAction: function
+  onClose: function
+  closeOnAction: [false, true]
+  closeOnMaskClick: [false, true]
+  --background-color: string
+  --border-radius: string
+  --max-width: string
+  --min-width: string
+  --z-index: string
+variants:
+  closeOnAction: [false, true]
+  closeOnMaskClick: [false, true]
+states:
+  dialog: [hidden, visible]
+metrics:
+  maxBodyHeight: 70vh
+  imageMaxHeight: 40vh
+  headerMarginBottom: 8px
+  contentPaddingX: 12px
+  contentPaddingBottom: 20px
+  actionPadding: 10px
+tokens:
+  cssVars:
+    - --background-color
+    - --border-radius
+    - --max-width
+    - --min-width
+    - --z-index
+notes:
+  - source schema is Ant Design Mobile DialogProps

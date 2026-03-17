@@ -1,0 +1,18 @@
+{
+  "screen": "login",
+  "purpose": "user authentication",
+  "theme": "core",
+  "density": "comfortable",
+  "sections": ["header", "form", "footer"],
+  "primaryAction": "sign in",
+  "dataComplexity": "low",
+  "state": "filled",
+  "components": [
+    { "type": "text", "intent": "title", "label": "Welcome Back" },
+    { "type": "text", "intent": "subtitle", "label": "Sign in to continue" },
+    { "type": "input", "intent": "email-input", "name": "email" },
+    { "type": "input", "intent": "password-input", "name": "password" },
+    { "type": "button", "intent": "primary-action", "variant": "primary", "label": "Sign in" },
+    { "type": "text", "intent": "helper-text", "label": "Need help signing in?" }
+  ]
+}

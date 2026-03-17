@@ -1,0 +1,68 @@
+component: Form
+status: draft
+purpose: freeze Ant Design Mobile FormProps and FormItemProps as the core form schema
+props:
+  form: formInstance
+  initialValues: object
+  name: string
+  preserve: [false, true]
+  validateMessages: object
+  validateTrigger: string
+  onFieldsChange: function
+  onFinish: function
+  onFinishFailed: function
+  onValuesChange: function
+  children: reactNode
+  footer: reactNode
+  mode: [default, card]
+  layout: [vertical, horizontal]
+  label: reactNode
+  help: reactNode
+  helpIcon: reactNode
+  hasFeedback: [false, true]
+  required: [false, true]
+  noStyle: [false, true]
+  disabled: [false, true]
+  hidden: [false, true]
+  childElementPosition: [normal, right]
+  extra: reactNode
+  clickable: [false, true]
+  arrow: [false, true, reactNode]
+  arrowIcon: [false, true, reactNode]
+  description: reactNode
+  dependencies: array
+  valuePropName: string
+  rules: array
+  messageVariables: object
+  trigger: string
+  shouldUpdate: [false, true, function]
+  initialValue: any
+  getValueFromEvent: function
+  getValueProps: function
+  normalize: function
+  validateFirst: [false, true]
+  onClick: function
+  --border-inner: string
+  --border-top: string
+  --border-bottom: string
+  --prefix-width: string
+variants:
+  mode: [default, card]
+  layout: [vertical, horizontal]
+  childElementPosition: [normal, right]
+states:
+  item: [default, hidden, disabled, error, warning]
+metrics:
+  footerPaddingY: 20px
+  footerPaddingX: 12px
+  prefixWidth: 6.8em
+  verticalLabelMarginBottom: 4px
+  feedbackMarginTop: 4px
+tokens:
+  cssVars:
+    - --border-inner
+    - --border-top
+    - --border-bottom
+    - --prefix-width
+notes:
+  - source schema is Ant Design Mobile FormProps and FormItemProps
