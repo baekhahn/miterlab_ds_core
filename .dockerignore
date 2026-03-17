@@ -1,0 +1,13 @@
+.git
+.cache
+node_modules
+artifacts
+docs
+*.log
+
+apps/docs/build
+apps/docs/.docusaurus
+apps/docs/node_modules
+
+packages/*/node_modules
+apps/*/node_modules
