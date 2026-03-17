@@ -4,7 +4,7 @@ module.exports = {
     {
       type: "category",
       label: "Core",
-      items: ["core/overview", "core/contract", "core/ant-mobile-p1-source-of-truth", "core/p1-full-family-table"]
+      items: ["core/overview", "core/master-plan", "core/contract", "core/ant-mobile-p1-source-of-truth", "core/p1-full-family-table", "core/p1-full-family-contract"]
     },
     {
       type: "category",
