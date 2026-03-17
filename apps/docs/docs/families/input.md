@@ -13,7 +13,7 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 - Ant Design Mobile InputProps
 - Spec files: `packages/ui-core/specs/input.spec.yaml`
 - Parity mismatch count: `0`
-- Spec notes: `official InputProps does not define size, status, prefix, or suffix props`, `source schema is Ant Design Mobile InputProps`
+- Spec notes: `official NativeProps adds className, style, tabIndex, and aria/data attributes`, `official InputProps does not define size, status, prefix, or suffix props`, `source schema is Ant Design Mobile InputProps`
 
 ## Inspection Screen
 
@@ -27,8 +27,8 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 | Check | Status |
 | --- | --- |
 | Spec parity | verified |
-| Generator parity | verified |
-| Plugin parity | verified |
+| Generator parity | pending |
+| Plugin parity | pending |
 | Figma write verification | pending |
 | Screenshot attached | pending |
 | Review approved | pending |
@@ -46,23 +46,23 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 - Official defaults come from `src/components/input/input.tsx` and `input.less`.
 - The official Input API does not define `size`, `status`, `prefix`, or `suffix` props.
 - wrapper: minHeight=24px, width=100%, alignItems=center
-- element: lineHeight=1.5, minHeight=1.5em, padding=0, border=0
-- clear: marginLeft=8px, padding=4px, iconFontSize=var(--adm-font-size-7)
+- element: lineHeight=1.5, minHeight=1.5em, padding=0, border=0, fontSize=17px
+- clear: marginLeft=8px, padding=4px, iconFontSize=15px
 
 ## Token References
 
 - Input styling is driven by official CSS variables instead of dedicated size/status props.
 - Value and placeholder colors remain distinct through `--color` and `--placeholder-color`.
-- cssVar: `--font-size` -> default `var(--adm-font-size-9)` in official input.less
-- cssVar: `--color` -> default `var(--adm-color-text)` in official input.less
-- cssVar: `--placeholder-color` -> default `var(--adm-color-light)` in official input.less
+- cssVar: `--font-size` -> default `17px` via `var(--adm-font-size-9)`
+- cssVar: `--color` -> default `#333333` via `var(--adm-color-text)`
+- cssVar: `--placeholder-color` -> default `#cccccc` via `var(--adm-color-light)`
 - cssVar: `--text-align` -> default `left` in official input.less
-- antToken: `colorText` -> represented through `var(--adm-color-text)`
-- antToken: `colorBorder` -> native input border is removed; field wrappers may use external border styling
-- antToken: `colorPrimary` -> used indirectly for surrounding focused field patterns, not as an Input prop
-- antToken: `colorError` -> not exposed by official InputProps
-- antToken: `colorWarning` -> not exposed by official InputProps
-- antToken: `colorTextSecondary` -> represented through light/weak text variables in Ant Mobile
+- antToken: `colorText` -> `#333333` via `--adm-color-text`
+- antToken: `colorBorder` -> native input border is removed; wrapper integrations commonly use `#eeeeee` via `--adm-color-border`
+- antToken: `colorPrimary` -> `#1677ff` global token; no dedicated Input status prop
+- antToken: `colorError` -> `#ff3141` global token; not exposed by official InputProps
+- antToken: `colorWarning` -> `#ff8f1f` global token; not exposed by official InputProps
+- antToken: `colorTextSecondary` -> `#666666` via `--adm-color-text-secondary`
 
 ## Input
 
@@ -105,6 +105,9 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 | `min` | `number` | TODO | General prop contract. |
 | `max` | `number` | TODO | General prop contract. |
 | `role` | `string` | TODO | General prop contract. |
+| `className` | `string` | TODO | General prop contract. |
+| `style` | `object` | TODO | General prop contract. |
+| `tabIndex` | `number` | TODO | General prop contract. |
 | `--font-size` | `string` | TODO | Official CSS variable contract. |
 | `--color` | `string` | TODO | Official CSS variable contract. |
 | `--placeholder-color` | `string` | TODO | Official CSS variable contract. |
@@ -124,23 +127,23 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 ### Metrics
 
 - wrapper: minHeight=24px, width=100%, alignItems=center
-- element: lineHeight=1.5, minHeight=1.5em, padding=0, border=0
-- clear: marginLeft=8px, padding=4px, iconFontSize=var(--adm-font-size-7)
+- element: lineHeight=1.5, minHeight=1.5em, padding=0, border=0, fontSize=17px
+- clear: marginLeft=8px, padding=4px, iconFontSize=15px
 
 ### Tokens
 
 | Token | Kind | Notes |
 | --- | --- | --- |
-| `--font-size` | cssVar | default `var(--adm-font-size-9)` in official input.less |
-| `--color` | cssVar | default `var(--adm-color-text)` in official input.less |
-| `--placeholder-color` | cssVar | default `var(--adm-color-light)` in official input.less |
+| `--font-size` | cssVar | default `17px` via `var(--adm-font-size-9)` |
+| `--color` | cssVar | default `#333333` via `var(--adm-color-text)` |
+| `--placeholder-color` | cssVar | default `#cccccc` via `var(--adm-color-light)` |
 | `--text-align` | cssVar | default `left` in official input.less |
-| `colorText` | antToken | represented through `var(--adm-color-text)` |
-| `colorBorder` | antToken | native input border is removed; field wrappers may use external border styling |
-| `colorPrimary` | antToken | used indirectly for surrounding focused field patterns, not as an Input prop |
-| `colorError` | antToken | not exposed by official InputProps |
-| `colorWarning` | antToken | not exposed by official InputProps |
-| `colorTextSecondary` | antToken | represented through light/weak text variables in Ant Mobile |
+| `colorText` | antToken | `#333333` via `--adm-color-text` |
+| `colorBorder` | antToken | native input border is removed; wrapper integrations commonly use `#eeeeee` via `--adm-color-border` |
+| `colorPrimary` | antToken | `#1677ff` global token; no dedicated Input status prop |
+| `colorError` | antToken | `#ff3141` global token; not exposed by official InputProps |
+| `colorWarning` | antToken | `#ff8f1f` global token; not exposed by official InputProps |
+| `colorTextSecondary` | antToken | `#666666` via `--adm-color-text-secondary` |
 
 ## Variant Axes Table
 
@@ -183,6 +186,9 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 | `min` | `number` | TODO | General prop contract. |
 | `max` | `number` | TODO | General prop contract. |
 | `role` | `string` | TODO | General prop contract. |
+| `className` | `string` | TODO | General prop contract. |
+| `style` | `object` | TODO | General prop contract. |
+| `tabIndex` | `number` | TODO | General prop contract. |
 | `--font-size` | `string` | TODO | Official CSS variable contract. |
 | `--color` | `string` | TODO | Official CSS variable contract. |
 | `--placeholder-color` | `string` | TODO | Official CSS variable contract. |
@@ -194,7 +200,7 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 
 | Size | Height | Padding X | Padding Y | Radius | Rectangular Radius | Icon Gap |
 | --- | --- | --- | --- | --- | --- | --- |
-| `default` | `24px` | `0` | `0` | TODO | TODO | TODO |
+| `default` | `24px` | `0px` | `0px` | `0px` official input itself has no border radius | `0px` | `8px` clear inset |
 
 ## Inspection Mapping
 
@@ -243,6 +249,11 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 
 - `disabled=true` applies the disabled token set and suppresses interaction while preserving layout metrics.
 
+## Official Non-Props
+
+- `size`, `status`, `prefix`, and `suffix` are not official Input props in Ant Design Mobile 5.x.
+- `className`, `style`, `tabIndex`, and `aria-*` / `data-*` support come from `NativeProps`.
+
 ## Render Expectations
 
 - Text input wrapper and element metrics must follow the official CSS variable defaults and Less rules.
@@ -251,6 +262,11 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 - `disabled=true` must suppress interactive styling and use muted field/value tokens.
 - `clearable=true` must render an action affordance when clear behavior is available.
 - `onlyShowClearWhenFocus=true` must keep the clear affordance hidden until focus.
+
+## Current Runtime Gaps
+
+- Current inspection payload still uses runtime field metrics such as `height=42`, `paddingY=9`, and semantic token paths instead of the official Ant Mobile Input defaults.
+- Phase A freeze remains pending until generator and plugin output match the official Input metrics and token mapping on the payload/write path.
 
 ## Failure Cases
 

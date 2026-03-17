@@ -20,7 +20,7 @@ Every prop table in this document is generated from the frozen Ant-based spec fi
 | `loading` | `boolean`, `string` | `false`, `true`, `auto` | `false` | `false` | Boolean and `auto` must remain distinct in the contract. |
 | `loadingText` | `string` | TODO | TODO | `false` | TODO |
 | `loadingIcon` | `reactNode` | TODO | TODO | `false` | TODO |
-| `disabled` | `boolean` | `false`, `true` | TODO | `false` | TODO |
+| `disabled` | `boolean` | `false`, `true` | `false` | `false` | TODO |
 | `onClick` | `function` | TODO | TODO | `false` | TODO |
 | `type` | `string` | `button`, `submit`, `reset` | `button` | `false` | TODO |
 | `children` | `reactNode` | TODO | TODO | `false` | TODO |
@@ -30,6 +30,9 @@ Every prop table in this document is generated from the frozen Ant-based spec fi
 | `onTouchEnd` | `function` | TODO | TODO | `false` | TODO |
 | `id` | `string` | TODO | TODO | `false` | TODO |
 | `form` | `string` | TODO | TODO | `false` | TODO |
+| `className` | `string` | TODO | TODO | `false` | Supported through `NativeProps`. |
+| `style` | `object` | TODO | TODO | `false` | Supported through `NativeProps`. |
+| `tabIndex` | `number` | TODO | TODO | `false` | Supported through `NativeProps`. |
 | `--text-color` | `string` | TODO | TODO | `false` | CSS variable from the official API. |
 | `--background-color` | `string` | TODO | TODO | `false` | CSS variable from the official API. |
 | `--border-radius` | `string` | TODO | TODO | `false` | CSS variable from the official API. |
@@ -64,13 +67,13 @@ Every prop table in this document is generated from the frozen Ant-based spec fi
 | `step` | `number` | TODO | TODO | `false` | TODO |
 | `id` | `string` | TODO | TODO | `false` | TODO |
 | `placeholder` | `string` | TODO | TODO | `false` | TODO |
-| `readOnly` | `boolean` | `false`, `true` | TODO | `false` | TODO |
-| `disabled` | `boolean` | `false`, `true` | TODO | `false` | TODO |
+| `readOnly` | `boolean` | `false`, `true` | `false` | `false` | TODO |
+| `disabled` | `boolean` | `false`, `true` | `false` | `false` | TODO |
 | `enterKeyHint` | `string` | TODO | TODO | `false` | TODO |
 | `value` | `string` | TODO | TODO | `false` | TODO |
 | `defaultValue` | `string` | TODO | TODO | `false` | TODO |
 | `onChange` | `function` | TODO | TODO | `false` | TODO |
-| `clearable` | `boolean` | `false`, `true` | TODO | `false` | TODO |
+| `clearable` | `boolean` | `false`, `true` | `false` | `false` | TODO |
 | `clearIcon` | `reactNode` | TODO | TODO | `false` | TODO |
 | `onlyShowClearWhenFocus` | `boolean` | `false`, `true` | `true` | `false` | Clear affordance must remain conditional on focus. |
 | `onClear` | `function` | TODO | TODO | `false` | TODO |
@@ -78,6 +81,9 @@ Every prop table in this document is generated from the frozen Ant-based spec fi
 | `min` | `number` | TODO | TODO | `false` | TODO |
 | `max` | `number` | TODO | TODO | `false` | TODO |
 | `role` | `string` | TODO | TODO | `false` | TODO |
+| `className` | `string` | TODO | TODO | `false` | Supported through `NativeProps`. |
+| `style` | `object` | TODO | TODO | `false` | Supported through `NativeProps`. |
+| `tabIndex` | `number` | TODO | TODO | `false` | Supported through `NativeProps`. |
 | `--font-size` | `string` | TODO | TODO | `false` | CSS variable from the official API. |
 | `--color` | `string` | TODO | TODO | `false` | CSS variable from the official API. |
 | `--placeholder-color` | `string` | TODO | TODO | `false` | CSS variable from the official API. |

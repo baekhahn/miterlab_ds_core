@@ -238,6 +238,8 @@ export const createButtonInspectionPrompt = (theme = "core"): DesignPrompt => {
 - `variant flattened`: multiple official values collapse into one rendered preset.
 - `state ignored`: state output exists in spec but not in payload or renderer.
 - `plugin mismatch`: payload is correct but plugin write path renders the wrong family behavior.
+- `missing token`: output falls back to semantic or ad hoc token paths instead of the documented Ant token or CSS variable mapping.
+- `wrong metrics`: payload size, padding, radius, or line-height diverges from the official Ant defaults.
 - `read-only write path`: generation succeeds but the write environment cannot create nodes on canvas.
 
 ## Verification Checklist

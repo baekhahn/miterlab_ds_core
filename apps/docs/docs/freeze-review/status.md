@@ -8,8 +8,8 @@ title: Freeze Review Status
 
 | Priority | Family | Mismatch count | Spec parity | Generator parity | Plugin parity |
 | --- | --- | --- | --- | --- | --- |
-| P1 | Button | `0` | verified | verified | verified |
-| P1 | Input | `0` | verified | verified | verified |
+| P1 | Button | `0` | verified | pending | pending |
+| P1 | Input | `0` | verified | pending | pending |
 | P2 | Tabs | `0` | verified | verified | verified |
 | P2 | List / Cell | `0` | verified | verified | verified |
 | P2 | Dialog / Popup / Toast | `0` | verified | verified | verified |

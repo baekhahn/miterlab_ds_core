@@ -138,6 +138,11 @@ const familyContracts = {
       "Loading state rendered as plain text with no state token change.",
       "Disabled state still uses primary action colors."
     ],
+    unsupportedNotes: [
+      "`icon` is not an official Button prop in Ant Design Mobile 5.x.",
+      "`href`, `target`, and `htmlType` are not official Button props. The official prop is `type` for the native button element.",
+      "`className`, `style`, `tabIndex`, and `aria-*` / `data-*` support come from `NativeProps`."
+    ],
     inspectionMapping: [
       "Inspection row `Sizes` verifies `size=mini|small|middle|large`.",
       "Inspection row `Color and Fill` verifies `color` and `fill` combinations.",
@@ -157,6 +162,10 @@ const familyContracts = {
     tokenNotes: [
       "Button styling is driven by component CSS variables and Ant Mobile color variables.",
       "Primary, success, warning, and danger map through `--color` to `--adm-color-*` values."
+    ],
+    runtimeGaps: [
+      "Current inspection payload still uses runtime metrics such as `radius=8`, `paddingX=10`, and semantic token paths instead of the official Ant Mobile defaults.",
+      "Phase A freeze remains pending until generator and plugin output match the official Button metrics and token mapping on the payload/write path."
     ]
   },
   input: {
@@ -175,6 +184,10 @@ const familyContracts = {
       "Number/password `type` props dropped during mapping.",
       "Field padding changed independently from frozen defaults.",
       "Text alignment or vertical centering broken in the rendered node."
+    ],
+    unsupportedNotes: [
+      "`size`, `status`, `prefix`, and `suffix` are not official Input props in Ant Design Mobile 5.x.",
+      "`className`, `style`, `tabIndex`, and `aria-*` / `data-*` support come from `NativeProps`."
     ],
     inspectionMapping: [
       "Inspection group `Text Values` verifies `placeholder`, `value`, and `defaultValue`.",
@@ -196,6 +209,10 @@ const familyContracts = {
     tokenNotes: [
       "Input styling is driven by official CSS variables instead of dedicated size/status props.",
       "Value and placeholder colors remain distinct through `--color` and `--placeholder-color`."
+    ],
+    runtimeGaps: [
+      "Current inspection payload still uses runtime field metrics such as `height=42`, `paddingY=9`, and semantic token paths instead of the official Ant Mobile Input defaults.",
+      "Phase A freeze remains pending until generator and plugin output match the official Input metrics and token mapping on the payload/write path."
     ]
   },
   tabs: {
@@ -256,7 +273,6 @@ const familyContracts = {
   }
 };
 
-const pluginStatus = "verified";
 const canvasDefault = {
   figmaWriteVerified: "pending",
   screenshotAttached: "pending",
@@ -266,11 +282,11 @@ const canvasDefault = {
 const officialComponentData = {
   Button: {
     metricsSummary: [
-      "default: paddingY=7px, paddingX=12px, borderRadius=4px, fontSize=var(--adm-font-size-9), lineHeight=1.4, height=auto",
-      "mini: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-main)",
-      "small: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-7)",
-      "middle: paddingY=7px, paddingX=12px, fontSize=var(--adm-font-size-9)",
-      "large: paddingY=11px, paddingX=12px, fontSize=var(--adm-font-size-10)",
+      "default: paddingY=7px, paddingX=12px, borderRadius=4px, fontSize=17px, lineHeight=1.4, height=auto",
+      "mini: paddingY=3px, paddingX=12px, fontSize=13px",
+      "small: paddingY=3px, paddingX=12px, fontSize=15px",
+      "middle: paddingY=7px, paddingX=12px, fontSize=17px",
+      "large: paddingY=11px, paddingX=12px, fontSize=18px",
       "rounded: borderRadius=1000px",
       "rectangular: borderRadius=0"
     ],
@@ -279,40 +295,41 @@ const officialComponentData = {
       ["`default`", "`paddingX`", "`12px`", "official button.less"],
       ["`default`", "`paddingY`", "`7px`", "official button.less"],
       ["`default`", "`borderRadius`", "`4px`", "official button.less"],
-      ["`default`", "`fontSize`", "`var(--adm-font-size-9)`", "official button.less"],
+      ["`default`", "`fontSize`", "`17px`", "official button.less + theme-default.less"],
       ["`default`", "`lineHeight`", "`1.4`", "official button.less"],
       ["`mini`", "`paddingY`", "`3px`", "official button.less"],
-      ["`mini`", "`fontSize`", "`var(--adm-font-size-main)`", "official button.less"],
+      ["`mini`", "`fontSize`", "`13px`", "official button.less + theme-default.less"],
       ["`small`", "`paddingY`", "`3px`", "official button.less"],
-      ["`small`", "`fontSize`", "`var(--adm-font-size-7)`", "official button.less"],
+      ["`small`", "`fontSize`", "`15px`", "official button.less + theme-default.less"],
+      ["`middle`", "`fontSize`", "`17px`", "official button.less + theme-default.less"],
       ["`large`", "`paddingY`", "`11px`", "official button.less"],
-      ["`large`", "`fontSize`", "`var(--adm-font-size-10)`", "official button.less"]
+      ["`large`", "`fontSize`", "`18px`", "official button.less + theme-default.less"]
     ],
     sizeRows: [
-      ["`mini`", "`auto`", "`12px`", "`3px`", "`4px`", "`0`", "TODO"],
-      ["`small`", "`auto`", "`12px`", "`3px`", "`4px`", "`0`", "TODO"],
-      ["`middle`", "`auto`", "`12px`", "`7px`", "`4px`", "`0`", "TODO"],
-      ["`large`", "`auto`", "`12px`", "`11px`", "`4px`", "`0`", "TODO"]
+      ["`mini`", "`auto`", "`12px`", "`3px`", "`4px`", "`0`", "`0px` official prop gap not defined"],
+      ["`small`", "`auto`", "`12px`", "`3px`", "`4px`", "`0`", "`0px` official prop gap not defined"],
+      ["`middle`", "`auto`", "`12px`", "`7px`", "`4px`", "`0`", "`0px` official prop gap not defined"],
+      ["`large`", "`auto`", "`12px`", "`11px`", "`4px`", "`0`", "`0px` official prop gap not defined"]
     ],
     tokenRows: [
-      ["Button", "`--text-color`", "cssVar", "default `var(--adm-color-text)` in official button.less"],
-      ["Button", "`--background-color`", "cssVar", "default `var(--adm-color-background)` in official button.less"],
+      ["Button", "`--text-color`", "cssVar", "default `#333333` via `var(--adm-color-text)`"],
+      ["Button", "`--background-color`", "cssVar", "default `#ffffff` via `var(--adm-color-background)`"],
       ["Button", "`--border-radius`", "cssVar", "default `4px` in official button.less"],
       ["Button", "`--border-width`", "cssVar", "default `1px` in official button.less"],
       ["Button", "`--border-style`", "cssVar", "default `solid` in official button.less"],
-      ["Button", "`--border-color`", "cssVar", "default `var(--adm-color-border)` in official button.less"],
-      ["Button", "`colorPrimary`", "antToken", "represented through `var(--adm-color-primary)`"],
-      ["Button", "`colorText`", "antToken", "represented through `var(--adm-color-text)`"],
-      ["Button", "`colorBorder`", "antToken", "represented through `var(--adm-color-border)`"],
-      ["Button", "`colorBgContainer`", "antToken", "represented through `var(--adm-color-background)`"],
+      ["Button", "`--border-color`", "cssVar", "default `#eeeeee` via `var(--adm-color-border)`"],
+      ["Button", "`colorPrimary`", "antToken", "`#1677ff` via `--adm-color-primary`"],
+      ["Button", "`colorText`", "antToken", "`#333333` via `--adm-color-text`"],
+      ["Button", "`colorBorder`", "antToken", "`#eeeeee` via `--adm-color-border`"],
+      ["Button", "`colorBgContainer`", "antToken", "`#ffffff` via `--adm-color-background`"],
       ["Button", "`controlHeight`", "antToken", "no explicit component token; effective height is content-driven"]
     ]
   },
   Input: {
     metricsSummary: [
       "wrapper: minHeight=24px, width=100%, alignItems=center",
-      "element: lineHeight=1.5, minHeight=1.5em, padding=0, border=0",
-      "clear: marginLeft=8px, padding=4px, iconFontSize=var(--adm-font-size-7)"
+      "element: lineHeight=1.5, minHeight=1.5em, padding=0, border=0, fontSize=17px",
+      "clear: marginLeft=8px, padding=4px, iconFontSize=15px"
     ],
     metricRows: [
       ["`wrapper`", "`minHeight`", "`24px`", "official input.less"],
@@ -322,22 +339,24 @@ const officialComponentData = {
       ["`element`", "`minHeight`", "`1.5em`", "official input.less"],
       ["`element`", "`padding`", "`0`", "official input.less"],
       ["`clear`", "`marginLeft`", "`8px`", "official input.less"],
-      ["`clear`", "`padding`", "`4px`", "official input.less"]
+      ["`clear`", "`padding`", "`4px`", "official input.less"],
+      ["`element`", "`fontSize`", "`17px`", "official input.less + theme-default.less"],
+      ["`clear`", "`iconFontSize`", "`15px`", "official input.less + theme-default.less"]
     ],
     sizeRows: [
-      ["`default`", "`24px`", "`0`", "`0`", "TODO", "TODO", "TODO"]
+      ["`default`", "`24px`", "`0px`", "`0px`", "`0px` official input itself has no border radius", "`0px`", "`8px` clear inset"]
     ],
     tokenRows: [
-      ["Input", "`--font-size`", "cssVar", "default `var(--adm-font-size-9)` in official input.less"],
-      ["Input", "`--color`", "cssVar", "default `var(--adm-color-text)` in official input.less"],
-      ["Input", "`--placeholder-color`", "cssVar", "default `var(--adm-color-light)` in official input.less"],
+      ["Input", "`--font-size`", "cssVar", "default `17px` via `var(--adm-font-size-9)`"],
+      ["Input", "`--color`", "cssVar", "default `#333333` via `var(--adm-color-text)`"],
+      ["Input", "`--placeholder-color`", "cssVar", "default `#cccccc` via `var(--adm-color-light)`"],
       ["Input", "`--text-align`", "cssVar", "default `left` in official input.less"],
-      ["Input", "`colorText`", "antToken", "represented through `var(--adm-color-text)`"],
-      ["Input", "`colorBorder`", "antToken", "native input border is removed; field wrappers may use external border styling"],
-      ["Input", "`colorPrimary`", "antToken", "used indirectly for surrounding focused field patterns, not as an Input prop"],
-      ["Input", "`colorError`", "antToken", "not exposed by official InputProps"],
-      ["Input", "`colorWarning`", "antToken", "not exposed by official InputProps"],
-      ["Input", "`colorTextSecondary`", "antToken", "represented through light/weak text variables in Ant Mobile"]
+      ["Input", "`colorText`", "antToken", "`#333333` via `--adm-color-text`"],
+      ["Input", "`colorBorder`", "antToken", "native input border is removed; wrapper integrations commonly use `#eeeeee` via `--adm-color-border`"],
+      ["Input", "`colorPrimary`", "antToken", "`#1677ff` global token; no dedicated Input status prop"],
+      ["Input", "`colorError`", "antToken", "`#ff3141` global token; not exposed by official InputProps"],
+      ["Input", "`colorWarning`", "antToken", "`#ff8f1f` global token; not exposed by official InputProps"],
+      ["Input", "`colorTextSecondary`", "antToken", "`#666666` via `--adm-color-text-secondary`"]
     ]
   },
   Tabs: {
@@ -460,6 +479,7 @@ function propRows(spec, sectionName = "props") {
     if (prop === "arrow" || prop === "backArrow") notes = "Deprecated in the official API but retained in the frozen contract.";
     if (prop === "loading") notes = "Boolean and `auto` must remain distinct in the contract.";
     if (prop === "onlyShowClearWhenFocus") notes = "Clear affordance must remain conditional on focus.";
+    if (prop === "className" || prop === "style" || prop === "tabIndex") notes = "Supported through `NativeProps`.";
     if (prop === "activeKey" || prop === "defaultActiveKey") notes = "Official API allows string or null.";
     return [`\`${prop}\``, type, allowedValues, defaultValue === undefined ? "TODO" : formatPrimitive(defaultValue), "`false`", notes];
   });
@@ -524,9 +544,10 @@ function extractVariantAxes(spec) {
 function freezeStatusForFamily(family) {
   const parity = family.parity;
   const summary = family.summary;
+  const runtimeGaps = familyContracts[family.id]?.runtimeGaps || [];
   const specParity = parity.afterFixMismatchCount === 0 ? "verified" : "blocked";
-  const generatorParity = summary?.passed ? "verified" : "blocked";
-  const pluginParityValue = pluginStatus;
+  const generatorParity = parity.afterFixMismatchCount === 0 && summary?.passed && runtimeGaps.length === 0 ? "verified" : summary?.passed ? "pending" : "blocked";
+  const pluginParityValue = runtimeGaps.length === 0 ? "verified" : "pending";
   return {
     implementation: {
       specParity,
@@ -550,6 +571,24 @@ function truncateText(value, maxLength = 1600) {
   return value.length <= maxLength ? value : `${value.slice(0, maxLength)}\n...`;
 }
 
+function findFirstComponentNode(value, componentName) {
+  if (!value) return null;
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const match = findFirstComponentNode(item, componentName);
+      if (match) return match;
+    }
+    return null;
+  }
+  if (typeof value !== "object") return null;
+  if (value.component === componentName) return value;
+  if (value.children) {
+    const childMatch = findFirstComponentNode(value.children, componentName);
+    if (childMatch) return childMatch;
+  }
+  return null;
+}
+
 function loadFamilies() {
   return familyConfigs.map((family) => {
     const specs = family.specFiles.map((file) => readYaml(`packages/ui-core/specs/${file}`));
@@ -557,7 +596,7 @@ function loadFamilies() {
     const summary = readJson(`artifacts/figma/${family.inspection.summaryFile}`);
     const payload = readJson(`artifacts/figma/${family.inspection.payloadFile}`);
     const layout = readJson(`artifacts/figma/${family.inspection.layoutFile}`);
-    return { ...family, specs, parity, summary, payload, layout, freeze: freezeStatusForFamily({ parity, summary }) };
+    return { ...family, specs, parity, summary, payload, layout, freeze: freezeStatusForFamily({ id: family.id, parity, summary }) };
   });
 }
 
@@ -598,7 +637,9 @@ function buildSchemaIndex(families) {
       String(tokenCount || 0),
       family.freeze.implementation.specParity === "verified" && family.freeze.implementation.generatorParity === "verified" && family.freeze.implementation.pluginParity === "verified"
         ? "Phase A verified / Phase B pending"
-        : "blocked"
+        : family.freeze.implementation.specParity === "verified"
+          ? "Phase A pending / Phase B pending"
+          : "blocked"
     ];
   });
 
@@ -700,7 +741,7 @@ function buildMetricsAndTokens(families) {
     `${titleFrontmatter("Metrics And Tokens")}
 # Metrics And Tokens
 
-Known metric values are taken directly from the frozen specs. Unknown values remain marked as \`TODO\` instead of being omitted.
+Official Ant Mobile metric and token defaults are shown first when they are known from source. Frozen spec runtime-only fields remain listed with their spec source so current implementation gaps stay visible.
 
 ${sections}
 `
@@ -789,7 +830,8 @@ function buildFamilyDocs(families) {
     }).join("\n\n");
 
     const contract = familyContracts[family.id] || {};
-    const payloadNode = family.payload.nodes.find((node) => node.component) || family.payload.nodes[0] || {};
+    const primaryComponent = family.specs[0]?.component;
+    const payloadNode = findFirstComponentNode(family.payload.nodes, primaryComponent) || family.payload.nodes[0] || {};
     const layoutExample = family.layout.children?.slice(0, 2) || family.layout.sections?.slice(0, 2) || family.layout;
 
     const extraSections = [];
@@ -843,6 +885,9 @@ ${markdownTable(
 - Disabled state must override interactive color tokens.
 - Disabled state must keep layout metrics stable and remove active emphasis.`
         );
+        contractSections.push(`## Official Non-Props
+
+${toBulletList(contract.unsupportedNotes || [])}`);
       }
       if (family.id === "input") {
         contractSections.push(
@@ -869,6 +914,9 @@ ${markdownTable(
 
 - \`disabled=true\` applies the disabled token set and suppresses interaction while preserving layout metrics.`
         );
+        contractSections.push(`## Official Non-Props
+
+${toBulletList(contract.unsupportedNotes || [])}`);
       }
       extraSections.push(
         `## Variant Axes Table\n\n${family.specs.map((spec) => `### ${spec.component}\n\n${componentAxesTable(spec)}`).join("\n\n")}`,
@@ -877,6 +925,7 @@ ${markdownTable(
         `## State Mapping\n\n${family.specs.map((spec) => `### ${spec.component}\n\n${stateTable(spec, family.id)}`).join("\n\n")}`,
         ...contractSections,
         `## Render Expectations\n\n${toBulletList(contract.renderExpectations || [])}`,
+        contract.runtimeGaps?.length ? `## Current Runtime Gaps\n\n${toBulletList(contract.runtimeGaps)}` : "",
         `## Failure Cases\n\n${toBulletList(contract.failureCases || [])}`
       );
     } else {
@@ -983,7 +1032,7 @@ function buildGenerationDocs(families) {
   const buttonPromptSource = fs.readFileSync(path.join(repoRoot, "packages/figma-generator/src/examples/buttonFamily/createButtonInspectionPrompt.ts"), "utf8");
   const examplePayload = {
     document: buttonFamily.payload.document,
-    node: buttonFamily.payload.nodes.find((node) => node.component === "Button")
+    node: findFirstComponentNode(buttonFamily.payload.nodes, "Button")
   };
   const exampleLayout = buttonFamily.layout.children?.slice(0, 2) || buttonFamily.layout;
   const exampleRender = {
@@ -1027,6 +1076,8 @@ ${codeBlock("json", truncateJson(exampleRender, 1200))}
 - \`variant flattened\`: multiple official values collapse into one rendered preset.
 - \`state ignored\`: state output exists in spec but not in payload or renderer.
 - \`plugin mismatch\`: payload is correct but plugin write path renders the wrong family behavior.
+- \`missing token\`: output falls back to semantic or ad hoc token paths instead of the documented Ant token or CSS variable mapping.
+- \`wrong metrics\`: payload size, padding, radius, or line-height diverges from the official Ant defaults.
 - \`read-only write path\`: generation succeeds but the write environment cannot create nodes on canvas.
 
 ## Verification Checklist
@@ -1120,7 +1171,7 @@ ${families
 
 function buildRuntimeDocs(families) {
   const buttonFamily = families.find((family) => family.id === "button");
-  const exampleNode = buttonFamily.payload.nodes.find((node) => node.component === "Button") || buttonFamily.payload.nodes[0];
+  const exampleNode = findFirstComponentNode(buttonFamily.payload.nodes, "Button") || buttonFamily.payload.nodes[0];
 
   writeDoc(
     "runtime/index.md",
@@ -1170,12 +1221,14 @@ ${codeBlock("json", truncateJson(buttonFamily.payload.nodes.slice(0, 3), 1400))}
 - \`style.radius\`, \`paddingX\`, \`paddingY\`, \`gap\`, \`fontSize\`, \`lineHeight\`, and \`minWidth\` must reflect the frozen spec metrics.
 - Family size distinctions must remain visible in node dimensions and style fields.
 - Plugin rendering must not override frozen metrics with generic presets.
+- Button and Input are currently documented with official Ant metrics even where the runtime payload still shows older internal metrics. That gap blocks full Phase A verification.
 
 ## Token Mapping Rules
 
 - \`variables\` should preserve semantic token paths emitted by the generator.
 - CSS variable props remain part of the contract when present in the spec.
 - Token remapping outside the family contract is not allowed in the runtime layer.
+- Button and Input still require runtime token alignment from semantic paths to the official documented token contract.
 `
   );
 

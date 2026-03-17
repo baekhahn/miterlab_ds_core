@@ -13,7 +13,7 @@ Core action control baseline for Ant Design Mobile Button behavior.
 - Ant Design Mobile ButtonProps
 - Spec files: `packages/ui-core/specs/button.spec.yaml`
 - Parity mismatch count: `0`
-- Spec notes: `official ButtonProps does not define href, target, or icon props`, `source schema is Ant Design Mobile ButtonProps`
+- Spec notes: `official NativeProps adds className, style, tabIndex, and aria/data attributes`, `official ButtonProps does not define href, target, or icon props`, `source schema is Ant Design Mobile ButtonProps`
 
 ## Inspection Screen
 
@@ -27,8 +27,8 @@ Core action control baseline for Ant Design Mobile Button behavior.
 | Check | Status |
 | --- | --- |
 | Spec parity | verified |
-| Generator parity | verified |
-| Plugin parity | verified |
+| Generator parity | pending |
+| Plugin parity | pending |
 | Figma write verification | pending |
 | Screenshot attached | pending |
 | Review approved | pending |
@@ -45,11 +45,11 @@ Core action control baseline for Ant Design Mobile Button behavior.
 
 - Official defaults come from `src/components/button/button.tsx` and `button.less`.
 - The public API does not define `href`, `target`, or `icon` props.
-- default: paddingY=7px, paddingX=12px, borderRadius=4px, fontSize=var(--adm-font-size-9), lineHeight=1.4, height=auto
-- mini: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-main)
-- small: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-7)
-- middle: paddingY=7px, paddingX=12px, fontSize=var(--adm-font-size-9)
-- large: paddingY=11px, paddingX=12px, fontSize=var(--adm-font-size-10)
+- default: paddingY=7px, paddingX=12px, borderRadius=4px, fontSize=17px, lineHeight=1.4, height=auto
+- mini: paddingY=3px, paddingX=12px, fontSize=13px
+- small: paddingY=3px, paddingX=12px, fontSize=15px
+- middle: paddingY=7px, paddingX=12px, fontSize=17px
+- large: paddingY=11px, paddingX=12px, fontSize=18px
 - rounded: borderRadius=1000px
 - rectangular: borderRadius=0
 
@@ -57,16 +57,16 @@ Core action control baseline for Ant Design Mobile Button behavior.
 
 - Button styling is driven by component CSS variables and Ant Mobile color variables.
 - Primary, success, warning, and danger map through `--color` to `--adm-color-*` values.
-- cssVar: `--text-color` -> default `var(--adm-color-text)` in official button.less
-- cssVar: `--background-color` -> default `var(--adm-color-background)` in official button.less
+- cssVar: `--text-color` -> default `#333333` via `var(--adm-color-text)`
+- cssVar: `--background-color` -> default `#ffffff` via `var(--adm-color-background)`
 - cssVar: `--border-radius` -> default `4px` in official button.less
 - cssVar: `--border-width` -> default `1px` in official button.less
 - cssVar: `--border-style` -> default `solid` in official button.less
-- cssVar: `--border-color` -> default `var(--adm-color-border)` in official button.less
-- antToken: `colorPrimary` -> represented through `var(--adm-color-primary)`
-- antToken: `colorText` -> represented through `var(--adm-color-text)`
-- antToken: `colorBorder` -> represented through `var(--adm-color-border)`
-- antToken: `colorBgContainer` -> represented through `var(--adm-color-background)`
+- cssVar: `--border-color` -> default `#eeeeee` via `var(--adm-color-border)`
+- antToken: `colorPrimary` -> `#1677ff` via `--adm-color-primary`
+- antToken: `colorText` -> `#333333` via `--adm-color-text`
+- antToken: `colorBorder` -> `#eeeeee` via `--adm-color-border`
+- antToken: `colorBgContainer` -> `#ffffff` via `--adm-color-background`
 - antToken: `controlHeight` -> no explicit component token; effective height is content-driven
 
 ## Button
@@ -93,6 +93,9 @@ Core action control baseline for Ant Design Mobile Button behavior.
 | `onTouchEnd` | `function` | TODO | General prop contract. |
 | `id` | `string` | TODO | General prop contract. |
 | `form` | `string` | TODO | General prop contract. |
+| `className` | `string` | TODO | General prop contract. |
+| `style` | `object` | TODO | General prop contract. |
+| `tabIndex` | `number` | TODO | General prop contract. |
 | `--text-color` | `string` | TODO | Official CSS variable contract. |
 | `--background-color` | `string` | TODO | Official CSS variable contract. |
 | `--border-radius` | `string` | TODO | Official CSS variable contract. |
@@ -112,11 +115,11 @@ Core action control baseline for Ant Design Mobile Button behavior.
 
 ### Metrics
 
-- default: paddingY=7px, paddingX=12px, borderRadius=4px, fontSize=var(--adm-font-size-9), lineHeight=1.4, height=auto
-- mini: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-main)
-- small: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-7)
-- middle: paddingY=7px, paddingX=12px, fontSize=var(--adm-font-size-9)
-- large: paddingY=11px, paddingX=12px, fontSize=var(--adm-font-size-10)
+- default: paddingY=7px, paddingX=12px, borderRadius=4px, fontSize=17px, lineHeight=1.4, height=auto
+- mini: paddingY=3px, paddingX=12px, fontSize=13px
+- small: paddingY=3px, paddingX=12px, fontSize=15px
+- middle: paddingY=7px, paddingX=12px, fontSize=17px
+- large: paddingY=11px, paddingX=12px, fontSize=18px
 - rounded: borderRadius=1000px
 - rectangular: borderRadius=0
 
@@ -124,16 +127,16 @@ Core action control baseline for Ant Design Mobile Button behavior.
 
 | Token | Kind | Notes |
 | --- | --- | --- |
-| `--text-color` | cssVar | default `var(--adm-color-text)` in official button.less |
-| `--background-color` | cssVar | default `var(--adm-color-background)` in official button.less |
+| `--text-color` | cssVar | default `#333333` via `var(--adm-color-text)` |
+| `--background-color` | cssVar | default `#ffffff` via `var(--adm-color-background)` |
 | `--border-radius` | cssVar | default `4px` in official button.less |
 | `--border-width` | cssVar | default `1px` in official button.less |
 | `--border-style` | cssVar | default `solid` in official button.less |
-| `--border-color` | cssVar | default `var(--adm-color-border)` in official button.less |
-| `colorPrimary` | antToken | represented through `var(--adm-color-primary)` |
-| `colorText` | antToken | represented through `var(--adm-color-text)` |
-| `colorBorder` | antToken | represented through `var(--adm-color-border)` |
-| `colorBgContainer` | antToken | represented through `var(--adm-color-background)` |
+| `--border-color` | cssVar | default `#eeeeee` via `var(--adm-color-border)` |
+| `colorPrimary` | antToken | `#1677ff` via `--adm-color-primary` |
+| `colorText` | antToken | `#333333` via `--adm-color-text` |
+| `colorBorder` | antToken | `#eeeeee` via `--adm-color-border` |
+| `colorBgContainer` | antToken | `#ffffff` via `--adm-color-background` |
 | `controlHeight` | antToken | no explicit component token; effective height is content-driven |
 
 ## Variant Axes Table
@@ -160,6 +163,9 @@ Core action control baseline for Ant Design Mobile Button behavior.
 | `onTouchEnd` | `function` | TODO | General prop contract. |
 | `id` | `string` | TODO | General prop contract. |
 | `form` | `string` | TODO | General prop contract. |
+| `className` | `string` | TODO | General prop contract. |
+| `style` | `object` | TODO | General prop contract. |
+| `tabIndex` | `number` | TODO | General prop contract. |
 | `--text-color` | `string` | TODO | Official CSS variable contract. |
 | `--background-color` | `string` | TODO | Official CSS variable contract. |
 | `--border-radius` | `string` | TODO | Official CSS variable contract. |
@@ -173,10 +179,10 @@ Core action control baseline for Ant Design Mobile Button behavior.
 
 | Size | Height | Padding X | Padding Y | Radius | Rectangular Radius | Icon Gap |
 | --- | --- | --- | --- | --- | --- | --- |
-| `mini` | `auto` | `12px` | `3px` | `4px` | `0` | TODO |
-| `small` | `auto` | `12px` | `3px` | `4px` | `0` | TODO |
-| `middle` | `auto` | `12px` | `7px` | `4px` | `0` | TODO |
-| `large` | `auto` | `12px` | `11px` | `4px` | `0` | TODO |
+| `mini` | `auto` | `12px` | `3px` | `4px` | `0` | `0px` official prop gap not defined |
+| `small` | `auto` | `12px` | `3px` | `4px` | `0` | `0px` official prop gap not defined |
+| `middle` | `auto` | `12px` | `7px` | `4px` | `0` | `0px` official prop gap not defined |
+| `large` | `auto` | `12px` | `11px` | `4px` | `0` | `0px` official prop gap not defined |
 
 ## Inspection Mapping
 
@@ -238,6 +244,12 @@ Core action control baseline for Ant Design Mobile Button behavior.
 - Disabled state must override interactive color tokens.
 - Disabled state must keep layout metrics stable and remove active emphasis.
 
+## Official Non-Props
+
+- `icon` is not an official Button prop in Ant Design Mobile 5.x.
+- `href`, `target`, and `htmlType` are not official Button props. The official prop is `type` for the native button element.
+- `className`, `style`, `tabIndex`, and `aria-*` / `data-*` support come from `NativeProps`.
+
 ## Render Expectations
 
 - All four sizes must be visibly different in padding and type scale, while official height remains content-driven.
@@ -246,6 +258,11 @@ Core action control baseline for Ant Design Mobile Button behavior.
 - `block=true` must expand the control to the full inspection row width.
 - `loading=true` must keep button height stable and display the loading label or indicator state.
 - `disabled=true` must suppress the interactive color set and render disabled tokens.
+
+## Current Runtime Gaps
+
+- Current inspection payload still uses runtime metrics such as `radius=8`, `paddingX=10`, and semantic token paths instead of the official Ant Mobile defaults.
+- Phase A freeze remains pending until generator and plugin output match the official Button metrics and token mapping on the payload/write path.
 
 ## Failure Cases
 

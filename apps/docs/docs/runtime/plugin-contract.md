@@ -136,9 +136,11 @@ The plugin expects a payload that conforms to the shared Figma write contract.
 - `style.radius`, `paddingX`, `paddingY`, `gap`, `fontSize`, `lineHeight`, and `minWidth` must reflect the frozen spec metrics.
 - Family size distinctions must remain visible in node dimensions and style fields.
 - Plugin rendering must not override frozen metrics with generic presets.
+- Button and Input are currently documented with official Ant metrics even where the runtime payload still shows older internal metrics. That gap blocks full Phase A verification.
 
 ## Token Mapping Rules
 
 - `variables` should preserve semantic token paths emitted by the generator.
 - CSS variable props remain part of the contract when present in the spec.
 - Token remapping outside the family contract is not allowed in the runtime layer.
+- Button and Input still require runtime token alignment from semantic paths to the official documented token contract.

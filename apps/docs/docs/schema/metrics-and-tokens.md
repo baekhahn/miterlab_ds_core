@@ -4,7 +4,7 @@ title: Metrics And Tokens
 
 # Metrics And Tokens
 
-Known metric values are taken directly from the frozen specs. Unknown values remain marked as `TODO` instead of being omitted.
+Official Ant Mobile metric and token defaults are shown first when they are known from source. Frozen spec runtime-only fields remain listed with their spec source so current implementation gaps stay visible.
 
 ## Button
 
@@ -16,14 +16,15 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 | `default` | `paddingX` | `12px` | official button.less |
 | `default` | `paddingY` | `7px` | official button.less |
 | `default` | `borderRadius` | `4px` | official button.less |
-| `default` | `fontSize` | `var(--adm-font-size-9)` | official button.less |
+| `default` | `fontSize` | `17px` | official button.less + theme-default.less |
 | `default` | `lineHeight` | `1.4` | official button.less |
 | `mini` | `paddingY` | `3px` | official button.less |
-| `mini` | `fontSize` | `var(--adm-font-size-main)` | official button.less |
+| `mini` | `fontSize` | `13px` | official button.less + theme-default.less |
 | `small` | `paddingY` | `3px` | official button.less |
-| `small` | `fontSize` | `var(--adm-font-size-7)` | official button.less |
+| `small` | `fontSize` | `15px` | official button.less + theme-default.less |
+| `middle` | `fontSize` | `17px` | official button.less + theme-default.less |
 | `large` | `paddingY` | `11px` | official button.less |
-| `large` | `fontSize` | `var(--adm-font-size-10)` | official button.less |
+| `large` | `fontSize` | `18px` | official button.less + theme-default.less |
 | `internalLayout` | `minWidth` | `64` | spec internalLayout |
 | `internalLayout` | `textAlignX` | `center` | spec internalLayout |
 | `internalLayout` | `textAlignY` | `center` | spec internalLayout |
@@ -32,16 +33,16 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 
 | Scope | Token | Kind | Source |
 | --- | --- | --- | --- |
-| Button | `--text-color` | cssVar | default `var(--adm-color-text)` in official button.less |
-| Button | `--background-color` | cssVar | default `var(--adm-color-background)` in official button.less |
+| Button | `--text-color` | cssVar | default `#333333` via `var(--adm-color-text)` |
+| Button | `--background-color` | cssVar | default `#ffffff` via `var(--adm-color-background)` |
 | Button | `--border-radius` | cssVar | default `4px` in official button.less |
 | Button | `--border-width` | cssVar | default `1px` in official button.less |
 | Button | `--border-style` | cssVar | default `solid` in official button.less |
-| Button | `--border-color` | cssVar | default `var(--adm-color-border)` in official button.less |
-| Button | `colorPrimary` | antToken | represented through `var(--adm-color-primary)` |
-| Button | `colorText` | antToken | represented through `var(--adm-color-text)` |
-| Button | `colorBorder` | antToken | represented through `var(--adm-color-border)` |
-| Button | `colorBgContainer` | antToken | represented through `var(--adm-color-background)` |
+| Button | `--border-color` | cssVar | default `#eeeeee` via `var(--adm-color-border)` |
+| Button | `colorPrimary` | antToken | `#1677ff` via `--adm-color-primary` |
+| Button | `colorText` | antToken | `#333333` via `--adm-color-text` |
+| Button | `colorBorder` | antToken | `#eeeeee` via `--adm-color-border` |
+| Button | `colorBgContainer` | antToken | `#ffffff` via `--adm-color-background` |
 | Button | `controlHeight` | antToken | no explicit component token; effective height is content-driven |
 
 ## Input
@@ -58,6 +59,8 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 | `element` | `padding` | `0` | official input.less |
 | `clear` | `marginLeft` | `8px` | official input.less |
 | `clear` | `padding` | `4px` | official input.less |
+| `element` | `fontSize` | `17px` | official input.less + theme-default.less |
+| `clear` | `iconFontSize` | `15px` | official input.less + theme-default.less |
 | `default` | `height` | `42` | spec defaults |
 | `default` | `paddingX` | `14` | spec defaults |
 | `default` | `paddingY` | `10` | spec defaults |
@@ -70,16 +73,16 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 
 | Scope | Token | Kind | Source |
 | --- | --- | --- | --- |
-| Input | `--font-size` | cssVar | default `var(--adm-font-size-9)` in official input.less |
-| Input | `--color` | cssVar | default `var(--adm-color-text)` in official input.less |
-| Input | `--placeholder-color` | cssVar | default `var(--adm-color-light)` in official input.less |
+| Input | `--font-size` | cssVar | default `17px` via `var(--adm-font-size-9)` |
+| Input | `--color` | cssVar | default `#333333` via `var(--adm-color-text)` |
+| Input | `--placeholder-color` | cssVar | default `#cccccc` via `var(--adm-color-light)` |
 | Input | `--text-align` | cssVar | default `left` in official input.less |
-| Input | `colorText` | antToken | represented through `var(--adm-color-text)` |
-| Input | `colorBorder` | antToken | native input border is removed; field wrappers may use external border styling |
-| Input | `colorPrimary` | antToken | used indirectly for surrounding focused field patterns, not as an Input prop |
-| Input | `colorError` | antToken | not exposed by official InputProps |
-| Input | `colorWarning` | antToken | not exposed by official InputProps |
-| Input | `colorTextSecondary` | antToken | represented through light/weak text variables in Ant Mobile |
+| Input | `colorText` | antToken | `#333333` via `--adm-color-text` |
+| Input | `colorBorder` | antToken | native input border is removed; wrapper integrations commonly use `#eeeeee` via `--adm-color-border` |
+| Input | `colorPrimary` | antToken | `#1677ff` global token; no dedicated Input status prop |
+| Input | `colorError` | antToken | `#ff3141` global token; not exposed by official InputProps |
+| Input | `colorWarning` | antToken | `#ff8f1f` global token; not exposed by official InputProps |
+| Input | `colorTextSecondary` | antToken | `#666666` via `--adm-color-text-secondary` |
 
 ## Tabs
 

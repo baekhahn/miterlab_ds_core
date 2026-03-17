@@ -37,13 +37,19 @@ props:
   min: number
   max: number
   role: string
+  className: string
+  style: object
+  tabIndex: number
   --font-size: string
   --color: string
   --placeholder-color: string
   --text-align: string
 propDefaults:
+  clearable: false
   defaultValue: ''
+  disabled: false
   onlyShowClearWhenFocus: true
+  readOnly: false
 states: [default, focus, disabled, readOnly]
 defaults:
   height: 42
@@ -79,5 +85,6 @@ semanticMapping:
       value.color: semantic.text.secondary
       placeholder.color: semantic.text.muted
 notes:
+  - official NativeProps adds className, style, tabIndex, and aria/data attributes
   - official InputProps does not define size, status, prefix, or suffix props
   - source schema is Ant Design Mobile InputProps

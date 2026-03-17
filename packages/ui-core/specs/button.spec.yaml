@@ -20,6 +20,9 @@ props:
   onTouchEnd: function
   id: string
   form: string
+  className: string
+  style: object
+  tabIndex: number
   --text-color: string
   --background-color: string
   --border-radius: string
@@ -33,6 +36,7 @@ propDefaults:
   shape: default
   block: false
   loading: false
+  disabled: false
   type: button
 states: [default, active, focus, disabled, loading]
 sizeDefaults:
@@ -424,5 +428,6 @@ semanticMapping:
       container.border: semantic.surface.subtle
       label.color: semantic.status.critical
 notes:
+  - official NativeProps adds className, style, tabIndex, and aria/data attributes
   - official ButtonProps does not define href, target, or icon props
   - source schema is Ant Design Mobile ButtonProps
