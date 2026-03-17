@@ -13,7 +13,7 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 - Ant Design Mobile InputProps
 - Spec files: `packages/ui-core/specs/input.spec.yaml`
 - Parity mismatch count: `0`
-- Spec notes: `official NativeProps adds className, style, tabIndex, and aria/data attributes`, `official InputProps does not define size, status, prefix, or suffix props`, `source schema is Ant Design Mobile InputProps`
+- Spec notes: `official NativeProps adds className, style, tabIndex, and aria/data attributes`, `official InputProps does not define allowClear; Ant Design Mobile uses clearable`, `official InputProps does not define size, status, prefix, or suffix props`, `official clearIcon default is <CloseCircleFill />`, `source schema is Ant Design Mobile InputProps`
 
 ## Inspection Screen
 
@@ -63,6 +63,8 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 - antToken: `colorError` -> `#ff3141` global token; not exposed by official InputProps
 - antToken: `colorWarning` -> `#ff8f1f` global token; not exposed by official InputProps
 - antToken: `colorTextSecondary` -> `#666666` via `--adm-color-text-secondary`
+- antToken: `colorTextDisabled` -> Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled input uses wrapper `opacity: 0.4`
+- antToken: `controlHeight` -> no explicit component token; effective wrapper min-height is `24px` in official input.less
 
 ## Input
 
@@ -144,6 +146,8 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 | `colorError` | antToken | `#ff3141` global token; not exposed by official InputProps |
 | `colorWarning` | antToken | `#ff8f1f` global token; not exposed by official InputProps |
 | `colorTextSecondary` | antToken | `#666666` via `--adm-color-text-secondary` |
+| `colorTextDisabled` | antToken | Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled input uses wrapper `opacity: 0.4` |
+| `controlHeight` | antToken | no explicit component token; effective wrapper min-height is `24px` in official input.less |
 
 ## Variant Axes Table
 
@@ -251,6 +255,7 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 
 ## Official Non-Props
 
+- `allowClear` is not an official Input prop in Ant Design Mobile 5.x. The official prop is `clearable`.
 - `size`, `status`, `prefix`, and `suffix` are not official Input props in Ant Design Mobile 5.x.
 - `className`, `style`, `tabIndex`, and `aria-*` / `data-*` support come from `NativeProps`.
 
@@ -265,7 +270,7 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 
 ## Current Runtime Gaps
 
-- Current inspection payload still uses runtime field metrics such as `height=42`, `paddingY=9`, and semantic token paths instead of the official Ant Mobile Input defaults.
+- Current inspection payload now matches the official Input height, radius, padding, inset, and type scale, but the token paths still diverge from the documented Ant contract.
 - Phase A freeze remains pending until generator and plugin output match the official Input metrics and token mapping on the payload/write path.
 
 ## Failure Cases
@@ -293,17 +298,19 @@ Core text entry baseline for Ant Design Mobile Input behavior.
     "x": 48,
     "y": 192,
     "width": 320,
-    "height": 42,
+    "height": 24,
     "component": "Input",
     "style": {
       "fill": "#FFFFFF",
       "stroke": "#E0E6EE",
       "text": "#1F2430",
-      "paddingY": 9,
-      "fontSize": 15,
-      "lineHeight": 22,
-      "fontWeight": "regular",
-      "minWidth": 220
+      "radius": 0,
+      "paddingX": 0,
+      "paddingY": 0,
+      "gap": 8,
+      "fontSize": 17,
+      "lineHeight": 26,
+      "fontWeight": "regular"
     },
     "variant": {
       "placeholder": "Type here"

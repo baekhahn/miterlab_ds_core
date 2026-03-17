@@ -25,7 +25,7 @@ Official Ant Mobile metric and token defaults are shown first when they are know
 | `middle` | `fontSize` | `17px` | official button.less + theme-default.less |
 | `large` | `paddingY` | `11px` | official button.less |
 | `large` | `fontSize` | `18px` | official button.less + theme-default.less |
-| `internalLayout` | `minWidth` | `64` | spec internalLayout |
+| `internalLayout` | `minWidth` | `0` | spec internalLayout |
 | `internalLayout` | `textAlignX` | `center` | spec internalLayout |
 | `internalLayout` | `textAlignY` | `center` | spec internalLayout |
 
@@ -43,6 +43,9 @@ Official Ant Mobile metric and token defaults are shown first when they are know
 | Button | `colorText` | antToken | `#333333` via `--adm-color-text` |
 | Button | `colorBorder` | antToken | `#eeeeee` via `--adm-color-border` |
 | Button | `colorBgContainer` | antToken | `#ffffff` via `--adm-color-background` |
+| Button | `colorFill` | antToken | Ant Design Mobile 5.x does not expose `colorFill` by name; nearest exposed fill token is `--adm-color-fill-content` -> `#f5f5f5` |
+| Button | `colorFillSecondary` | antToken | Ant Design Mobile 5.x does not expose `colorFillSecondary` by name in theme-default.less |
+| Button | `colorTextDisabled` | antToken | Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled button uses `opacity: 0.4` over current text/background colors |
 | Button | `controlHeight` | antToken | no explicit component token; effective height is content-driven |
 
 ## Input
@@ -61,11 +64,13 @@ Official Ant Mobile metric and token defaults are shown first when they are know
 | `clear` | `padding` | `4px` | official input.less |
 | `element` | `fontSize` | `17px` | official input.less + theme-default.less |
 | `clear` | `iconFontSize` | `15px` | official input.less + theme-default.less |
-| `default` | `height` | `42` | spec defaults |
-| `default` | `paddingX` | `14` | spec defaults |
-| `default` | `paddingY` | `10` | spec defaults |
-| `default` | `radius` | `12` | spec defaults |
-| `internalLayout` | `minWidth` | `220` | spec internalLayout |
+| `default` | `height` | `24` | spec defaults |
+| `default` | `paddingX` | `0` | spec defaults |
+| `default` | `paddingY` | `0` | spec defaults |
+| `default` | `radius` | `0` | spec defaults |
+| `default` | `inset` | `8` | spec defaults |
+| `default` | `fontSize` | `17` | spec defaults |
+| `internalLayout` | `minWidth` | `0` | spec internalLayout |
 | `internalLayout` | `textAlignX` | `start` | spec internalLayout |
 | `internalLayout` | `textAlignY` | `center` | spec internalLayout |
 
@@ -83,6 +88,8 @@ Official Ant Mobile metric and token defaults are shown first when they are know
 | Input | `colorError` | antToken | `#ff3141` global token; not exposed by official InputProps |
 | Input | `colorWarning` | antToken | `#ff8f1f` global token; not exposed by official InputProps |
 | Input | `colorTextSecondary` | antToken | `#666666` via `--adm-color-text-secondary` |
+| Input | `colorTextDisabled` | antToken | Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled input uses wrapper `opacity: 0.4` |
+| Input | `controlHeight` | antToken | no explicit component token; effective wrapper min-height is `24px` in official input.less |
 
 ## Tabs
 

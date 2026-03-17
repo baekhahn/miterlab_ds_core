@@ -11,6 +11,7 @@ interface ParsedSpec {
   sizes?: string[];
   states?: string[];
   sizeDefaults?: Record<string, Record<string, number>>;
+  defaults?: Record<string, unknown>;
   internalLayout?: Record<string, unknown>;
   semanticMapping?: Record<string, Record<string, Record<string, string>>>;
 }
@@ -237,15 +238,14 @@ const resolveTextMetrics = (
   size: string
 ): { fontSize: number; lineHeight: number; fontWeight: FontWeight } => {
   if (component === "Button") {
-    if (size === "large") return { fontSize: 17, lineHeight: 24, fontWeight: "medium" };
-    if (size === "small" || size === "mini") return { fontSize: 13, lineHeight: 18, fontWeight: "medium" };
-    return { fontSize: 15, lineHeight: 22, fontWeight: "medium" };
+    if (size === "large") return { fontSize: 18, lineHeight: 25, fontWeight: "medium" };
+    if (size === "small") return { fontSize: 15, lineHeight: 21, fontWeight: "medium" };
+    if (size === "mini") return { fontSize: 13, lineHeight: 18, fontWeight: "medium" };
+    return { fontSize: 17, lineHeight: 24, fontWeight: "medium" };
   }
 
   if (component === "Input") {
-    if (size === "large") return { fontSize: 16, lineHeight: 24, fontWeight: "regular" };
-    if (size === "small") return { fontSize: 14, lineHeight: 20, fontWeight: "regular" };
-    return { fontSize: 15, lineHeight: 22, fontWeight: "regular" };
+    return { fontSize: 17, lineHeight: 26, fontWeight: "regular" };
   }
 
   if (component === "Label") {
@@ -323,9 +323,9 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
   }
 
   const resolvedSize = input.size ?? spec.sizes?.[0] ?? "md";
-  const specHeight = spec.sizeDefaults?.[resolvedSize]?.height;
-  const specPaddingX = spec.sizeDefaults?.[resolvedSize]?.paddingX;
-  const specPaddingY = spec.sizeDefaults?.[resolvedSize]?.paddingY;
+  const specHeight = spec.sizeDefaults?.[resolvedSize]?.height ?? spec.defaults?.height;
+  const specPaddingX = spec.sizeDefaults?.[resolvedSize]?.paddingX ?? spec.defaults?.paddingX;
+  const specPaddingY = spec.sizeDefaults?.[resolvedSize]?.paddingY ?? spec.defaults?.paddingY;
   const shapeKey = input.shape ?? "default";
   const specRadius =
     spec.component === "Button"
@@ -333,9 +333,9 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
         ? 999
         : shapeKey === "rectangular"
           ? spec.sizeDefaults?.[resolvedSize]?.radiusRectangular ?? spec.sizeDefaults?.[resolvedSize]?.radius
-          : spec.sizeDefaults?.[resolvedSize]?.radius
-      : spec.sizeDefaults?.[resolvedSize]?.radius;
-  const specIconGap = spec.sizeDefaults?.[resolvedSize]?.iconGap;
+          : spec.sizeDefaults?.[resolvedSize]?.radius ?? spec.defaults?.radius
+      : spec.sizeDefaults?.[resolvedSize]?.radius ?? spec.defaults?.radius;
+  const specIconGap = spec.sizeDefaults?.[resolvedSize]?.iconGap ?? spec.defaults?.inset ?? 0;
   const specMinWidth = Number(spec.internalLayout?.minWidth ?? 0);
   const metrics = resolveTextMetrics(spec.component, resolvedSize);
   const defaultHeight =

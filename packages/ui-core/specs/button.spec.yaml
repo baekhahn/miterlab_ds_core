@@ -36,40 +36,41 @@ propDefaults:
   shape: default
   block: false
   loading: false
+  loadingIcon: <DotLoading color='currentColor' />
   disabled: false
   type: button
 states: [default, active, focus, disabled, loading]
 sizeDefaults:
   mini:
-    height: 28
-    paddingX: 10
-    paddingY: 5
-    radius: 8
-    radiusRectangular: 4
-    iconGap: 4
+    height: auto
+    paddingX: 12
+    paddingY: 3
+    radius: 4
+    radiusRectangular: 0
+    iconGap: 0
   small:
-    height: 32
+    height: auto
+    paddingX: 12
+    paddingY: 3
+    radius: 4
+    radiusRectangular: 0
+    iconGap: 0
+  middle:
+    height: auto
     paddingX: 12
     paddingY: 7
-    radius: 10
-    radiusRectangular: 6
-    iconGap: 4
-  middle:
-    height: 36
-    paddingX: 16
-    paddingY: 8
-    radius: 12
-    radiusRectangular: 8
-    iconGap: 6
+    radius: 4
+    radiusRectangular: 0
+    iconGap: 0
   large:
-    height: 44
-    paddingX: 20
-    paddingY: 10
-    radius: 14
-    radiusRectangular: 10
-    iconGap: 6
+    height: auto
+    paddingX: 12
+    paddingY: 11
+    radius: 4
+    radiusRectangular: 0
+    iconGap: 0
 internalLayout:
-  minWidth: 64
+  minWidth: 0
   textAlignX: center
   textAlignY: center
 slots: [container, label]
@@ -430,4 +431,6 @@ semanticMapping:
 notes:
   - official NativeProps adds className, style, tabIndex, and aria/data attributes
   - official ButtonProps does not define href, target, or icon props
+  - official ButtonProps does not define htmlType; native button type is exposed as type
+  - official loadingIcon default is <DotLoading color='currentColor' />
   - source schema is Ant Design Mobile ButtonProps

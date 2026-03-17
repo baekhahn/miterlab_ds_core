@@ -91,6 +91,7 @@ export const layoutRules = {
     caption: 18
   },
   componentDefaults: {
+    input: { width: 358, height: 24 },
     textarea: { width: 358, height: 96 },
     select: { width: 358, height: 40 },
     "check-mark": { width: 24, height: 24 },

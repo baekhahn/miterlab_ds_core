@@ -13,7 +13,7 @@ Core action control baseline for Ant Design Mobile Button behavior.
 - Ant Design Mobile ButtonProps
 - Spec files: `packages/ui-core/specs/button.spec.yaml`
 - Parity mismatch count: `0`
-- Spec notes: `official NativeProps adds className, style, tabIndex, and aria/data attributes`, `official ButtonProps does not define href, target, or icon props`, `source schema is Ant Design Mobile ButtonProps`
+- Spec notes: `official NativeProps adds className, style, tabIndex, and aria/data attributes`, `official ButtonProps does not define href, target, or icon props`, `official ButtonProps does not define htmlType; native button type is exposed as type`, `official loadingIcon default is <DotLoading color='currentColor' />`, `source schema is Ant Design Mobile ButtonProps`
 
 ## Inspection Screen
 
@@ -67,6 +67,9 @@ Core action control baseline for Ant Design Mobile Button behavior.
 - antToken: `colorText` -> `#333333` via `--adm-color-text`
 - antToken: `colorBorder` -> `#eeeeee` via `--adm-color-border`
 - antToken: `colorBgContainer` -> `#ffffff` via `--adm-color-background`
+- antToken: `colorFill` -> Ant Design Mobile 5.x does not expose `colorFill` by name; nearest exposed fill token is `--adm-color-fill-content` -> `#f5f5f5`
+- antToken: `colorFillSecondary` -> Ant Design Mobile 5.x does not expose `colorFillSecondary` by name in theme-default.less
+- antToken: `colorTextDisabled` -> Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled button uses `opacity: 0.4` over current text/background colors
 - antToken: `controlHeight` -> no explicit component token; effective height is content-driven
 
 ## Button
@@ -137,6 +140,9 @@ Core action control baseline for Ant Design Mobile Button behavior.
 | `colorText` | antToken | `#333333` via `--adm-color-text` |
 | `colorBorder` | antToken | `#eeeeee` via `--adm-color-border` |
 | `colorBgContainer` | antToken | `#ffffff` via `--adm-color-background` |
+| `colorFill` | antToken | Ant Design Mobile 5.x does not expose `colorFill` by name; nearest exposed fill token is `--adm-color-fill-content` -> `#f5f5f5` |
+| `colorFillSecondary` | antToken | Ant Design Mobile 5.x does not expose `colorFillSecondary` by name in theme-default.less |
+| `colorTextDisabled` | antToken | Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled button uses `opacity: 0.4` over current text/background colors |
 | `controlHeight` | antToken | no explicit component token; effective height is content-driven |
 
 ## Variant Axes Table
@@ -261,7 +267,7 @@ Core action control baseline for Ant Design Mobile Button behavior.
 
 ## Current Runtime Gaps
 
-- Current inspection payload still uses runtime metrics such as `radius=8`, `paddingX=10`, and semantic token paths instead of the official Ant Mobile defaults.
+- Current inspection payload now matches the official mini Button radius and padding, but still uses fixed frame heights and semantic token paths instead of the documented Ant token contract.
 - Phase A freeze remains pending until generator and plugin output match the official Button metrics and token mapping on the payload/write path.
 
 ## Failure Cases
@@ -295,14 +301,13 @@ Core action control baseline for Ant Design Mobile Button behavior.
       "fill": "#2E6CFF",
       "stroke": "#2E6CFF",
       "text": "#FFFFFF",
-      "radius": 8,
-      "paddingX": 10,
-      "paddingY": 5,
-      "gap": 4,
+      "radius": 4,
+      "paddingX": 12,
+      "paddingY": 3,
+      "gap": 0,
       "fontSize": 13,
       "lineHeight": 18,
-      "fontWeight": "medium",
-      "minWidth": 64
+      "fontWeight": "medium"
     },
     "variant": {
       "color": "primary",

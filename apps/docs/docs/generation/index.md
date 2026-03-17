@@ -66,14 +66,13 @@ export const createButtonInspectionPrompt = (theme = "core"): DesignPrompt => {
       "fill": "#2E6CFF",
       "stroke": "#2E6CFF",
       "text": "#FFFFFF",
-      "radius": 8,
-      "paddingX": 10,
-      "paddingY": 5,
-      "gap": 4,
+      "radius": 4,
+      "paddingX": 12,
+      "paddingY": 3,
+      "gap": 0,
       "fontSize": 13,
       "lineHeight": 18,
-      "fontWeight": "medium",
-      "minWidth": 64
+      "fontWeight": "medium"
     },
     "variant": {
       "color": "primary",
@@ -164,6 +163,73 @@ export const createButtonInspectionPrompt = (theme = "core"): DesignPrompt => {
             "width": 108,
             "height": 32,
           
+...
+```
+
+## Example Node Tree
+
+```json
+[
+  {
+    "id": "layout_1",
+    "type": "FRAME",
+    "name": "Button inspection Screen",
+    "x": 0,
+    "y": 0,
+    "width": 1440,
+    "height": 1240,
+    "children": [
+      {
+        "id": "layout_2",
+        "type": "FRAME",
+        "name": "header-section",
+        "x": 48,
+        "y": 40,
+        "width": 1320,
+        "height": 100,
+        "children": [
+          {
+            "id": "layout_3",
+            "type": "TEXT",
+            "name": "Text 1",
+            "x": 48,
+            "y": 40,
+            "width": 358,
+            "height": 32,
+            "text": "Button Inspection",
+            "variables": {
+              "text.color": "semantic.text.primary"
+            },
+            "style": {
+              "text": "text/heading/xl",
+              "fill": "#1F2430"
+            }
+          }
+        ]
+      },
+      {
+        "id": "layout_4",
+        "type": "FRAME",
+        "name": "content-section",
+        "x": 48,
+        "y": 116,
+        "width": 1320,
+        "height": 100,
+        "children": [
+          {
+            "id": "layout_5",
+            "type": "TEXT",
+            "name": "Text 2",
+            "x": 48,
+            "y": 116,
+            "width": 358,
+            "height": 24,
+            "text": "Sizes",
+            "variables": {
+              "text.color": "semantic.text.secondary"
+            },
+            "style": {
+              "text": "te
 ...
 ```
 

@@ -28,14 +28,13 @@ The plugin expects a payload that conforms to the shared Figma write contract.
       "fill": "#2E6CFF",
       "stroke": "#2E6CFF",
       "text": "#FFFFFF",
-      "radius": 8,
-      "paddingX": 10,
-      "paddingY": 5,
-      "gap": 4,
+      "radius": 4,
+      "paddingX": 12,
+      "paddingY": 3,
+      "gap": 0,
       "fontSize": 13,
       "lineHeight": 18,
-      "fontWeight": "medium",
-      "minWidth": 64
+      "fontWeight": "medium"
     },
     "variant": {
       "color": "primary",

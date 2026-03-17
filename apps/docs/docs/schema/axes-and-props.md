@@ -19,7 +19,7 @@ Every prop table in this document is generated from the frozen Ant-based spec fi
 | `block` | `boolean` | `false`, `true` | `false` | `false` | TODO |
 | `loading` | `boolean`, `string` | `false`, `true`, `auto` | `false` | `false` | Boolean and `auto` must remain distinct in the contract. |
 | `loadingText` | `string` | TODO | TODO | `false` | TODO |
-| `loadingIcon` | `reactNode` | TODO | TODO | `false` | TODO |
+| `loadingIcon` | `reactNode` | TODO | `<DotLoading color='currentColor' />` | `false` | TODO |
 | `disabled` | `boolean` | `false`, `true` | `false` | `false` | TODO |
 | `onClick` | `function` | TODO | TODO | `false` | TODO |
 | `type` | `string` | `button`, `submit`, `reset` | `button` | `false` | TODO |
@@ -49,7 +49,7 @@ Every prop table in this document is generated from the frozen Ant-based spec fi
 | `maxLength` | `number` | TODO | TODO | `false` | TODO |
 | `minLength` | `number` | TODO | TODO | `false` | TODO |
 | `autoComplete` | `string` | TODO | TODO | `false` | TODO |
-| `autoFocus` | `boolean` | `false`, `true` | TODO | `false` | TODO |
+| `autoFocus` | `boolean` | `false`, `true` | `false` | `false` | TODO |
 | `pattern` | `string` | TODO | TODO | `false` | TODO |
 | `inputMode` | `string` | TODO | TODO | `false` | TODO |
 | `type` | `string` | TODO | TODO | `false` | TODO |
@@ -74,7 +74,7 @@ Every prop table in this document is generated from the frozen Ant-based spec fi
 | `defaultValue` | `string` | TODO | TODO | `false` | TODO |
 | `onChange` | `function` | TODO | TODO | `false` | TODO |
 | `clearable` | `boolean` | `false`, `true` | `false` | `false` | TODO |
-| `clearIcon` | `reactNode` | TODO | TODO | `false` | TODO |
+| `clearIcon` | `reactNode` | TODO | `<CloseCircleFill />` | `false` | TODO |
 | `onlyShowClearWhenFocus` | `boolean` | `false`, `true` | `true` | `false` | Clear affordance must remain conditional on focus. |
 | `onClear` | `function` | TODO | TODO | `false` | TODO |
 | `onEnterPress` | `function` | TODO | TODO | `false` | TODO |

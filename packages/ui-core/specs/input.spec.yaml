@@ -45,19 +45,23 @@ props:
   --placeholder-color: string
   --text-align: string
 propDefaults:
+  autoFocus: false
   clearable: false
+  clearIcon: <CloseCircleFill />
   defaultValue: ''
   disabled: false
   onlyShowClearWhenFocus: true
   readOnly: false
 states: [default, focus, disabled, readOnly]
 defaults:
-  height: 42
-  paddingX: 14
-  paddingY: 10
-  radius: 12
+  height: 24
+  paddingX: 0
+  paddingY: 0
+  radius: 0
+  inset: 8
+  fontSize: 17
 internalLayout:
-  minWidth: 220
+  minWidth: 0
   textAlignX: start
   textAlignY: center
 slots: [field, value, placeholder, action]
@@ -86,5 +90,7 @@ semanticMapping:
       placeholder.color: semantic.text.muted
 notes:
   - official NativeProps adds className, style, tabIndex, and aria/data attributes
+  - official InputProps does not define allowClear; Ant Design Mobile uses clearable
   - official InputProps does not define size, status, prefix, or suffix props
+  - official clearIcon default is <CloseCircleFill />
   - source schema is Ant Design Mobile InputProps

@@ -164,7 +164,7 @@ const familyContracts = {
       "Primary, success, warning, and danger map through `--color` to `--adm-color-*` values."
     ],
     runtimeGaps: [
-      "Current inspection payload still uses runtime metrics such as `radius=8`, `paddingX=10`, and semantic token paths instead of the official Ant Mobile defaults.",
+      "Current inspection payload now matches the official mini Button radius and padding, but still uses fixed frame heights and semantic token paths instead of the documented Ant token contract.",
       "Phase A freeze remains pending until generator and plugin output match the official Button metrics and token mapping on the payload/write path."
     ]
   },
@@ -186,6 +186,7 @@ const familyContracts = {
       "Text alignment or vertical centering broken in the rendered node."
     ],
     unsupportedNotes: [
+      "`allowClear` is not an official Input prop in Ant Design Mobile 5.x. The official prop is `clearable`.",
       "`size`, `status`, `prefix`, and `suffix` are not official Input props in Ant Design Mobile 5.x.",
       "`className`, `style`, `tabIndex`, and `aria-*` / `data-*` support come from `NativeProps`."
     ],
@@ -211,7 +212,7 @@ const familyContracts = {
       "Value and placeholder colors remain distinct through `--color` and `--placeholder-color`."
     ],
     runtimeGaps: [
-      "Current inspection payload still uses runtime field metrics such as `height=42`, `paddingY=9`, and semantic token paths instead of the official Ant Mobile Input defaults.",
+      "Current inspection payload now matches the official Input height, radius, padding, inset, and type scale, but the token paths still diverge from the documented Ant contract.",
       "Phase A freeze remains pending until generator and plugin output match the official Input metrics and token mapping on the payload/write path."
     ]
   },
@@ -322,6 +323,9 @@ const officialComponentData = {
       ["Button", "`colorText`", "antToken", "`#333333` via `--adm-color-text`"],
       ["Button", "`colorBorder`", "antToken", "`#eeeeee` via `--adm-color-border`"],
       ["Button", "`colorBgContainer`", "antToken", "`#ffffff` via `--adm-color-background`"],
+      ["Button", "`colorFill`", "antToken", "Ant Design Mobile 5.x does not expose `colorFill` by name; nearest exposed fill token is `--adm-color-fill-content` -> `#f5f5f5`"],
+      ["Button", "`colorFillSecondary`", "antToken", "Ant Design Mobile 5.x does not expose `colorFillSecondary` by name in theme-default.less"],
+      ["Button", "`colorTextDisabled`", "antToken", "Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled button uses `opacity: 0.4` over current text/background colors"],
       ["Button", "`controlHeight`", "antToken", "no explicit component token; effective height is content-driven"]
     ]
   },
@@ -356,7 +360,9 @@ const officialComponentData = {
       ["Input", "`colorPrimary`", "antToken", "`#1677ff` global token; no dedicated Input status prop"],
       ["Input", "`colorError`", "antToken", "`#ff3141` global token; not exposed by official InputProps"],
       ["Input", "`colorWarning`", "antToken", "`#ff8f1f` global token; not exposed by official InputProps"],
-      ["Input", "`colorTextSecondary`", "antToken", "`#666666` via `--adm-color-text-secondary`"]
+      ["Input", "`colorTextSecondary`", "antToken", "`#666666` via `--adm-color-text-secondary`"],
+      ["Input", "`colorTextDisabled`", "antToken", "Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled input uses wrapper `opacity: 0.4`"],
+      ["Input", "`controlHeight`", "antToken", "no explicit component token; effective wrapper min-height is `24px` in official input.less"]
     ]
   },
   Tabs: {
@@ -1035,6 +1041,7 @@ function buildGenerationDocs(families) {
     node: findFirstComponentNode(buttonFamily.payload.nodes, "Button")
   };
   const exampleLayout = buttonFamily.layout.children?.slice(0, 2) || buttonFamily.layout;
+  const exampleNodeTree = buttonFamily.payload.nodes.slice(0, 3);
   const exampleRender = {
     button: buttonFamily.summary,
     input: inputFamily.summary
@@ -1065,6 +1072,10 @@ ${codeBlock("json", truncateJson(examplePayload))}
 ## Example Layout
 
 ${codeBlock("json", truncateJson(exampleLayout))}
+
+## Example Node Tree
+
+${codeBlock("json", truncateJson(exampleNodeTree, 1400))}
 
 ## Example Render Result
 

@@ -162,13 +162,9 @@ const mapComponentToLayoutNode = (index: number, component: GrammarComponent, sc
   if (componentType === "input") {
     const extractedSource = screen === "input-inspection" ? loadInputExtractionArtifacts().sources.at(-1) : undefined;
     const extractedMetrics = extractedSource?.blueprint?.metrics;
-
-    // Generator's job here is translation, not reinterpretation.
-    // For extracted inspection screens, source-derived metrics win and layout rules are fallback only.
     const extractedWidth =
       typeof extractedMetrics?.width === "number" && extractedMetrics.width > 0 ? extractedMetrics.width : undefined;
-    const extractedHeight =
-      typeof extractedMetrics?.height === "number" && extractedMetrics.height > 0 ? extractedMetrics.height : undefined;
+    const defaultInputHeight = layoutRules.componentDefaults.input?.height ?? 24;
 
     return {
       type: "component",
@@ -217,7 +213,7 @@ const mapComponentToLayoutNode = (index: number, component: GrammarComponent, sc
           : component.fullWidth === false
             ? 320
             : layoutRules.contentWidth.form,
-      height: screen === "input-inspection" ? extractedHeight ?? 42 : 42,
+      height: screen === "input-inspection" ? defaultInputHeight : component.height ?? defaultInputHeight,
       label: component.label
     };
   }
