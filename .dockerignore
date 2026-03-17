@@ -5,7 +5,6 @@ artifacts
 docs
 *.log
 
-apps/docs/build
 apps/docs/.docusaurus
 apps/docs/node_modules
 
