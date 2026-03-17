@@ -12,30 +12,18 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 
 | Scope | Metric | Value | Source |
 | --- | --- | --- | --- |
-| `mini` | `height` | `28` | spec sizeDefaults |
-| `mini` | `paddingX` | `10` | spec sizeDefaults |
-| `mini` | `paddingY` | `5` | spec sizeDefaults |
-| `mini` | `radius` | `8` | spec sizeDefaults |
-| `mini` | `radiusRectangular` | `4` | spec sizeDefaults |
-| `mini` | `iconGap` | `4` | spec sizeDefaults |
-| `small` | `height` | `32` | spec sizeDefaults |
-| `small` | `paddingX` | `12` | spec sizeDefaults |
-| `small` | `paddingY` | `7` | spec sizeDefaults |
-| `small` | `radius` | `10` | spec sizeDefaults |
-| `small` | `radiusRectangular` | `6` | spec sizeDefaults |
-| `small` | `iconGap` | `4` | spec sizeDefaults |
-| `middle` | `height` | `36` | spec sizeDefaults |
-| `middle` | `paddingX` | `16` | spec sizeDefaults |
-| `middle` | `paddingY` | `8` | spec sizeDefaults |
-| `middle` | `radius` | `12` | spec sizeDefaults |
-| `middle` | `radiusRectangular` | `8` | spec sizeDefaults |
-| `middle` | `iconGap` | `6` | spec sizeDefaults |
-| `large` | `height` | `44` | spec sizeDefaults |
-| `large` | `paddingX` | `20` | spec sizeDefaults |
-| `large` | `paddingY` | `10` | spec sizeDefaults |
-| `large` | `radius` | `14` | spec sizeDefaults |
-| `large` | `radiusRectangular` | `10` | spec sizeDefaults |
-| `large` | `iconGap` | `6` | spec sizeDefaults |
+| `default` | `height` | `auto` | official button.less |
+| `default` | `paddingX` | `12px` | official button.less |
+| `default` | `paddingY` | `7px` | official button.less |
+| `default` | `borderRadius` | `4px` | official button.less |
+| `default` | `fontSize` | `var(--adm-font-size-9)` | official button.less |
+| `default` | `lineHeight` | `1.4` | official button.less |
+| `mini` | `paddingY` | `3px` | official button.less |
+| `mini` | `fontSize` | `var(--adm-font-size-main)` | official button.less |
+| `small` | `paddingY` | `3px` | official button.less |
+| `small` | `fontSize` | `var(--adm-font-size-7)` | official button.less |
+| `large` | `paddingY` | `11px` | official button.less |
+| `large` | `fontSize` | `var(--adm-font-size-10)` | official button.less |
 | `internalLayout` | `minWidth` | `64` | spec internalLayout |
 | `internalLayout` | `textAlignX` | `center` | spec internalLayout |
 | `internalLayout` | `textAlignY` | `center` | spec internalLayout |
@@ -44,23 +32,17 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 
 | Scope | Token | Kind | Source |
 | --- | --- | --- | --- |
-| Button | `semantic.surface.subtle` | semantic | spec semanticMapping |
-| Button | `semantic.text.primary` | semantic | spec semanticMapping |
-| Button | `semantic.surface.sunken` | semantic | spec semanticMapping |
-| Button | `semantic.border.strong` | semantic | spec semanticMapping |
-| Button | `semantic.focus.ring` | semantic | spec semanticMapping |
-| Button | `semantic.action.disabled` | semantic | spec semanticMapping |
-| Button | `semantic.text.muted` | semantic | spec semanticMapping |
-| Button | `semantic.action.primary` | semantic | spec semanticMapping |
-| Button | `semantic.action.onPrimary` | semantic | spec semanticMapping |
-| Button | `semantic.action.primaryHover` | semantic | spec semanticMapping |
-| Button | `semantic.action.primaryPressed` | semantic | spec semanticMapping |
-| Button | `semantic.status.success` | semantic | spec semanticMapping |
-| Button | `semantic.status.warning` | semantic | spec semanticMapping |
-| Button | `semantic.status.critical` | semantic | spec semanticMapping |
-| Button | `semantic.surface.default` | semantic | spec semanticMapping |
-| Button | `semantic.border.default` | semantic | spec semanticMapping |
-| Button | `semantic.border.subtle` | semantic | spec semanticMapping |
+| Button | `--text-color` | cssVar | default `var(--adm-color-text)` in official button.less |
+| Button | `--background-color` | cssVar | default `var(--adm-color-background)` in official button.less |
+| Button | `--border-radius` | cssVar | default `4px` in official button.less |
+| Button | `--border-width` | cssVar | default `1px` in official button.less |
+| Button | `--border-style` | cssVar | default `solid` in official button.less |
+| Button | `--border-color` | cssVar | default `var(--adm-color-border)` in official button.less |
+| Button | `colorPrimary` | antToken | represented through `var(--adm-color-primary)` |
+| Button | `colorText` | antToken | represented through `var(--adm-color-text)` |
+| Button | `colorBorder` | antToken | represented through `var(--adm-color-border)` |
+| Button | `colorBgContainer` | antToken | represented through `var(--adm-color-background)` |
+| Button | `controlHeight` | antToken | no explicit component token; effective height is content-driven |
 
 ## Input
 
@@ -68,6 +50,14 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 
 | Scope | Metric | Value | Source |
 | --- | --- | --- | --- |
+| `wrapper` | `minHeight` | `24px` | official input.less |
+| `wrapper` | `width` | `100%` | official input.less |
+| `wrapper` | `alignItems` | `center` | official input.less |
+| `element` | `lineHeight` | `1.5` | official input.less |
+| `element` | `minHeight` | `1.5em` | official input.less |
+| `element` | `padding` | `0` | official input.less |
+| `clear` | `marginLeft` | `8px` | official input.less |
+| `clear` | `padding` | `4px` | official input.less |
 | `default` | `height` | `42` | spec defaults |
 | `default` | `paddingX` | `14` | spec defaults |
 | `default` | `paddingY` | `10` | spec defaults |
@@ -80,13 +70,16 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 
 | Scope | Token | Kind | Source |
 | --- | --- | --- | --- |
-| Input | `semantic.surface.default` | semantic | spec semanticMapping |
-| Input | `semantic.border.default` | semantic | spec semanticMapping |
-| Input | `semantic.text.primary` | semantic | spec semanticMapping |
-| Input | `semantic.text.muted` | semantic | spec semanticMapping |
-| Input | `semantic.surface.subtle` | semantic | spec semanticMapping |
-| Input | `semantic.border.subtle` | semantic | spec semanticMapping |
-| Input | `semantic.text.secondary` | semantic | spec semanticMapping |
+| Input | `--font-size` | cssVar | default `var(--adm-font-size-9)` in official input.less |
+| Input | `--color` | cssVar | default `var(--adm-color-text)` in official input.less |
+| Input | `--placeholder-color` | cssVar | default `var(--adm-color-light)` in official input.less |
+| Input | `--text-align` | cssVar | default `left` in official input.less |
+| Input | `colorText` | antToken | represented through `var(--adm-color-text)` |
+| Input | `colorBorder` | antToken | native input border is removed; field wrappers may use external border styling |
+| Input | `colorPrimary` | antToken | used indirectly for surrounding focused field patterns, not as an Input prop |
+| Input | `colorError` | antToken | not exposed by official InputProps |
+| Input | `colorWarning` | antToken | not exposed by official InputProps |
+| Input | `colorTextSecondary` | antToken | represented through light/weak text variables in Ant Mobile |
 
 ## Tabs
 
@@ -104,13 +97,12 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 
 | Scope | Token | Kind | Source |
 | --- | --- | --- | --- |
-| Tabs | `--fixed-active-line-width` | cssVar | spec tokens.cssVars |
-| Tabs | `--active-line-height` | cssVar | spec tokens.cssVars |
-| Tabs | `--active-line-border-radius` | cssVar | spec tokens.cssVars |
-| Tabs | `--title-font-size` | cssVar | spec tokens.cssVars |
-| Tabs | `--content-padding` | cssVar | spec tokens.cssVars |
-| Tabs | `--active-title-color` | cssVar | spec tokens.cssVars |
-| Tabs | `--active-line-color` | cssVar | spec tokens.cssVars |
+| Tabs | `--title-font-size` | cssVar | default `var(--adm-font-size-9)` in official tabs.less |
+| Tabs | `--content-padding` | cssVar | default `12px` in official tabs.less |
+| Tabs | `--active-line-height` | cssVar | default `2px` in official tabs.less |
+| Tabs | `--active-line-border-radius` | cssVar | default `var(--active-line-height)` in official tabs.less |
+| Tabs | `--active-line-color` | cssVar | default `var(--adm-color-primary)` in official tabs.less |
+| Tabs | `--active-title-color` | cssVar | default `var(--adm-color-primary)` in official tabs.less |
 
 ## List / Cell
 
@@ -128,18 +120,12 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 
 | Scope | Token | Kind | Source |
 | --- | --- | --- | --- |
-| List | `--active-background-color` | cssVar | spec tokens.cssVars |
-| List | `--align-items` | cssVar | spec tokens.cssVars |
-| List | `--border-bottom` | cssVar | spec tokens.cssVars |
-| List | `--border-inner` | cssVar | spec tokens.cssVars |
-| List | `--border-top` | cssVar | spec tokens.cssVars |
-| List | `--extra-max-width` | cssVar | spec tokens.cssVars |
-| List | `--font-size` | cssVar | spec tokens.cssVars |
-| List | `--header-font-size` | cssVar | spec tokens.cssVars |
-| List | `--padding-left` | cssVar | spec tokens.cssVars |
-| List | `--padding-right` | cssVar | spec tokens.cssVars |
-| List | `--prefix-padding-right` | cssVar | spec tokens.cssVars |
-| List | `--prefix-width` | cssVar | spec tokens.cssVars |
+| List | `--header-font-size` | cssVar | default `var(--adm-font-size-7)` in official list.less |
+| List | `--prefix-padding-right` | cssVar | default `12px` in official list.less |
+| List | `--align-items` | cssVar | default `center` in official list.less |
+| List | `--active-background-color` | cssVar | default `var(--adm-color-border)` in official list.less |
+| List | `--font-size` | cssVar | default `var(--adm-font-size-9)` in official list.less |
+| List | `--extra-max-width` | cssVar | default `70%` in official list.less |
 
 ### Cell Metrics
 
@@ -175,11 +161,7 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 
 | Scope | Token | Kind | Source |
 | --- | --- | --- | --- |
-| Dialog | `--background-color` | cssVar | spec tokens.cssVars |
-| Dialog | `--border-radius` | cssVar | spec tokens.cssVars |
-| Dialog | `--max-width` | cssVar | spec tokens.cssVars |
-| Dialog | `--min-width` | cssVar | spec tokens.cssVars |
-| Dialog | `--z-index` | cssVar | spec tokens.cssVars |
+| Dialog | `--z-index` | cssVar | default `var(--adm-dialog-z-index, 1000)` in official dialog.less |
 
 ### Popup Metrics
 
@@ -228,8 +210,8 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 
 | Scope | Token | Kind | Source |
 | --- | --- | --- | --- |
-| NavBar | `--height` | cssVar | spec tokens.cssVars |
-| NavBar | `--border-bottom` | cssVar | spec tokens.cssVars |
+| NavBar | `--height` | cssVar | default `45px` in official nav-bar.less |
+| NavBar | `--border-bottom` | cssVar | default `none` in official nav-bar.less |
 
 ### TabBar Metrics
 
@@ -245,7 +227,8 @@ Known metric values are taken directly from the frozen specs. Unknown values rem
 
 | Scope | Token | Kind | Source |
 | --- | --- | --- | --- |
-| TabBar | TODO | TODO | TODO |
+| TabBar | `colorPrimary` | antToken | active item color is `var(--adm-color-primary)` in official tab-bar.less |
+| TabBar | `colorTextSecondary` | antToken | inactive item color is `var(--adm-color-text-secondary)` in official tab-bar.less |
 
 ## Form
 

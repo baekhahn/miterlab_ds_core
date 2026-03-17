@@ -28,6 +28,11 @@ props:
   --max-width: string
   --min-width: string
   --z-index: string
+propDefaults:
+  actions: array
+  closeOnAction: false
+  closeOnMaskClick: false
+  getContainer: null
 variants:
   closeOnAction: [false, true]
   closeOnMaskClick: [false, true]

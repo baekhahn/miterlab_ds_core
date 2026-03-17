@@ -17,6 +17,8 @@ props:
   --padding-right: string
   --prefix-padding-right: string
   --prefix-width: string
+propDefaults:
+  mode: default
 variants:
   mode: [default, card]
 states: []

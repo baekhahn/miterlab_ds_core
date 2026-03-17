@@ -13,6 +13,7 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 - Ant Design Mobile InputProps
 - Spec files: `packages/ui-core/specs/input.spec.yaml`
 - Parity mismatch count: `0`
+- Spec notes: `official InputProps does not define size, status, prefix, or suffix props`, `source schema is Ant Design Mobile InputProps`
 
 ## Inspection Screen
 
@@ -42,22 +43,26 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 
 ## Metrics
 
-- Control height, padding, and radius come from `defaults`.
-- Minimum width and text alignment come from `internalLayout`.
-- defaults: height=42, paddingX=14, paddingY=10, radius=12
-- internalLayout: minWidth=220, textAlignX=start, textAlignY=center
+- Official defaults come from `src/components/input/input.tsx` and `input.less`.
+- The official Input API does not define `size`, `status`, `prefix`, or `suffix` props.
+- wrapper: minHeight=24px, width=100%, alignItems=center
+- element: lineHeight=1.5, minHeight=1.5em, padding=0, border=0
+- clear: marginLeft=8px, padding=4px, iconFontSize=var(--adm-font-size-7)
 
 ## Token References
 
-- Semantic tokens come from `semanticMapping.default` by state.
-- Value and placeholder colors are distinct contract outputs and must not be merged.
-- Token: `semantic.surface.default`
-- Token: `semantic.border.default`
-- Token: `semantic.text.primary`
-- Token: `semantic.text.muted`
-- Token: `semantic.surface.subtle`
-- Token: `semantic.border.subtle`
-- Token: `semantic.text.secondary`
+- Input styling is driven by official CSS variables instead of dedicated size/status props.
+- Value and placeholder colors remain distinct through `--color` and `--placeholder-color`.
+- cssVar: `--font-size` -> default `var(--adm-font-size-9)` in official input.less
+- cssVar: `--color` -> default `var(--adm-color-text)` in official input.less
+- cssVar: `--placeholder-color` -> default `var(--adm-color-light)` in official input.less
+- cssVar: `--text-align` -> default `left` in official input.less
+- antToken: `colorText` -> represented through `var(--adm-color-text)`
+- antToken: `colorBorder` -> native input border is removed; field wrappers may use external border styling
+- antToken: `colorPrimary` -> used indirectly for surrounding focused field patterns, not as an Input prop
+- antToken: `colorError` -> not exposed by official InputProps
+- antToken: `colorWarning` -> not exposed by official InputProps
+- antToken: `colorTextSecondary` -> represented through light/weak text variables in Ant Mobile
 
 ## Input
 
@@ -100,34 +105,42 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 | `min` | `number` | TODO | General prop contract. |
 | `max` | `number` | TODO | General prop contract. |
 | `role` | `string` | TODO | General prop contract. |
+| `--font-size` | `string` | TODO | Official CSS variable contract. |
+| `--color` | `string` | TODO | Official CSS variable contract. |
+| `--placeholder-color` | `string` | TODO | Official CSS variable contract. |
+| `--text-align` | `string` | TODO | Official CSS variable contract. |
 
 ### States
 
 | State | Expectation |
 | --- | --- |
-| `default` | Uses `field.background`, `field.border`, `value.color`, and `placeholder.color` from `semanticMapping.default.default`. |
-| `disabled` | Uses the disabled mapping from `semanticMapping.default.disabled`. |
-| `readOnly` | Uses the read-only mapping from `semanticMapping.default.readOnly`. |
-| `focused` | Runtime focus must preserve the frozen field metrics and expose focus treatment when implemented. |
-| `clearable` | Runtime must reserve action slot behavior when `clearable=true`. |
+| `default` | Uses the official CSS variable defaults for font size, color, placeholder color, and text alignment. |
+| `focus` | Focus is tracked internally with `hasFocus` and gates clear button visibility. |
+| `disabled` | Disabled state applies wrapper opacity and keeps the native element enabled styling at 1. |
+| `readOnly` | Read-only blocks pointer events on the native element while preserving value rendering. |
+| `clearable` | Clear button appears when `clearable` is true and visibility conditions are satisfied. |
 | `placeholder` | Placeholder remains visible only when `value` and `defaultValue` are absent. |
 
 ### Metrics
 
-- defaults: height=42, paddingX=14, paddingY=10, radius=12
-- internalLayout: minWidth=220, textAlignX=start, textAlignY=center
+- wrapper: minHeight=24px, width=100%, alignItems=center
+- element: lineHeight=1.5, minHeight=1.5em, padding=0, border=0
+- clear: marginLeft=8px, padding=4px, iconFontSize=var(--adm-font-size-7)
 
 ### Tokens
 
 | Token | Kind | Notes |
 | --- | --- | --- |
-| `semantic.surface.default` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.border.default` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.text.primary` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.text.muted` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.surface.subtle` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.border.subtle` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.text.secondary` | semantic | Semantic token referenced in the frozen spec |
+| `--font-size` | cssVar | default `var(--adm-font-size-9)` in official input.less |
+| `--color` | cssVar | default `var(--adm-color-text)` in official input.less |
+| `--placeholder-color` | cssVar | default `var(--adm-color-light)` in official input.less |
+| `--text-align` | cssVar | default `left` in official input.less |
+| `colorText` | antToken | represented through `var(--adm-color-text)` |
+| `colorBorder` | antToken | native input border is removed; field wrappers may use external border styling |
+| `colorPrimary` | antToken | used indirectly for surrounding focused field patterns, not as an Input prop |
+| `colorError` | antToken | not exposed by official InputProps |
+| `colorWarning` | antToken | not exposed by official InputProps |
+| `colorTextSecondary` | antToken | represented through light/weak text variables in Ant Mobile |
 
 ## Variant Axes Table
 
@@ -170,6 +183,10 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 | `min` | `number` | TODO | General prop contract. |
 | `max` | `number` | TODO | General prop contract. |
 | `role` | `string` | TODO | General prop contract. |
+| `--font-size` | `string` | TODO | Official CSS variable contract. |
+| `--color` | `string` | TODO | Official CSS variable contract. |
+| `--placeholder-color` | `string` | TODO | Official CSS variable contract. |
+| `--text-align` | `string` | TODO | Official CSS variable contract. |
 
 ## Size Metrics Table
 
@@ -177,7 +194,7 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 
 | Size | Height | Padding X | Padding Y | Radius | Rectangular Radius | Icon Gap |
 | --- | --- | --- | --- | --- | --- | --- |
-| `default` | `42` | `14` | `10` | `12` | TODO | TODO |
+| `default` | `24px` | `0` | `0` | TODO | TODO | TODO |
 
 ## Inspection Mapping
 
@@ -191,11 +208,11 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 
 | State | Expectation |
 | --- | --- |
-| `default` | Uses `field.background`, `field.border`, `value.color`, and `placeholder.color` from `semanticMapping.default.default`. |
-| `disabled` | Uses the disabled mapping from `semanticMapping.default.disabled`. |
-| `readOnly` | Uses the read-only mapping from `semanticMapping.default.readOnly`. |
-| `focused` | Runtime focus must preserve the frozen field metrics and expose focus treatment when implemented. |
-| `clearable` | Runtime must reserve action slot behavior when `clearable=true`. |
+| `default` | Uses the official CSS variable defaults for font size, color, placeholder color, and text alignment. |
+| `focus` | Focus is tracked internally with `hasFocus` and gates clear button visibility. |
+| `disabled` | Disabled state applies wrapper opacity and keeps the native element enabled styling at 1. |
+| `readOnly` | Read-only blocks pointer events on the native element while preserving value rendering. |
+| `clearable` | Clear button appears when `clearable` is true and visibility conditions are satisfied. |
 | `placeholder` | Placeholder remains visible only when `value` and `defaultValue` are absent. |
 
 ## Placeholder Behavior
@@ -228,7 +245,7 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 
 ## Render Expectations
 
-- Text input height, padding, and radius must follow the frozen `defaults` metrics.
+- Text input wrapper and element metrics must follow the official CSS variable defaults and Less rules.
 - Placeholder text must render with placeholder tokens until `value` or `defaultValue` is present.
 - `readOnly=true` must keep value visible while switching to read-only token treatment.
 - `disabled=true` must suppress interactive styling and use muted field/value tokens.

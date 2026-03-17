@@ -123,7 +123,7 @@ const familyConfigs = [
 const familyContracts = {
   button: {
     renderExpectations: [
-      "All four sizes must be visibly different in height, padding, radius, and type scale.",
+      "All four sizes must be visibly different in padding and type scale, while official height remains content-driven.",
       "`fill=solid`, `fill=outline`, and `fill=none` must preserve distinct background and border behavior.",
       "`shape=default`, `shape=rounded`, and `shape=rectangular` must produce visibly different corner treatment.",
       "`block=true` must expand the control to the full inspection row width.",
@@ -144,25 +144,24 @@ const familyContracts = {
       "Inspection row `Shape and States` verifies `shape`, `loading`, `disabled`, and `block`."
     ],
     stateMapping: [
-      ["default", "Base semantic mapping from `semanticMapping`."],
-      ["hover", "Hover token set must only change supported color/border outputs."],
-      ["pressed", "Pressed token set must show stronger border or darker fill."],
-      ["focus", "Focus ring must be rendered through `container.focusRing` mapping."],
-      ["disabled", "Disabled tokens override interactive colors and border styling."],
-      ["loading", "Loading uses the state mapping for the current fill/color pair."]
+      ["default", "Uses the merged official defaults for `color`, `fill`, `size`, `shape`, and `type`."],
+      ["active", "Maps to the `:active::before` overlay in the official Less source."],
+      ["focus", "The native button removes browser outline and preserves the component border radius."],
+      ["disabled", "Runtime disabled state is `props.disabled || loading` in the official source."],
+      ["loading", "Loading uses `loadingIcon`, `loadingText`, and can be controlled by `loading='auto'`."]
     ],
     metricsNotes: [
-      "Height, padding, radius, and icon gap come from `sizeDefaults`.",
-      "Minimum width and center alignment come from `internalLayout`."
+      "Official defaults come from `src/components/button/button.tsx` and `button.less`.",
+      "The public API does not define `href`, `target`, or `icon` props."
     ],
     tokenNotes: [
-      "Semantic tokens are derived from `semanticMapping` by fill, color, and state.",
-      "CSS variable props remain part of the contract and can override runtime styling."
+      "Button styling is driven by component CSS variables and Ant Mobile color variables.",
+      "Primary, success, warning, and danger map through `--color` to `--adm-color-*` values."
     ]
   },
   input: {
     renderExpectations: [
-      "Text input height, padding, and radius must follow the frozen `defaults` metrics.",
+      "Text input wrapper and element metrics must follow the official CSS variable defaults and Less rules.",
       "Placeholder text must render with placeholder tokens until `value` or `defaultValue` is present.",
       "`readOnly=true` must keep value visible while switching to read-only token treatment.",
       "`disabled=true` must suppress interactive styling and use muted field/value tokens.",
@@ -183,20 +182,20 @@ const familyContracts = {
       "Password and number examples verify `type`, `min`, `max`, and `step`."
     ],
     stateMapping: [
-      ["default", "Uses `field.background`, `field.border`, `value.color`, and `placeholder.color` from `semanticMapping.default.default`."],
-      ["disabled", "Uses the disabled mapping from `semanticMapping.default.disabled`."],
-      ["readOnly", "Uses the read-only mapping from `semanticMapping.default.readOnly`."],
-      ["focused", "Runtime focus must preserve the frozen field metrics and expose focus treatment when implemented."],
-      ["clearable", "Runtime must reserve action slot behavior when `clearable=true`."],
+      ["default", "Uses the official CSS variable defaults for font size, color, placeholder color, and text alignment."],
+      ["focus", "Focus is tracked internally with `hasFocus` and gates clear button visibility."],
+      ["disabled", "Disabled state applies wrapper opacity and keeps the native element enabled styling at 1."],
+      ["readOnly", "Read-only blocks pointer events on the native element while preserving value rendering."],
+      ["clearable", "Clear button appears when `clearable` is true and visibility conditions are satisfied."],
       ["placeholder", "Placeholder remains visible only when `value` and `defaultValue` are absent."]
     ],
     metricsNotes: [
-      "Control height, padding, and radius come from `defaults`.",
-      "Minimum width and text alignment come from `internalLayout`."
+      "Official defaults come from `src/components/input/input.tsx` and `input.less`.",
+      "The official Input API does not define `size`, `status`, `prefix`, or `suffix` props."
     ],
     tokenNotes: [
-      "Semantic tokens come from `semanticMapping.default` by state.",
-      "Value and placeholder colors are distinct contract outputs and must not be merged."
+      "Input styling is driven by official CSS variables instead of dedicated size/status props.",
+      "Value and placeholder colors remain distinct through `--color` and `--placeholder-color`."
     ]
   },
   tabs: {
@@ -262,6 +261,122 @@ const canvasDefault = {
   figmaWriteVerified: "pending",
   screenshotAttached: "pending",
   reviewApproved: "pending"
+};
+
+const officialComponentData = {
+  Button: {
+    metricsSummary: [
+      "default: paddingY=7px, paddingX=12px, borderRadius=4px, fontSize=var(--adm-font-size-9), lineHeight=1.4, height=auto",
+      "mini: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-main)",
+      "small: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-7)",
+      "middle: paddingY=7px, paddingX=12px, fontSize=var(--adm-font-size-9)",
+      "large: paddingY=11px, paddingX=12px, fontSize=var(--adm-font-size-10)",
+      "rounded: borderRadius=1000px",
+      "rectangular: borderRadius=0"
+    ],
+    metricRows: [
+      ["`default`", "`height`", "`auto`", "official button.less"],
+      ["`default`", "`paddingX`", "`12px`", "official button.less"],
+      ["`default`", "`paddingY`", "`7px`", "official button.less"],
+      ["`default`", "`borderRadius`", "`4px`", "official button.less"],
+      ["`default`", "`fontSize`", "`var(--adm-font-size-9)`", "official button.less"],
+      ["`default`", "`lineHeight`", "`1.4`", "official button.less"],
+      ["`mini`", "`paddingY`", "`3px`", "official button.less"],
+      ["`mini`", "`fontSize`", "`var(--adm-font-size-main)`", "official button.less"],
+      ["`small`", "`paddingY`", "`3px`", "official button.less"],
+      ["`small`", "`fontSize`", "`var(--adm-font-size-7)`", "official button.less"],
+      ["`large`", "`paddingY`", "`11px`", "official button.less"],
+      ["`large`", "`fontSize`", "`var(--adm-font-size-10)`", "official button.less"]
+    ],
+    sizeRows: [
+      ["`mini`", "`auto`", "`12px`", "`3px`", "`4px`", "`0`", "TODO"],
+      ["`small`", "`auto`", "`12px`", "`3px`", "`4px`", "`0`", "TODO"],
+      ["`middle`", "`auto`", "`12px`", "`7px`", "`4px`", "`0`", "TODO"],
+      ["`large`", "`auto`", "`12px`", "`11px`", "`4px`", "`0`", "TODO"]
+    ],
+    tokenRows: [
+      ["Button", "`--text-color`", "cssVar", "default `var(--adm-color-text)` in official button.less"],
+      ["Button", "`--background-color`", "cssVar", "default `var(--adm-color-background)` in official button.less"],
+      ["Button", "`--border-radius`", "cssVar", "default `4px` in official button.less"],
+      ["Button", "`--border-width`", "cssVar", "default `1px` in official button.less"],
+      ["Button", "`--border-style`", "cssVar", "default `solid` in official button.less"],
+      ["Button", "`--border-color`", "cssVar", "default `var(--adm-color-border)` in official button.less"],
+      ["Button", "`colorPrimary`", "antToken", "represented through `var(--adm-color-primary)`"],
+      ["Button", "`colorText`", "antToken", "represented through `var(--adm-color-text)`"],
+      ["Button", "`colorBorder`", "antToken", "represented through `var(--adm-color-border)`"],
+      ["Button", "`colorBgContainer`", "antToken", "represented through `var(--adm-color-background)`"],
+      ["Button", "`controlHeight`", "antToken", "no explicit component token; effective height is content-driven"]
+    ]
+  },
+  Input: {
+    metricsSummary: [
+      "wrapper: minHeight=24px, width=100%, alignItems=center",
+      "element: lineHeight=1.5, minHeight=1.5em, padding=0, border=0",
+      "clear: marginLeft=8px, padding=4px, iconFontSize=var(--adm-font-size-7)"
+    ],
+    metricRows: [
+      ["`wrapper`", "`minHeight`", "`24px`", "official input.less"],
+      ["`wrapper`", "`width`", "`100%`", "official input.less"],
+      ["`wrapper`", "`alignItems`", "`center`", "official input.less"],
+      ["`element`", "`lineHeight`", "`1.5`", "official input.less"],
+      ["`element`", "`minHeight`", "`1.5em`", "official input.less"],
+      ["`element`", "`padding`", "`0`", "official input.less"],
+      ["`clear`", "`marginLeft`", "`8px`", "official input.less"],
+      ["`clear`", "`padding`", "`4px`", "official input.less"]
+    ],
+    sizeRows: [
+      ["`default`", "`24px`", "`0`", "`0`", "TODO", "TODO", "TODO"]
+    ],
+    tokenRows: [
+      ["Input", "`--font-size`", "cssVar", "default `var(--adm-font-size-9)` in official input.less"],
+      ["Input", "`--color`", "cssVar", "default `var(--adm-color-text)` in official input.less"],
+      ["Input", "`--placeholder-color`", "cssVar", "default `var(--adm-color-light)` in official input.less"],
+      ["Input", "`--text-align`", "cssVar", "default `left` in official input.less"],
+      ["Input", "`colorText`", "antToken", "represented through `var(--adm-color-text)`"],
+      ["Input", "`colorBorder`", "antToken", "native input border is removed; field wrappers may use external border styling"],
+      ["Input", "`colorPrimary`", "antToken", "used indirectly for surrounding focused field patterns, not as an Input prop"],
+      ["Input", "`colorError`", "antToken", "not exposed by official InputProps"],
+      ["Input", "`colorWarning`", "antToken", "not exposed by official InputProps"],
+      ["Input", "`colorTextSecondary`", "antToken", "represented through light/weak text variables in Ant Mobile"]
+    ]
+  },
+  Tabs: {
+    tokenRows: [
+      ["Tabs", "`--title-font-size`", "cssVar", "default `var(--adm-font-size-9)` in official tabs.less"],
+      ["Tabs", "`--content-padding`", "cssVar", "default `12px` in official tabs.less"],
+      ["Tabs", "`--active-line-height`", "cssVar", "default `2px` in official tabs.less"],
+      ["Tabs", "`--active-line-border-radius`", "cssVar", "default `var(--active-line-height)` in official tabs.less"],
+      ["Tabs", "`--active-line-color`", "cssVar", "default `var(--adm-color-primary)` in official tabs.less"],
+      ["Tabs", "`--active-title-color`", "cssVar", "default `var(--adm-color-primary)` in official tabs.less"]
+    ]
+  },
+  List: {
+    tokenRows: [
+      ["List", "`--header-font-size`", "cssVar", "default `var(--adm-font-size-7)` in official list.less"],
+      ["List", "`--prefix-padding-right`", "cssVar", "default `12px` in official list.less"],
+      ["List", "`--align-items`", "cssVar", "default `center` in official list.less"],
+      ["List", "`--active-background-color`", "cssVar", "default `var(--adm-color-border)` in official list.less"],
+      ["List", "`--font-size`", "cssVar", "default `var(--adm-font-size-9)` in official list.less"],
+      ["List", "`--extra-max-width`", "cssVar", "default `70%` in official list.less"]
+    ]
+  },
+  Dialog: {
+    tokenRows: [
+      ["Dialog", "`--z-index`", "cssVar", "default `var(--adm-dialog-z-index, 1000)` in official dialog.less"]
+    ]
+  },
+  NavBar: {
+    tokenRows: [
+      ["NavBar", "`--height`", "cssVar", "default `45px` in official nav-bar.less"],
+      ["NavBar", "`--border-bottom`", "cssVar", "default `none` in official nav-bar.less"]
+    ]
+  },
+  TabBar: {
+    tokenRows: [
+      ["TabBar", "`colorPrimary`", "antToken", "active item color is `var(--adm-color-primary)` in official tab-bar.less"],
+      ["TabBar", "`colorTextSecondary`", "antToken", "inactive item color is `var(--adm-color-text-secondary)` in official tab-bar.less"]
+    ]
+  }
 };
 
 function readYaml(relativePath) {
@@ -339,12 +454,14 @@ function propRows(spec, sectionName = "props") {
   const section = spec?.[sectionName] || {};
   return Object.entries(section).map(([prop, value]) => {
     const { type, allowedValues } = normalizeTypeAndValues(value);
+    const defaultValue = spec?.propDefaults?.[prop];
     let notes = "TODO";
     if (prop.startsWith("--")) notes = "CSS variable from the official API.";
     if (prop === "arrow" || prop === "backArrow") notes = "Deprecated in the official API but retained in the frozen contract.";
     if (prop === "loading") notes = "Boolean and `auto` must remain distinct in the contract.";
     if (prop === "onlyShowClearWhenFocus") notes = "Clear affordance must remain conditional on focus.";
-    return [`\`${prop}\``, type, allowedValues, "TODO", "`false`", notes];
+    if (prop === "activeKey" || prop === "defaultActiveKey") notes = "Official API allows string or null.";
+    return [`\`${prop}\``, type, allowedValues, defaultValue === undefined ? "TODO" : formatPrimitive(defaultValue), "`false`", notes];
   });
 }
 
@@ -376,6 +493,8 @@ function collectSemanticTokens(value, output = new Set()) {
 }
 
 function summarizeMetrics(spec) {
+  const official = officialComponentData[spec.component];
+  if (official?.metricsSummary) return official.metricsSummary;
   const lines = [];
   if (spec.sizeDefaults) {
     for (const [size, metrics] of Object.entries(spec.sizeDefaults)) {
@@ -535,8 +654,11 @@ function buildMetricsAndTokens(families) {
     .map((family) => {
       const parts = [`## ${family.title}`];
       family.specs.forEach((spec) => {
+        const official = officialComponentData[spec.component];
         const metricRows = [];
-        if (spec.sizeDefaults) {
+        if (official?.metricRows) {
+          metricRows.push(...official.metricRows);
+        } else if (spec.sizeDefaults) {
           for (const [size, metrics] of Object.entries(spec.sizeDefaults)) {
             for (const [metric, value] of Object.entries(metrics)) {
               metricRows.push([`\`${size}\``, `\`${metric}\``, formatPrimitive(value), "spec sizeDefaults"]);
@@ -559,7 +681,7 @@ function buildMetricsAndTokens(families) {
           }
         }
 
-        const tokens = [
+        const tokens = official?.tokenRows || [
           ...(spec.tokens?.cssVars || []).map((token) => [spec.component, `\`${token}\``, "cssVar", "spec tokens.cssVars"]),
           ...Array.from(collectSemanticTokens(spec.semanticMapping)).map((token) => [spec.component, `\`${token}\``, "semantic", "spec semanticMapping"])
         ];
@@ -586,6 +708,10 @@ ${sections}
 }
 
 function sizeMetricsTableForSpec(spec) {
+  const official = officialComponentData[spec.component];
+  if (official?.sizeRows) {
+    return markdownTable(["Size", "Height", "Padding X", "Padding Y", "Radius", "Rectangular Radius", "Icon Gap"], official.sizeRows);
+  }
   if (spec.sizeDefaults) {
     const rows = Object.entries(spec.sizeDefaults).map(([size, metrics]) => [
       `\`${size}\``,
@@ -631,10 +757,13 @@ function stateTable(spec, familyId) {
 }
 
 function tokenReferenceTable(spec) {
-  const rows = [
-    ...(spec.tokens?.cssVars || []).map((token) => [`\`${token}\``, "cssVar", "Official CSS variable contract"]),
-    ...Array.from(collectSemanticTokens(spec.semanticMapping)).map((token) => [`\`${token}\``, "semantic", "Semantic token referenced in the frozen spec"])
-  ];
+  const official = officialComponentData[spec.component];
+  const rows = official?.tokenRows
+    ? official.tokenRows.map((row) => [row[1], row[2], row[3]])
+    : [
+        ...(spec.tokens?.cssVars || []).map((token) => [`\`${token}\``, "cssVar", "Official CSS variable contract"]),
+        ...Array.from(collectSemanticTokens(spec.semanticMapping)).map((token) => [`\`${token}\``, "semantic", "Semantic token referenced in the frozen spec"])
+      ];
   return markdownTable(["Token", "Kind", "Notes"], rows.length ? rows : [["TODO", "TODO", "TODO"]]);
 }
 
@@ -673,9 +802,9 @@ function buildFamilyDocs(families) {
 ${markdownTable(
   ["Fill", "Expected render behavior"],
   [
-    ["`solid`", "Background and border both use the semantic action/status fill for the selected color."],
-    ["`outline`", "Background remains surface-driven while border and label use the selected color family."],
-    ["`none`", "Background is transparent or surface-neutral and emphasis stays on label color."]
+    ["`solid`", "Uses the selected color as both background and border in the official button Less rules."],
+    ["`outline`", "Background becomes transparent while text and border keep the selected color."],
+    ["`none`", "Background is transparent and border width becomes `0px` in the official button Less rules."]
   ]
 )}`,
           `## Color Mapping
@@ -683,11 +812,11 @@ ${markdownTable(
 ${markdownTable(
   ["Color", "Expected token family"],
   [
-    ["`default`", "`semantic.surface.*`, `semantic.border.*`, `semantic.text.*`"],
-    ["`primary`", "`semantic.action.primary*`, `semantic.action.onPrimary`"],
-    ["`success`", "`semantic.status.success`, `semantic.action.onPrimary`"],
-    ["`warning`", "`semantic.status.warning`, `semantic.text.primary`"],
-    ["`danger`", "`semantic.status.critical`, `semantic.action.onPrimary`"]
+    ["`default`", "`--adm-color-text`, `--adm-color-background`, `--adm-color-border`"],
+    ["`primary`", "`--adm-color-primary`"],
+    ["`success`", "`--adm-color-success`"],
+    ["`warning`", "`--adm-color-warning`"],
+    ["`danger`", "`--adm-color-danger`"]
   ]
 )}`,
           `## Shape Mapping
@@ -695,9 +824,9 @@ ${markdownTable(
 ${markdownTable(
   ["Shape", "Expected radius behavior"],
   [
-    ["`default`", "Uses the base size radius."],
-    ["`rounded`", "Uses the full rounded treatment from runtime shape mapping."],
-    ["`rectangular`", "Uses `radiusRectangular` for the selected size."]
+    ["`default`", "Uses the official default border radius `4px`."],
+    ["`rounded`", "Uses the official rounded border radius `1000px`."],
+    ["`rectangular`", "Uses the official rectangular border radius `0`."]
   ]
 )}`,
           `## Block Behavior
@@ -771,6 +900,7 @@ ${family.purpose}
 - ${family.baseline}
 - Spec files: ${family.specFiles.map((file) => `\`packages/ui-core/specs/${file}\``).join(", ")}
 - Parity mismatch count: \`${family.parity.afterFixMismatchCount}\`
+- Spec notes: ${family.specs.flatMap((spec) => spec.notes || []).length ? family.specs.flatMap((spec) => spec.notes || []).map((note) => `\`${note}\``).join(", ") : "none"}
 
 ## Inspection Screen
 
@@ -799,8 +929,15 @@ ${toBulletList((familyContracts[family.id]?.metricsNotes || []).concat(family.sp
 
 ${toBulletList([
   ...(familyContracts[family.id]?.tokenNotes || []),
-  ...family.specs.flatMap((spec) => Array.from(collectSemanticTokens(spec.semanticMapping)).map((token) => `Token: \`${token}\``)),
-  ...family.specs.flatMap((spec) => (spec.tokens?.cssVars || []).map((token) => `CSS variable: \`${token}\``))
+  ...family.specs.flatMap((spec) => (officialComponentData[spec.component]?.tokenRows || []).map((row) => `${row[2]}: ${row[1]} -> ${row[3]}`)),
+  ...family.specs.flatMap((spec) =>
+    officialComponentData[spec.component]?.tokenRows
+      ? []
+      : [
+          ...Array.from(collectSemanticTokens(spec.semanticMapping)).map((token) => `Token: \`${token}\``),
+          ...(spec.tokens?.cssVars || []).map((token) => `CSS variable: \`${token}\``)
+        ]
+  )
 ])}
 
 ${specSections}

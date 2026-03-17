@@ -13,6 +13,7 @@ Structured list and row presentation baseline for Ant Design Mobile List and Cel
 - Ant Design Mobile ListProps and ListItemProps
 - Spec files: `packages/ui-core/specs/list.spec.yaml`, `packages/ui-core/specs/cell.spec.yaml`
 - Parity mismatch count: `0`
+- Spec notes: `source schema is Ant Design Mobile ListProps`, `source schema is Ant Design Mobile ListItemProps`, `deprecated field `arrow` is retained because it exists in the official API`
 
 ## Inspection Screen
 
@@ -54,18 +55,12 @@ Structured list and row presentation baseline for Ant Design Mobile List and Cel
 
 ## Token References
 
-- CSS variable: `--active-background-color`
-- CSS variable: `--align-items`
-- CSS variable: `--border-bottom`
-- CSS variable: `--border-inner`
-- CSS variable: `--border-top`
-- CSS variable: `--extra-max-width`
-- CSS variable: `--font-size`
-- CSS variable: `--header-font-size`
-- CSS variable: `--padding-left`
-- CSS variable: `--padding-right`
-- CSS variable: `--prefix-padding-right`
-- CSS variable: `--prefix-width`
+- cssVar: `--header-font-size` -> default `var(--adm-font-size-7)` in official list.less
+- cssVar: `--prefix-padding-right` -> default `12px` in official list.less
+- cssVar: `--align-items` -> default `center` in official list.less
+- cssVar: `--active-background-color` -> default `var(--adm-color-border)` in official list.less
+- cssVar: `--font-size` -> default `var(--adm-font-size-9)` in official list.less
+- cssVar: `--extra-max-width` -> default `70%` in official list.less
 - CSS variable: `--prefix-width`
 - CSS variable: `--align-items`
 - CSS variable: `--active-background-color`
@@ -110,18 +105,12 @@ Structured list and row presentation baseline for Ant Design Mobile List and Cel
 
 | Token | Kind | Notes |
 | --- | --- | --- |
-| `--active-background-color` | cssVar | Official CSS variable contract |
-| `--align-items` | cssVar | Official CSS variable contract |
-| `--border-bottom` | cssVar | Official CSS variable contract |
-| `--border-inner` | cssVar | Official CSS variable contract |
-| `--border-top` | cssVar | Official CSS variable contract |
-| `--extra-max-width` | cssVar | Official CSS variable contract |
-| `--font-size` | cssVar | Official CSS variable contract |
-| `--header-font-size` | cssVar | Official CSS variable contract |
-| `--padding-left` | cssVar | Official CSS variable contract |
-| `--padding-right` | cssVar | Official CSS variable contract |
-| `--prefix-padding-right` | cssVar | Official CSS variable contract |
-| `--prefix-width` | cssVar | Official CSS variable contract |
+| `--header-font-size` | cssVar | default `var(--adm-font-size-7)` in official list.less |
+| `--prefix-padding-right` | cssVar | default `12px` in official list.less |
+| `--align-items` | cssVar | default `center` in official list.less |
+| `--active-background-color` | cssVar | default `var(--adm-color-border)` in official list.less |
+| `--font-size` | cssVar | default `var(--adm-font-size-9)` in official list.less |
+| `--extra-max-width` | cssVar | default `70%` in official list.less |
 
 ## Cell
 

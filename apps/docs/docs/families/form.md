@@ -13,6 +13,7 @@ Field grouping and validation baseline for Ant Design Mobile Form behavior.
 - Ant Design Mobile FormProps and FormItemProps
 - Spec files: `packages/ui-core/specs/form.spec.yaml`
 - Parity mismatch count: `0`
+- Spec notes: `source schema is Ant Design Mobile FormProps and FormItemProps`
 
 ## Inspection Screen
 
@@ -75,6 +76,7 @@ Field grouping and validation baseline for Ant Design Mobile Form behavior.
 | `footer` | `reactNode` | TODO | General prop contract. |
 | `mode` | `string` | `default`, `card` | General prop contract. |
 | `layout` | `string` | `vertical`, `horizontal` | General prop contract. |
+| `requiredMarkStyle` | `string` | `asterisk`, `text-required`, `text-optional`, `none` | General prop contract. |
 | `label` | `reactNode` | TODO | General prop contract. |
 | `help` | `reactNode` | TODO | General prop contract. |
 | `helpIcon` | `reactNode` | TODO | General prop contract. |

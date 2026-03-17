@@ -25,6 +25,17 @@ props:
   position: [bottom, top, left, right]
   closeOnSwipe: [false, true]
   --z-index: string
+propDefaults:
+  closeOnMaskClick: false
+  destroyOnClose: false
+  disableBodyScroll: true
+  forceRender: false
+  mask: true
+  showCloseButton: false
+  stopPropagation: [click]
+  visible: false
+  closeOnSwipe: false
+  position: bottom
 variants:
   position: [bottom, top, left, right]
   closeOnSwipe: [false, true]

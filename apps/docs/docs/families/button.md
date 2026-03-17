@@ -13,6 +13,7 @@ Core action control baseline for Ant Design Mobile Button behavior.
 - Ant Design Mobile ButtonProps
 - Spec files: `packages/ui-core/specs/button.spec.yaml`
 - Parity mismatch count: `0`
+- Spec notes: `official ButtonProps does not define href, target, or icon props`, `source schema is Ant Design Mobile ButtonProps`
 
 ## Inspection Screen
 
@@ -42,35 +43,31 @@ Core action control baseline for Ant Design Mobile Button behavior.
 
 ## Metrics
 
-- Height, padding, radius, and icon gap come from `sizeDefaults`.
-- Minimum width and center alignment come from `internalLayout`.
-- mini: height=28, paddingX=10, paddingY=5, radius=8, radiusRectangular=4, iconGap=4
-- small: height=32, paddingX=12, paddingY=7, radius=10, radiusRectangular=6, iconGap=4
-- middle: height=36, paddingX=16, paddingY=8, radius=12, radiusRectangular=8, iconGap=6
-- large: height=44, paddingX=20, paddingY=10, radius=14, radiusRectangular=10, iconGap=6
-- internalLayout: minWidth=64, textAlignX=center, textAlignY=center
+- Official defaults come from `src/components/button/button.tsx` and `button.less`.
+- The public API does not define `href`, `target`, or `icon` props.
+- default: paddingY=7px, paddingX=12px, borderRadius=4px, fontSize=var(--adm-font-size-9), lineHeight=1.4, height=auto
+- mini: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-main)
+- small: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-7)
+- middle: paddingY=7px, paddingX=12px, fontSize=var(--adm-font-size-9)
+- large: paddingY=11px, paddingX=12px, fontSize=var(--adm-font-size-10)
+- rounded: borderRadius=1000px
+- rectangular: borderRadius=0
 
 ## Token References
 
-- Semantic tokens are derived from `semanticMapping` by fill, color, and state.
-- CSS variable props remain part of the contract and can override runtime styling.
-- Token: `semantic.surface.subtle`
-- Token: `semantic.text.primary`
-- Token: `semantic.surface.sunken`
-- Token: `semantic.border.strong`
-- Token: `semantic.focus.ring`
-- Token: `semantic.action.disabled`
-- Token: `semantic.text.muted`
-- Token: `semantic.action.primary`
-- Token: `semantic.action.onPrimary`
-- Token: `semantic.action.primaryHover`
-- Token: `semantic.action.primaryPressed`
-- Token: `semantic.status.success`
-- Token: `semantic.status.warning`
-- Token: `semantic.status.critical`
-- Token: `semantic.surface.default`
-- Token: `semantic.border.default`
-- Token: `semantic.border.subtle`
+- Button styling is driven by component CSS variables and Ant Mobile color variables.
+- Primary, success, warning, and danger map through `--color` to `--adm-color-*` values.
+- cssVar: `--text-color` -> default `var(--adm-color-text)` in official button.less
+- cssVar: `--background-color` -> default `var(--adm-color-background)` in official button.less
+- cssVar: `--border-radius` -> default `4px` in official button.less
+- cssVar: `--border-width` -> default `1px` in official button.less
+- cssVar: `--border-style` -> default `solid` in official button.less
+- cssVar: `--border-color` -> default `var(--adm-color-border)` in official button.less
+- antToken: `colorPrimary` -> represented through `var(--adm-color-primary)`
+- antToken: `colorText` -> represented through `var(--adm-color-text)`
+- antToken: `colorBorder` -> represented through `var(--adm-color-border)`
+- antToken: `colorBgContainer` -> represented through `var(--adm-color-background)`
+- antToken: `controlHeight` -> no explicit component token; effective height is content-driven
 
 ## Button
 
@@ -107,42 +104,37 @@ Core action control baseline for Ant Design Mobile Button behavior.
 
 | State | Expectation |
 | --- | --- |
-| `default` | Base semantic mapping from `semanticMapping`. |
-| `hover` | Hover token set must only change supported color/border outputs. |
-| `pressed` | Pressed token set must show stronger border or darker fill. |
-| `focus` | Focus ring must be rendered through `container.focusRing` mapping. |
-| `disabled` | Disabled tokens override interactive colors and border styling. |
-| `loading` | Loading uses the state mapping for the current fill/color pair. |
+| `default` | Uses the merged official defaults for `color`, `fill`, `size`, `shape`, and `type`. |
+| `active` | Maps to the `:active::before` overlay in the official Less source. |
+| `focus` | The native button removes browser outline and preserves the component border radius. |
+| `disabled` | Runtime disabled state is `props.disabled || loading` in the official source. |
+| `loading` | Loading uses `loadingIcon`, `loadingText`, and can be controlled by `loading='auto'`. |
 
 ### Metrics
 
-- mini: height=28, paddingX=10, paddingY=5, radius=8, radiusRectangular=4, iconGap=4
-- small: height=32, paddingX=12, paddingY=7, radius=10, radiusRectangular=6, iconGap=4
-- middle: height=36, paddingX=16, paddingY=8, radius=12, radiusRectangular=8, iconGap=6
-- large: height=44, paddingX=20, paddingY=10, radius=14, radiusRectangular=10, iconGap=6
-- internalLayout: minWidth=64, textAlignX=center, textAlignY=center
+- default: paddingY=7px, paddingX=12px, borderRadius=4px, fontSize=var(--adm-font-size-9), lineHeight=1.4, height=auto
+- mini: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-main)
+- small: paddingY=3px, paddingX=12px, fontSize=var(--adm-font-size-7)
+- middle: paddingY=7px, paddingX=12px, fontSize=var(--adm-font-size-9)
+- large: paddingY=11px, paddingX=12px, fontSize=var(--adm-font-size-10)
+- rounded: borderRadius=1000px
+- rectangular: borderRadius=0
 
 ### Tokens
 
 | Token | Kind | Notes |
 | --- | --- | --- |
-| `semantic.surface.subtle` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.text.primary` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.surface.sunken` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.border.strong` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.focus.ring` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.action.disabled` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.text.muted` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.action.primary` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.action.onPrimary` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.action.primaryHover` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.action.primaryPressed` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.status.success` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.status.warning` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.status.critical` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.surface.default` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.border.default` | semantic | Semantic token referenced in the frozen spec |
-| `semantic.border.subtle` | semantic | Semantic token referenced in the frozen spec |
+| `--text-color` | cssVar | default `var(--adm-color-text)` in official button.less |
+| `--background-color` | cssVar | default `var(--adm-color-background)` in official button.less |
+| `--border-radius` | cssVar | default `4px` in official button.less |
+| `--border-width` | cssVar | default `1px` in official button.less |
+| `--border-style` | cssVar | default `solid` in official button.less |
+| `--border-color` | cssVar | default `var(--adm-color-border)` in official button.less |
+| `colorPrimary` | antToken | represented through `var(--adm-color-primary)` |
+| `colorText` | antToken | represented through `var(--adm-color-text)` |
+| `colorBorder` | antToken | represented through `var(--adm-color-border)` |
+| `colorBgContainer` | antToken | represented through `var(--adm-color-background)` |
+| `controlHeight` | antToken | no explicit component token; effective height is content-driven |
 
 ## Variant Axes Table
 
@@ -181,10 +173,10 @@ Core action control baseline for Ant Design Mobile Button behavior.
 
 | Size | Height | Padding X | Padding Y | Radius | Rectangular Radius | Icon Gap |
 | --- | --- | --- | --- | --- | --- | --- |
-| `mini` | `28` | `10` | `5` | `8` | `4` | `4` |
-| `small` | `32` | `12` | `7` | `10` | `6` | `4` |
-| `middle` | `36` | `16` | `8` | `12` | `8` | `6` |
-| `large` | `44` | `20` | `10` | `14` | `10` | `6` |
+| `mini` | `auto` | `12px` | `3px` | `4px` | `0` | TODO |
+| `small` | `auto` | `12px` | `3px` | `4px` | `0` | TODO |
+| `middle` | `auto` | `12px` | `7px` | `4px` | `0` | TODO |
+| `large` | `auto` | `12px` | `11px` | `4px` | `0` | TODO |
 
 ## Inspection Mapping
 
@@ -198,38 +190,37 @@ Core action control baseline for Ant Design Mobile Button behavior.
 
 | State | Expectation |
 | --- | --- |
-| `default` | Base semantic mapping from `semanticMapping`. |
-| `hover` | Hover token set must only change supported color/border outputs. |
-| `pressed` | Pressed token set must show stronger border or darker fill. |
-| `focus` | Focus ring must be rendered through `container.focusRing` mapping. |
-| `disabled` | Disabled tokens override interactive colors and border styling. |
-| `loading` | Loading uses the state mapping for the current fill/color pair. |
+| `default` | Uses the merged official defaults for `color`, `fill`, `size`, `shape`, and `type`. |
+| `active` | Maps to the `:active::before` overlay in the official Less source. |
+| `focus` | The native button removes browser outline and preserves the component border radius. |
+| `disabled` | Runtime disabled state is `props.disabled || loading` in the official source. |
+| `loading` | Loading uses `loadingIcon`, `loadingText`, and can be controlled by `loading='auto'`. |
 
 ## Fill Mapping
 
 | Fill | Expected render behavior |
 | --- | --- |
-| `solid` | Background and border both use the semantic action/status fill for the selected color. |
-| `outline` | Background remains surface-driven while border and label use the selected color family. |
-| `none` | Background is transparent or surface-neutral and emphasis stays on label color. |
+| `solid` | Uses the selected color as both background and border in the official button Less rules. |
+| `outline` | Background becomes transparent while text and border keep the selected color. |
+| `none` | Background is transparent and border width becomes `0px` in the official button Less rules. |
 
 ## Color Mapping
 
 | Color | Expected token family |
 | --- | --- |
-| `default` | `semantic.surface.*`, `semantic.border.*`, `semantic.text.*` |
-| `primary` | `semantic.action.primary*`, `semantic.action.onPrimary` |
-| `success` | `semantic.status.success`, `semantic.action.onPrimary` |
-| `warning` | `semantic.status.warning`, `semantic.text.primary` |
-| `danger` | `semantic.status.critical`, `semantic.action.onPrimary` |
+| `default` | `--adm-color-text`, `--adm-color-background`, `--adm-color-border` |
+| `primary` | `--adm-color-primary` |
+| `success` | `--adm-color-success` |
+| `warning` | `--adm-color-warning` |
+| `danger` | `--adm-color-danger` |
 
 ## Shape Mapping
 
 | Shape | Expected radius behavior |
 | --- | --- |
-| `default` | Uses the base size radius. |
-| `rounded` | Uses the full rounded treatment from runtime shape mapping. |
-| `rectangular` | Uses `radiusRectangular` for the selected size. |
+| `default` | Uses the official default border radius `4px`. |
+| `rounded` | Uses the official rounded border radius `1000px`. |
+| `rectangular` | Uses the official rectangular border radius `0`. |
 
 ## Block Behavior
 
@@ -249,7 +240,7 @@ Core action control baseline for Ant Design Mobile Button behavior.
 
 ## Render Expectations
 
-- All four sizes must be visibly different in height, padding, radius, and type scale.
+- All four sizes must be visibly different in padding and type scale, while official height remains content-driven.
 - `fill=solid`, `fill=outline`, and `fill=none` must preserve distinct background and border behavior.
 - `shape=default`, `shape=rounded`, and `shape=rectangular` must produce visibly different corner treatment.
 - `block=true` must expand the control to the full inspection row width.

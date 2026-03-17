@@ -26,7 +26,15 @@ props:
   --border-width: string
   --border-style: string
   --border-color: string
-states: [default, hover, pressed, focus, disabled, loading]
+propDefaults:
+  color: default
+  fill: solid
+  size: middle
+  shape: default
+  block: false
+  loading: false
+  type: button
+states: [default, active, focus, disabled, loading]
 sizeDefaults:
   mini:
     height: 28
@@ -61,6 +69,14 @@ internalLayout:
   textAlignX: center
   textAlignY: center
 slots: [container, label]
+tokens:
+  cssVars:
+    - --text-color
+    - --background-color
+    - --border-radius
+    - --border-width
+    - --border-style
+    - --border-color
 semanticMapping:
   solid.default:
     default:
@@ -408,4 +424,5 @@ semanticMapping:
       container.border: semantic.surface.subtle
       label.color: semantic.status.critical
 notes:
+  - official ButtonProps does not define href, target, or icon props
   - source schema is Ant Design Mobile ButtonProps

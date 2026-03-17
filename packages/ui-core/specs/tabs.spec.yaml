@@ -2,8 +2,8 @@ component: Tabs
 status: draft
 purpose: freeze Ant Design Mobile Tabs and Tab props as the core tabs schema
 props:
-  activeKey: string
-  defaultActiveKey: string
+  activeKey: [string, null]
+  defaultActiveKey: [string, null]
   activeLineMode: [auto, full, fixed]
   stretch: [false, true]
   onChange: function
@@ -17,6 +17,10 @@ props:
   --content-padding: string
   --active-title-color: string
   --active-line-color: string
+propDefaults:
+  activeLineMode: auto
+  stretch: true
+  direction: ltr
 tabProps:
   title: reactNode
   disabled: [false, true]
@@ -44,4 +48,5 @@ tokens:
     - --active-title-color
     - --active-line-color
 notes:
+  - activeKey and defaultActiveKey allow null in the official API
   - source schema is Ant Design Mobile TabsProps and TabProps

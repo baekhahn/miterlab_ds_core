@@ -16,6 +16,7 @@ props:
   footer: reactNode
   mode: [default, card]
   layout: [vertical, horizontal]
+  requiredMarkStyle: [asterisk, text-required, text-optional, none]
   label: reactNode
   help: reactNode
   helpIcon: reactNode
@@ -46,6 +47,12 @@ props:
   --border-top: string
   --border-bottom: string
   --prefix-width: string
+propDefaults:
+  hasFeedback: true
+  layout: vertical
+  requiredMarkStyle: asterisk
+  disabled: false
+  mode: default
 variants:
   mode: [default, card]
   layout: [vertical, horizontal]

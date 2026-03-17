@@ -37,6 +37,14 @@ props:
   min: number
   max: number
   role: string
+  --font-size: string
+  --color: string
+  --placeholder-color: string
+  --text-align: string
+propDefaults:
+  defaultValue: ''
+  onlyShowClearWhenFocus: true
+states: [default, focus, disabled, readOnly]
 defaults:
   height: 42
   paddingX: 14
@@ -47,6 +55,12 @@ internalLayout:
   textAlignX: start
   textAlignY: center
 slots: [field, value, placeholder, action]
+tokens:
+  cssVars:
+    - --font-size
+    - --color
+    - --placeholder-color
+    - --text-align
 semanticMapping:
   default:
     default:
@@ -65,4 +79,5 @@ semanticMapping:
       value.color: semantic.text.secondary
       placeholder.color: semantic.text.muted
 notes:
+  - official InputProps does not define size, status, prefix, or suffix props
   - source schema is Ant Design Mobile InputProps

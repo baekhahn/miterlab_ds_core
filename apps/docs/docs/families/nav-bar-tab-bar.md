@@ -13,6 +13,7 @@ Top and bottom navigation baseline for Ant Design Mobile navigation components.
 - Ant Design Mobile NavBarProps and TabBarProps
 - Spec files: `packages/ui-core/specs/nav-bar.spec.yaml`, `packages/ui-core/specs/tab-bar.spec.yaml`
 - Parity mismatch count: `0`
+- Spec notes: `source schema is Ant Design Mobile NavBarProps`, `deprecated field `backArrow` is retained because it exists in the official API`, `source schema is Ant Design Mobile TabBarProps and TabBarItemProps`
 
 ## Inspection Screen
 
@@ -55,8 +56,10 @@ Top and bottom navigation baseline for Ant Design Mobile navigation components.
 
 ## Token References
 
-- CSS variable: `--height`
-- CSS variable: `--border-bottom`
+- cssVar: `--height` -> default `45px` in official nav-bar.less
+- cssVar: `--border-bottom` -> default `none` in official nav-bar.less
+- antToken: `colorPrimary` -> active item color is `var(--adm-color-primary)` in official tab-bar.less
+- antToken: `colorTextSecondary` -> inactive item color is `var(--adm-color-text-secondary)` in official tab-bar.less
 
 ## NavBar
 
@@ -92,8 +95,8 @@ Top and bottom navigation baseline for Ant Design Mobile navigation components.
 
 | Token | Kind | Notes |
 | --- | --- | --- |
-| `--height` | cssVar | Official CSS variable contract |
-| `--border-bottom` | cssVar | Official CSS variable contract |
+| `--height` | cssVar | default `45px` in official nav-bar.less |
+| `--border-bottom` | cssVar | default `none` in official nav-bar.less |
 
 ## TabBar
 
@@ -126,7 +129,8 @@ Top and bottom navigation baseline for Ant Design Mobile navigation components.
 
 | Token | Kind | Notes |
 | --- | --- | --- |
-| TODO | TODO | TODO |
+| `colorPrimary` | antToken | active item color is `var(--adm-color-primary)` in official tab-bar.less |
+| `colorTextSecondary` | antToken | inactive item color is `var(--adm-color-text-secondary)` in official tab-bar.less |
 
 ## Render Expectations
 

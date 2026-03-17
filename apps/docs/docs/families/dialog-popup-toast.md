@@ -13,6 +13,7 @@ Overlay and transient messaging baseline for Ant Design Mobile dialog, popup, an
 - Ant Design Mobile DialogProps, PopupProps, and ToastShowProps
 - Spec files: `packages/ui-core/specs/dialog.spec.yaml`, `packages/ui-core/specs/popup.spec.yaml`, `packages/ui-core/specs/toast.spec.yaml`
 - Parity mismatch count: `0`
+- Spec notes: `source schema is Ant Design Mobile DialogProps`, `source schema is Ant Design Mobile PopupProps`, `source schema is Ant Design Mobile ToastShowProps`
 
 ## Inspection Screen
 
@@ -60,11 +61,7 @@ Overlay and transient messaging baseline for Ant Design Mobile dialog, popup, an
 
 ## Token References
 
-- CSS variable: `--background-color`
-- CSS variable: `--border-radius`
-- CSS variable: `--max-width`
-- CSS variable: `--min-width`
-- CSS variable: `--z-index`
+- cssVar: `--z-index` -> default `var(--adm-dialog-z-index, 1000)` in official dialog.less
 - CSS variable: `--z-index`
 - CSS variable: `--size`
 
@@ -121,11 +118,7 @@ Overlay and transient messaging baseline for Ant Design Mobile dialog, popup, an
 
 | Token | Kind | Notes |
 | --- | --- | --- |
-| `--background-color` | cssVar | Official CSS variable contract |
-| `--border-radius` | cssVar | Official CSS variable contract |
-| `--max-width` | cssVar | Official CSS variable contract |
-| `--min-width` | cssVar | Official CSS variable contract |
-| `--z-index` | cssVar | Official CSS variable contract |
+| `--z-index` | cssVar | default `var(--adm-dialog-z-index, 1000)` in official dialog.less |
 
 ## Popup
 

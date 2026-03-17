@@ -13,6 +13,7 @@ Primary segmented navigation baseline for Ant Design Mobile Tabs behavior.
 - Ant Design Mobile TabsProps and TabProps
 - Spec files: `packages/ui-core/specs/tabs.spec.yaml`
 - Parity mismatch count: `0`
+- Spec notes: `activeKey and defaultActiveKey allow null in the official API`, `source schema is Ant Design Mobile TabsProps and TabProps`
 
 ## Inspection Screen
 
@@ -50,13 +51,12 @@ Primary segmented navigation baseline for Ant Design Mobile Tabs behavior.
 
 ## Token References
 
-- CSS variable: `--fixed-active-line-width`
-- CSS variable: `--active-line-height`
-- CSS variable: `--active-line-border-radius`
-- CSS variable: `--title-font-size`
-- CSS variable: `--content-padding`
-- CSS variable: `--active-title-color`
-- CSS variable: `--active-line-color`
+- cssVar: `--title-font-size` -> default `var(--adm-font-size-9)` in official tabs.less
+- cssVar: `--content-padding` -> default `12px` in official tabs.less
+- cssVar: `--active-line-height` -> default `2px` in official tabs.less
+- cssVar: `--active-line-border-radius` -> default `var(--active-line-height)` in official tabs.less
+- cssVar: `--active-line-color` -> default `var(--adm-color-primary)` in official tabs.less
+- cssVar: `--active-title-color` -> default `var(--adm-color-primary)` in official tabs.less
 
 ## Tabs
 
@@ -64,8 +64,8 @@ Primary segmented navigation baseline for Ant Design Mobile Tabs behavior.
 
 | Axis / prop | Type | Allowed values | Notes |
 | --- | --- | --- | --- |
-| `activeKey` | `string` | TODO | General prop contract. |
-| `defaultActiveKey` | `string` | TODO | General prop contract. |
+| `activeKey` | `string` | `string`, `null` | General prop contract. |
+| `defaultActiveKey` | `string` | `string`, `null` | General prop contract. |
 | `activeLineMode` | `string` | `auto`, `full`, `fixed` | General prop contract. |
 | `stretch` | `boolean` | `false`, `true` | General prop contract. |
 | `onChange` | `function` | TODO | General prop contract. |
@@ -100,13 +100,12 @@ Primary segmented navigation baseline for Ant Design Mobile Tabs behavior.
 
 | Token | Kind | Notes |
 | --- | --- | --- |
-| `--fixed-active-line-width` | cssVar | Official CSS variable contract |
-| `--active-line-height` | cssVar | Official CSS variable contract |
-| `--active-line-border-radius` | cssVar | Official CSS variable contract |
-| `--title-font-size` | cssVar | Official CSS variable contract |
-| `--content-padding` | cssVar | Official CSS variable contract |
-| `--active-title-color` | cssVar | Official CSS variable contract |
-| `--active-line-color` | cssVar | Official CSS variable contract |
+| `--title-font-size` | cssVar | default `var(--adm-font-size-9)` in official tabs.less |
+| `--content-padding` | cssVar | default `12px` in official tabs.less |
+| `--active-line-height` | cssVar | default `2px` in official tabs.less |
+| `--active-line-border-radius` | cssVar | default `var(--active-line-height)` in official tabs.less |
+| `--active-line-color` | cssVar | default `var(--adm-color-primary)` in official tabs.less |
+| `--active-title-color` | cssVar | default `var(--adm-color-primary)` in official tabs.less |
 
 ## Render Expectations
 
