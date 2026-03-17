@@ -2,312 +2,522 @@
 title: Core Contract
 ---
 
-# Core Contract
+# Ant Mobile → Core Schema → Full Family Contract (Codex Handoff)
 
-Ant Mobile aligned core schema contract.
+이 문서는 **Ant Design Mobile을 baseline으로 채택하여 core schema를 구성하고**, 현재 `mads.fly.dev` 문서를 **운영 가능한 contract docs 수준**으로 끌어올리기 위한 Codex 전달용 문서입니다.
 
-## Token Contract
+핵심 원칙은 아래와 같습니다.
 
-### Colors
+- **Ant Design Mobile이 source of truth**
+- spec는 Ant 기준을 따른다
+- generator는 spec 외 값을 만들지 않는다
+- plugin은 payload를 flatten 하지 않는다
+- Figma는 source가 아니라 output이다
+- docs는 사람용 source of truth, spec은 기계용 source of truth다
 
-| Token | Value |
-| --- | --- |
-| `colorPrimary` | `#1677ff` |
-| `colorText` | `#333333` |
-| `colorTextSecondary` | `#666666` |
-| `colorTextDisabled` | `TODO` |
-| `colorBorder` | `#eeeeee` |
-| `colorBorderSecondary` | `TODO` |
-| `colorBgContainer` | `#ffffff` |
-| `colorBgContainerDisabled` | `TODO` |
-| `colorFill` | `#f5f5f5` nearest exposed fill |
-| `colorFillSecondary` | `TODO` |
-| `colorFillTertiary` | `TODO` |
-| `colorError` | `#ff3141` |
-| `colorWarning` | `#ff8f1f` |
-| `colorSuccess` | `#00b578` |
+---
 
-### Typography
+## 1. Freeze Review Status 보강 문안
 
-| Token | Value |
-| --- | --- |
-| `fontSizeSM` | `12` |
-| `fontSizeMD` | `14` |
-| `fontSizeLG` | `16` |
-| `lineHeightSM` | `16` |
-| `lineHeightMD` | `20` |
-| `lineHeightLG` | `22` |
-| `fontWeightRegular` | `400` |
-| `fontWeightMedium` | `500` |
-| `fontWeightBold` | `600` |
+```md
+## Freeze Review Status Rules
 
-### Radius
+### Phase A — Implementation Freeze
+A family reaches Phase A only when all three conditions are satisfied:
 
-| Token | Value |
-| --- | --- |
-| `radiusSM` | `2` |
-| `radiusMD` | `4` |
-| `radiusLG` | `8` |
+- Spec parity: the family spec matches the frozen Ant-based contract
+- Generator parity: payload preserves all required axes, metrics, and token references
+- Plugin parity: renderer/write path preserves those values without flattening or renaming
 
-### Padding
+### Phase B — Canvas Freeze
+A family reaches Phase B only when all three conditions are satisfied:
 
-| Token | Value |
-| --- | --- |
-| `paddingSM` | `4` |
-| `paddingMD` | `8` |
-| `paddingLG` | `12` |
-| `paddingXL` | `16` |
-
-### Control Metrics
-
-| Token | Value |
-| --- | --- |
-| `controlHeightSM` | `24` |
-| `controlHeightMD` | `32` |
-| `controlHeightLG` | `44` |
-| `controlHeight` | `controlHeightLG` |
-
-### Motion
-
-| Token | Value |
-| --- | --- |
-| `motionDurationFast` | `0.1s` |
-| `motionDurationMid` | `0.2s` |
-| `motionDurationSlow` | `0.3s` |
-| `motionEaseInOut` | `cubic-bezier(0.4,0,0.2,1)` |
-| `motionEaseOut` | `cubic-bezier(0,0,0.2,1)` |
-| `motionEaseIn` | `cubic-bezier(0.4,0,1,1)` |
-
-## Button Contract
-
-### Props
-
-| Prop | Contract |
-| --- | --- |
-| `size` | `mini | small | middle | large` |
-| `color` | `default | primary | success | warning | danger` |
-| `fill` | `solid | outline | none` |
-| `shape` | `default | rounded | rectangular` |
-| `block` | `boolean` |
-| `loading` | `boolean` |
-| `disabled` | `boolean` |
-| `type` | `button | submit | reset` |
-| `icon` | supported by contract document |
-| `href` | supported by contract document |
-| `target` | supported by contract document |
-| `htmlType` | supported by contract document |
-| `onClick` | supported |
-| `style` | supported |
-| `className` | supported |
-
-### States
-
-- `default`
-- `hover`
-- `active`
-- `focus`
-- `disabled`
-- `loading`
-
-### Metrics
-
-| Size | Height | Padding X | Padding Y | Radius |
-| --- | --- | --- | --- | --- |
-| `mini` | `24` | `12` | `3` | `4` |
-| `small` | `28` | `12` | `3` | `4` |
-| `middle` | `32` | `12` | `7` | `4` |
-| `large` | `44` | `12` | `11` | `4` |
-
-| Metric | Value |
-| --- | --- |
-| `rectangularRadius` | `0` |
-| `iconGap` | `4` |
-| `fontSizeSM` | `12` |
-| `fontSizeMD` | `14` |
-| `fontSizeLG` | `16` |
-
-### Tokens
-
-| Group | Tokens |
-| --- | --- |
-| `background` | `colorPrimary`, `colorFill`, `colorFillSecondary` |
-| `text` | `colorText`, `colorTextDisabled` |
-| `border` | `colorBorder`, `colorBorderSecondary` |
-| `control` | `controlHeight` |
-
-### Render Rules
-
-- `fill=solid` -> background `colorPrimary`
-- `fill=outline` -> border with transparent background
-- `fill=none` -> text only
-- `disabled` -> `colorTextDisabled`
-- `loading` -> show `loadingIcon`
-- `block` -> width `100%`
-
-## Input Contract
-
-### Props
-
-| Prop | Contract |
-| --- | --- |
-| `size` | `small | middle | large` |
-| `value` | supported |
-| `defaultValue` | supported |
-| `placeholder` | supported |
-| `disabled` | `boolean` |
-| `readOnly` | `boolean` |
-| `clearable` | `boolean` |
-| `type` | supported |
-| `maxLength` | supported |
-| `status` | supported by contract document |
-| `prefix` | supported by contract document |
-| `suffix` | supported by contract document |
-| `autoFocus` | supported |
-| `inputMode` | supported |
-| `onChange` | supported |
-| `onFocus` | supported |
-| `onBlur` | supported |
-
-### States
-
-- `default`
-- `focus`
-- `disabled`
-- `error`
-- `warning`
-- `readonly`
-
-### Metrics
-
-| Size | Height | Padding X | Padding Y | Radius |
-| --- | --- | --- | --- | --- |
-| `small` | `24` | `0` | `0` | `0` |
-| `middle` | `32` | `0` | `0` | `4` |
-| `large` | `44` | `0` | `0` | `4` |
-
-| Metric | Value |
-| --- | --- |
-| `inset` | `8` |
-| `fontSize` | `17` |
-
-### Tokens
-
-| Group | Tokens |
-| --- | --- |
-| `text` | `colorText`, `colorTextSecondary`, `colorTextDisabled` |
-| `border` | `colorBorder`, `colorBorderSecondary` |
-| `focus` | `colorPrimary` |
-| `error` | `colorError` |
-| `warning` | `colorWarning` |
-| `background` | `colorBgContainer` |
-| `control` | `controlHeight` |
-
-### Render Rules
-
-- `focus` -> border `colorPrimary`
-- `error` -> border `colorError`
-- `warning` -> border `colorWarning`
-- `disabled` -> `colorTextDisabled`
-- `clearable` -> show `clearIcon`
-
-## Freeze Review Contract
-
-### Columns
-
-- `Family`
-- `Priority`
-- `Phase A`
-- `Phase B`
-- `Reason`
-
-### Phase A
-
-- `spec parity`
-- `generator parity`
-- `plugin parity`
-
-### Phase B
-
-- `figma write verified`
-- `screenshot attached`
-- `review approved`
+- Figma write verified
+- Screenshot attached
+- Review approved
 
 ### Priority
+- P1: Button
+- P1: Input
+- P2: Tabs
+- P2: List / Cell
+- P2: Dialog / Popup / Toast
+- P2: NavBar / TabBar
+- P2: Form
 
-| Priority | Families |
-| --- | --- |
-| `P1` | `Button`, `Input` |
-| `P2` | `Tabs`, `List`, `Dialog`, `Popup`, `Toast`, `NavBar`, `TabBar`, `Form` |
+### Reason Values
+Use one of the following explicit reason values instead of generic pending:
 
-### Reason Examples
+- pending (token contract mismatch)
+- pending (payload mismatch)
+- pending (plugin mismatch)
+- pending (canvas not verified)
+- verified
+```
 
-- `pending (token mismatch)`
-- `pending (payload mismatch)`
-- `pending (plugin mismatch)`
-- `pending (canvas not verified)`
-- `verified`
+---
 
-## Runtime Contract
+## 2. Runtime / Plugin Contract 보강 문안
 
-### Flow
+```md
+## Plugin Contract
 
-`spec -> generator -> payload -> plugin -> figma`
+### Input
+Plugin input must preserve:
 
-### Payload Fields
+- component identity
+- component family
+- variant axes
+- state axes
+- metrics
+- token references
 
-- `component`
-- `variant`
-- `state`
-- `metrics`
-- `tokens`
+### Renderer Rules
+The renderer must not:
 
-### Rules
+- flatten multiple families into one preset
+- rename token references for convenience
+- drop size/state/variant axes
+- replace payload values with hardcoded defaults
+- collapse Ant contract values into internal semantic placeholders
 
-- Plugin must not rewrite token names.
-- Plugin must not flatten variant.
-- Plugin must not drop state.
-- Plugin must not change metrics.
+### Allowed Behavior
+The renderer may:
 
+- convert payload into Figma node structure
+- create frames, text nodes, and vector nodes
+- map values into visual nodes without changing their meaning
+
+### Forbidden Behavior
+The renderer must not:
+
+- reinterpret contract values
+- replace Ant token names with generic semantic aliases
+- merge Button / IconButton / TextButton into one visual preset
+- merge Input status variants into one default state
+```
+
+---
+
+## 3. Generation Contract 보강 문안
+
+```md
 ## Generation Contract
 
 ### Flow
+spec
+→ generator
+→ payload
+→ plugin
+→ figma
 
-`Prompt -> layout rules -> component mapping -> payload -> plugin render`
+### Generator Rules
+The generator must:
+
+- read only frozen specs
+- preserve all allowed props
+- preserve all allowed variant axes
+- preserve all allowed states
+- preserve metrics
+- preserve token references
+
+The generator must not:
+
+- invent new variants
+- normalize sizes
+- rename props
+- rewrite token contracts
+- drop unsupported values silently
 
 ### Payload Example
 
-```json
 {
   "component": "Button",
   "variant": {
     "size": "large",
     "fill": "solid",
-    "color": "primary"
+    "color": "primary",
+    "shape": "default",
+    "block": false
   },
-  "state": "default",
+  "state": {
+    "loading": false,
+    "disabled": false
+  },
   "metrics": {
-    "height": 44
+    "height": 44,
+    "paddingX": 12,
+    "paddingY": 11,
+    "radius": 4,
+    "iconGap": 4
   },
   "tokens": {
-    "background": "colorPrimary"
+    "background": "colorPrimary",
+    "text": "colorText",
+    "border": "colorBorder"
   }
 }
-```
 
 ### Failure Cases
+- axis missing
+- variant flattened
+- token missing
+- wrong metrics
+- plugin mismatch
+- read-only write path
+```
 
-- `axis missing`
-- `variant flattened`
-- `token missing`
-- `metrics wrong`
-- `plugin mismatch`
-- `read-only write`
+---
 
-### Verification Checklist
+## 4. Token Contract 확장본
 
-- `size correct`
-- `radius correct`
-- `padding correct`
-- `token correct`
-- `state correct`
-- `variant correct`
+```md
+## Token Contract (Ant Mobile aligned)
+
+### Colors
+colorPrimary
+colorText
+colorTextSecondary
+colorTextDisabled
+
+colorBorder
+colorBorderSecondary
+
+colorBgContainer
+colorBgContainerDisabled
+
+colorFill
+colorFillSecondary
+colorFillTertiary
+
+colorError
+colorWarning
+colorSuccess
+
+### Typography
+fontSizeSM = 12
+fontSizeMD = 14
+fontSizeLG = 16
+
+lineHeightSM = 16
+lineHeightMD = 20
+lineHeightLG = 22
+
+fontWeightRegular = 400
+fontWeightMedium = 500
+fontWeightBold = 600
+
+### Radius
+radiusSM = 2
+radiusMD = 4
+radiusLG = 8
+
+### Padding
+paddingSM = 4
+paddingMD = 8
+paddingLG = 12
+paddingXL = 16
+
+### Control Metrics
+controlHeightSM = 24
+controlHeightMD = 32
+controlHeightLG = 44
+controlHeight = controlHeightLG
+
+### Motion
+motionDurationFast = 0.1s
+motionDurationMid = 0.2s
+motionDurationSlow = 0.3s
+
+motionEaseInOut = cubic-bezier(0.4,0,0.2,1)
+motionEaseOut = cubic-bezier(0,0,0.2,1)
+motionEaseIn = cubic-bezier(0.4,0,1,1)
+```
+
+---
+
+## 5. Button Contract (완성본)
+
+```md
+## Button Contract
+
+### Props
+size: mini | small | middle | large
+color: default | primary | success | warning | danger
+fill: solid | outline | none
+shape: default | rounded | rectangular
+
+block: boolean
+loading: boolean
+disabled: boolean
+
+type: button | submit | reset
+
+icon
+href
+target
+htmlType
+onClick
+style
+className
+
+### States
+default
+hover
+active
+focus
+disabled
+loading
+
+### Metrics
+mini
+height = 24
+paddingX = 12
+paddingY = 3
+radius = 4
+
+small
+height = 28
+paddingX = 12
+paddingY = 3
+radius = 4
+
+middle
+height = 32
+paddingX = 12
+paddingY = 7
+radius = 4
+
+large
+height = 44
+paddingX = 12
+paddingY = 11
+radius = 4
+
+rectangularRadius = 0
+iconGap = 4
+
+fontSizeSM = 12
+fontSizeMD = 14
+fontSizeLG = 16
+
+### Tokens
+background
+- colorPrimary
+- colorFill
+- colorFillSecondary
+
+text
+- colorText
+- colorTextDisabled
+
+border
+- colorBorder
+- colorBorderSecondary
+
+controlHeight
+
+### Render Rules
+fill = solid → background colorPrimary
+fill = outline → border + transparent background
+fill = none → text only
+
+disabled → colorTextDisabled
+loading → show loadingIcon
+block → width = 100%
+```
+
+---
+
+## 6. Input Contract (완성본)
+
+```md
+## Input Contract
+
+### Props
+size: small | middle | large
+
+value
+defaultValue
+placeholder
+
+disabled
+readOnly
+clearable
+
+type
+maxLength
+
+status
+
+prefix
+suffix
+
+autoFocus
+inputMode
+
+onChange
+onFocus
+onBlur
+
+### States
+default
+focus
+disabled
+error
+warning
+readonly
+
+### Metrics
+small
+height = 24
+paddingX = 0
+paddingY = 0
+radius = 0
+
+middle
+height = 32
+radius = 4
+
+large
+height = 44
+radius = 4
+
+inset = 8
+fontSize = 17
+
+### Tokens
+text
+- colorText
+- colorTextSecondary
+- colorTextDisabled
+
+border
+- colorBorder
+- colorBorderSecondary
+
+focus
+- colorPrimary
+
+error
+- colorError
+
+warning
+- colorWarning
+
+background
+- colorBgContainer
+
+controlHeight
+
+### Render Rules
+focus → border colorPrimary
+error → border colorError
+warning → border colorWarning
+disabled → colorTextDisabled
+clearable → show clearIcon
+```
+
+---
+
+## 7. Full Family Contract 목록
+
+Ant Mobile 기준 full family contract 대상은 아래와 같습니다.
+
+```md
+Button
+Input
+Textarea
+Tabs
+List
+Cell
+Form
+Dialog
+Popup
+Toast
+NavBar
+TabBar
+Checkbox
+Radio
+Switch
+Slider
+Stepper
+Picker
+DatePicker
+SearchBar
+Badge
+Tag
+Card
+Grid
+Space
+Flex
+Avatar
+Image
+Progress
+Skeleton
+Result
+Empty
+NoticeBar
+Collapse
+Dropdown
+Popover
+ActionSheet
+PullToRefresh
+InfiniteScroll
+Swiper
+FloatingBubble
+WaterMark
+Mask
+Modal
+```
+
+---
+
+## 8. Codex 실행 지침
+
+Codex는 아래 원칙으로 동작해야 합니다.
+
+```md
+- Ant docs를 source of truth로 사용
+- frozen spec을 우선시
+- docs는 spec를 설명하는 계약 문서로 유지
+- generator는 spec 외 값 생성 금지
+- plugin은 payload flatten 금지
+- token contract는 Ant 이름 유지
+- Button/Input을 먼저 완전 고정
+- 이후 Tabs, List/Cell, Overlay, Navigation, Form 순서로 확장
+```
+
+---
+
+## 9. 다음 작업 우선순위
+
+```md
+P1
+- Button
+- Input
+
+P2
+- Tabs
+- List / Cell
+- Dialog / Popup / Toast
+- NavBar / TabBar
+- Form
+
+P3
+- 나머지 full family contract
+```
+
+---
+
+## 10. 최종 목표
+
+```md
+Ant Mobile baseline
+→ Core schema freeze
+→ Generator parity
+→ Plugin parity
+→ Figma canvas verification
+→ Theme layer
+→ External DS adapter
+```
