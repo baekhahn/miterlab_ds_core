@@ -33,3 +33,8 @@ Parity means:
 - canvas
 
 must match this table.
+
+## Done
+
+- This table is the frozen table baseline for P1 families.
+- Codex must use this instead of browsing Ant Mobile.

@@ -450,6 +450,46 @@ If added to the docs site, link it from:
 
 ---
 
+## Contract Rule
+
+Source of truth
+
+- Ant Mobile
+- Core schema
+- Spec yaml
+- Generator
+- Plugin
+- Figma
+
+---
+
+## Freeze Rule
+
+- No schema change after freeze
+- No prop change after freeze
+- No token change after freeze
+- No axis change after freeze
+
+---
+
+## Generation Rule
+
+Spec → generator → plugin → figma → inspection → freeze
+
+---
+
+## Inspection Rule
+
+Each family must have
+
+- inspection payload
+- inspection screenshot
+- inspection layout
+- inspection token
+- inspection node tree
+
+---
+
 ## Required Output from Codex
 
 For every loop, Codex must output:

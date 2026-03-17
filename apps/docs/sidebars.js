@@ -43,7 +43,13 @@ module.exports = {
     {
       type: "category",
       label: "Freeze Review",
-      items: ["freeze-review/status", "freeze-review/p1-scope"]
+      items: [
+        "freeze-review/status",
+        "freeze-review/p1-scope",
+        "freeze-review/parity-contract",
+        "freeze-review/inspection-contract",
+        "freeze-review/token-contract"
+      ]
     }
   ]
 };

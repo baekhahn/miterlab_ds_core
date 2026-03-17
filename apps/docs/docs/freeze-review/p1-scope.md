@@ -15,6 +15,8 @@ Checkbox Radio Switch
 
 No new schema axes until P1 complete.
 
+P2 starts only after all P1 Phase A done.
+
 ## Phase A
 
 spec parity generator parity plugin parity
