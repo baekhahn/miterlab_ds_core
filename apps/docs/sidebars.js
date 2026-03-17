@@ -4,7 +4,7 @@ module.exports = {
     {
       type: "category",
       label: "Core",
-      items: ["core/overview", "core/master-plan", "core/contract", "core/ant-mobile-p1-source-of-truth", "core/p1-full-family-table", "core/p1-full-family-contract"]
+      items: ["core/overview", "core/master-plan", "core/contract", "core/schema-contract", "core/ant-mobile-p1-source-of-truth", "core/p1-full-family-table", "core/p1-full-family-contract"]
     },
     {
       type: "category",
@@ -66,8 +66,10 @@ module.exports = {
       items: [
         "freeze-review/status",
         "freeze-review/p1-scope",
+        "freeze-review/parity-table",
         "freeze-review/parity-contract",
         "freeze-review/inspection-contract",
+        "freeze-review/inspection-contract-pack",
         "freeze-review/token-contract"
       ]
     }
