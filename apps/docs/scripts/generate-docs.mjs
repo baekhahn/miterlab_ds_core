@@ -280,6 +280,31 @@ const canvasDefault = {
   reviewApproved: "pending"
 };
 
+const antTokenContractRows = [
+  ["`colorPrimary`", "`#1677ff`", "global Ant token", "primary accent token"],
+  ["`colorText`", "`#333333`", "global Ant token", "primary foreground text"],
+  ["`colorTextSecondary`", "`#666666`", "global Ant token", "secondary foreground text"],
+  ["`colorTextDisabled`", "not exposed by name", "derived behavior", "commonly represented through component opacity or muted text treatment"],
+  ["`colorBorder`", "`#eeeeee`", "global Ant token", "default border token"],
+  ["`colorBorderSecondary`", "not exposed by name", "TODO", "no direct Ant Mobile 5.x token name in theme-default.less"],
+  ["`colorBgContainer`", "`#ffffff`", "global Ant token", "container background token"],
+  ["`colorBgContainerDisabled`", "not exposed by name", "derived behavior", "commonly represented through muted surface + opacity"],
+  ["`colorFill`", "`#f5f5f5` nearest: --adm-color-fill-content", "compatibility token", "nearest exposed fill token in Ant Mobile 5.x"],
+  ["`colorFillSecondary`", "not exposed by name", "TODO", "no direct Ant Mobile 5.x token name in theme-default.less"],
+  ["`colorFillTertiary`", "not exposed by name", "TODO", "no direct Ant Mobile 5.x token name in theme-default.less"],
+  ["`fontSizeSM`", "`13px`", "derived from --adm-font-size-main", "used by Button mini and compact text cases"],
+  ["`fontSizeMD`", "`17px`", "derived from --adm-font-size-9", "default body/control text size"],
+  ["`fontSizeLG`", "`18px`", "derived from --adm-font-size-10", "large control text size"],
+  ["`radiusSM`", "`4px`", "derived from --adm-radius-s", "small corner radius"],
+  ["`radiusMD`", "`8px`", "derived from --adm-radius-m", "medium corner radius"],
+  ["`radiusLG`", "`12px`", "derived from --adm-radius-l", "large corner radius"],
+  ["`paddingSM`", "`12px / 3px`", "component-derived", "small control horizontal/vertical padding from Button"],
+  ["`paddingMD`", "`12px / 7px`", "component-derived", "middle control horizontal/vertical padding from Button"],
+  ["`paddingLG`", "`12px / 11px`", "component-derived", "large control horizontal/vertical padding from Button"],
+  ["`controlHeight`", "content-driven or `24px` wrapper min-height", "component-derived", "Button is content-driven; Input wrapper min-height is `24px`"],
+  ["`lineHeight`", "`1.4` Button / `1.5` Input", "component-derived", "line-height varies by component family"]
+];
+
 const officialComponentData = {
   Button: {
     metricsSummary: [
@@ -564,6 +589,17 @@ function freezeStatusForFamily(family) {
   };
 }
 
+function freezeReasonForFamily(family, phase) {
+  const runtimeGaps = familyContracts[family.id]?.runtimeGaps || [];
+  if (phase === "implementation") {
+    if (family.parity.afterFixMismatchCount !== 0) return "mismatch count not zero";
+    if (!family.summary?.passed) return "inspection summary failed";
+    if (runtimeGaps.length > 0) return family.id === "button" || family.id === "input" ? "token mismatch" : "payload mismatch";
+    return "contract verified";
+  }
+  return "canvas not verified";
+}
+
 function codeBlock(language, value) {
   return `\`\`\`${language}\n${value}\n\`\`\``;
 }
@@ -630,6 +666,8 @@ function buildSchemaIndex(families) {
     const manualStates = familyContracts[family.id]?.stateMapping?.map(([state]) => state) || [];
     const metrics = family.specs.flatMap((spec) => summarizeMetrics(spec));
     const tokenCount = family.specs.reduce((count, spec) => {
+      const official = officialComponentData[spec.component];
+      if (official?.tokenRows) return count + official.tokenRows.length;
       const cssVars = spec.tokens?.cssVars?.length || 0;
       const semantic = collectSemanticTokens(spec.semanticMapping).size;
       return count + cssVars + semantic;
@@ -660,6 +698,10 @@ ${markdownTable(
   ["Family", "Props count", "Variant axes", "States", "Metrics defined", "Tokens defined", "Freeze status"],
   rows
 )}
+
+## Global Token Contract
+
+${markdownTable(["Token", "Default", "Source", "Notes"], antTokenContractRows)}
 `
   );
 }
@@ -748,6 +790,10 @@ function buildMetricsAndTokens(families) {
 # Metrics And Tokens
 
 Official Ant Mobile metric and token defaults are shown first when they are known from source. Frozen spec runtime-only fields remain listed with their spec source so current implementation gaps stay visible.
+
+## Global Ant Token Contract
+
+${markdownTable(["Token", "Default", "Source", "Notes"], antTokenContractRows)}
 
 ${sections}
 `
@@ -1110,11 +1156,29 @@ Inspection screens are family validation outputs, not product screens.
 
 ## Flow
 
+- \`spec -> prompt -> layout -> payload -> plugin -> figma\`
+
 1. Frozen spec defines the family contract.
 2. Family inspection prompt enumerates the minimum visible cases.
 3. Layout builder creates section and component placement.
 4. Payload writer maps layout nodes into the Figma write contract.
 5. Plugin write path renders nodes into the current Figma page when a writable path is available.
+
+## Example Prompt
+
+${codeBlock("ts", truncateText(buttonPromptSource.trim(), 1200))}
+
+## Example Payload
+
+${codeBlock("json", truncateJson(examplePayload))}
+
+## Example Layout
+
+${codeBlock("json", truncateJson(exampleLayout))}
+
+## Example Node Tree
+
+${codeBlock("json", truncateJson(exampleNodeTree, 1200))}
 
 ## Current Inspection Screens
 
@@ -1122,11 +1186,12 @@ ${toBulletList(families.map((family) => `\`${family.inspection.name}\` for ${fam
 
 ## Failure Cases
 
-- Axis present in spec but missing from the inspection prompt.
-- Layout width or height normalized so size differences disappear.
-- Payload variant keys renamed from the frozen spec.
-- Plugin renderer ignores family state or metric fields.
-- Write path blocked by a read-only environment.
+- missing axis: spec field never reaches prompt or payload.
+- flattened variant: two or more official values collapse into one rendered branch.
+- wrong metrics: payload size, padding, height, or radius diverges from the family contract.
+- wrong token: payload variables stay semantic-only or ad hoc instead of the documented token contract.
+- plugin mismatch: plugin write path ignores payload fields or rewrites them incorrectly.
+- read-only write: environment cannot create Figma canvas nodes even though payload generation succeeds.
 
 ## Verification Checklist
 
@@ -1191,6 +1256,10 @@ function buildRuntimeDocs(families) {
 
 Runtime documentation describes what the Figma plugin expects from the generated payload and how that payload maps to canvas nodes.
 
+## Flow
+
+- \`spec -> generator -> payload -> plugin -> figma\`
+
 ## Runtime Guarantees
 
 - Payload structure follows \`shared/contracts/figmaWritePayload.ts\`.
@@ -1227,6 +1296,12 @@ ${codeBlock("json", truncateJson(buttonFamily.payload.nodes.slice(0, 3), 1400))}
 - Disabled, loading, active, hidden, visible, and item states must not be inferred from unrelated fields.
 - Family-specific state groups such as \`tab\`, \`item\`, \`dialog\`, \`popup\`, and \`toast\` must remain separate.
 
+## Variant Mapping Rules
+
+- Variant keys must remain identical to the frozen spec prop names.
+- Button and Input must not be flattened into generic \`variant\` shorthands when the spec already defines first-class props.
+- Deprecated but supported fields must remain explicit when they are still in the frozen spec.
+
 ## Metrics Mapping Rules
 
 - \`style.radius\`, \`paddingX\`, \`paddingY\`, \`gap\`, \`fontSize\`, \`lineHeight\`, and \`minWidth\` must reflect the frozen spec metrics.
@@ -1256,6 +1331,13 @@ ${codeBlock("json", truncateJson(buttonFamily.payload.nodes.slice(0, 3), 1400))}
 4. Trigger plugin write into the current document when a writable path is available.
 5. Review the canvas output during Phase B freeze review.
 
+## Payload To Canvas Mapping
+
+- Spec defines the legal props, states, metrics, and token references.
+- Generator serializes those values into payload \`variant\`, \`style\`, and \`variables\` fields.
+- Plugin converts payload nodes into Figma frames, text nodes, and instances.
+- Canvas review validates that visible output still matches the documented contract.
+
 ## Current Limitations
 
 - MCP write path is known to be read-only in the current environment.
@@ -1282,27 +1364,29 @@ function buildFreezeReview(families) {
 ## Phase A — Implementation Freeze
 
 ${markdownTable(
-  ["Priority", "Family", "Mismatch count", "Spec parity", "Generator parity", "Plugin parity"],
+  ["Priority", "Family", "Mismatch count", "Spec parity", "Generator parity", "Plugin parity", "Reason"],
   families.map((family) => [
     family.priority,
     family.title,
     `\`${family.parity.afterFixMismatchCount}\``,
     family.freeze.implementation.specParity,
     family.freeze.implementation.generatorParity,
-    family.freeze.implementation.pluginParity
+    family.freeze.implementation.pluginParity,
+    freezeReasonForFamily(family, "implementation")
   ])
 )}
 
 ## Phase B — Canvas Freeze
 
 ${markdownTable(
-  ["Priority", "Family", "Figma write verified", "Screenshot attached", "Review approved"],
+  ["Priority", "Family", "Figma write verified", "Screenshot attached", "Review approved", "Reason"],
   families.map((family) => [
     family.priority,
     family.title,
     family.freeze.canvas.figmaWriteVerified,
     family.freeze.canvas.screenshotAttached,
-    family.freeze.canvas.reviewApproved
+    family.freeze.canvas.reviewApproved,
+    freezeReasonForFamily(family, "canvas")
   ])
 )}
 

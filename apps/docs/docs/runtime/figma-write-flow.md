@@ -12,6 +12,13 @@ title: Figma Write Flow
 4. Trigger plugin write into the current document when a writable path is available.
 5. Review the canvas output during Phase B freeze review.
 
+## Payload To Canvas Mapping
+
+- Spec defines the legal props, states, metrics, and token references.
+- Generator serializes those values into payload `variant`, `style`, and `variables` fields.
+- Plugin converts payload nodes into Figma frames, text nodes, and instances.
+- Canvas review validates that visible output still matches the documented contract.
+
 ## Current Limitations
 
 - MCP write path is known to be read-only in the current environment.

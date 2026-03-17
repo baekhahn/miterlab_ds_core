@@ -6,6 +6,10 @@ title: Runtime
 
 Runtime documentation describes what the Figma plugin expects from the generated payload and how that payload maps to canvas nodes.
 
+## Flow
+
+- `spec -> generator -> payload -> plugin -> figma`
+
 ## Runtime Guarantees
 
 - Payload structure follows `shared/contracts/figmaWritePayload.ts`.

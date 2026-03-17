@@ -130,6 +130,12 @@ The plugin expects a payload that conforms to the shared Figma write contract.
 - Disabled, loading, active, hidden, visible, and item states must not be inferred from unrelated fields.
 - Family-specific state groups such as `tab`, `item`, `dialog`, `popup`, and `toast` must remain separate.
 
+## Variant Mapping Rules
+
+- Variant keys must remain identical to the frozen spec prop names.
+- Button and Input must not be flattened into generic `variant` shorthands when the spec already defines first-class props.
+- Deprecated but supported fields must remain explicit when they are still in the frozen spec.
+
 ## Metrics Mapping Rules
 
 - `style.radius`, `paddingX`, `paddingY`, `gap`, `fontSize`, `lineHeight`, and `minWidth` must reflect the frozen spec metrics.

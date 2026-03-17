@@ -6,27 +6,27 @@ title: Freeze Review Status
 
 ## Phase A — Implementation Freeze
 
-| Priority | Family | Mismatch count | Spec parity | Generator parity | Plugin parity |
-| --- | --- | --- | --- | --- | --- |
-| P1 | Button | `0` | verified | pending | pending |
-| P1 | Input | `0` | verified | pending | pending |
-| P2 | Tabs | `0` | verified | verified | verified |
-| P2 | List / Cell | `0` | verified | verified | verified |
-| P2 | Dialog / Popup / Toast | `0` | verified | verified | verified |
-| P2 | NavBar / TabBar | `0` | verified | verified | verified |
-| P2 | Form | `0` | verified | verified | verified |
+| Priority | Family | Mismatch count | Spec parity | Generator parity | Plugin parity | Reason |
+| --- | --- | --- | --- | --- | --- | --- |
+| P1 | Button | `0` | verified | pending | pending | token mismatch |
+| P1 | Input | `0` | verified | pending | pending | token mismatch |
+| P2 | Tabs | `0` | verified | verified | verified | contract verified |
+| P2 | List / Cell | `0` | verified | verified | verified | contract verified |
+| P2 | Dialog / Popup / Toast | `0` | verified | verified | verified | contract verified |
+| P2 | NavBar / TabBar | `0` | verified | verified | verified | contract verified |
+| P2 | Form | `0` | verified | verified | verified | contract verified |
 
 ## Phase B — Canvas Freeze
 
-| Priority | Family | Figma write verified | Screenshot attached | Review approved |
-| --- | --- | --- | --- | --- |
-| P1 | Button | pending | pending | pending |
-| P1 | Input | pending | pending | pending |
-| P2 | Tabs | pending | pending | pending |
-| P2 | List / Cell | pending | pending | pending |
-| P2 | Dialog / Popup / Toast | pending | pending | pending |
-| P2 | NavBar / TabBar | pending | pending | pending |
-| P2 | Form | pending | pending | pending |
+| Priority | Family | Figma write verified | Screenshot attached | Review approved | Reason |
+| --- | --- | --- | --- | --- | --- |
+| P1 | Button | pending | pending | pending | canvas not verified |
+| P1 | Input | pending | pending | pending | canvas not verified |
+| P2 | Tabs | pending | pending | pending | canvas not verified |
+| P2 | List / Cell | pending | pending | pending | canvas not verified |
+| P2 | Dialog / Popup / Toast | pending | pending | pending | canvas not verified |
+| P2 | NavBar / TabBar | pending | pending | pending | canvas not verified |
+| P2 | Form | pending | pending | pending | canvas not verified |
 
 ## Status Terms
 
