@@ -4,7 +4,7 @@ module.exports = {
     {
       type: "category",
       label: "Core",
-      items: ["core/overview"]
+      items: ["core/overview", "core/contract"]
     },
     {
       type: "category",
