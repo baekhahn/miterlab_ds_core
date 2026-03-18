@@ -74,7 +74,6 @@ const genericComponentTypes = new Set<ReturnType<typeof resolveComponentType>>([
   "list-cell",
   "list-row",
   "list-card",
-  "empty-state",
   "fallback-view",
   "toast",
   "alert",
@@ -121,15 +120,7 @@ const resolveCoreButtonSize = (size?: GrammarComponent["size"]): "sm" | "md" | "
 };
 
 const mapComponentToLayoutNode = (index: number, component: GrammarComponent, screen: string): LayoutNode => {
-  const isInspectionScreen =
-    screen === "catalog" ||
-    screen === "button-inspection" ||
-    screen === "input-inspection" ||
-    screen === "tabs-inspection" ||
-    screen === "list-cell-inspection" ||
-    screen === "overlay-inspection" ||
-    screen === "navigation-inspection" ||
-    screen === "form-inspection";
+  const isInspectionScreen = screen === "button-inspection" || screen === "input-inspection";
   const componentType = resolveComponentType(component);
 
   if (componentType === "text") {
@@ -718,23 +709,16 @@ export const fromDesignPrompt = (prompt: GrammarDesignPrompt): LayoutFrameNode =
     sectionBuckets[key].push({ order: placement.order, node });
   }
 
-  const isCatalog = normalized.screen === "catalog";
   const isInspectionScreen =
-    normalized.screen === "catalog" ||
     normalized.screen === "button-inspection" ||
-    normalized.screen === "input-inspection" ||
-    normalized.screen === "tabs-inspection" ||
-    normalized.screen === "list-cell-inspection" ||
-    normalized.screen === "overlay-inspection" ||
-    normalized.screen === "navigation-inspection" ||
-    normalized.screen === "form-inspection";
+    normalized.screen === "input-inspection";
   const sectionGap = layoutRules.sectionSpacing[normalized.density];
   const componentGap = layoutRules.componentSpacing[normalized.density];
   const formGap = layoutRules.formSpacing[normalized.density];
   const actionGap = layoutRules.actionSpacing[normalized.density];
-  const frameWidth = isInspectionScreen ? layoutRules.widths.catalog : layoutRules.widths.mobile;
-  const frameHeightBase = isInspectionScreen ? layoutRules.heights.catalog : layoutRules.heights.mobile;
-  const sectionWidth = isInspectionScreen ? layoutRules.contentWidth.catalog : layoutRules.contentWidth.mobile;
+  const frameWidth = isInspectionScreen ? layoutRules.widths.preview : layoutRules.widths.mobile;
+  const frameHeightBase = isInspectionScreen ? layoutRules.heights.preview : layoutRules.heights.mobile;
+  const sectionWidth = isInspectionScreen ? layoutRules.contentWidth.preview : layoutRules.contentWidth.mobile;
   const framePaddingX = isInspectionScreen ? 48 : layoutRules.framePadding.x;
 
   let currentY = layoutRules.framePadding.top;

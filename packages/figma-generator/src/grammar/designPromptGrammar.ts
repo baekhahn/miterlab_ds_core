@@ -1,28 +1,13 @@
 export type ScreenType =
-  | "core-families"
   | "button-inspection"
-  | "input-inspection"
-  | "tabs-inspection"
-  | "list-cell-inspection"
-  | "overlay-inspection"
-  | "navigation-inspection"
-  | "form-inspection"
-  | "catalog"
-  | "playground"
-  | "login"
-  | "settings"
-  | "list"
-  | "dashboard"
-  | "detail"
-  | "filter-panel"
-  | "empty-state"
-  | "modal-form";
+  | "input-inspection";
 
 export type LayoutDensity = "comfortable" | "compact";
 export type ScreenState = "empty" | "loading" | "filled" | "error";
 export type DataComplexity = "low" | "medium" | "high";
 
 export type SectionKey =
+  | "preview"
   | "header"
   | "filter"
   | "content"
@@ -38,13 +23,9 @@ export type ComponentIntent =
   | "title"
   | "subtitle"
   | "helper-text"
-  | "email-input"
-  | "password-input"
   | "text-input"
   | "primary-action"
-  | "secondary-action"
-  | "filter-action"
-  | "status-text";
+  | "secondary-action";
 
 export type DesignPromptComponentType = "text" | "input" | "button" | "filter-button";
 export type ExtendedDesignPromptComponentType =
@@ -81,7 +62,6 @@ export type ExtendedDesignPromptComponentType =
   | "list-cell"
   | "list-row"
   | "list-card"
-  | "empty-state"
   | "fallback-view"
   | "toast"
   | "alert"

@@ -66,7 +66,7 @@ export const evaluateLayout = (screen: string, layout?: LayoutNode): LayoutEvalR
     return n.component === "button" && (variant === "primary" || (color === "primary" && fill === "solid"));
   });
 
-  if (hasPrimaryAction && !actionSection && screen !== "core-families" && screen !== "tabs-inspection" && screen !== "list-cell-inspection" && screen !== "navigation-inspection" && screen !== "overlay-inspection" && screen !== "form-inspection") {
+  if (hasPrimaryAction && !actionSection && screen !== "button-inspection" && screen !== "input-inspection") {
     warnings.push({
       level: "warning",
       code: "missing_action_section",
@@ -74,7 +74,7 @@ export const evaluateLayout = (screen: string, layout?: LayoutNode): LayoutEvalR
     });
   }
 
-  if (!hasPrimaryAction && screen !== "tabs-inspection" && screen !== "list-cell-inspection" && screen !== "navigation-inspection" && screen !== "overlay-inspection" && screen !== "form-inspection") {
+  if (!hasPrimaryAction && screen !== "button-inspection" && screen !== "input-inspection") {
     warnings.push({
       level: "warning",
       code: "missing_primary_action",
@@ -96,7 +96,7 @@ export const evaluateLayout = (screen: string, layout?: LayoutNode): LayoutEvalR
     }
   }
 
-  if (!(screen in { "core-families": 1, "button-inspection": 1, "input-inspection": 1, "tabs-inspection": 1, "list-cell-inspection": 1, "overlay-inspection": 1, "navigation-inspection": 1, "form-inspection": 1, catalog: 1, playground: 1, login: 1, settings: 1, list: 1, dashboard: 1, detail: 1, "filter-panel": 1, "empty-state": 1, "modal-form": 1 })) {
+  if (!(screen in { "button-inspection": 1, "input-inspection": 1 })) {
     warnings.push({
       level: "warning",
       code: "unsupported_pattern",

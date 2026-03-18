@@ -1307,6 +1307,129 @@
                     },
                     variables: {},
                     text: "Full Width"
+                  },
+                  {
+                    id: "layout_17",
+                    type: "INSTANCE",
+                    name: "Leading Icon",
+                    x: 48,
+                    y: 40,
+                    width: 128,
+                    height: 50,
+                    component: "Button",
+                    style: {
+                      radius: 14,
+                      paddingX: 18,
+                      paddingY: 13,
+                      gap: 8,
+                      fontSize: 16,
+                      lineHeight: 22,
+                      fontWeight: "semibold",
+                      minWidth: 128
+                    },
+                    variant: {
+                      emphasis: "secondary",
+                      width: "hug",
+                      state: "enabled",
+                      size: "md"
+                    },
+                    variables: {},
+                    text: "Leading Icon"
+                  },
+                  {
+                    id: "layout_18",
+                    type: "INSTANCE",
+                    name: "Icon Only",
+                    x: 48,
+                    y: 40,
+                    width: 50,
+                    height: 50,
+                    component: "Button",
+                    style: {
+                      radius: 14,
+                      paddingX: 18,
+                      paddingY: 13,
+                      gap: 8,
+                      fontSize: 16,
+                      lineHeight: 22,
+                      fontWeight: "semibold",
+                      minWidth: 128
+                    },
+                    variant: {
+                      emphasis: "tertiary",
+                      width: "hug",
+                      state: "enabled",
+                      size: "md"
+                    },
+                    variables: {},
+                    text: "Icon Only"
+                  },
+                  {
+                    id: "layout_19",
+                    type: "INSTANCE",
+                    name: "Bottom CTA",
+                    x: 48,
+                    y: 40,
+                    width: 358,
+                    height: 56,
+                    component: "Button",
+                    style: {
+                      radius: 16,
+                      paddingX: 20,
+                      paddingY: 16,
+                      gap: 8,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "semibold",
+                      minWidth: 176
+                    },
+                    variant: {
+                      emphasis: "primary",
+                      width: "full",
+                      state: "enabled",
+                      size: "lg"
+                    },
+                    variables: {},
+                    text: "Bottom CTA"
+                  }
+                ]
+              },
+              {
+                id: "layout_20",
+                type: "FRAME",
+                name: "preview-row-3",
+                x: 48,
+                y: 40,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_21",
+                    type: "INSTANCE",
+                    name: "Danger CTA",
+                    x: 48,
+                    y: 40,
+                    width: 358,
+                    height: 56,
+                    component: "Button",
+                    style: {
+                      radius: 16,
+                      paddingX: 20,
+                      paddingY: 16,
+                      gap: 8,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "semibold",
+                      minWidth: 176
+                    },
+                    variant: {
+                      emphasis: "destructive",
+                      width: "full",
+                      state: "enabled",
+                      size: "lg"
+                    },
+                    variables: {},
+                    text: "Danger CTA"
                   }
                 ]
               }
@@ -1680,6 +1803,129 @@
                 },
                 variables: {},
                 text: "Full Width"
+              },
+              {
+                id: "layout_17",
+                type: "INSTANCE",
+                name: "Leading Icon",
+                x: 48,
+                y: 40,
+                width: 128,
+                height: 50,
+                component: "Button",
+                style: {
+                  radius: 14,
+                  paddingX: 18,
+                  paddingY: 13,
+                  gap: 8,
+                  fontSize: 16,
+                  lineHeight: 22,
+                  fontWeight: "semibold",
+                  minWidth: 128
+                },
+                variant: {
+                  emphasis: "secondary",
+                  width: "hug",
+                  state: "enabled",
+                  size: "md"
+                },
+                variables: {},
+                text: "Leading Icon"
+              },
+              {
+                id: "layout_18",
+                type: "INSTANCE",
+                name: "Icon Only",
+                x: 48,
+                y: 40,
+                width: 50,
+                height: 50,
+                component: "Button",
+                style: {
+                  radius: 14,
+                  paddingX: 18,
+                  paddingY: 13,
+                  gap: 8,
+                  fontSize: 16,
+                  lineHeight: 22,
+                  fontWeight: "semibold",
+                  minWidth: 128
+                },
+                variant: {
+                  emphasis: "tertiary",
+                  width: "hug",
+                  state: "enabled",
+                  size: "md"
+                },
+                variables: {},
+                text: "Icon Only"
+              },
+              {
+                id: "layout_19",
+                type: "INSTANCE",
+                name: "Bottom CTA",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 56,
+                component: "Button",
+                style: {
+                  radius: 16,
+                  paddingX: 20,
+                  paddingY: 16,
+                  gap: 8,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "semibold",
+                  minWidth: 176
+                },
+                variant: {
+                  emphasis: "primary",
+                  width: "full",
+                  state: "enabled",
+                  size: "lg"
+                },
+                variables: {},
+                text: "Bottom CTA"
+              }
+            ]
+          },
+          {
+            id: "layout_20",
+            type: "FRAME",
+            name: "preview-row-3",
+            x: 48,
+            y: 40,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_21",
+                type: "INSTANCE",
+                name: "Danger CTA",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 56,
+                component: "Button",
+                style: {
+                  radius: 16,
+                  paddingX: 20,
+                  paddingY: 16,
+                  gap: 8,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "semibold",
+                  minWidth: 176
+                },
+                variant: {
+                  emphasis: "destructive",
+                  width: "full",
+                  state: "enabled",
+                  size: "lg"
+                },
+                variables: {},
+                text: "Danger CTA"
               }
             ]
           }
@@ -2295,6 +2541,90 @@
             },
             variables: {},
             text: "Full Width"
+          },
+          {
+            id: "layout_17",
+            type: "INSTANCE",
+            name: "Leading Icon",
+            x: 48,
+            y: 40,
+            width: 128,
+            height: 50,
+            component: "Button",
+            style: {
+              radius: 14,
+              paddingX: 18,
+              paddingY: 13,
+              gap: 8,
+              fontSize: 16,
+              lineHeight: 22,
+              fontWeight: "semibold",
+              minWidth: 128
+            },
+            variant: {
+              emphasis: "secondary",
+              width: "hug",
+              state: "enabled",
+              size: "md"
+            },
+            variables: {},
+            text: "Leading Icon"
+          },
+          {
+            id: "layout_18",
+            type: "INSTANCE",
+            name: "Icon Only",
+            x: 48,
+            y: 40,
+            width: 50,
+            height: 50,
+            component: "Button",
+            style: {
+              radius: 14,
+              paddingX: 18,
+              paddingY: 13,
+              gap: 8,
+              fontSize: 16,
+              lineHeight: 22,
+              fontWeight: "semibold",
+              minWidth: 128
+            },
+            variant: {
+              emphasis: "tertiary",
+              width: "hug",
+              state: "enabled",
+              size: "md"
+            },
+            variables: {},
+            text: "Icon Only"
+          },
+          {
+            id: "layout_19",
+            type: "INSTANCE",
+            name: "Bottom CTA",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 56,
+            component: "Button",
+            style: {
+              radius: 16,
+              paddingX: 20,
+              paddingY: 16,
+              gap: 8,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "semibold",
+              minWidth: 176
+            },
+            variant: {
+              emphasis: "primary",
+              width: "full",
+              state: "enabled",
+              size: "lg"
+            },
+            variables: {},
+            text: "Bottom CTA"
           }
         ]
       },
@@ -2382,6 +2712,157 @@
         },
         variables: {},
         text: "Full Width"
+      },
+      {
+        id: "layout_17",
+        type: "INSTANCE",
+        name: "Leading Icon",
+        x: 48,
+        y: 40,
+        width: 128,
+        height: 50,
+        component: "Button",
+        style: {
+          radius: 14,
+          paddingX: 18,
+          paddingY: 13,
+          gap: 8,
+          fontSize: 16,
+          lineHeight: 22,
+          fontWeight: "semibold",
+          minWidth: 128
+        },
+        variant: {
+          emphasis: "secondary",
+          width: "hug",
+          state: "enabled",
+          size: "md"
+        },
+        variables: {},
+        text: "Leading Icon"
+      },
+      {
+        id: "layout_18",
+        type: "INSTANCE",
+        name: "Icon Only",
+        x: 48,
+        y: 40,
+        width: 50,
+        height: 50,
+        component: "Button",
+        style: {
+          radius: 14,
+          paddingX: 18,
+          paddingY: 13,
+          gap: 8,
+          fontSize: 16,
+          lineHeight: 22,
+          fontWeight: "semibold",
+          minWidth: 128
+        },
+        variant: {
+          emphasis: "tertiary",
+          width: "hug",
+          state: "enabled",
+          size: "md"
+        },
+        variables: {},
+        text: "Icon Only"
+      },
+      {
+        id: "layout_19",
+        type: "INSTANCE",
+        name: "Bottom CTA",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 56,
+        component: "Button",
+        style: {
+          radius: 16,
+          paddingX: 20,
+          paddingY: 16,
+          gap: 8,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "semibold",
+          minWidth: 176
+        },
+        variant: {
+          emphasis: "primary",
+          width: "full",
+          state: "enabled",
+          size: "lg"
+        },
+        variables: {},
+        text: "Bottom CTA"
+      },
+      {
+        id: "layout_20",
+        type: "FRAME",
+        name: "preview-row-3",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_21",
+            type: "INSTANCE",
+            name: "Danger CTA",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 56,
+            component: "Button",
+            style: {
+              radius: 16,
+              paddingX: 20,
+              paddingY: 16,
+              gap: 8,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "semibold",
+              minWidth: 176
+            },
+            variant: {
+              emphasis: "destructive",
+              width: "full",
+              state: "enabled",
+              size: "lg"
+            },
+            variables: {},
+            text: "Danger CTA"
+          }
+        ]
+      },
+      {
+        id: "layout_21",
+        type: "INSTANCE",
+        name: "Danger CTA",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 56,
+        component: "Button",
+        style: {
+          radius: 16,
+          paddingX: 20,
+          paddingY: 16,
+          gap: 8,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "semibold",
+          minWidth: 176
+        },
+        variant: {
+          emphasis: "destructive",
+          width: "full",
+          state: "enabled",
+          size: "lg"
+        },
+        variables: {},
+        text: "Danger CTA"
       }
     ],
     frames: [
@@ -2400,6 +2881,10 @@
       {
         id: "layout_13",
         name: "preview-row-2"
+      },
+      {
+        id: "layout_20",
+        name: "preview-row-3"
       }
     ],
     components: [
@@ -2536,6 +3021,50 @@
           state: "enabled",
           size: "lg"
         }
+      },
+      {
+        id: "layout_17",
+        name: "Leading Icon",
+        component: "Button",
+        variant: {
+          emphasis: "secondary",
+          width: "hug",
+          state: "enabled",
+          size: "md"
+        }
+      },
+      {
+        id: "layout_18",
+        name: "Icon Only",
+        component: "Button",
+        variant: {
+          emphasis: "tertiary",
+          width: "hug",
+          state: "enabled",
+          size: "md"
+        }
+      },
+      {
+        id: "layout_19",
+        name: "Bottom CTA",
+        component: "Button",
+        variant: {
+          emphasis: "primary",
+          width: "full",
+          state: "enabled",
+          size: "lg"
+        }
+      },
+      {
+        id: "layout_21",
+        name: "Danger CTA",
+        component: "Button",
+        variant: {
+          emphasis: "destructive",
+          width: "full",
+          state: "enabled",
+          size: "lg"
+        }
       }
     ],
     variables: {},
@@ -2635,7 +3164,39 @@
       "layout_16.fontSize": "17",
       "layout_16.lineHeight": "24",
       "layout_16.fontWeight": "semibold",
-      "layout_16.minWidth": "176"
+      "layout_16.minWidth": "176",
+      "layout_17.radius": "14",
+      "layout_17.paddingX": "18",
+      "layout_17.paddingY": "13",
+      "layout_17.gap": "8",
+      "layout_17.fontSize": "16",
+      "layout_17.lineHeight": "22",
+      "layout_17.fontWeight": "semibold",
+      "layout_17.minWidth": "128",
+      "layout_18.radius": "14",
+      "layout_18.paddingX": "18",
+      "layout_18.paddingY": "13",
+      "layout_18.gap": "8",
+      "layout_18.fontSize": "16",
+      "layout_18.lineHeight": "22",
+      "layout_18.fontWeight": "semibold",
+      "layout_18.minWidth": "128",
+      "layout_19.radius": "16",
+      "layout_19.paddingX": "20",
+      "layout_19.paddingY": "16",
+      "layout_19.gap": "8",
+      "layout_19.fontSize": "17",
+      "layout_19.lineHeight": "24",
+      "layout_19.fontWeight": "semibold",
+      "layout_19.minWidth": "176",
+      "layout_21.radius": "16",
+      "layout_21.paddingX": "20",
+      "layout_21.paddingY": "16",
+      "layout_21.gap": "8",
+      "layout_21.fontSize": "17",
+      "layout_21.lineHeight": "24",
+      "layout_21.fontWeight": "semibold",
+      "layout_21.minWidth": "176"
     },
     modes: {
       brand: "core",
@@ -2644,7 +3205,7 @@
     metadata: {
       source: "miterlab-figma-generator",
       version: "0.1.0",
-      generatedAt: "2026-03-18T08:48:07.234Z"
+      generatedAt: "2026-03-18T16:56:26.020Z"
     }
   };
 
@@ -3061,6 +3622,143 @@
                     variables: {}
                   }
                 ]
+              },
+              {
+                id: "layout_19",
+                type: "FRAME",
+                name: "preview-row-5",
+                x: 48,
+                y: 40,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_20",
+                    type: "INSTANCE",
+                    name: "With Helper",
+                    x: 48,
+                    y: 40,
+                    width: 358,
+                    height: 48,
+                    component: "Input",
+                    style: {
+                      radius: 14,
+                      paddingX: 14,
+                      paddingY: 14,
+                      gap: 0,
+                      fontSize: 16,
+                      lineHeight: 22,
+                      fontWeight: "regular",
+                      minWidth: 220
+                    },
+                    variant: {
+                      intent: "default",
+                      width: "full",
+                      state: "enabled",
+                      size: "md",
+                      placeholder: "Email address"
+                    },
+                    variables: {}
+                  },
+                  {
+                    id: "layout_21",
+                    type: "INSTANCE",
+                    name: "With Error Text",
+                    x: 48,
+                    y: 40,
+                    width: 358,
+                    height: 48,
+                    component: "Input",
+                    style: {
+                      radius: 14,
+                      paddingX: 14,
+                      paddingY: 14,
+                      gap: 0,
+                      fontSize: 16,
+                      lineHeight: 22,
+                      fontWeight: "regular",
+                      minWidth: 220
+                    },
+                    variant: {
+                      intent: "error",
+                      width: "full",
+                      state: "focused",
+                      size: "md",
+                      value: "wrong@email"
+                    },
+                    variables: {},
+                    text: "wrong@email"
+                  },
+                  {
+                    id: "layout_22",
+                    type: "INSTANCE",
+                    name: "Multiline",
+                    x: 48,
+                    y: 40,
+                    width: 358,
+                    height: 56,
+                    component: "Input",
+                    style: {
+                      radius: 16,
+                      paddingX: 16,
+                      paddingY: 16,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "regular",
+                      minWidth: 220
+                    },
+                    variant: {
+                      intent: "default",
+                      width: "full",
+                      state: "enabled",
+                      size: "lg",
+                      placeholder: "Type a longer message"
+                    },
+                    variables: {}
+                  }
+                ]
+              },
+              {
+                id: "layout_23",
+                type: "FRAME",
+                name: "preview-row-6",
+                x: 48,
+                y: 40,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_24",
+                    type: "INSTANCE",
+                    name: "Readonly Field",
+                    x: 48,
+                    y: 40,
+                    width: 358,
+                    height: 48,
+                    component: "Input",
+                    style: {
+                      radius: 14,
+                      paddingX: 14,
+                      paddingY: 14,
+                      gap: 0,
+                      fontSize: 16,
+                      lineHeight: 22,
+                      fontWeight: "regular",
+                      minWidth: 220
+                    },
+                    variant: {
+                      intent: "default",
+                      width: "full",
+                      state: "readonly",
+                      size: "md",
+                      readOnly: true,
+                      value: "Generated project slug"
+                    },
+                    variables: {},
+                    text: "Generated project slug"
+                  }
+                ]
               }
             ]
           }
@@ -3460,6 +4158,143 @@
                   placeholder: "Full width field"
                 },
                 variables: {}
+              }
+            ]
+          },
+          {
+            id: "layout_19",
+            type: "FRAME",
+            name: "preview-row-5",
+            x: 48,
+            y: 40,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_20",
+                type: "INSTANCE",
+                name: "With Helper",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 48,
+                component: "Input",
+                style: {
+                  radius: 14,
+                  paddingX: 14,
+                  paddingY: 14,
+                  gap: 0,
+                  fontSize: 16,
+                  lineHeight: 22,
+                  fontWeight: "regular",
+                  minWidth: 220
+                },
+                variant: {
+                  intent: "default",
+                  width: "full",
+                  state: "enabled",
+                  size: "md",
+                  placeholder: "Email address"
+                },
+                variables: {}
+              },
+              {
+                id: "layout_21",
+                type: "INSTANCE",
+                name: "With Error Text",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 48,
+                component: "Input",
+                style: {
+                  radius: 14,
+                  paddingX: 14,
+                  paddingY: 14,
+                  gap: 0,
+                  fontSize: 16,
+                  lineHeight: 22,
+                  fontWeight: "regular",
+                  minWidth: 220
+                },
+                variant: {
+                  intent: "error",
+                  width: "full",
+                  state: "focused",
+                  size: "md",
+                  value: "wrong@email"
+                },
+                variables: {},
+                text: "wrong@email"
+              },
+              {
+                id: "layout_22",
+                type: "INSTANCE",
+                name: "Multiline",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 56,
+                component: "Input",
+                style: {
+                  radius: 16,
+                  paddingX: 16,
+                  paddingY: 16,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "regular",
+                  minWidth: 220
+                },
+                variant: {
+                  intent: "default",
+                  width: "full",
+                  state: "enabled",
+                  size: "lg",
+                  placeholder: "Type a longer message"
+                },
+                variables: {}
+              }
+            ]
+          },
+          {
+            id: "layout_23",
+            type: "FRAME",
+            name: "preview-row-6",
+            x: 48,
+            y: 40,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_24",
+                type: "INSTANCE",
+                name: "Readonly Field",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 48,
+                component: "Input",
+                style: {
+                  radius: 14,
+                  paddingX: 14,
+                  paddingY: 14,
+                  gap: 0,
+                  fontSize: 16,
+                  lineHeight: 22,
+                  fontWeight: "regular",
+                  minWidth: 220
+                },
+                variant: {
+                  intent: "default",
+                  width: "full",
+                  state: "readonly",
+                  size: "md",
+                  readOnly: true,
+                  value: "Generated project slug"
+                },
+                variables: {},
+                text: "Generated project slug"
               }
             ]
           }
@@ -4196,6 +5031,258 @@
           placeholder: "Full width field"
         },
         variables: {}
+      },
+      {
+        id: "layout_19",
+        type: "FRAME",
+        name: "preview-row-5",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_20",
+            type: "INSTANCE",
+            name: "With Helper",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 48,
+            component: "Input",
+            style: {
+              radius: 14,
+              paddingX: 14,
+              paddingY: 14,
+              gap: 0,
+              fontSize: 16,
+              lineHeight: 22,
+              fontWeight: "regular",
+              minWidth: 220
+            },
+            variant: {
+              intent: "default",
+              width: "full",
+              state: "enabled",
+              size: "md",
+              placeholder: "Email address"
+            },
+            variables: {}
+          },
+          {
+            id: "layout_21",
+            type: "INSTANCE",
+            name: "With Error Text",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 48,
+            component: "Input",
+            style: {
+              radius: 14,
+              paddingX: 14,
+              paddingY: 14,
+              gap: 0,
+              fontSize: 16,
+              lineHeight: 22,
+              fontWeight: "regular",
+              minWidth: 220
+            },
+            variant: {
+              intent: "error",
+              width: "full",
+              state: "focused",
+              size: "md",
+              value: "wrong@email"
+            },
+            variables: {},
+            text: "wrong@email"
+          },
+          {
+            id: "layout_22",
+            type: "INSTANCE",
+            name: "Multiline",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 56,
+            component: "Input",
+            style: {
+              radius: 16,
+              paddingX: 16,
+              paddingY: 16,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "regular",
+              minWidth: 220
+            },
+            variant: {
+              intent: "default",
+              width: "full",
+              state: "enabled",
+              size: "lg",
+              placeholder: "Type a longer message"
+            },
+            variables: {}
+          }
+        ]
+      },
+      {
+        id: "layout_20",
+        type: "INSTANCE",
+        name: "With Helper",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 48,
+        component: "Input",
+        style: {
+          radius: 14,
+          paddingX: 14,
+          paddingY: 14,
+          gap: 0,
+          fontSize: 16,
+          lineHeight: 22,
+          fontWeight: "regular",
+          minWidth: 220
+        },
+        variant: {
+          intent: "default",
+          width: "full",
+          state: "enabled",
+          size: "md",
+          placeholder: "Email address"
+        },
+        variables: {}
+      },
+      {
+        id: "layout_21",
+        type: "INSTANCE",
+        name: "With Error Text",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 48,
+        component: "Input",
+        style: {
+          radius: 14,
+          paddingX: 14,
+          paddingY: 14,
+          gap: 0,
+          fontSize: 16,
+          lineHeight: 22,
+          fontWeight: "regular",
+          minWidth: 220
+        },
+        variant: {
+          intent: "error",
+          width: "full",
+          state: "focused",
+          size: "md",
+          value: "wrong@email"
+        },
+        variables: {},
+        text: "wrong@email"
+      },
+      {
+        id: "layout_22",
+        type: "INSTANCE",
+        name: "Multiline",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 56,
+        component: "Input",
+        style: {
+          radius: 16,
+          paddingX: 16,
+          paddingY: 16,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "regular",
+          minWidth: 220
+        },
+        variant: {
+          intent: "default",
+          width: "full",
+          state: "enabled",
+          size: "lg",
+          placeholder: "Type a longer message"
+        },
+        variables: {}
+      },
+      {
+        id: "layout_23",
+        type: "FRAME",
+        name: "preview-row-6",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_24",
+            type: "INSTANCE",
+            name: "Readonly Field",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 48,
+            component: "Input",
+            style: {
+              radius: 14,
+              paddingX: 14,
+              paddingY: 14,
+              gap: 0,
+              fontSize: 16,
+              lineHeight: 22,
+              fontWeight: "regular",
+              minWidth: 220
+            },
+            variant: {
+              intent: "default",
+              width: "full",
+              state: "readonly",
+              size: "md",
+              readOnly: true,
+              value: "Generated project slug"
+            },
+            variables: {},
+            text: "Generated project slug"
+          }
+        ]
+      },
+      {
+        id: "layout_24",
+        type: "INSTANCE",
+        name: "Readonly Field",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 48,
+        component: "Input",
+        style: {
+          radius: 14,
+          paddingX: 14,
+          paddingY: 14,
+          gap: 0,
+          fontSize: 16,
+          lineHeight: 22,
+          fontWeight: "regular",
+          minWidth: 220
+        },
+        variant: {
+          intent: "default",
+          width: "full",
+          state: "readonly",
+          size: "md",
+          readOnly: true,
+          value: "Generated project slug"
+        },
+        variables: {},
+        text: "Generated project slug"
       }
     ],
     frames: [
@@ -4222,6 +5309,14 @@
       {
         id: "layout_15",
         name: "preview-row-4"
+      },
+      {
+        id: "layout_19",
+        name: "preview-row-5"
+      },
+      {
+        id: "layout_23",
+        name: "preview-row-6"
       }
     ],
     components: [
@@ -4370,6 +5465,55 @@
           size: "md",
           placeholder: "Full width field"
         }
+      },
+      {
+        id: "layout_20",
+        name: "With Helper",
+        component: "Input",
+        variant: {
+          intent: "default",
+          width: "full",
+          state: "enabled",
+          size: "md",
+          placeholder: "Email address"
+        }
+      },
+      {
+        id: "layout_21",
+        name: "With Error Text",
+        component: "Input",
+        variant: {
+          intent: "error",
+          width: "full",
+          state: "focused",
+          size: "md",
+          value: "wrong@email"
+        }
+      },
+      {
+        id: "layout_22",
+        name: "Multiline",
+        component: "Input",
+        variant: {
+          intent: "default",
+          width: "full",
+          state: "enabled",
+          size: "lg",
+          placeholder: "Type a longer message"
+        }
+      },
+      {
+        id: "layout_24",
+        name: "Readonly Field",
+        component: "Input",
+        variant: {
+          intent: "default",
+          width: "full",
+          state: "readonly",
+          size: "md",
+          readOnly: true,
+          value: "Generated project slug"
+        }
       }
     ],
     variables: {},
@@ -4469,7 +5613,39 @@
       "layout_18.fontSize": "16",
       "layout_18.lineHeight": "22",
       "layout_18.fontWeight": "regular",
-      "layout_18.minWidth": "220"
+      "layout_18.minWidth": "220",
+      "layout_20.radius": "14",
+      "layout_20.paddingX": "14",
+      "layout_20.paddingY": "14",
+      "layout_20.gap": "0",
+      "layout_20.fontSize": "16",
+      "layout_20.lineHeight": "22",
+      "layout_20.fontWeight": "regular",
+      "layout_20.minWidth": "220",
+      "layout_21.radius": "14",
+      "layout_21.paddingX": "14",
+      "layout_21.paddingY": "14",
+      "layout_21.gap": "0",
+      "layout_21.fontSize": "16",
+      "layout_21.lineHeight": "22",
+      "layout_21.fontWeight": "regular",
+      "layout_21.minWidth": "220",
+      "layout_22.radius": "16",
+      "layout_22.paddingX": "16",
+      "layout_22.paddingY": "16",
+      "layout_22.gap": "0",
+      "layout_22.fontSize": "17",
+      "layout_22.lineHeight": "24",
+      "layout_22.fontWeight": "regular",
+      "layout_22.minWidth": "220",
+      "layout_24.radius": "14",
+      "layout_24.paddingX": "14",
+      "layout_24.paddingY": "14",
+      "layout_24.gap": "0",
+      "layout_24.fontSize": "16",
+      "layout_24.lineHeight": "22",
+      "layout_24.fontWeight": "regular",
+      "layout_24.minWidth": "220"
     },
     modes: {
       brand: "core",
@@ -4478,7 +5654,7 @@
     metadata: {
       source: "miterlab-figma-generator",
       version: "0.1.0",
-      generatedAt: "2026-03-18T08:48:07.541Z"
+      generatedAt: "2026-03-18T16:56:26.317Z"
     }
   };
 

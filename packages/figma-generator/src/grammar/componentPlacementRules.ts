@@ -84,7 +84,6 @@ export const defaultPlacementByType: Record<string, PlacementRule> = {
   "table-row": { section: "list", order: 45 },
   "list-row": { section: "list", order: 50 },
   "metadata-row": { section: "list", order: 55 },
-  "empty-state": { section: "list", order: 60 },
   skeleton: { section: "list", order: 65 },
   spinner: { section: "action", order: 75 },
   progress: { section: "action", order: 80 },

@@ -42,7 +42,7 @@ export const layoutRules = {
     form: 358,
     narrow: 320,
     compact: 240,
-    catalog: 1320
+    preview: 1320
   },
   controlHeights: {
     xs: 28,
@@ -116,7 +116,6 @@ export const layoutRules = {
     "table-row": { width: 358, height: 48 },
     "list-row": { width: 358, height: 48 },
     "metadata-row": { width: 358, height: 28 },
-    "empty-state": { width: 358, height: 120 },
     skeleton: { width: 358, height: 16 },
     spinner: { width: 24, height: 24 },
     progress: { width: 358, height: 8 },
@@ -171,10 +170,10 @@ export const layoutRules = {
   },
   widths: {
     mobile: 390,
-    catalog: 1440
+    preview: 1440
   },
   heights: {
     mobile: 844,
-    catalog: 1200
+    preview: 1200
   }
 };

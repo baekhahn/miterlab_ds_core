@@ -14,6 +14,8 @@ slug: /
 - Button source reference: [Tamagui Bento Buttons](https://tamagui.dev/bento/elements/buttons)
 - Input source reference: [Tamagui Bento Inputs](https://tamagui.dev/bento/forms/inputs)
 - 현재 source는 prop API가 아니라 Bento pattern bundle 기준입니다.
+- 현재 활성 inspection 경로는 `button-inspection`, `input-inspection` 두 개만 유지합니다.
+- docs preview와 Figma preview는 같은 layout model을 사용합니다.
 
 ## What Core Means
 

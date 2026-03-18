@@ -19,6 +19,7 @@ export const evaluateLayoutQuality = (layout?: LayoutNode): QualityEvalResult =>
   }
 
   const sections = (layout.children ?? []).filter((n) => n.type === "stack");
+  const previewOnly = sections.length > 0 && sections.every((section) => section.name.includes("preview"));
   const expectedGap = layoutRules.sectionSpacing.comfortable;
 
   for (let i = 1; i < sections.length; i += 1) {
@@ -39,7 +40,7 @@ export const evaluateLayoutQuality = (layout?: LayoutNode): QualityEvalResult =>
   const headerIndex = sections.findIndex((s) => s.name.includes("header"));
   const actionIndex = sections.findIndex((s) => s.name.includes("action"));
 
-  if (headerIndex === -1) {
+  if (!previewOnly && headerIndex === -1) {
     warnings.push({ level: "warning", code: "missing_header", message: "Header section is missing" });
   }
 
