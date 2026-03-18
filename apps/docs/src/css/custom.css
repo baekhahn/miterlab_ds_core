@@ -9,6 +9,8 @@
   --ifm-heading-color: #1f2430;
   --ifm-font-color-base: #344054;
   --ifm-code-font-size: 95%;
+  --ifm-font-family-base: "Pretendard", "Pretendard Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ifm-heading-font-family: "Pretendard", "Pretendard Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .table-of-contents {

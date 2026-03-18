@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="920" height="482" viewBox="0 0 920 482" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="920" height="482" rx="24" fill="#F8FAFC"/>
+  
+  <g transform="translate(32 32)">
+    <rect width="72" height="24" rx="12" fill="#E8EEF8" />
+    <text x="36" y="16" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="11" font-weight="700" fill="#4A5872">Emphasis</text>
+  </g>
+
+
+  <g transform="translate(120 20)">
+    <rect width="128" height="50" rx="14" fill="#1F6BFF" stroke="#1F6BFF" stroke-width="1" />
+    <text x="64" y="31" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="600" fill="#FFFFFF">Primary</text>
+  </g>
+
+
+  <g transform="translate(268 20)">
+    <rect width="128" height="50" rx="14" fill="#FFFFFF" stroke="#C7D2E5" stroke-width="1" />
+    <text x="64" y="31" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="600" fill="#172033">Secondary</text>
+  </g>
+
+
+  <g transform="translate(416 20)">
+    <rect width="128" height="50" rx="14" fill="transparent" stroke="transparent" stroke-width="0" />
+    <text x="64" y="31" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="600" fill="#172033">Tertiary</text>
+  </g>
+
+
+  <g transform="translate(564 20)">
+    <rect width="128" height="50" rx="14" fill="#DC3F45" stroke="#DC3F45" stroke-width="1" />
+    <text x="64" y="31" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="600" fill="#FFFFFF">Destructive</text>
+  </g>
+
+
+  <g transform="translate(32 104)">
+    <rect width="72" height="24" rx="12" fill="#E8EEF8" />
+    <text x="36" y="16" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="11" font-weight="700" fill="#4A5872">Size</text>
+  </g>
+
+
+  <g transform="translate(120 92)">
+    <rect width="128" height="44" rx="14" fill="#1F6BFF" stroke="#1F6BFF" stroke-width="1" />
+    <text x="64" y="27.5" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="15" font-weight="600" fill="#FFFFFF">Small</text>
+  </g>
+
+
+  <g transform="translate(268 92)">
+    <rect width="128" height="50" rx="14" fill="#1F6BFF" stroke="#1F6BFF" stroke-width="1" />
+    <text x="64" y="31" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="600" fill="#FFFFFF">Medium</text>
+  </g>
+
+
+  <g transform="translate(416 92)">
+    <rect width="128" height="56" rx="16" fill="#1F6BFF" stroke="#1F6BFF" stroke-width="1" />
+    <text x="64" y="34.5" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="17" font-weight="600" fill="#FFFFFF">Large</text>
+  </g>
+
+
+  <g transform="translate(32 182)">
+    <rect width="72" height="24" rx="12" fill="#E8EEF8" />
+    <text x="36" y="16" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="11" font-weight="700" fill="#4A5872">State</text>
+  </g>
+
+
+  <g transform="translate(120 170)">
+    <rect width="128" height="50" rx="14" fill="#1859D6" stroke="#1859D6" stroke-width="1" />
+    <text x="64" y="31" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="600" fill="#FFFFFF">Pressed</text>
+  </g>
+
+
+  <g transform="translate(268 170)">
+    <rect width="128" height="50" rx="14" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1" />
+    <text x="64" y="31" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="600" fill="#94A3B8">Disabled</text>
+  </g>
+
+
+  <g transform="translate(416 170)">
+    <rect width="128" height="50" rx="14" fill="#1F6BFF" stroke="#1F6BFF" stroke-width="1" />
+    <text x="64" y="31" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="600" fill="#FFFFFF">Loading</text>
+  </g>
+
+
+  <g transform="translate(32 254)">
+    <rect width="72" height="24" rx="12" fill="#E8EEF8" />
+    <text x="36" y="16" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="11" font-weight="700" fill="#4A5872">Width</text>
+  </g>
+
+
+  <g transform="translate(120 242)">
+    <rect width="128" height="50" rx="14" fill="#FFFFFF" stroke="#C7D2E5" stroke-width="1" />
+    <text x="64" y="31" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="600" fill="#172033">Hug Width</text>
+  </g>
+
+
+  <g transform="translate(268 242)">
+    <rect width="358" height="56" rx="16" fill="#1F6BFF" stroke="#1F6BFF" stroke-width="1" />
+    <text x="179" y="34.5" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="17" font-weight="600" fill="#FFFFFF">Full Width</text>
+  </g>
+
+
+  <g transform="translate(32 332)">
+    <rect width="72" height="24" rx="12" fill="#E8EEF8" />
+    <text x="36" y="16" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="11" font-weight="700" fill="#4A5872">Bundle</text>
+  </g>
+
+
+  <g transform="translate(120 320)">
+    <rect width="128" height="50" rx="14" fill="#FFFFFF" stroke="#C7D2E5" stroke-width="1" />
+    <text x="64" y="31" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="600" fill="#172033">Leading Icon</text>
+  </g>
+
+    <g transform="translate(136 336)">
+      <rect x="3" y="7.5" width="12" height="3" rx="1.5" fill="#172033" />
+      <rect x="7.5" y="3" width="3" height="12" rx="1.5" fill="#172033" />
+    </g>
+  
+
+  <g transform="translate(268 320)">
+    <rect width="50" height="50" rx="14" fill="transparent" stroke="transparent" stroke-width="0" />
+    <text x="25" y="31" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="600" fill="#172033"></text>
+  </g>
+
+    <g transform="translate(284 336)">
+      <rect x="3" y="7.5" width="12" height="3" rx="1.5" fill="#172033" />
+      <rect x="7.5" y="3" width="3" height="12" rx="1.5" fill="#172033" />
+    </g>
+  
+
+  <g transform="translate(338 320)">
+    <rect width="358" height="56" rx="16" fill="#1F6BFF" stroke="#1F6BFF" stroke-width="1" />
+    <text x="179" y="34.5" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="17" font-weight="600" fill="#FFFFFF">Bottom CTA</text>
+  </g>
+
+
+  <g transform="translate(120 392)">
+    <rect width="358" height="56" rx="16" fill="#DC3F45" stroke="#DC3F45" stroke-width="1" />
+    <text x="179" y="34.5" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="17" font-weight="600" fill="#FFFFFF">Danger CTA</text>
+  </g>
+
+</svg>

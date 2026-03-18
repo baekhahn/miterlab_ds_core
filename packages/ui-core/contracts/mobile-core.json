@@ -1,0 +1,123 @@
+{
+  "colors": {
+    "button": {
+      "emphasis": {
+        "primary": { "fill": "#1F6BFF", "stroke": "#1F6BFF", "text": "#FFFFFF", "pressedFill": "#1859D6", "pressedStroke": "#1859D6" },
+        "secondary": { "fill": "#FFFFFF", "stroke": "#C7D2E5", "text": "#172033", "pressedFill": "#F4F7FB", "pressedStroke": "#B7C5DD" },
+        "tertiary": { "fill": "transparent", "stroke": "transparent", "text": "#172033", "pressedFill": "transparent", "pressedStroke": "transparent" },
+        "destructive": { "fill": "#DC3F45", "stroke": "#DC3F45", "text": "#FFFFFF", "pressedFill": "#B73238", "pressedStroke": "#B73238" },
+        "disabled": { "fill": "#F1F5F9", "stroke": "#E2E8F0", "text": "#94A3B8" }
+      }
+    },
+    "input": {
+      "intent": {
+        "default": { "fill": "#FFFFFF", "stroke": "#CBD5E1", "text": "#111827", "subtle": "#94A3B8" },
+        "error": { "fill": "#FFFFFF", "stroke": "#DC2626", "text": "#111827", "subtle": "#94A3B8" },
+        "success": { "fill": "#FFFFFF", "stroke": "#0E9F6E", "text": "#111827", "subtle": "#94A3B8" },
+        "disabled": { "fill": "#F1F5F9", "stroke": "#E2E8F0", "text": "#94A3B8", "subtle": "#94A3B8" },
+        "readonly": { "fill": "#F8FAFC", "stroke": "#CBD5E1", "text": "#475569", "subtle": "#94A3B8" },
+        "loading": { "fill": "#FFFFFF", "stroke": "#CBD5E1", "text": "#64748B", "subtle": "#94A3B8" }
+      },
+      "focusRing": {
+        "stroke": "#2D6CFF",
+        "strokeWeight": 2
+      }
+    }
+  },
+  "button": {
+    "render": {
+      "sizes": {
+        "sm": { "height": 44, "paddingX": 14, "paddingY": 10, "radius": 14, "fontSize": 15, "lineHeight": 20, "gap": 8, "minWidth": 120 },
+        "md": { "height": 50, "paddingX": 18, "paddingY": 13, "radius": 14, "fontSize": 16, "lineHeight": 22, "gap": 8, "minWidth": 128 },
+        "lg": { "height": 56, "paddingX": 20, "paddingY": 16, "radius": 16, "fontSize": 17, "lineHeight": 24, "gap": 8, "minWidth": 176 }
+      },
+      "widths": {
+        "hug": 128,
+        "full": 358
+      }
+    },
+    "inspection": {
+      "title": "Button Inspection",
+      "axes": {
+        "emphasis": ["primary", "secondary", "tertiary", "destructive"],
+        "size": ["sm", "md", "lg"],
+        "width": ["hug", "full"],
+        "state": ["enabled", "pressed", "disabled", "loading"]
+      },
+      "rows": [
+        { "axis": "emphasis", "items": ["Primary", "Secondary", "Tertiary", "Destructive"] },
+        { "axis": "size", "items": ["Small", "Medium", "Large"] },
+        { "axis": "state", "items": ["Pressed", "Disabled", "Loading"] },
+        { "axis": "width", "items": ["Hug Width", "Full Width"] },
+        { "axis": "bundle", "items": ["Leading Icon", "Icon Only", "Bottom CTA", "Danger CTA"] }
+      ],
+      "sections": ["preview"],
+      "components": [
+        { "component": "button", "section": "preview", "label": "Primary", "emphasis": "primary", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Secondary", "emphasis": "secondary", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Tertiary", "emphasis": "tertiary", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Destructive", "emphasis": "destructive", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Small", "emphasis": "primary", "size": "sm", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Medium", "emphasis": "primary", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Large", "emphasis": "primary", "size": "lg", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Pressed", "emphasis": "primary", "size": "md", "width": "hug", "state": "pressed" },
+        { "component": "button", "section": "preview", "label": "Disabled", "emphasis": "primary", "size": "md", "width": "hug", "state": "disabled", "disabled": true },
+        { "component": "button", "section": "preview", "label": "Loading", "emphasis": "primary", "size": "md", "width": "hug", "state": "loading", "loading": true },
+        { "component": "button", "section": "preview", "label": "Hug Width", "emphasis": "secondary", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Full Width", "emphasis": "primary", "size": "lg", "width": "full", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Leading Icon", "emphasis": "secondary", "size": "md", "width": "hug", "state": "enabled", "iconLeading": true },
+        { "component": "button", "section": "preview", "label": "Icon Only", "emphasis": "tertiary", "size": "md", "width": "hug", "state": "enabled", "iconOnly": true },
+        { "component": "button", "section": "preview", "label": "Bottom CTA", "emphasis": "primary", "size": "lg", "width": "full", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Danger CTA", "emphasis": "destructive", "size": "lg", "width": "full", "state": "enabled" }
+      ]
+    }
+  },
+  "input": {
+    "render": {
+      "sizes": {
+        "sm": { "height": 44, "paddingX": 14, "paddingY": 12, "radius": 14, "fontSize": 15, "lineHeight": 20, "minWidth": 220 },
+        "md": { "height": 48, "paddingX": 14, "paddingY": 14, "radius": 14, "fontSize": 16, "lineHeight": 22, "minWidth": 220 },
+        "lg": { "height": 56, "paddingX": 16, "paddingY": 16, "radius": 16, "fontSize": 17, "lineHeight": 24, "minWidth": 220 }
+      },
+      "widths": {
+        "hug": 220,
+        "full": 358
+      }
+    },
+    "inspection": {
+      "title": "Input Inspection",
+      "axes": {
+        "intent": ["default", "error", "success"],
+        "size": ["sm", "md", "lg"],
+        "width": ["hug", "full"],
+        "state": ["enabled", "focused", "disabled", "readonly", "loading"]
+      },
+      "rows": [
+        { "axis": "intent", "items": ["Default", "Error", "Success"] },
+        { "axis": "size", "items": ["Small", "Medium", "Large"] },
+        { "axis": "state", "items": ["Focused", "Read Only", "Disabled"] },
+        { "axis": "width", "items": ["Hug Width", "Full Width"] },
+        { "axis": "bundle", "items": ["With Helper", "With Error Text", "Multiline", "Readonly Field"] }
+      ],
+      "sections": ["preview"],
+      "components": [
+        { "component": "input", "section": "preview", "label": "Default", "intent": "default", "size": "md", "width": "full", "state": "enabled", "placeholder": "Type here" },
+        { "component": "input", "section": "preview", "label": "Error", "intent": "error", "size": "md", "width": "full", "state": "focused", "value": "Wrong value" },
+        { "component": "input", "section": "preview", "label": "Success", "intent": "success", "size": "md", "width": "full", "state": "enabled", "value": "Correct value" },
+        { "component": "input", "section": "preview", "label": "Small", "intent": "default", "size": "sm", "width": "full", "state": "enabled", "placeholder": "Small input" },
+        { "component": "input", "section": "preview", "label": "Medium", "intent": "default", "size": "md", "width": "full", "state": "enabled", "placeholder": "Medium input" },
+        { "component": "input", "section": "preview", "label": "Large", "intent": "default", "size": "lg", "width": "full", "state": "enabled", "placeholder": "Large input" },
+        { "component": "input", "section": "preview", "label": "Focused", "intent": "default", "size": "md", "width": "full", "state": "focused", "value": "Focused value" },
+        { "component": "input", "section": "preview", "label": "Disabled", "intent": "default", "size": "md", "width": "full", "state": "disabled", "disabled": true, "value": "Disabled value" },
+        { "component": "input", "section": "preview", "label": "Read Only", "intent": "default", "size": "md", "width": "full", "state": "readonly", "readOnly": true, "value": "Read only value" },
+        { "component": "input", "section": "preview", "label": "Loading", "intent": "default", "size": "md", "width": "full", "state": "loading", "value": "Loading value" },
+        { "component": "input", "section": "preview", "label": "Hug Width", "intent": "default", "size": "md", "width": "hug", "state": "enabled", "placeholder": "Short" },
+        { "component": "input", "section": "preview", "label": "Full Width", "intent": "default", "size": "md", "width": "full", "state": "enabled", "placeholder": "Full width field" },
+        { "component": "input", "section": "preview", "label": "With Helper", "intent": "default", "size": "md", "width": "full", "state": "enabled", "placeholder": "Email address", "helperText": "We will never share your email." },
+        { "component": "input", "section": "preview", "label": "With Error Text", "intent": "error", "size": "md", "width": "full", "state": "focused", "value": "wrong@email", "helperText": "Enter a valid email address." },
+        { "component": "input", "section": "preview", "label": "Multiline", "intent": "default", "size": "lg", "width": "full", "state": "enabled", "placeholder": "Type a longer message", "multiline": true, "rowsCount": 3 },
+        { "component": "input", "section": "preview", "label": "Readonly Field", "intent": "default", "size": "md", "width": "full", "state": "readonly", "readOnly": true, "value": "Generated project slug" }
+      ]
+    }
+  }
+}

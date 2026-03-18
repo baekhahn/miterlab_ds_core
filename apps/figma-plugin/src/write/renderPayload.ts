@@ -1,92 +1,11 @@
 import type { FigmaWriteNode, FigmaWritePayload } from "../../../../shared/contracts/figmaWritePayload";
+import { createInspectionPreviewModel } from "../../../../packages/ui-core/contracts/inspectionPreviewLayout.mjs";
 import { createContainerNode } from "./createContainerNode";
 import { createFrameNode } from "./createFrameNode";
 import { createInstanceNode } from "./createInstanceNode";
-import { createTextNode, loadFont } from "./createTextNode";
+import { createTextNode } from "./createTextNode";
+import { loadFont } from "./createTextNode";
 import type { PluginWriteResult } from "../types";
-
-interface InputBlueprint {
-  targetComponent: "Input";
-  sourceComponentName: string;
-  updatedAt: string;
-  metrics?: {
-    width?: number;
-    height?: number;
-    paddingTop?: number;
-    paddingRight?: number;
-    paddingBottom?: number;
-    paddingLeft?: number;
-    itemSpacing?: number;
-    radius?: number;
-    layoutMode?: string;
-  };
-  properties?: {
-    keys: string[];
-    values?: Record<string, unknown>;
-  };
-}
-
-const INPUT_BLUEPRINT_KEY = "miterlab.blueprint.input.v1";
-
-const rgb = (hex: string) => {
-  const normalized = hex.replace("#", "");
-  const bigint = Number.parseInt(normalized, 16);
-  return {
-    r: ((bigint >> 16) & 255) / 255,
-    g: ((bigint >> 8) & 255) / 255,
-    b: (bigint & 255) / 255
-  };
-};
-
-const createMetaText = async (
-  value: string,
-  x: number,
-  y: number,
-  color: string,
-  size: number,
-  weight: "regular" | "medium" | "semibold"
-) => {
-  const font = await loadFont(weight);
-  const text = figma.createText();
-  text.fontName = font;
-  text.characters = value;
-  text.fontSize = size;
-  text.fills = [{ type: "SOLID", color: rgb(color) }];
-  text.x = x;
-  text.y = y;
-  text.textAutoResize = "WIDTH_AND_HEIGHT";
-  return text;
-};
-
-const createInputBlueprintPanel = async (blueprint: InputBlueprint, rootWidth: number, rootHeight: number) => {
-  const panel = figma.createFrame();
-  panel.name = "input-blueprint-panel";
-  panel.resize(Math.min(320, rootWidth - 32), 132);
-  panel.x = Math.max(16, rootWidth - panel.width - 16);
-  panel.y = Math.max(16, rootHeight - panel.height - 16);
-  panel.cornerRadius = 12;
-  panel.fills = [{ type: "SOLID", color: rgb("#121417") }];
-  panel.strokes = [{ type: "SOLID", color: rgb("#2C333B") }];
-  panel.strokeWeight = 1;
-
-  const title = await createMetaText("Input Blueprint", 12, 10, "#EEF2F6", 12, "semibold");
-  panel.appendChild(title);
-
-  const source = await createMetaText(`source: ${blueprint.sourceComponentName}`, 12, 34, "#C8D0DA", 11, "regular");
-  panel.appendChild(source);
-
-  const metrics = blueprint.metrics ?? {};
-  const metricLine = `w ${metrics.width ?? "-"} / h ${metrics.height ?? "-"} / r ${metrics.radius ?? "-"}`;
-  panel.appendChild(await createMetaText(metricLine, 12, 54, "#98A2B3", 11, "regular"));
-
-  const spacingLine = `p ${metrics.paddingTop ?? "-"},${metrics.paddingRight ?? "-"},${metrics.paddingBottom ?? "-"},${metrics.paddingLeft ?? "-"} / gap ${metrics.itemSpacing ?? "-"}`;
-  panel.appendChild(await createMetaText(spacingLine, 12, 72, "#98A2B3", 11, "regular"));
-
-  const propertyKeys = blueprint.properties?.keys?.slice(0, 4).join(", ") ?? "-";
-  panel.appendChild(await createMetaText(`props: ${propertyKeys}`, 12, 90, "#98A2B3", 11, "regular"));
-
-  return panel;
-};
 
 const toSceneNode = async (node: FigmaWriteNode, theme: string): Promise<SceneNode> => {
   if (node.type === "TEXT") {
@@ -130,6 +49,85 @@ const renderChildren = async (parent: FrameNode, children: FigmaWriteNode[], the
   return count;
 };
 
+const rgb = (hex: string) => {
+  const normalized = hex.replace("#", "");
+  const bigint = Number.parseInt(normalized, 16);
+  return {
+    r: ((bigint >> 16) & 255) / 255,
+    g: ((bigint >> 8) & 255) / 255,
+    b: (bigint & 255) / 255
+  };
+};
+
+const createAxisPill = async (label: string, x: number, y: number) => {
+  const pill = figma.createFrame();
+  pill.layoutMode = "NONE";
+  pill.resize(72, 24);
+  pill.x = x;
+  pill.y = y;
+  pill.cornerRadius = 12;
+  pill.fills = [{ type: "SOLID", color: rgb("#E8EEF8") }];
+  pill.strokes = [];
+
+  const text = figma.createText();
+  text.fontName = await loadFont("semibold");
+  text.characters = label;
+  text.fontSize = 11;
+  text.fills = [{ type: "SOLID", color: rgb("#4A5872") }];
+  text.textAlignHorizontal = "CENTER";
+  text.textAutoResize = "WIDTH_AND_HEIGHT";
+  text.x = Math.round((72 - text.width) / 2);
+  text.y = 6;
+
+  pill.appendChild(text);
+  return pill;
+};
+
+const createInspectionPreviewFrame = async (payload: FigmaWritePayload, frameName: string): Promise<{ frame: FrameNode; createdNodeCount: number }> => {
+  const preview = createInspectionPreviewModel(payload.document.screen);
+  const frame = figma.createFrame();
+  frame.name = frameName;
+  frame.layoutMode = "NONE";
+  frame.resize(preview.width, preview.height);
+  frame.cornerRadius = 24;
+  frame.fills = [{ type: "SOLID", color: rgb("#F8FAFC") }];
+  frame.strokes = [];
+  frame.clipsContent = false;
+
+  const theme = payload.document.theme || "core";
+  let createdNodeCount = 1;
+
+  for (const row of preview.rows) {
+    const pill = await createAxisPill(row.axisTitle, row.pill.x, row.pill.y);
+    frame.appendChild(pill);
+    createdNodeCount += 2;
+
+    for (const item of row.items) {
+      const next = await createInstanceNode(
+        {
+          id: `${payload.document.screen}-${item.label}`,
+          type: "INSTANCE",
+          name: item.label,
+          x: item.x,
+          y: item.y,
+          width: item.width,
+          height: item.height,
+          component: item.component.component === "button" ? "Button" : "Input",
+          variant: { ...item.component },
+          text: item.component.label
+        },
+        theme
+      );
+      next.x = item.x;
+      next.y = item.y;
+      frame.appendChild(next);
+      createdNodeCount += 1;
+    }
+  }
+
+  return { frame, createdNodeCount };
+};
+
 export const renderPayload = async (payload: FigmaWritePayload): Promise<PluginWriteResult> => {
   const root = payload.nodes[0];
   if (!root) {
@@ -145,21 +143,23 @@ export const renderPayload = async (payload: FigmaWritePayload): Promise<PluginW
     existing.remove();
   }
 
+  if (payload.document.screen === "button-inspection" || payload.document.screen === "input-inspection") {
+    const { frame, createdNodeCount } = await createInspectionPreviewFrame(payload, frameName);
+    figma.currentPage.appendChild(frame);
+    figma.currentPage.selection = [frame];
+    figma.viewport.scrollAndZoomIntoView([frame]);
+    return {
+      createdNodeCount,
+      createdFrameName: frame.name
+    };
+  }
+
   const frame = createFrameNode({ ...root, name: frameName }, theme);
   figma.currentPage.appendChild(frame);
 
   let createdNodeCount = 1;
   if (root.children && root.children.length > 0) {
     createdNodeCount += await renderChildren(frame, root.children, theme);
-  }
-
-  if (payload.document.screen === "input-inspection") {
-    const blueprint = await figma.clientStorage.getAsync(INPUT_BLUEPRINT_KEY);
-    if (blueprint && typeof blueprint === "object") {
-      const panel = await createInputBlueprintPanel(blueprint as InputBlueprint, frame.width, frame.height);
-      frame.appendChild(panel);
-      createdNodeCount += 1;
-    }
   }
 
   figma.currentPage.selection = [frame];

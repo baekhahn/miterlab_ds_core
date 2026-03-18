@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="920" height="742" viewBox="0 0 920 742" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="920" height="742" rx="24" fill="#F8FAFC"/>
+  
+  <g transform="translate(32 32)">
+    <rect width="72" height="24" rx="12" fill="#E8EEF8" />
+    <text x="36" y="16" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="11" font-weight="700" fill="#4A5872">Intent</text>
+  </g>
+
+
+  <g transform="translate(120 20)">
+    <rect width="358" height="48" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#94A3B8">Type here</text>
+  </g>
+
+
+  <g transform="translate(498 20)">
+    <rect width="358" height="48" rx="14" fill="#FFFFFF" stroke="#2D6CFF" stroke-width="2" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#111827">Wrong value</text>
+  </g>
+
+
+  <g transform="translate(120 84)">
+    <rect width="358" height="48" rx="14" fill="#FFFFFF" stroke="#0E9F6E" stroke-width="1" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#111827">Correct value</text>
+  </g>
+
+
+  <g transform="translate(32 166)">
+    <rect width="72" height="24" rx="12" fill="#E8EEF8" />
+    <text x="36" y="16" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="11" font-weight="700" fill="#4A5872">Size</text>
+  </g>
+
+
+  <g transform="translate(120 154)">
+    <rect width="358" height="44" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="16" y="27.5"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="15" font-weight="400" fill="#94A3B8">Small input</text>
+  </g>
+
+
+  <g transform="translate(498 154)">
+    <rect width="358" height="48" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#94A3B8">Medium input</text>
+  </g>
+
+
+  <g transform="translate(120 218)">
+    <rect width="358" height="56" rx="16" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="16" y="34.5"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="17" font-weight="400" fill="#94A3B8">Large input</text>
+  </g>
+
+
+  <g transform="translate(32 308)">
+    <rect width="72" height="24" rx="12" fill="#E8EEF8" />
+    <text x="36" y="16" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="11" font-weight="700" fill="#4A5872">State</text>
+  </g>
+
+
+  <g transform="translate(120 296)">
+    <rect width="358" height="48" rx="14" fill="#FFFFFF" stroke="#2D6CFF" stroke-width="2" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#111827">Focused value</text>
+  </g>
+
+
+  <g transform="translate(498 296)">
+    <rect width="358" height="48" rx="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#475569">Read only value</text>
+  </g>
+
+
+  <g transform="translate(120 360)">
+    <rect width="358" height="48" rx="14" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#94A3B8">Disabled value</text>
+  </g>
+
+
+  <g transform="translate(32 442)">
+    <rect width="72" height="24" rx="12" fill="#E8EEF8" />
+    <text x="36" y="16" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="11" font-weight="700" fill="#4A5872">Width</text>
+  </g>
+
+
+  <g transform="translate(120 430)">
+    <rect width="220" height="48" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#94A3B8">Short</text>
+  </g>
+
+
+  <g transform="translate(360 430)">
+    <rect width="358" height="48" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#94A3B8">Full width field</text>
+  </g>
+
+
+  <g transform="translate(32 512)">
+    <rect width="72" height="24" rx="12" fill="#E8EEF8" />
+    <text x="36" y="16" text-anchor="middle"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="11" font-weight="700" fill="#4A5872">Bundle</text>
+  </g>
+
+
+  <g transform="translate(120 500)">
+    <rect width="358" height="48" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#94A3B8">Email address</text>
+  </g>
+
+      <text x="120" y="566"
+        font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="12" font-weight="400" fill="#667085">We will never share your email.</text>
+    
+
+  <g transform="translate(498 500)">
+    <rect width="358" height="48" rx="14" fill="#FFFFFF" stroke="#2D6CFF" stroke-width="2" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#111827">wrong@email</text>
+  </g>
+
+      <text x="498" y="566"
+        font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="12" font-weight="400" fill="#DC2626">Enter a valid email address.</text>
+    
+
+  <g transform="translate(120 588)">
+    <rect width="358" height="120" rx="16" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+    <text x="16" y="66.5"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="17" font-weight="400" fill="#94A3B8">Type a longer message</text>
+  </g>
+
+
+  <g transform="translate(498 588)">
+    <rect width="358" height="48" rx="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1" />
+    <text x="16" y="30"
+      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"
+      font-size="16" font-weight="400" fill="#475569">Generated project slug</text>
+  </g>
+
+</svg>

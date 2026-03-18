@@ -2,6 +2,7 @@ import { load } from "js-yaml";
 import type { FigmaNode } from "../types/figmaNode";
 import { layoutRules } from "../grammar/layoutRules";
 import { resolveToken, type TokenResolveContext } from "../tokens/resolveToken";
+import mobileCore from "../../../ui-core/contracts/mobile-core.json";
 
 interface ParsedSpec {
   component: string;
@@ -26,6 +27,9 @@ export interface MapComponentInput {
   width?: number;
   height?: number;
   variant?: string;
+  emphasis?: string;
+  widthMode?: string;
+  intent?: string;
   tone?: string;
   color?: string;
   fill?: string;
@@ -203,16 +207,18 @@ const resolveButtonVariantKey = (input: MapComponentInput, spec: ParsedSpec) => 
 };
 
 const resolveButtonStateKey = (input: MapComponentInput) => {
-  if (input.disabled) return "disabled";
-  if (input.loading === true || input.loading === "auto") return "loading";
-  if (input.state === "hover" || input.state === "pressed" || input.state === "focus") return input.state;
-  return "default";
+  if (input.disabled || input.state === "disabled") return "disabled";
+  if (input.loading === true || input.loading === "auto" || input.state === "loading") return "loading";
+  if (input.state === "pressed" || input.state === "active") return "pressed";
+  return input.state === "enabled" ? "enabled" : "default";
 };
 
 const resolveInputStateKey = (input: MapComponentInput) => {
-  if (input.disabled) return "disabled";
-  if (input.readOnly) return "readOnly";
-  return "default";
+  if (input.disabled || input.state === "disabled") return "disabled";
+  if (input.readOnly || input.state === "readOnly" || input.state === "readonly") return "readonly";
+  if (input.state === "focus" || input.state === "focused") return "focused";
+  if (input.state === "loading") return "loading";
+  return "enabled";
 };
 
 const isActionLike = (component: string) =>
@@ -323,6 +329,12 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
   }
 
   const resolvedSize = input.size ?? spec.sizes?.[0] ?? "md";
+  const isCoreButton = spec.component === "Button";
+  const isCoreInput = spec.component === "Input";
+  const buttonRenderSize =
+    resolvedSize === "sm" || resolvedSize === "md" || resolvedSize === "lg" ? mobileCore.button.render.sizes[resolvedSize] : undefined;
+  const inputRenderSize =
+    resolvedSize === "sm" || resolvedSize === "md" || resolvedSize === "lg" ? mobileCore.input.render.sizes[resolvedSize] : undefined;
   const specHeight = spec.sizeDefaults?.[resolvedSize]?.height ?? spec.defaults?.height;
   const specPaddingX = spec.sizeDefaults?.[resolvedSize]?.paddingX ?? spec.defaults?.paddingX;
   const specPaddingY = spec.sizeDefaults?.[resolvedSize]?.paddingY ?? spec.defaults?.paddingY;
@@ -339,7 +351,19 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
   const specMinWidth = Number(spec.internalLayout?.minWidth ?? 0);
   const metrics = resolveTextMetrics(spec.component, resolvedSize);
   const defaultHeight =
-    typeof specHeight === "number"
+    isCoreButton
+      ? resolvedSize === "sm"
+        ? buttonRenderSize?.height ?? 44
+        : resolvedSize === "lg"
+          ? buttonRenderSize?.height ?? 56
+          : buttonRenderSize?.height ?? 50
+      : isCoreInput
+        ? resolvedSize === "sm"
+          ? inputRenderSize?.height ?? 44
+          : resolvedSize === "lg"
+            ? inputRenderSize?.height ?? 56
+            : inputRenderSize?.height ?? 48
+      : typeof specHeight === "number"
       ? specHeight
       :
     resolvedSize === "sm"
@@ -374,9 +398,13 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
   const finalWidth =
     input.iconOnly && buttonLike
       ? input.width ?? defaultHeight
-      : input.block || input.fullWidth
-        ? input.width ?? layoutRules.contentWidth.form
-        : input.width ?? defaultWidth;
+      : input.widthMode === "full" || input.block || input.fullWidth
+        ? input.width ?? (isCoreButton ? mobileCore.button.render.widths.full : isCoreInput ? mobileCore.input.render.widths.full : layoutRules.contentWidth.form)
+        : isCoreInput && input.widthMode === "hug"
+          ? input.width ?? mobileCore.input.render.widths.hug
+          : isCoreButton && input.widthMode === "hug"
+            ? input.width ?? mobileCore.button.render.widths.hug
+          : input.width ?? defaultWidth;
   const textValue =
     spec.component === "Input"
       ? input.value ?? input.defaultValue
@@ -550,17 +578,21 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
             ...(spec.component !== "Button" && spec.component !== "Input"
               ? { variant: input.variant ?? variantKey }
               : {}),
+            ...(spec.component === "Button" && input.emphasis ? { emphasis: input.emphasis } : {}),
+            ...(spec.component === "Button" && input.widthMode ? { width: input.widthMode } : {}),
+            ...(spec.component === "Button" ? { state: resolveButtonStateKey(input) } : {}),
+            ...(spec.component === "Input" && input.intent ? { intent: input.intent } : {}),
+            ...(spec.component === "Input" && input.widthMode ? { width: input.widthMode } : {}),
+            ...(spec.component === "Input" ? { state: resolveInputStateKey(input) } : {}),
             ...(toneKey ? { tone: toneKey } : {}),
-            ...(input.color ? { color: input.color } : {}),
-            ...(input.fill ? { fill: input.fill } : {}),
-            ...(input.shape ? { shape: input.shape } : {}),
-            ...(spec.component !== "Input" ? { size: resolvedSize } : {}),
+            ...(spec.component !== "Button" && input.color ? { color: input.color } : {}),
+            ...(spec.component !== "Button" && input.fill ? { fill: input.fill } : {}),
+            ...(spec.component !== "Button" && input.shape ? { shape: input.shape } : {}),
+            ...(spec.component !== "Input" ? { size: resolvedSize } : { size: resolvedSize }),
             ...(spec.component !== "Button" && spec.component !== "Input" ? { state: stateKey } : {}),
             ...(typeof input.selected === "boolean" ? { selected: input.selected } : {}),
-            ...(input.block ? { block: true } : {}),
+            ...(spec.component !== "Button" && input.block ? { block: true } : {}),
             ...(typeof input.loading !== "undefined" ? { loading: input.loading } : {}),
-            ...(input.loadingText ? { loadingText: input.loadingText } : {}),
-            ...(input.loadingIcon ? { loadingIcon: input.loadingIcon } : {}),
             ...(input.disabled ? { disabled: true } : {}),
             ...(input.readOnly ? { readOnly: true } : {}),
             ...(input.clearable ? { clearable: true } : {}),
@@ -612,6 +644,8 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
             ...(input.type ? { type: input.type } : {})
           };
 
+  const coreRenderMode = isCoreButton || isCoreInput;
+
   return {
     id: `node_${Math.random().toString(36).slice(2, 10)}`,
     type: "INSTANCE",
@@ -622,29 +656,66 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
     height: input.height ?? defaultHeight,
     component: spec.component,
     style: {
-      fill: resolvedStyles["container.background"] ?? resolvedStyles["field.background"] ?? resolvedStyles["track.background"] ?? resolvedStyles["control.background"],
-      stroke: resolvedStyles["container.border"] ?? resolvedStyles["field.border"] ?? resolvedStyles["track.border"] ?? resolvedStyles["control.border"],
-      text:
-        resolvedStyles["label.color"] ??
-        resolvedStyles["icon.color"] ??
-        resolvedStyles["value.color"] ??
-        resolvedStyles["title.color"] ??
-        resolvedStyles["mark.color"],
-      effect: resolvedStyles["container.focusRing"] ?? resolvedStyles["field.focusRing"],
-      radius: typeof specRadius === "number" ? specRadius : undefined,
-      paddingX: typeof specPaddingX === "number" ? specPaddingX : undefined,
+      ...(coreRenderMode
+        ? {}
+        : {
+            fill:
+              resolvedStyles["container.background"] ??
+              resolvedStyles["field.background"] ??
+              resolvedStyles["track.background"] ??
+              resolvedStyles["control.background"],
+            stroke:
+              resolvedStyles["container.border"] ??
+              resolvedStyles["field.border"] ??
+              resolvedStyles["track.border"] ??
+              resolvedStyles["control.border"],
+            text:
+              resolvedStyles["label.color"] ??
+              resolvedStyles["icon.color"] ??
+              resolvedStyles["value.color"] ??
+              resolvedStyles["title.color"] ??
+              resolvedStyles["mark.color"],
+            effect: resolvedStyles["container.focusRing"] ?? resolvedStyles["field.focusRing"]
+          }),
+      radius:
+        isCoreButton
+          ? buttonRenderSize?.radius ?? 14
+          : isCoreInput
+            ? inputRenderSize?.radius ?? 14
+            : typeof specRadius === "number"
+              ? specRadius
+              : undefined,
+      paddingX:
+        isCoreButton
+          ? buttonRenderSize?.paddingX ?? 18
+          : isCoreInput
+            ? inputRenderSize?.paddingX ?? 14
+            : typeof specPaddingX === "number"
+              ? specPaddingX
+              : undefined,
       paddingY:
-        typeof specPaddingY === "number"
+        isCoreButton
+          ? buttonRenderSize?.paddingY ?? 13
+          : isCoreInput
+            ? inputRenderSize?.paddingY ?? 14
+          : typeof specPaddingY === "number"
           ? specPaddingY
           : Math.max(6, Math.round((defaultHeight - metrics.lineHeight) / 2)),
-      gap: typeof specIconGap === "number" ? specIconGap : undefined,
-      fontSize: metrics.fontSize,
-      lineHeight: metrics.lineHeight,
-      fontWeight: metrics.fontWeight,
-      minWidth: specMinWidth > 0 ? specMinWidth : undefined
+      gap: isCoreButton ? buttonRenderSize?.gap ?? 8 : typeof specIconGap === "number" ? specIconGap : undefined,
+      fontSize: isCoreButton ? buttonRenderSize?.fontSize ?? 16 : isCoreInput ? inputRenderSize?.fontSize ?? 16 : metrics.fontSize,
+      lineHeight: isCoreButton ? buttonRenderSize?.lineHeight ?? 22 : isCoreInput ? inputRenderSize?.lineHeight ?? 22 : metrics.lineHeight,
+      fontWeight: isCoreButton ? "semibold" : isCoreInput ? "regular" : metrics.fontWeight,
+      minWidth:
+        isCoreButton
+          ? buttonRenderSize?.minWidth
+          : isCoreInput
+            ? inputRenderSize?.minWidth
+            : specMinWidth > 0
+              ? specMinWidth
+              : undefined
     },
     variant: variantPayload,
-    variables,
+    variables: coreRenderMode ? {} : variables,
     text: textValue
   };
 };

@@ -17,7 +17,7 @@
         {
           "id": "layout_2",
           "type": "FRAME",
-          "name": "header-section",
+          "name": "preview-section",
           "x": 48,
           "y": 40,
           "width": 1320,
@@ -25,578 +25,526 @@
           "children": [
             {
               "id": "layout_3",
-              "type": "TEXT",
-              "name": "Text 1",
+              "type": "FRAME",
+              "name": "preview-row-1",
               "x": 48,
               "y": 40,
-              "width": 358,
-              "height": 32,
-              "text": "Input Inspection",
-              "variables": {
-                "text.color": "semantic.text.primary"
-              },
-              "style": {
-                "text": "text/heading/xl",
-                "fill": "#1F2430"
-              }
-            }
-          ]
-        },
-        {
-          "id": "layout_4",
-          "type": "FRAME",
-          "name": "content-section",
-          "x": 48,
-          "y": 116,
-          "width": 1320,
-          "height": 100,
-          "children": []
-        },
-        {
-          "id": "layout_5",
-          "type": "FRAME",
-          "name": "form-section",
-          "x": 48,
-          "y": 192,
-          "width": 1320,
-          "height": 100,
-          "children": [
-            {
-              "id": "layout_6",
-              "type": "TEXT",
-              "name": "Text 2",
-              "x": 48,
-              "y": 192,
-              "width": 358,
-              "height": 24,
-              "text": "Input Only",
-              "variables": {
-                "text.color": "semantic.text.secondary"
-              },
-              "style": {
-                "text": "text/body/lg",
-                "fill": "#5F6A7B"
-              }
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_4",
+                  "type": "INSTANCE",
+                  "name": "Default",
+                  "x": 48,
+                  "y": 40,
+                  "width": 358,
+                  "height": 48,
+                  "component": "Input",
+                  "style": {
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
+                  },
+                  "variant": {
+                    "intent": "default",
+                    "width": "full",
+                    "state": "enabled",
+                    "size": "md",
+                    "placeholder": "Type here"
+                  },
+                  "variables": {}
+                },
+                {
+                  "id": "layout_5",
+                  "type": "INSTANCE",
+                  "name": "Error",
+                  "x": 48,
+                  "y": 40,
+                  "width": 358,
+                  "height": 48,
+                  "component": "Input",
+                  "style": {
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
+                  },
+                  "variant": {
+                    "intent": "error",
+                    "width": "full",
+                    "state": "focused",
+                    "size": "md",
+                    "value": "Wrong value"
+                  },
+                  "variables": {},
+                  "text": "Wrong value"
+                },
+                {
+                  "id": "layout_6",
+                  "type": "INSTANCE",
+                  "name": "Success",
+                  "x": 48,
+                  "y": 40,
+                  "width": 358,
+                  "height": 48,
+                  "component": "Input",
+                  "style": {
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
+                  },
+                  "variant": {
+                    "intent": "success",
+                    "width": "full",
+                    "state": "enabled",
+                    "size": "md",
+                    "value": "Correct value"
+                  },
+                  "variables": {},
+                  "text": "Correct value"
+                }
+              ]
             },
             {
               "id": "layout_7",
               "type": "FRAME",
-              "name": "form-row-1",
+              "name": "preview-row-2",
               "x": 48,
-              "y": 192,
+              "y": 40,
               "width": 1320,
               "height": 100,
               "children": [
                 {
                   "id": "layout_8",
                   "type": "INSTANCE",
-                  "name": "Placeholder",
+                  "name": "Small",
                   "x": 48,
-                  "y": 192,
-                  "width": 320,
-                  "height": 24,
+                  "y": 40,
+                  "width": 358,
+                  "height": 44,
                   "component": "Input",
                   "style": {
-                    "fill": "#FFFFFF",
-                    "stroke": "#E0E6EE",
-                    "text": "#1F2430",
-                    "radius": 0,
-                    "paddingX": 0,
-                    "paddingY": 0,
-                    "gap": 8,
-                    "fontSize": 17,
-                    "lineHeight": 26,
-                    "fontWeight": "regular"
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 12,
+                    "gap": 0,
+                    "fontSize": 15,
+                    "lineHeight": 20,
+                    "fontWeight": "regular",
+                    "minWidth": 220
                   },
                   "variant": {
-                    "placeholder": "Type here"
+                    "intent": "default",
+                    "width": "full",
+                    "state": "enabled",
+                    "size": "sm",
+                    "placeholder": "Small input"
                   },
-                  "variables": {
-                    "field.background": "Semantic/surface/default",
-                    "field.border": "Semantic/border/default",
-                    "value.color": "Semantic/text/primary",
-                    "placeholder.color": "Semantic/text/muted"
-                  }
+                  "variables": {}
                 },
                 {
                   "id": "layout_9",
                   "type": "INSTANCE",
-                  "name": "Value",
+                  "name": "Medium",
                   "x": 48,
-                  "y": 192,
-                  "width": 320,
-                  "height": 24,
+                  "y": 40,
+                  "width": 358,
+                  "height": 48,
                   "component": "Input",
                   "style": {
-                    "fill": "#FFFFFF",
-                    "stroke": "#E0E6EE",
-                    "text": "#1F2430",
-                    "radius": 0,
-                    "paddingX": 0,
-                    "paddingY": 0,
-                    "gap": 8,
-                    "fontSize": 17,
-                    "lineHeight": 26,
-                    "fontWeight": "regular"
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
                   },
                   "variant": {
-                    "value": "Current value"
+                    "intent": "default",
+                    "width": "full",
+                    "state": "enabled",
+                    "size": "md",
+                    "placeholder": "Medium input"
                   },
-                  "variables": {
-                    "field.background": "Semantic/surface/default",
-                    "field.border": "Semantic/border/default",
-                    "value.color": "Semantic/text/primary",
-                    "placeholder.color": "Semantic/text/muted"
-                  },
-                  "text": "Current value"
+                  "variables": {}
                 },
                 {
                   "id": "layout_10",
                   "type": "INSTANCE",
-                  "name": "Default Value",
+                  "name": "Large",
                   "x": 48,
-                  "y": 192,
-                  "width": 320,
-                  "height": 24,
+                  "y": 40,
+                  "width": 358,
+                  "height": 56,
                   "component": "Input",
                   "style": {
-                    "fill": "#FFFFFF",
-                    "stroke": "#E0E6EE",
-                    "text": "#1F2430",
-                    "radius": 0,
-                    "paddingX": 0,
-                    "paddingY": 0,
-                    "gap": 8,
+                    "radius": 16,
+                    "paddingX": 16,
+                    "paddingY": 16,
+                    "gap": 0,
                     "fontSize": 17,
-                    "lineHeight": 26,
-                    "fontWeight": "regular"
+                    "lineHeight": 24,
+                    "fontWeight": "regular",
+                    "minWidth": 220
                   },
                   "variant": {
-                    "defaultValue": "Seed value"
+                    "intent": "default",
+                    "width": "full",
+                    "state": "enabled",
+                    "size": "lg",
+                    "placeholder": "Large input"
                   },
-                  "variables": {
-                    "field.background": "Semantic/surface/default",
-                    "field.border": "Semantic/border/default",
-                    "value.color": "Semantic/text/primary",
-                    "placeholder.color": "Semantic/text/muted"
-                  },
-                  "text": "Seed value"
+                  "variables": {}
                 }
               ]
             },
             {
               "id": "layout_11",
-              "type": "TEXT",
-              "name": "Text 6",
-              "x": 48,
-              "y": 192,
-              "width": 358,
-              "height": 24,
-              "text": "Interaction Props",
-              "variables": {
-                "text.color": "semantic.text.secondary"
-              },
-              "style": {
-                "text": "text/body/lg",
-                "fill": "#5F6A7B"
-              }
-            },
-            {
-              "id": "layout_12",
               "type": "FRAME",
-              "name": "form-row-2",
+              "name": "preview-row-3",
               "x": 48,
-              "y": 192,
+              "y": 40,
               "width": 1320,
               "height": 100,
               "children": [
+                {
+                  "id": "layout_12",
+                  "type": "INSTANCE",
+                  "name": "Focused",
+                  "x": 48,
+                  "y": 40,
+                  "width": 358,
+                  "height": 48,
+                  "component": "Input",
+                  "style": {
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
+                  },
+                  "variant": {
+                    "intent": "default",
+                    "width": "full",
+                    "state": "focused",
+                    "size": "md",
+                    "value": "Focused value"
+                  },
+                  "variables": {},
+                  "text": "Focused value"
+                },
                 {
                   "id": "layout_13",
                   "type": "INSTANCE",
                   "name": "Disabled",
                   "x": 48,
-                  "y": 192,
-                  "width": 320,
-                  "height": 24,
+                  "y": 40,
+                  "width": 358,
+                  "height": 48,
                   "component": "Input",
                   "style": {
-                    "fill": "#EEF1F5",
-                    "stroke": "#EEF1F5",
-                    "text": "#7E8A9C",
-                    "radius": 0,
-                    "paddingX": 0,
-                    "paddingY": 0,
-                    "gap": 8,
-                    "fontSize": 17,
-                    "lineHeight": 26,
-                    "fontWeight": "regular"
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
                   },
                   "variant": {
+                    "intent": "default",
+                    "width": "full",
+                    "state": "disabled",
+                    "size": "md",
                     "disabled": true,
-                    "placeholder": "Disabled placeholder"
+                    "value": "Disabled value"
                   },
-                  "variables": {
-                    "field.background": "Semantic/surface/subtle",
-                    "field.border": "Semantic/border/subtle",
-                    "value.color": "Semantic/text/muted",
-                    "placeholder.color": "Semantic/text/muted"
-                  }
+                  "variables": {},
+                  "text": "Disabled value"
                 },
                 {
                   "id": "layout_14",
                   "type": "INSTANCE",
                   "name": "Read Only",
                   "x": 48,
-                  "y": 192,
-                  "width": 320,
-                  "height": 24,
+                  "y": 40,
+                  "width": 358,
+                  "height": 48,
                   "component": "Input",
                   "style": {
-                    "fill": "#EEF1F5",
-                    "stroke": "#E0E6EE",
-                    "text": "#5F6A7B",
-                    "radius": 0,
-                    "paddingX": 0,
-                    "paddingY": 0,
-                    "gap": 8,
-                    "fontSize": 17,
-                    "lineHeight": 26,
-                    "fontWeight": "regular"
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
                   },
                   "variant": {
+                    "intent": "default",
+                    "width": "full",
+                    "state": "readonly",
+                    "size": "md",
                     "readOnly": true,
-                    "value": "Read only"
+                    "value": "Read only value"
                   },
-                  "variables": {
-                    "field.background": "Semantic/surface/subtle",
-                    "field.border": "Semantic/border/default",
-                    "value.color": "Semantic/text/secondary",
-                    "placeholder.color": "Semantic/text/muted"
-                  },
-                  "text": "Read only"
-                },
-                {
-                  "id": "layout_15",
-                  "type": "INSTANCE",
-                  "name": "Clearable",
-                  "x": 48,
-                  "y": 192,
-                  "width": 320,
-                  "height": 24,
-                  "component": "Input",
-                  "style": {
-                    "fill": "#FFFFFF",
-                    "stroke": "#E0E6EE",
-                    "text": "#1F2430",
-                    "radius": 0,
-                    "paddingX": 0,
-                    "paddingY": 0,
-                    "gap": 8,
-                    "fontSize": 17,
-                    "lineHeight": 26,
-                    "fontWeight": "regular"
-                  },
-                  "variant": {
-                    "clearable": true,
-                    "value": "Clear me"
-                  },
-                  "variables": {
-                    "field.background": "Semantic/surface/default",
-                    "field.border": "Semantic/border/default",
-                    "value.color": "Semantic/text/primary",
-                    "placeholder.color": "Semantic/text/muted"
-                  },
-                  "text": "Clear me"
+                  "variables": {},
+                  "text": "Read only value"
                 }
               ]
             },
             {
-              "id": "layout_16",
+              "id": "layout_15",
               "type": "FRAME",
-              "name": "form-row-3",
+              "name": "preview-row-4",
               "x": 48,
-              "y": 192,
+              "y": 40,
               "width": 1320,
               "height": 100,
               "children": [
                 {
-                  "id": "layout_17",
+                  "id": "layout_16",
                   "type": "INSTANCE",
-                  "name": "Clear On Focus",
+                  "name": "Loading",
                   "x": 48,
-                  "y": 192,
-                  "width": 320,
-                  "height": 24,
+                  "y": 40,
+                  "width": 358,
+                  "height": 48,
                   "component": "Input",
                   "style": {
-                    "fill": "#FFFFFF",
-                    "stroke": "#E0E6EE",
-                    "text": "#1F2430",
-                    "radius": 0,
-                    "paddingX": 0,
-                    "paddingY": 0,
-                    "gap": 8,
-                    "fontSize": 17,
-                    "lineHeight": 26,
-                    "fontWeight": "regular"
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
                   },
                   "variant": {
-                    "clearable": true,
-                    "value": "Focus clear",
-                    "onlyShowClearWhenFocus": true
+                    "intent": "default",
+                    "width": "full",
+                    "state": "loading",
+                    "size": "md",
+                    "value": "Loading value"
                   },
-                  "variables": {
-                    "field.background": "Semantic/surface/default",
-                    "field.border": "Semantic/border/default",
-                    "value.color": "Semantic/text/primary",
-                    "placeholder.color": "Semantic/text/muted"
+                  "variables": {},
+                  "text": "Loading value"
+                },
+                {
+                  "id": "layout_17",
+                  "type": "INSTANCE",
+                  "name": "Hug Width",
+                  "x": 48,
+                  "y": 40,
+                  "width": 220,
+                  "height": 48,
+                  "component": "Input",
+                  "style": {
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
                   },
-                  "text": "Focus clear"
+                  "variant": {
+                    "intent": "default",
+                    "width": "hug",
+                    "state": "enabled",
+                    "size": "md",
+                    "placeholder": "Short"
+                  },
+                  "variables": {}
                 },
                 {
                   "id": "layout_18",
                   "type": "INSTANCE",
-                  "name": "Password",
+                  "name": "Full Width",
                   "x": 48,
-                  "y": 192,
-                  "width": 320,
-                  "height": 24,
+                  "y": 40,
+                  "width": 358,
+                  "height": 48,
                   "component": "Input",
                   "style": {
-                    "fill": "#FFFFFF",
-                    "stroke": "#E0E6EE",
-                    "text": "#1F2430",
-                    "radius": 0,
-                    "paddingX": 0,
-                    "paddingY": 0,
-                    "gap": 8,
-                    "fontSize": 17,
-                    "lineHeight": 26,
-                    "fontWeight": "regular"
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
                   },
                   "variant": {
-                    "value": "secret123",
-                    "type": "password"
+                    "intent": "default",
+                    "width": "full",
+                    "state": "enabled",
+                    "size": "md",
+                    "placeholder": "Full width field"
                   },
-                  "variables": {
-                    "field.background": "Semantic/surface/default",
-                    "field.border": "Semantic/border/default",
-                    "value.color": "Semantic/text/primary",
-                    "placeholder.color": "Semantic/text/muted"
-                  },
-                  "text": "secret123"
-                },
-                {
-                  "id": "layout_19",
-                  "type": "INSTANCE",
-                  "name": "Number",
-                  "x": 48,
-                  "y": 192,
-                  "width": 320,
-                  "height": 24,
-                  "component": "Input",
-                  "style": {
-                    "fill": "#FFFFFF",
-                    "stroke": "#E0E6EE",
-                    "text": "#1F2430",
-                    "radius": 0,
-                    "paddingX": 0,
-                    "paddingY": 0,
-                    "gap": 8,
-                    "fontSize": 17,
-                    "lineHeight": 26,
-                    "fontWeight": "regular"
-                  },
-                  "variant": {
-                    "value": "12",
-                    "step": 1,
-                    "min": 0,
-                    "max": 20,
-                    "type": "number"
-                  },
-                  "variables": {
-                    "field.background": "Semantic/surface/default",
-                    "field.border": "Semantic/border/default",
-                    "value.color": "Semantic/text/primary",
-                    "placeholder.color": "Semantic/text/muted"
-                  },
-                  "text": "12"
+                  "variables": {}
                 }
               ]
-            }
-          ]
-        },
-        {
-          "id": "layout_20",
-          "type": "FRAME",
-          "name": "action-section",
-          "x": 48,
-          "y": 456,
-          "width": 1320,
-          "height": 100,
-          "children": []
-        },
-        {
-          "id": "layout_21",
-          "type": "FRAME",
-          "name": "list-section",
-          "x": 48,
-          "y": 532,
-          "width": 1320,
-          "height": 100,
-          "children": [
+            },
             {
-              "id": "layout_22",
-              "type": "TEXT",
-              "name": "Text 13",
+              "id": "layout_19",
+              "type": "FRAME",
+              "name": "preview-row-5",
               "x": 48,
-              "y": 532,
-              "width": 358,
-              "height": 24,
-              "text": "Input + Cell",
-              "variables": {
-                "text.color": "semantic.text.secondary"
-              },
-              "style": {
-                "text": "text/body/lg",
-                "fill": "#5F6A7B"
-              }
+              "y": 40,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_20",
+                  "type": "INSTANCE",
+                  "name": "With Helper",
+                  "x": 48,
+                  "y": 40,
+                  "width": 358,
+                  "height": 48,
+                  "component": "Input",
+                  "style": {
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
+                  },
+                  "variant": {
+                    "intent": "default",
+                    "width": "full",
+                    "state": "enabled",
+                    "size": "md",
+                    "placeholder": "Email address"
+                  },
+                  "variables": {}
+                },
+                {
+                  "id": "layout_21",
+                  "type": "INSTANCE",
+                  "name": "With Error Text",
+                  "x": 48,
+                  "y": 40,
+                  "width": 358,
+                  "height": 48,
+                  "component": "Input",
+                  "style": {
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
+                    "gap": 0,
+                    "fontSize": 16,
+                    "lineHeight": 22,
+                    "fontWeight": "regular",
+                    "minWidth": 220
+                  },
+                  "variant": {
+                    "intent": "error",
+                    "width": "full",
+                    "state": "focused",
+                    "size": "md",
+                    "value": "wrong@email"
+                  },
+                  "variables": {},
+                  "text": "wrong@email"
+                },
+                {
+                  "id": "layout_22",
+                  "type": "INSTANCE",
+                  "name": "Multiline",
+                  "x": 48,
+                  "y": 40,
+                  "width": 358,
+                  "height": 56,
+                  "component": "Input",
+                  "style": {
+                    "radius": 16,
+                    "paddingX": 16,
+                    "paddingY": 16,
+                    "gap": 0,
+                    "fontSize": 17,
+                    "lineHeight": 24,
+                    "fontWeight": "regular",
+                    "minWidth": 220
+                  },
+                  "variant": {
+                    "intent": "default",
+                    "width": "full",
+                    "state": "enabled",
+                    "size": "lg",
+                    "placeholder": "Type a longer message"
+                  },
+                  "variables": {}
+                }
+              ]
             },
             {
               "id": "layout_23",
               "type": "FRAME",
-              "name": "list-row-1",
+              "name": "preview-row-6",
               "x": 48,
-              "y": 532,
+              "y": 40,
               "width": 1320,
               "height": 100,
               "children": [
                 {
                   "id": "layout_24",
                   "type": "INSTANCE",
-                  "name": "Email",
+                  "name": "Readonly Field",
                   "x": 48,
-                  "y": 532,
+                  "y": 40,
                   "width": 358,
-                  "height": 72,
-                  "component": "Cell",
+                  "height": 48,
+                  "component": "Input",
                   "style": {
-                    "paddingY": 9,
+                    "radius": 14,
+                    "paddingX": 14,
+                    "paddingY": 14,
                     "gap": 0,
-                    "fontSize": 15,
+                    "fontSize": 16,
                     "lineHeight": 22,
-                    "fontWeight": "regular"
+                    "fontWeight": "regular",
+                    "minWidth": 220
                   },
                   "variant": {
-                    "title": "Email",
-                    "children": "input:email@example.com",
-                    "description": "Cell container metrics",
-                    "extra": "Required"
+                    "intent": "default",
+                    "width": "full",
+                    "state": "readonly",
+                    "size": "md",
+                    "readOnly": true,
+                    "value": "Generated project slug"
                   },
                   "variables": {},
-                  "text": "Email"
-                },
-                {
-                  "id": "layout_25",
-                  "type": "INSTANCE",
-                  "name": "Search",
-                  "x": 48,
-                  "y": 532,
-                  "width": 358,
-                  "height": 56,
-                  "component": "Cell",
-                  "style": {
-                    "paddingY": 9,
-                    "gap": 0,
-                    "fontSize": 15,
-                    "lineHeight": 22,
-                    "fontWeight": "regular"
-                  },
-                  "variant": {
-                    "title": "Search",
-                    "children": "input:Search query",
-                    "prefix": "S",
-                    "clickable": true,
-                    "arrowIcon": true
-                  },
-                  "variables": {},
-                  "text": "Search"
-                }
-              ]
-            },
-            {
-              "id": "layout_26",
-              "type": "TEXT",
-              "name": "Text 16",
-              "x": 48,
-              "y": 532,
-              "width": 358,
-              "height": 24,
-              "text": "Input + List",
-              "variables": {
-                "text.color": "semantic.text.secondary"
-              },
-              "style": {
-                "text": "text/body/lg",
-                "fill": "#5F6A7B"
-              }
-            },
-            {
-              "id": "layout_27",
-              "type": "FRAME",
-              "name": "list-row-2",
-              "x": 48,
-              "y": 532,
-              "width": 1320,
-              "height": 100,
-              "children": [
-                {
-                  "id": "layout_28",
-                  "type": "INSTANCE",
-                  "name": "Default List Shell",
-                  "x": 48,
-                  "y": 532,
-                  "width": 358,
-                  "height": 160,
-                  "component": "List",
-                  "style": {
-                    "paddingY": 9,
-                    "gap": 0,
-                    "fontSize": 15,
-                    "lineHeight": 22,
-                    "fontWeight": "regular"
-                  },
-                  "variant": {
-                    "header": "Profile",
-                    "mode": "default",
-                    "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
-                  },
-                  "variables": {},
-                  "text": "Profile"
-                },
-                {
-                  "id": "layout_29",
-                  "type": "INSTANCE",
-                  "name": "Card List Shell",
-                  "x": 48,
-                  "y": 532,
-                  "width": 358,
-                  "height": 184,
-                  "component": "List",
-                  "style": {
-                    "paddingY": 9,
-                    "gap": 0,
-                    "fontSize": 15,
-                    "lineHeight": 22,
-                    "fontWeight": "regular"
-                  },
-                  "variant": {
-                    "header": "Billing",
-                    "mode": "card",
-                    "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
-                  },
-                  "variables": {},
-                  "text": "Billing"
+                  "text": "Generated project slug"
                 }
               ]
             }
@@ -607,7 +555,7 @@
     {
       "id": "layout_2",
       "type": "FRAME",
-      "name": "header-section",
+      "name": "preview-section",
       "x": 48,
       "y": 40,
       "width": 1320,
@@ -615,1512 +563,1514 @@
       "children": [
         {
           "id": "layout_3",
-          "type": "TEXT",
-          "name": "Text 1",
+          "type": "FRAME",
+          "name": "preview-row-1",
           "x": 48,
           "y": 40,
-          "width": 358,
-          "height": 32,
-          "text": "Input Inspection",
-          "variables": {
-            "text.color": "semantic.text.primary"
-          },
-          "style": {
-            "text": "text/heading/xl",
-            "fill": "#1F2430"
-          }
-        }
-      ]
-    },
-    {
-      "id": "layout_3",
-      "type": "TEXT",
-      "name": "Text 1",
-      "x": 48,
-      "y": 40,
-      "width": 358,
-      "height": 32,
-      "text": "Input Inspection",
-      "variables": {
-        "text.color": "semantic.text.primary"
-      },
-      "style": {
-        "text": "text/heading/xl",
-        "fill": "#1F2430"
-      }
-    },
-    {
-      "id": "layout_4",
-      "type": "FRAME",
-      "name": "content-section",
-      "x": 48,
-      "y": 116,
-      "width": 1320,
-      "height": 100,
-      "children": []
-    },
-    {
-      "id": "layout_5",
-      "type": "FRAME",
-      "name": "form-section",
-      "x": 48,
-      "y": 192,
-      "width": 1320,
-      "height": 100,
-      "children": [
-        {
-          "id": "layout_6",
-          "type": "TEXT",
-          "name": "Text 2",
-          "x": 48,
-          "y": 192,
-          "width": 358,
-          "height": 24,
-          "text": "Input Only",
-          "variables": {
-            "text.color": "semantic.text.secondary"
-          },
-          "style": {
-            "text": "text/body/lg",
-            "fill": "#5F6A7B"
-          }
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_4",
+              "type": "INSTANCE",
+              "name": "Default",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 48,
+              "component": "Input",
+              "style": {
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
+              },
+              "variant": {
+                "intent": "default",
+                "width": "full",
+                "state": "enabled",
+                "size": "md",
+                "placeholder": "Type here"
+              },
+              "variables": {}
+            },
+            {
+              "id": "layout_5",
+              "type": "INSTANCE",
+              "name": "Error",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 48,
+              "component": "Input",
+              "style": {
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
+              },
+              "variant": {
+                "intent": "error",
+                "width": "full",
+                "state": "focused",
+                "size": "md",
+                "value": "Wrong value"
+              },
+              "variables": {},
+              "text": "Wrong value"
+            },
+            {
+              "id": "layout_6",
+              "type": "INSTANCE",
+              "name": "Success",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 48,
+              "component": "Input",
+              "style": {
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
+              },
+              "variant": {
+                "intent": "success",
+                "width": "full",
+                "state": "enabled",
+                "size": "md",
+                "value": "Correct value"
+              },
+              "variables": {},
+              "text": "Correct value"
+            }
+          ]
         },
         {
           "id": "layout_7",
           "type": "FRAME",
-          "name": "form-row-1",
+          "name": "preview-row-2",
           "x": 48,
-          "y": 192,
+          "y": 40,
           "width": 1320,
           "height": 100,
           "children": [
             {
               "id": "layout_8",
               "type": "INSTANCE",
-              "name": "Placeholder",
+              "name": "Small",
               "x": 48,
-              "y": 192,
-              "width": 320,
-              "height": 24,
+              "y": 40,
+              "width": 358,
+              "height": 44,
               "component": "Input",
               "style": {
-                "fill": "#FFFFFF",
-                "stroke": "#E0E6EE",
-                "text": "#1F2430",
-                "radius": 0,
-                "paddingX": 0,
-                "paddingY": 0,
-                "gap": 8,
-                "fontSize": 17,
-                "lineHeight": 26,
-                "fontWeight": "regular"
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 12,
+                "gap": 0,
+                "fontSize": 15,
+                "lineHeight": 20,
+                "fontWeight": "regular",
+                "minWidth": 220
               },
               "variant": {
-                "placeholder": "Type here"
+                "intent": "default",
+                "width": "full",
+                "state": "enabled",
+                "size": "sm",
+                "placeholder": "Small input"
               },
-              "variables": {
-                "field.background": "Semantic/surface/default",
-                "field.border": "Semantic/border/default",
-                "value.color": "Semantic/text/primary",
-                "placeholder.color": "Semantic/text/muted"
-              }
+              "variables": {}
             },
             {
               "id": "layout_9",
               "type": "INSTANCE",
-              "name": "Value",
+              "name": "Medium",
               "x": 48,
-              "y": 192,
-              "width": 320,
-              "height": 24,
+              "y": 40,
+              "width": 358,
+              "height": 48,
               "component": "Input",
               "style": {
-                "fill": "#FFFFFF",
-                "stroke": "#E0E6EE",
-                "text": "#1F2430",
-                "radius": 0,
-                "paddingX": 0,
-                "paddingY": 0,
-                "gap": 8,
-                "fontSize": 17,
-                "lineHeight": 26,
-                "fontWeight": "regular"
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
               },
               "variant": {
-                "value": "Current value"
+                "intent": "default",
+                "width": "full",
+                "state": "enabled",
+                "size": "md",
+                "placeholder": "Medium input"
               },
-              "variables": {
-                "field.background": "Semantic/surface/default",
-                "field.border": "Semantic/border/default",
-                "value.color": "Semantic/text/primary",
-                "placeholder.color": "Semantic/text/muted"
-              },
-              "text": "Current value"
+              "variables": {}
             },
             {
               "id": "layout_10",
               "type": "INSTANCE",
-              "name": "Default Value",
+              "name": "Large",
               "x": 48,
-              "y": 192,
-              "width": 320,
-              "height": 24,
+              "y": 40,
+              "width": 358,
+              "height": 56,
               "component": "Input",
               "style": {
-                "fill": "#FFFFFF",
-                "stroke": "#E0E6EE",
-                "text": "#1F2430",
-                "radius": 0,
-                "paddingX": 0,
-                "paddingY": 0,
-                "gap": 8,
+                "radius": 16,
+                "paddingX": 16,
+                "paddingY": 16,
+                "gap": 0,
                 "fontSize": 17,
-                "lineHeight": 26,
-                "fontWeight": "regular"
+                "lineHeight": 24,
+                "fontWeight": "regular",
+                "minWidth": 220
               },
               "variant": {
-                "defaultValue": "Seed value"
+                "intent": "default",
+                "width": "full",
+                "state": "enabled",
+                "size": "lg",
+                "placeholder": "Large input"
               },
-              "variables": {
-                "field.background": "Semantic/surface/default",
-                "field.border": "Semantic/border/default",
-                "value.color": "Semantic/text/primary",
-                "placeholder.color": "Semantic/text/muted"
-              },
-              "text": "Seed value"
+              "variables": {}
             }
           ]
         },
         {
           "id": "layout_11",
-          "type": "TEXT",
-          "name": "Text 6",
-          "x": 48,
-          "y": 192,
-          "width": 358,
-          "height": 24,
-          "text": "Interaction Props",
-          "variables": {
-            "text.color": "semantic.text.secondary"
-          },
-          "style": {
-            "text": "text/body/lg",
-            "fill": "#5F6A7B"
-          }
-        },
-        {
-          "id": "layout_12",
           "type": "FRAME",
-          "name": "form-row-2",
+          "name": "preview-row-3",
           "x": 48,
-          "y": 192,
+          "y": 40,
           "width": 1320,
           "height": 100,
           "children": [
+            {
+              "id": "layout_12",
+              "type": "INSTANCE",
+              "name": "Focused",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 48,
+              "component": "Input",
+              "style": {
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
+              },
+              "variant": {
+                "intent": "default",
+                "width": "full",
+                "state": "focused",
+                "size": "md",
+                "value": "Focused value"
+              },
+              "variables": {},
+              "text": "Focused value"
+            },
             {
               "id": "layout_13",
               "type": "INSTANCE",
               "name": "Disabled",
               "x": 48,
-              "y": 192,
-              "width": 320,
-              "height": 24,
+              "y": 40,
+              "width": 358,
+              "height": 48,
               "component": "Input",
               "style": {
-                "fill": "#EEF1F5",
-                "stroke": "#EEF1F5",
-                "text": "#7E8A9C",
-                "radius": 0,
-                "paddingX": 0,
-                "paddingY": 0,
-                "gap": 8,
-                "fontSize": 17,
-                "lineHeight": 26,
-                "fontWeight": "regular"
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
               },
               "variant": {
+                "intent": "default",
+                "width": "full",
+                "state": "disabled",
+                "size": "md",
                 "disabled": true,
-                "placeholder": "Disabled placeholder"
+                "value": "Disabled value"
               },
-              "variables": {
-                "field.background": "Semantic/surface/subtle",
-                "field.border": "Semantic/border/subtle",
-                "value.color": "Semantic/text/muted",
-                "placeholder.color": "Semantic/text/muted"
-              }
+              "variables": {},
+              "text": "Disabled value"
             },
             {
               "id": "layout_14",
               "type": "INSTANCE",
               "name": "Read Only",
               "x": 48,
-              "y": 192,
-              "width": 320,
-              "height": 24,
+              "y": 40,
+              "width": 358,
+              "height": 48,
               "component": "Input",
               "style": {
-                "fill": "#EEF1F5",
-                "stroke": "#E0E6EE",
-                "text": "#5F6A7B",
-                "radius": 0,
-                "paddingX": 0,
-                "paddingY": 0,
-                "gap": 8,
-                "fontSize": 17,
-                "lineHeight": 26,
-                "fontWeight": "regular"
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
               },
               "variant": {
+                "intent": "default",
+                "width": "full",
+                "state": "readonly",
+                "size": "md",
                 "readOnly": true,
-                "value": "Read only"
+                "value": "Read only value"
               },
-              "variables": {
-                "field.background": "Semantic/surface/subtle",
-                "field.border": "Semantic/border/default",
-                "value.color": "Semantic/text/secondary",
-                "placeholder.color": "Semantic/text/muted"
-              },
-              "text": "Read only"
-            },
-            {
-              "id": "layout_15",
-              "type": "INSTANCE",
-              "name": "Clearable",
-              "x": 48,
-              "y": 192,
-              "width": 320,
-              "height": 24,
-              "component": "Input",
-              "style": {
-                "fill": "#FFFFFF",
-                "stroke": "#E0E6EE",
-                "text": "#1F2430",
-                "radius": 0,
-                "paddingX": 0,
-                "paddingY": 0,
-                "gap": 8,
-                "fontSize": 17,
-                "lineHeight": 26,
-                "fontWeight": "regular"
-              },
-              "variant": {
-                "clearable": true,
-                "value": "Clear me"
-              },
-              "variables": {
-                "field.background": "Semantic/surface/default",
-                "field.border": "Semantic/border/default",
-                "value.color": "Semantic/text/primary",
-                "placeholder.color": "Semantic/text/muted"
-              },
-              "text": "Clear me"
+              "variables": {},
+              "text": "Read only value"
             }
           ]
         },
         {
-          "id": "layout_16",
+          "id": "layout_15",
           "type": "FRAME",
-          "name": "form-row-3",
+          "name": "preview-row-4",
           "x": 48,
-          "y": 192,
+          "y": 40,
           "width": 1320,
           "height": 100,
           "children": [
             {
-              "id": "layout_17",
+              "id": "layout_16",
               "type": "INSTANCE",
-              "name": "Clear On Focus",
+              "name": "Loading",
               "x": 48,
-              "y": 192,
-              "width": 320,
-              "height": 24,
+              "y": 40,
+              "width": 358,
+              "height": 48,
               "component": "Input",
               "style": {
-                "fill": "#FFFFFF",
-                "stroke": "#E0E6EE",
-                "text": "#1F2430",
-                "radius": 0,
-                "paddingX": 0,
-                "paddingY": 0,
-                "gap": 8,
-                "fontSize": 17,
-                "lineHeight": 26,
-                "fontWeight": "regular"
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
               },
               "variant": {
-                "clearable": true,
-                "value": "Focus clear",
-                "onlyShowClearWhenFocus": true
+                "intent": "default",
+                "width": "full",
+                "state": "loading",
+                "size": "md",
+                "value": "Loading value"
               },
-              "variables": {
-                "field.background": "Semantic/surface/default",
-                "field.border": "Semantic/border/default",
-                "value.color": "Semantic/text/primary",
-                "placeholder.color": "Semantic/text/muted"
+              "variables": {},
+              "text": "Loading value"
+            },
+            {
+              "id": "layout_17",
+              "type": "INSTANCE",
+              "name": "Hug Width",
+              "x": 48,
+              "y": 40,
+              "width": 220,
+              "height": 48,
+              "component": "Input",
+              "style": {
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
               },
-              "text": "Focus clear"
+              "variant": {
+                "intent": "default",
+                "width": "hug",
+                "state": "enabled",
+                "size": "md",
+                "placeholder": "Short"
+              },
+              "variables": {}
             },
             {
               "id": "layout_18",
               "type": "INSTANCE",
-              "name": "Password",
+              "name": "Full Width",
               "x": 48,
-              "y": 192,
-              "width": 320,
-              "height": 24,
+              "y": 40,
+              "width": 358,
+              "height": 48,
               "component": "Input",
               "style": {
-                "fill": "#FFFFFF",
-                "stroke": "#E0E6EE",
-                "text": "#1F2430",
-                "radius": 0,
-                "paddingX": 0,
-                "paddingY": 0,
-                "gap": 8,
-                "fontSize": 17,
-                "lineHeight": 26,
-                "fontWeight": "regular"
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
               },
               "variant": {
-                "value": "secret123",
-                "type": "password"
+                "intent": "default",
+                "width": "full",
+                "state": "enabled",
+                "size": "md",
+                "placeholder": "Full width field"
               },
-              "variables": {
-                "field.background": "Semantic/surface/default",
-                "field.border": "Semantic/border/default",
-                "value.color": "Semantic/text/primary",
-                "placeholder.color": "Semantic/text/muted"
-              },
-              "text": "secret123"
-            },
-            {
-              "id": "layout_19",
-              "type": "INSTANCE",
-              "name": "Number",
-              "x": 48,
-              "y": 192,
-              "width": 320,
-              "height": 24,
-              "component": "Input",
-              "style": {
-                "fill": "#FFFFFF",
-                "stroke": "#E0E6EE",
-                "text": "#1F2430",
-                "radius": 0,
-                "paddingX": 0,
-                "paddingY": 0,
-                "gap": 8,
-                "fontSize": 17,
-                "lineHeight": 26,
-                "fontWeight": "regular"
-              },
-              "variant": {
-                "value": "12",
-                "step": 1,
-                "min": 0,
-                "max": 20,
-                "type": "number"
-              },
-              "variables": {
-                "field.background": "Semantic/surface/default",
-                "field.border": "Semantic/border/default",
-                "value.color": "Semantic/text/primary",
-                "placeholder.color": "Semantic/text/muted"
-              },
-              "text": "12"
+              "variables": {}
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "layout_6",
-      "type": "TEXT",
-      "name": "Text 2",
-      "x": 48,
-      "y": 192,
-      "width": 358,
-      "height": 24,
-      "text": "Input Only",
-      "variables": {
-        "text.color": "semantic.text.secondary"
-      },
-      "style": {
-        "text": "text/body/lg",
-        "fill": "#5F6A7B"
-      }
-    },
-    {
-      "id": "layout_7",
-      "type": "FRAME",
-      "name": "form-row-1",
-      "x": 48,
-      "y": 192,
-      "width": 1320,
-      "height": 100,
-      "children": [
-        {
-          "id": "layout_8",
-          "type": "INSTANCE",
-          "name": "Placeholder",
-          "x": 48,
-          "y": 192,
-          "width": 320,
-          "height": 24,
-          "component": "Input",
-          "style": {
-            "fill": "#FFFFFF",
-            "stroke": "#E0E6EE",
-            "text": "#1F2430",
-            "radius": 0,
-            "paddingX": 0,
-            "paddingY": 0,
-            "gap": 8,
-            "fontSize": 17,
-            "lineHeight": 26,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "placeholder": "Type here"
-          },
-          "variables": {
-            "field.background": "Semantic/surface/default",
-            "field.border": "Semantic/border/default",
-            "value.color": "Semantic/text/primary",
-            "placeholder.color": "Semantic/text/muted"
-          }
-        },
-        {
-          "id": "layout_9",
-          "type": "INSTANCE",
-          "name": "Value",
-          "x": 48,
-          "y": 192,
-          "width": 320,
-          "height": 24,
-          "component": "Input",
-          "style": {
-            "fill": "#FFFFFF",
-            "stroke": "#E0E6EE",
-            "text": "#1F2430",
-            "radius": 0,
-            "paddingX": 0,
-            "paddingY": 0,
-            "gap": 8,
-            "fontSize": 17,
-            "lineHeight": 26,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "value": "Current value"
-          },
-          "variables": {
-            "field.background": "Semantic/surface/default",
-            "field.border": "Semantic/border/default",
-            "value.color": "Semantic/text/primary",
-            "placeholder.color": "Semantic/text/muted"
-          },
-          "text": "Current value"
-        },
-        {
-          "id": "layout_10",
-          "type": "INSTANCE",
-          "name": "Default Value",
-          "x": 48,
-          "y": 192,
-          "width": 320,
-          "height": 24,
-          "component": "Input",
-          "style": {
-            "fill": "#FFFFFF",
-            "stroke": "#E0E6EE",
-            "text": "#1F2430",
-            "radius": 0,
-            "paddingX": 0,
-            "paddingY": 0,
-            "gap": 8,
-            "fontSize": 17,
-            "lineHeight": 26,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "defaultValue": "Seed value"
-          },
-          "variables": {
-            "field.background": "Semantic/surface/default",
-            "field.border": "Semantic/border/default",
-            "value.color": "Semantic/text/primary",
-            "placeholder.color": "Semantic/text/muted"
-          },
-          "text": "Seed value"
-        }
-      ]
-    },
-    {
-      "id": "layout_8",
-      "type": "INSTANCE",
-      "name": "Placeholder",
-      "x": 48,
-      "y": 192,
-      "width": 320,
-      "height": 24,
-      "component": "Input",
-      "style": {
-        "fill": "#FFFFFF",
-        "stroke": "#E0E6EE",
-        "text": "#1F2430",
-        "radius": 0,
-        "paddingX": 0,
-        "paddingY": 0,
-        "gap": 8,
-        "fontSize": 17,
-        "lineHeight": 26,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "placeholder": "Type here"
-      },
-      "variables": {
-        "field.background": "Semantic/surface/default",
-        "field.border": "Semantic/border/default",
-        "value.color": "Semantic/text/primary",
-        "placeholder.color": "Semantic/text/muted"
-      }
-    },
-    {
-      "id": "layout_9",
-      "type": "INSTANCE",
-      "name": "Value",
-      "x": 48,
-      "y": 192,
-      "width": 320,
-      "height": 24,
-      "component": "Input",
-      "style": {
-        "fill": "#FFFFFF",
-        "stroke": "#E0E6EE",
-        "text": "#1F2430",
-        "radius": 0,
-        "paddingX": 0,
-        "paddingY": 0,
-        "gap": 8,
-        "fontSize": 17,
-        "lineHeight": 26,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "value": "Current value"
-      },
-      "variables": {
-        "field.background": "Semantic/surface/default",
-        "field.border": "Semantic/border/default",
-        "value.color": "Semantic/text/primary",
-        "placeholder.color": "Semantic/text/muted"
-      },
-      "text": "Current value"
-    },
-    {
-      "id": "layout_10",
-      "type": "INSTANCE",
-      "name": "Default Value",
-      "x": 48,
-      "y": 192,
-      "width": 320,
-      "height": 24,
-      "component": "Input",
-      "style": {
-        "fill": "#FFFFFF",
-        "stroke": "#E0E6EE",
-        "text": "#1F2430",
-        "radius": 0,
-        "paddingX": 0,
-        "paddingY": 0,
-        "gap": 8,
-        "fontSize": 17,
-        "lineHeight": 26,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "defaultValue": "Seed value"
-      },
-      "variables": {
-        "field.background": "Semantic/surface/default",
-        "field.border": "Semantic/border/default",
-        "value.color": "Semantic/text/primary",
-        "placeholder.color": "Semantic/text/muted"
-      },
-      "text": "Seed value"
-    },
-    {
-      "id": "layout_11",
-      "type": "TEXT",
-      "name": "Text 6",
-      "x": 48,
-      "y": 192,
-      "width": 358,
-      "height": 24,
-      "text": "Interaction Props",
-      "variables": {
-        "text.color": "semantic.text.secondary"
-      },
-      "style": {
-        "text": "text/body/lg",
-        "fill": "#5F6A7B"
-      }
-    },
-    {
-      "id": "layout_12",
-      "type": "FRAME",
-      "name": "form-row-2",
-      "x": 48,
-      "y": 192,
-      "width": 1320,
-      "height": 100,
-      "children": [
-        {
-          "id": "layout_13",
-          "type": "INSTANCE",
-          "name": "Disabled",
-          "x": 48,
-          "y": 192,
-          "width": 320,
-          "height": 24,
-          "component": "Input",
-          "style": {
-            "fill": "#EEF1F5",
-            "stroke": "#EEF1F5",
-            "text": "#7E8A9C",
-            "radius": 0,
-            "paddingX": 0,
-            "paddingY": 0,
-            "gap": 8,
-            "fontSize": 17,
-            "lineHeight": 26,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "disabled": true,
-            "placeholder": "Disabled placeholder"
-          },
-          "variables": {
-            "field.background": "Semantic/surface/subtle",
-            "field.border": "Semantic/border/subtle",
-            "value.color": "Semantic/text/muted",
-            "placeholder.color": "Semantic/text/muted"
-          }
-        },
-        {
-          "id": "layout_14",
-          "type": "INSTANCE",
-          "name": "Read Only",
-          "x": 48,
-          "y": 192,
-          "width": 320,
-          "height": 24,
-          "component": "Input",
-          "style": {
-            "fill": "#EEF1F5",
-            "stroke": "#E0E6EE",
-            "text": "#5F6A7B",
-            "radius": 0,
-            "paddingX": 0,
-            "paddingY": 0,
-            "gap": 8,
-            "fontSize": 17,
-            "lineHeight": 26,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "readOnly": true,
-            "value": "Read only"
-          },
-          "variables": {
-            "field.background": "Semantic/surface/subtle",
-            "field.border": "Semantic/border/default",
-            "value.color": "Semantic/text/secondary",
-            "placeholder.color": "Semantic/text/muted"
-          },
-          "text": "Read only"
-        },
-        {
-          "id": "layout_15",
-          "type": "INSTANCE",
-          "name": "Clearable",
-          "x": 48,
-          "y": 192,
-          "width": 320,
-          "height": 24,
-          "component": "Input",
-          "style": {
-            "fill": "#FFFFFF",
-            "stroke": "#E0E6EE",
-            "text": "#1F2430",
-            "radius": 0,
-            "paddingX": 0,
-            "paddingY": 0,
-            "gap": 8,
-            "fontSize": 17,
-            "lineHeight": 26,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "clearable": true,
-            "value": "Clear me"
-          },
-          "variables": {
-            "field.background": "Semantic/surface/default",
-            "field.border": "Semantic/border/default",
-            "value.color": "Semantic/text/primary",
-            "placeholder.color": "Semantic/text/muted"
-          },
-          "text": "Clear me"
-        }
-      ]
-    },
-    {
-      "id": "layout_13",
-      "type": "INSTANCE",
-      "name": "Disabled",
-      "x": 48,
-      "y": 192,
-      "width": 320,
-      "height": 24,
-      "component": "Input",
-      "style": {
-        "fill": "#EEF1F5",
-        "stroke": "#EEF1F5",
-        "text": "#7E8A9C",
-        "radius": 0,
-        "paddingX": 0,
-        "paddingY": 0,
-        "gap": 8,
-        "fontSize": 17,
-        "lineHeight": 26,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "disabled": true,
-        "placeholder": "Disabled placeholder"
-      },
-      "variables": {
-        "field.background": "Semantic/surface/subtle",
-        "field.border": "Semantic/border/subtle",
-        "value.color": "Semantic/text/muted",
-        "placeholder.color": "Semantic/text/muted"
-      }
-    },
-    {
-      "id": "layout_14",
-      "type": "INSTANCE",
-      "name": "Read Only",
-      "x": 48,
-      "y": 192,
-      "width": 320,
-      "height": 24,
-      "component": "Input",
-      "style": {
-        "fill": "#EEF1F5",
-        "stroke": "#E0E6EE",
-        "text": "#5F6A7B",
-        "radius": 0,
-        "paddingX": 0,
-        "paddingY": 0,
-        "gap": 8,
-        "fontSize": 17,
-        "lineHeight": 26,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "readOnly": true,
-        "value": "Read only"
-      },
-      "variables": {
-        "field.background": "Semantic/surface/subtle",
-        "field.border": "Semantic/border/default",
-        "value.color": "Semantic/text/secondary",
-        "placeholder.color": "Semantic/text/muted"
-      },
-      "text": "Read only"
-    },
-    {
-      "id": "layout_15",
-      "type": "INSTANCE",
-      "name": "Clearable",
-      "x": 48,
-      "y": 192,
-      "width": 320,
-      "height": 24,
-      "component": "Input",
-      "style": {
-        "fill": "#FFFFFF",
-        "stroke": "#E0E6EE",
-        "text": "#1F2430",
-        "radius": 0,
-        "paddingX": 0,
-        "paddingY": 0,
-        "gap": 8,
-        "fontSize": 17,
-        "lineHeight": 26,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "clearable": true,
-        "value": "Clear me"
-      },
-      "variables": {
-        "field.background": "Semantic/surface/default",
-        "field.border": "Semantic/border/default",
-        "value.color": "Semantic/text/primary",
-        "placeholder.color": "Semantic/text/muted"
-      },
-      "text": "Clear me"
-    },
-    {
-      "id": "layout_16",
-      "type": "FRAME",
-      "name": "form-row-3",
-      "x": 48,
-      "y": 192,
-      "width": 1320,
-      "height": 100,
-      "children": [
-        {
-          "id": "layout_17",
-          "type": "INSTANCE",
-          "name": "Clear On Focus",
-          "x": 48,
-          "y": 192,
-          "width": 320,
-          "height": 24,
-          "component": "Input",
-          "style": {
-            "fill": "#FFFFFF",
-            "stroke": "#E0E6EE",
-            "text": "#1F2430",
-            "radius": 0,
-            "paddingX": 0,
-            "paddingY": 0,
-            "gap": 8,
-            "fontSize": 17,
-            "lineHeight": 26,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "clearable": true,
-            "value": "Focus clear",
-            "onlyShowClearWhenFocus": true
-          },
-          "variables": {
-            "field.background": "Semantic/surface/default",
-            "field.border": "Semantic/border/default",
-            "value.color": "Semantic/text/primary",
-            "placeholder.color": "Semantic/text/muted"
-          },
-          "text": "Focus clear"
-        },
-        {
-          "id": "layout_18",
-          "type": "INSTANCE",
-          "name": "Password",
-          "x": 48,
-          "y": 192,
-          "width": 320,
-          "height": 24,
-          "component": "Input",
-          "style": {
-            "fill": "#FFFFFF",
-            "stroke": "#E0E6EE",
-            "text": "#1F2430",
-            "radius": 0,
-            "paddingX": 0,
-            "paddingY": 0,
-            "gap": 8,
-            "fontSize": 17,
-            "lineHeight": 26,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "value": "secret123",
-            "type": "password"
-          },
-          "variables": {
-            "field.background": "Semantic/surface/default",
-            "field.border": "Semantic/border/default",
-            "value.color": "Semantic/text/primary",
-            "placeholder.color": "Semantic/text/muted"
-          },
-          "text": "secret123"
         },
         {
           "id": "layout_19",
-          "type": "INSTANCE",
-          "name": "Number",
+          "type": "FRAME",
+          "name": "preview-row-5",
           "x": 48,
-          "y": 192,
-          "width": 320,
-          "height": 24,
-          "component": "Input",
-          "style": {
-            "fill": "#FFFFFF",
-            "stroke": "#E0E6EE",
-            "text": "#1F2430",
-            "radius": 0,
-            "paddingX": 0,
-            "paddingY": 0,
-            "gap": 8,
-            "fontSize": 17,
-            "lineHeight": 26,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "value": "12",
-            "step": 1,
-            "min": 0,
-            "max": 20,
-            "type": "number"
-          },
-          "variables": {
-            "field.background": "Semantic/surface/default",
-            "field.border": "Semantic/border/default",
-            "value.color": "Semantic/text/primary",
-            "placeholder.color": "Semantic/text/muted"
-          },
-          "text": "12"
-        }
-      ]
-    },
-    {
-      "id": "layout_17",
-      "type": "INSTANCE",
-      "name": "Clear On Focus",
-      "x": 48,
-      "y": 192,
-      "width": 320,
-      "height": 24,
-      "component": "Input",
-      "style": {
-        "fill": "#FFFFFF",
-        "stroke": "#E0E6EE",
-        "text": "#1F2430",
-        "radius": 0,
-        "paddingX": 0,
-        "paddingY": 0,
-        "gap": 8,
-        "fontSize": 17,
-        "lineHeight": 26,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "clearable": true,
-        "value": "Focus clear",
-        "onlyShowClearWhenFocus": true
-      },
-      "variables": {
-        "field.background": "Semantic/surface/default",
-        "field.border": "Semantic/border/default",
-        "value.color": "Semantic/text/primary",
-        "placeholder.color": "Semantic/text/muted"
-      },
-      "text": "Focus clear"
-    },
-    {
-      "id": "layout_18",
-      "type": "INSTANCE",
-      "name": "Password",
-      "x": 48,
-      "y": 192,
-      "width": 320,
-      "height": 24,
-      "component": "Input",
-      "style": {
-        "fill": "#FFFFFF",
-        "stroke": "#E0E6EE",
-        "text": "#1F2430",
-        "radius": 0,
-        "paddingX": 0,
-        "paddingY": 0,
-        "gap": 8,
-        "fontSize": 17,
-        "lineHeight": 26,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "value": "secret123",
-        "type": "password"
-      },
-      "variables": {
-        "field.background": "Semantic/surface/default",
-        "field.border": "Semantic/border/default",
-        "value.color": "Semantic/text/primary",
-        "placeholder.color": "Semantic/text/muted"
-      },
-      "text": "secret123"
-    },
-    {
-      "id": "layout_19",
-      "type": "INSTANCE",
-      "name": "Number",
-      "x": 48,
-      "y": 192,
-      "width": 320,
-      "height": 24,
-      "component": "Input",
-      "style": {
-        "fill": "#FFFFFF",
-        "stroke": "#E0E6EE",
-        "text": "#1F2430",
-        "radius": 0,
-        "paddingX": 0,
-        "paddingY": 0,
-        "gap": 8,
-        "fontSize": 17,
-        "lineHeight": 26,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "value": "12",
-        "step": 1,
-        "min": 0,
-        "max": 20,
-        "type": "number"
-      },
-      "variables": {
-        "field.background": "Semantic/surface/default",
-        "field.border": "Semantic/border/default",
-        "value.color": "Semantic/text/primary",
-        "placeholder.color": "Semantic/text/muted"
-      },
-      "text": "12"
-    },
-    {
-      "id": "layout_20",
-      "type": "FRAME",
-      "name": "action-section",
-      "x": 48,
-      "y": 456,
-      "width": 1320,
-      "height": 100,
-      "children": []
-    },
-    {
-      "id": "layout_21",
-      "type": "FRAME",
-      "name": "list-section",
-      "x": 48,
-      "y": 532,
-      "width": 1320,
-      "height": 100,
-      "children": [
-        {
-          "id": "layout_22",
-          "type": "TEXT",
-          "name": "Text 13",
-          "x": 48,
-          "y": 532,
-          "width": 358,
-          "height": 24,
-          "text": "Input + Cell",
-          "variables": {
-            "text.color": "semantic.text.secondary"
-          },
-          "style": {
-            "text": "text/body/lg",
-            "fill": "#5F6A7B"
-          }
+          "y": 40,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_20",
+              "type": "INSTANCE",
+              "name": "With Helper",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 48,
+              "component": "Input",
+              "style": {
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
+              },
+              "variant": {
+                "intent": "default",
+                "width": "full",
+                "state": "enabled",
+                "size": "md",
+                "placeholder": "Email address"
+              },
+              "variables": {}
+            },
+            {
+              "id": "layout_21",
+              "type": "INSTANCE",
+              "name": "With Error Text",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 48,
+              "component": "Input",
+              "style": {
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
+                "gap": 0,
+                "fontSize": 16,
+                "lineHeight": 22,
+                "fontWeight": "regular",
+                "minWidth": 220
+              },
+              "variant": {
+                "intent": "error",
+                "width": "full",
+                "state": "focused",
+                "size": "md",
+                "value": "wrong@email"
+              },
+              "variables": {},
+              "text": "wrong@email"
+            },
+            {
+              "id": "layout_22",
+              "type": "INSTANCE",
+              "name": "Multiline",
+              "x": 48,
+              "y": 40,
+              "width": 358,
+              "height": 56,
+              "component": "Input",
+              "style": {
+                "radius": 16,
+                "paddingX": 16,
+                "paddingY": 16,
+                "gap": 0,
+                "fontSize": 17,
+                "lineHeight": 24,
+                "fontWeight": "regular",
+                "minWidth": 220
+              },
+              "variant": {
+                "intent": "default",
+                "width": "full",
+                "state": "enabled",
+                "size": "lg",
+                "placeholder": "Type a longer message"
+              },
+              "variables": {}
+            }
+          ]
         },
         {
           "id": "layout_23",
           "type": "FRAME",
-          "name": "list-row-1",
+          "name": "preview-row-6",
           "x": 48,
-          "y": 532,
+          "y": 40,
           "width": 1320,
           "height": 100,
           "children": [
             {
               "id": "layout_24",
               "type": "INSTANCE",
-              "name": "Email",
+              "name": "Readonly Field",
               "x": 48,
-              "y": 532,
+              "y": 40,
               "width": 358,
-              "height": 72,
-              "component": "Cell",
+              "height": 48,
+              "component": "Input",
               "style": {
-                "paddingY": 9,
+                "radius": 14,
+                "paddingX": 14,
+                "paddingY": 14,
                 "gap": 0,
-                "fontSize": 15,
+                "fontSize": 16,
                 "lineHeight": 22,
-                "fontWeight": "regular"
+                "fontWeight": "regular",
+                "minWidth": 220
               },
               "variant": {
-                "title": "Email",
-                "children": "input:email@example.com",
-                "description": "Cell container metrics",
-                "extra": "Required"
+                "intent": "default",
+                "width": "full",
+                "state": "readonly",
+                "size": "md",
+                "readOnly": true,
+                "value": "Generated project slug"
               },
               "variables": {},
-              "text": "Email"
-            },
-            {
-              "id": "layout_25",
-              "type": "INSTANCE",
-              "name": "Search",
-              "x": 48,
-              "y": 532,
-              "width": 358,
-              "height": 56,
-              "component": "Cell",
-              "style": {
-                "paddingY": 9,
-                "gap": 0,
-                "fontSize": 15,
-                "lineHeight": 22,
-                "fontWeight": "regular"
-              },
-              "variant": {
-                "title": "Search",
-                "children": "input:Search query",
-                "prefix": "S",
-                "clickable": true,
-                "arrowIcon": true
-              },
-              "variables": {},
-              "text": "Search"
-            }
-          ]
-        },
-        {
-          "id": "layout_26",
-          "type": "TEXT",
-          "name": "Text 16",
-          "x": 48,
-          "y": 532,
-          "width": 358,
-          "height": 24,
-          "text": "Input + List",
-          "variables": {
-            "text.color": "semantic.text.secondary"
-          },
-          "style": {
-            "text": "text/body/lg",
-            "fill": "#5F6A7B"
-          }
-        },
-        {
-          "id": "layout_27",
-          "type": "FRAME",
-          "name": "list-row-2",
-          "x": 48,
-          "y": 532,
-          "width": 1320,
-          "height": 100,
-          "children": [
-            {
-              "id": "layout_28",
-              "type": "INSTANCE",
-              "name": "Default List Shell",
-              "x": 48,
-              "y": 532,
-              "width": 358,
-              "height": 160,
-              "component": "List",
-              "style": {
-                "paddingY": 9,
-                "gap": 0,
-                "fontSize": 15,
-                "lineHeight": 22,
-                "fontWeight": "regular"
-              },
-              "variant": {
-                "header": "Profile",
-                "mode": "default",
-                "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
-              },
-              "variables": {},
-              "text": "Profile"
-            },
-            {
-              "id": "layout_29",
-              "type": "INSTANCE",
-              "name": "Card List Shell",
-              "x": 48,
-              "y": 532,
-              "width": 358,
-              "height": 184,
-              "component": "List",
-              "style": {
-                "paddingY": 9,
-                "gap": 0,
-                "fontSize": 15,
-                "lineHeight": 22,
-                "fontWeight": "regular"
-              },
-              "variant": {
-                "header": "Billing",
-                "mode": "card",
-                "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
-              },
-              "variables": {},
-              "text": "Billing"
+              "text": "Generated project slug"
             }
           ]
         }
       ]
     },
     {
-      "id": "layout_22",
-      "type": "TEXT",
-      "name": "Text 13",
+      "id": "layout_3",
+      "type": "FRAME",
+      "name": "preview-row-1",
       "x": 48,
-      "y": 532,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_4",
+          "type": "INSTANCE",
+          "name": "Default",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "full",
+            "state": "enabled",
+            "size": "md",
+            "placeholder": "Type here"
+          },
+          "variables": {}
+        },
+        {
+          "id": "layout_5",
+          "type": "INSTANCE",
+          "name": "Error",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "error",
+            "width": "full",
+            "state": "focused",
+            "size": "md",
+            "value": "Wrong value"
+          },
+          "variables": {},
+          "text": "Wrong value"
+        },
+        {
+          "id": "layout_6",
+          "type": "INSTANCE",
+          "name": "Success",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "success",
+            "width": "full",
+            "state": "enabled",
+            "size": "md",
+            "value": "Correct value"
+          },
+          "variables": {},
+          "text": "Correct value"
+        }
+      ]
+    },
+    {
+      "id": "layout_4",
+      "type": "INSTANCE",
+      "name": "Default",
+      "x": 48,
+      "y": 40,
       "width": 358,
-      "height": 24,
-      "text": "Input + Cell",
-      "variables": {
-        "text.color": "semantic.text.secondary"
-      },
+      "height": 48,
+      "component": "Input",
       "style": {
-        "text": "text/body/lg",
-        "fill": "#5F6A7B"
-      }
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "md",
+        "placeholder": "Type here"
+      },
+      "variables": {}
+    },
+    {
+      "id": "layout_5",
+      "type": "INSTANCE",
+      "name": "Error",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 48,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "error",
+        "width": "full",
+        "state": "focused",
+        "size": "md",
+        "value": "Wrong value"
+      },
+      "variables": {},
+      "text": "Wrong value"
+    },
+    {
+      "id": "layout_6",
+      "type": "INSTANCE",
+      "name": "Success",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 48,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "success",
+        "width": "full",
+        "state": "enabled",
+        "size": "md",
+        "value": "Correct value"
+      },
+      "variables": {},
+      "text": "Correct value"
+    },
+    {
+      "id": "layout_7",
+      "type": "FRAME",
+      "name": "preview-row-2",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_8",
+          "type": "INSTANCE",
+          "name": "Small",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 44,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 12,
+            "gap": 0,
+            "fontSize": 15,
+            "lineHeight": 20,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "full",
+            "state": "enabled",
+            "size": "sm",
+            "placeholder": "Small input"
+          },
+          "variables": {}
+        },
+        {
+          "id": "layout_9",
+          "type": "INSTANCE",
+          "name": "Medium",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "full",
+            "state": "enabled",
+            "size": "md",
+            "placeholder": "Medium input"
+          },
+          "variables": {}
+        },
+        {
+          "id": "layout_10",
+          "type": "INSTANCE",
+          "name": "Large",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 56,
+          "component": "Input",
+          "style": {
+            "radius": 16,
+            "paddingX": 16,
+            "paddingY": 16,
+            "gap": 0,
+            "fontSize": 17,
+            "lineHeight": 24,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "full",
+            "state": "enabled",
+            "size": "lg",
+            "placeholder": "Large input"
+          },
+          "variables": {}
+        }
+      ]
+    },
+    {
+      "id": "layout_8",
+      "type": "INSTANCE",
+      "name": "Small",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 44,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 12,
+        "gap": 0,
+        "fontSize": 15,
+        "lineHeight": 20,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "sm",
+        "placeholder": "Small input"
+      },
+      "variables": {}
+    },
+    {
+      "id": "layout_9",
+      "type": "INSTANCE",
+      "name": "Medium",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 48,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "md",
+        "placeholder": "Medium input"
+      },
+      "variables": {}
+    },
+    {
+      "id": "layout_10",
+      "type": "INSTANCE",
+      "name": "Large",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 56,
+      "component": "Input",
+      "style": {
+        "radius": 16,
+        "paddingX": 16,
+        "paddingY": 16,
+        "gap": 0,
+        "fontSize": 17,
+        "lineHeight": 24,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "lg",
+        "placeholder": "Large input"
+      },
+      "variables": {}
+    },
+    {
+      "id": "layout_11",
+      "type": "FRAME",
+      "name": "preview-row-3",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_12",
+          "type": "INSTANCE",
+          "name": "Focused",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "full",
+            "state": "focused",
+            "size": "md",
+            "value": "Focused value"
+          },
+          "variables": {},
+          "text": "Focused value"
+        },
+        {
+          "id": "layout_13",
+          "type": "INSTANCE",
+          "name": "Disabled",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "full",
+            "state": "disabled",
+            "size": "md",
+            "disabled": true,
+            "value": "Disabled value"
+          },
+          "variables": {},
+          "text": "Disabled value"
+        },
+        {
+          "id": "layout_14",
+          "type": "INSTANCE",
+          "name": "Read Only",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "full",
+            "state": "readonly",
+            "size": "md",
+            "readOnly": true,
+            "value": "Read only value"
+          },
+          "variables": {},
+          "text": "Read only value"
+        }
+      ]
+    },
+    {
+      "id": "layout_12",
+      "type": "INSTANCE",
+      "name": "Focused",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 48,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "focused",
+        "size": "md",
+        "value": "Focused value"
+      },
+      "variables": {},
+      "text": "Focused value"
+    },
+    {
+      "id": "layout_13",
+      "type": "INSTANCE",
+      "name": "Disabled",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 48,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "disabled",
+        "size": "md",
+        "disabled": true,
+        "value": "Disabled value"
+      },
+      "variables": {},
+      "text": "Disabled value"
+    },
+    {
+      "id": "layout_14",
+      "type": "INSTANCE",
+      "name": "Read Only",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 48,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "readonly",
+        "size": "md",
+        "readOnly": true,
+        "value": "Read only value"
+      },
+      "variables": {},
+      "text": "Read only value"
+    },
+    {
+      "id": "layout_15",
+      "type": "FRAME",
+      "name": "preview-row-4",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_16",
+          "type": "INSTANCE",
+          "name": "Loading",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "full",
+            "state": "loading",
+            "size": "md",
+            "value": "Loading value"
+          },
+          "variables": {},
+          "text": "Loading value"
+        },
+        {
+          "id": "layout_17",
+          "type": "INSTANCE",
+          "name": "Hug Width",
+          "x": 48,
+          "y": 40,
+          "width": 220,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "hug",
+            "state": "enabled",
+            "size": "md",
+            "placeholder": "Short"
+          },
+          "variables": {}
+        },
+        {
+          "id": "layout_18",
+          "type": "INSTANCE",
+          "name": "Full Width",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "full",
+            "state": "enabled",
+            "size": "md",
+            "placeholder": "Full width field"
+          },
+          "variables": {}
+        }
+      ]
+    },
+    {
+      "id": "layout_16",
+      "type": "INSTANCE",
+      "name": "Loading",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 48,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "loading",
+        "size": "md",
+        "value": "Loading value"
+      },
+      "variables": {},
+      "text": "Loading value"
+    },
+    {
+      "id": "layout_17",
+      "type": "INSTANCE",
+      "name": "Hug Width",
+      "x": 48,
+      "y": 40,
+      "width": 220,
+      "height": 48,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "hug",
+        "state": "enabled",
+        "size": "md",
+        "placeholder": "Short"
+      },
+      "variables": {}
+    },
+    {
+      "id": "layout_18",
+      "type": "INSTANCE",
+      "name": "Full Width",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 48,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "md",
+        "placeholder": "Full width field"
+      },
+      "variables": {}
+    },
+    {
+      "id": "layout_19",
+      "type": "FRAME",
+      "name": "preview-row-5",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_20",
+          "type": "INSTANCE",
+          "name": "With Helper",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "full",
+            "state": "enabled",
+            "size": "md",
+            "placeholder": "Email address"
+          },
+          "variables": {}
+        },
+        {
+          "id": "layout_21",
+          "type": "INSTANCE",
+          "name": "With Error Text",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 48,
+          "component": "Input",
+          "style": {
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
+            "gap": 0,
+            "fontSize": 16,
+            "lineHeight": 22,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "error",
+            "width": "full",
+            "state": "focused",
+            "size": "md",
+            "value": "wrong@email"
+          },
+          "variables": {},
+          "text": "wrong@email"
+        },
+        {
+          "id": "layout_22",
+          "type": "INSTANCE",
+          "name": "Multiline",
+          "x": 48,
+          "y": 40,
+          "width": 358,
+          "height": 56,
+          "component": "Input",
+          "style": {
+            "radius": 16,
+            "paddingX": 16,
+            "paddingY": 16,
+            "gap": 0,
+            "fontSize": 17,
+            "lineHeight": 24,
+            "fontWeight": "regular",
+            "minWidth": 220
+          },
+          "variant": {
+            "intent": "default",
+            "width": "full",
+            "state": "enabled",
+            "size": "lg",
+            "placeholder": "Type a longer message"
+          },
+          "variables": {}
+        }
+      ]
+    },
+    {
+      "id": "layout_20",
+      "type": "INSTANCE",
+      "name": "With Helper",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 48,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "md",
+        "placeholder": "Email address"
+      },
+      "variables": {}
+    },
+    {
+      "id": "layout_21",
+      "type": "INSTANCE",
+      "name": "With Error Text",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 48,
+      "component": "Input",
+      "style": {
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
+        "gap": 0,
+        "fontSize": 16,
+        "lineHeight": 22,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "error",
+        "width": "full",
+        "state": "focused",
+        "size": "md",
+        "value": "wrong@email"
+      },
+      "variables": {},
+      "text": "wrong@email"
+    },
+    {
+      "id": "layout_22",
+      "type": "INSTANCE",
+      "name": "Multiline",
+      "x": 48,
+      "y": 40,
+      "width": 358,
+      "height": 56,
+      "component": "Input",
+      "style": {
+        "radius": 16,
+        "paddingX": 16,
+        "paddingY": 16,
+        "gap": 0,
+        "fontSize": 17,
+        "lineHeight": 24,
+        "fontWeight": "regular",
+        "minWidth": 220
+      },
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "lg",
+        "placeholder": "Type a longer message"
+      },
+      "variables": {}
     },
     {
       "id": "layout_23",
       "type": "FRAME",
-      "name": "list-row-1",
+      "name": "preview-row-6",
       "x": 48,
-      "y": 532,
+      "y": 40,
       "width": 1320,
       "height": 100,
       "children": [
         {
           "id": "layout_24",
           "type": "INSTANCE",
-          "name": "Email",
+          "name": "Readonly Field",
           "x": 48,
-          "y": 532,
+          "y": 40,
           "width": 358,
-          "height": 72,
-          "component": "Cell",
+          "height": 48,
+          "component": "Input",
           "style": {
-            "paddingY": 9,
+            "radius": 14,
+            "paddingX": 14,
+            "paddingY": 14,
             "gap": 0,
-            "fontSize": 15,
+            "fontSize": 16,
             "lineHeight": 22,
-            "fontWeight": "regular"
+            "fontWeight": "regular",
+            "minWidth": 220
           },
           "variant": {
-            "title": "Email",
-            "children": "input:email@example.com",
-            "description": "Cell container metrics",
-            "extra": "Required"
+            "intent": "default",
+            "width": "full",
+            "state": "readonly",
+            "size": "md",
+            "readOnly": true,
+            "value": "Generated project slug"
           },
           "variables": {},
-          "text": "Email"
-        },
-        {
-          "id": "layout_25",
-          "type": "INSTANCE",
-          "name": "Search",
-          "x": 48,
-          "y": 532,
-          "width": 358,
-          "height": 56,
-          "component": "Cell",
-          "style": {
-            "paddingY": 9,
-            "gap": 0,
-            "fontSize": 15,
-            "lineHeight": 22,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "title": "Search",
-            "children": "input:Search query",
-            "prefix": "S",
-            "clickable": true,
-            "arrowIcon": true
-          },
-          "variables": {},
-          "text": "Search"
+          "text": "Generated project slug"
         }
       ]
     },
     {
       "id": "layout_24",
       "type": "INSTANCE",
-      "name": "Email",
+      "name": "Readonly Field",
       "x": 48,
-      "y": 532,
+      "y": 40,
       "width": 358,
-      "height": 72,
-      "component": "Cell",
+      "height": 48,
+      "component": "Input",
       "style": {
-        "paddingY": 9,
+        "radius": 14,
+        "paddingX": 14,
+        "paddingY": 14,
         "gap": 0,
-        "fontSize": 15,
+        "fontSize": 16,
         "lineHeight": 22,
-        "fontWeight": "regular"
+        "fontWeight": "regular",
+        "minWidth": 220
       },
       "variant": {
-        "title": "Email",
-        "children": "input:email@example.com",
-        "description": "Cell container metrics",
-        "extra": "Required"
+        "intent": "default",
+        "width": "full",
+        "state": "readonly",
+        "size": "md",
+        "readOnly": true,
+        "value": "Generated project slug"
       },
       "variables": {},
-      "text": "Email"
-    },
-    {
-      "id": "layout_25",
-      "type": "INSTANCE",
-      "name": "Search",
-      "x": 48,
-      "y": 532,
-      "width": 358,
-      "height": 56,
-      "component": "Cell",
-      "style": {
-        "paddingY": 9,
-        "gap": 0,
-        "fontSize": 15,
-        "lineHeight": 22,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "title": "Search",
-        "children": "input:Search query",
-        "prefix": "S",
-        "clickable": true,
-        "arrowIcon": true
-      },
-      "variables": {},
-      "text": "Search"
-    },
-    {
-      "id": "layout_26",
-      "type": "TEXT",
-      "name": "Text 16",
-      "x": 48,
-      "y": 532,
-      "width": 358,
-      "height": 24,
-      "text": "Input + List",
-      "variables": {
-        "text.color": "semantic.text.secondary"
-      },
-      "style": {
-        "text": "text/body/lg",
-        "fill": "#5F6A7B"
-      }
-    },
-    {
-      "id": "layout_27",
-      "type": "FRAME",
-      "name": "list-row-2",
-      "x": 48,
-      "y": 532,
-      "width": 1320,
-      "height": 100,
-      "children": [
-        {
-          "id": "layout_28",
-          "type": "INSTANCE",
-          "name": "Default List Shell",
-          "x": 48,
-          "y": 532,
-          "width": 358,
-          "height": 160,
-          "component": "List",
-          "style": {
-            "paddingY": 9,
-            "gap": 0,
-            "fontSize": 15,
-            "lineHeight": 22,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "header": "Profile",
-            "mode": "default",
-            "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
-          },
-          "variables": {},
-          "text": "Profile"
-        },
-        {
-          "id": "layout_29",
-          "type": "INSTANCE",
-          "name": "Card List Shell",
-          "x": 48,
-          "y": 532,
-          "width": 358,
-          "height": 184,
-          "component": "List",
-          "style": {
-            "paddingY": 9,
-            "gap": 0,
-            "fontSize": 15,
-            "lineHeight": 22,
-            "fontWeight": "regular"
-          },
-          "variant": {
-            "header": "Billing",
-            "mode": "card",
-            "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
-          },
-          "variables": {},
-          "text": "Billing"
-        }
-      ]
-    },
-    {
-      "id": "layout_28",
-      "type": "INSTANCE",
-      "name": "Default List Shell",
-      "x": 48,
-      "y": 532,
-      "width": 358,
-      "height": 160,
-      "component": "List",
-      "style": {
-        "paddingY": 9,
-        "gap": 0,
-        "fontSize": 15,
-        "lineHeight": 22,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "header": "Profile",
-        "mode": "default",
-        "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
-      },
-      "variables": {},
-      "text": "Profile"
-    },
-    {
-      "id": "layout_29",
-      "type": "INSTANCE",
-      "name": "Card List Shell",
-      "x": 48,
-      "y": 532,
-      "width": 358,
-      "height": 184,
-      "component": "List",
-      "style": {
-        "paddingY": 9,
-        "gap": 0,
-        "fontSize": 15,
-        "lineHeight": 22,
-        "fontWeight": "regular"
-      },
-      "variant": {
-        "header": "Billing",
-        "mode": "card",
-        "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
-      },
-      "variables": {},
-      "text": "Billing"
+      "text": "Generated project slug"
     }
   ],
   "frames": [
@@ -2130,68 +2080,116 @@
     },
     {
       "id": "layout_2",
-      "name": "header-section"
+      "name": "preview-section"
     },
     {
-      "id": "layout_4",
-      "name": "content-section"
-    },
-    {
-      "id": "layout_5",
-      "name": "form-section"
+      "id": "layout_3",
+      "name": "preview-row-1"
     },
     {
       "id": "layout_7",
-      "name": "form-row-1"
+      "name": "preview-row-2"
     },
     {
-      "id": "layout_12",
-      "name": "form-row-2"
+      "id": "layout_11",
+      "name": "preview-row-3"
     },
     {
-      "id": "layout_16",
-      "name": "form-row-3"
+      "id": "layout_15",
+      "name": "preview-row-4"
     },
     {
-      "id": "layout_20",
-      "name": "action-section"
-    },
-    {
-      "id": "layout_21",
-      "name": "list-section"
+      "id": "layout_19",
+      "name": "preview-row-5"
     },
     {
       "id": "layout_23",
-      "name": "list-row-1"
-    },
-    {
-      "id": "layout_27",
-      "name": "list-row-2"
+      "name": "preview-row-6"
     }
   ],
   "components": [
     {
-      "id": "layout_8",
-      "name": "Placeholder",
+      "id": "layout_4",
+      "name": "Default",
       "component": "Input",
       "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "md",
         "placeholder": "Type here"
       }
     },
     {
-      "id": "layout_9",
-      "name": "Value",
+      "id": "layout_5",
+      "name": "Error",
       "component": "Input",
       "variant": {
-        "value": "Current value"
+        "intent": "error",
+        "width": "full",
+        "state": "focused",
+        "size": "md",
+        "value": "Wrong value"
+      }
+    },
+    {
+      "id": "layout_6",
+      "name": "Success",
+      "component": "Input",
+      "variant": {
+        "intent": "success",
+        "width": "full",
+        "state": "enabled",
+        "size": "md",
+        "value": "Correct value"
+      }
+    },
+    {
+      "id": "layout_8",
+      "name": "Small",
+      "component": "Input",
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "sm",
+        "placeholder": "Small input"
+      }
+    },
+    {
+      "id": "layout_9",
+      "name": "Medium",
+      "component": "Input",
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "md",
+        "placeholder": "Medium input"
       }
     },
     {
       "id": "layout_10",
-      "name": "Default Value",
+      "name": "Large",
       "component": "Input",
       "variant": {
-        "defaultValue": "Seed value"
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "lg",
+        "placeholder": "Large input"
+      }
+    },
+    {
+      "id": "layout_12",
+      "name": "Focused",
+      "component": "Input",
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "focused",
+        "size": "md",
+        "value": "Focused value"
       }
     },
     {
@@ -2199,8 +2197,12 @@
       "name": "Disabled",
       "component": "Input",
       "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "disabled",
+        "size": "md",
         "disabled": true,
-        "placeholder": "Disabled placeholder"
+        "value": "Disabled value"
       }
     },
     {
@@ -2208,304 +2210,230 @@
       "name": "Read Only",
       "component": "Input",
       "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "readonly",
+        "size": "md",
         "readOnly": true,
-        "value": "Read only"
+        "value": "Read only value"
       }
     },
     {
-      "id": "layout_15",
-      "name": "Clearable",
+      "id": "layout_16",
+      "name": "Loading",
       "component": "Input",
       "variant": {
-        "clearable": true,
-        "value": "Clear me"
+        "intent": "default",
+        "width": "full",
+        "state": "loading",
+        "size": "md",
+        "value": "Loading value"
       }
     },
     {
       "id": "layout_17",
-      "name": "Clear On Focus",
+      "name": "Hug Width",
       "component": "Input",
       "variant": {
-        "clearable": true,
-        "value": "Focus clear",
-        "onlyShowClearWhenFocus": true
+        "intent": "default",
+        "width": "hug",
+        "state": "enabled",
+        "size": "md",
+        "placeholder": "Short"
       }
     },
     {
       "id": "layout_18",
-      "name": "Password",
+      "name": "Full Width",
       "component": "Input",
       "variant": {
-        "value": "secret123",
-        "type": "password"
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "md",
+        "placeholder": "Full width field"
       }
     },
     {
-      "id": "layout_19",
-      "name": "Number",
+      "id": "layout_20",
+      "name": "With Helper",
       "component": "Input",
       "variant": {
-        "value": "12",
-        "step": 1,
-        "min": 0,
-        "max": 20,
-        "type": "number"
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "md",
+        "placeholder": "Email address"
+      }
+    },
+    {
+      "id": "layout_21",
+      "name": "With Error Text",
+      "component": "Input",
+      "variant": {
+        "intent": "error",
+        "width": "full",
+        "state": "focused",
+        "size": "md",
+        "value": "wrong@email"
+      }
+    },
+    {
+      "id": "layout_22",
+      "name": "Multiline",
+      "component": "Input",
+      "variant": {
+        "intent": "default",
+        "width": "full",
+        "state": "enabled",
+        "size": "lg",
+        "placeholder": "Type a longer message"
       }
     },
     {
       "id": "layout_24",
-      "name": "Email",
-      "component": "Cell",
+      "name": "Readonly Field",
+      "component": "Input",
       "variant": {
-        "title": "Email",
-        "children": "input:email@example.com",
-        "description": "Cell container metrics",
-        "extra": "Required"
-      }
-    },
-    {
-      "id": "layout_25",
-      "name": "Search",
-      "component": "Cell",
-      "variant": {
-        "title": "Search",
-        "children": "input:Search query",
-        "prefix": "S",
-        "clickable": true,
-        "arrowIcon": true
-      }
-    },
-    {
-      "id": "layout_28",
-      "name": "Default List Shell",
-      "component": "List",
-      "variant": {
-        "header": "Profile",
-        "mode": "default",
-        "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
-      }
-    },
-    {
-      "id": "layout_29",
-      "name": "Card List Shell",
-      "component": "List",
-      "variant": {
-        "header": "Billing",
-        "mode": "card",
-        "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
+        "intent": "default",
+        "width": "full",
+        "state": "readonly",
+        "size": "md",
+        "readOnly": true,
+        "value": "Generated project slug"
       }
     }
   ],
-  "variables": {
-    "layout_3.text.color": "semantic.text.primary",
-    "layout_6.text.color": "semantic.text.secondary",
-    "layout_8.field.background": "Semantic/surface/default",
-    "layout_8.field.border": "Semantic/border/default",
-    "layout_8.value.color": "Semantic/text/primary",
-    "layout_8.placeholder.color": "Semantic/text/muted",
-    "layout_9.field.background": "Semantic/surface/default",
-    "layout_9.field.border": "Semantic/border/default",
-    "layout_9.value.color": "Semantic/text/primary",
-    "layout_9.placeholder.color": "Semantic/text/muted",
-    "layout_10.field.background": "Semantic/surface/default",
-    "layout_10.field.border": "Semantic/border/default",
-    "layout_10.value.color": "Semantic/text/primary",
-    "layout_10.placeholder.color": "Semantic/text/muted",
-    "layout_11.text.color": "semantic.text.secondary",
-    "layout_13.field.background": "Semantic/surface/subtle",
-    "layout_13.field.border": "Semantic/border/subtle",
-    "layout_13.value.color": "Semantic/text/muted",
-    "layout_13.placeholder.color": "Semantic/text/muted",
-    "layout_14.field.background": "Semantic/surface/subtle",
-    "layout_14.field.border": "Semantic/border/default",
-    "layout_14.value.color": "Semantic/text/secondary",
-    "layout_14.placeholder.color": "Semantic/text/muted",
-    "layout_15.field.background": "Semantic/surface/default",
-    "layout_15.field.border": "Semantic/border/default",
-    "layout_15.value.color": "Semantic/text/primary",
-    "layout_15.placeholder.color": "Semantic/text/muted",
-    "layout_17.field.background": "Semantic/surface/default",
-    "layout_17.field.border": "Semantic/border/default",
-    "layout_17.value.color": "Semantic/text/primary",
-    "layout_17.placeholder.color": "Semantic/text/muted",
-    "layout_18.field.background": "Semantic/surface/default",
-    "layout_18.field.border": "Semantic/border/default",
-    "layout_18.value.color": "Semantic/text/primary",
-    "layout_18.placeholder.color": "Semantic/text/muted",
-    "layout_19.field.background": "Semantic/surface/default",
-    "layout_19.field.border": "Semantic/border/default",
-    "layout_19.value.color": "Semantic/text/primary",
-    "layout_19.placeholder.color": "Semantic/text/muted",
-    "layout_22.text.color": "semantic.text.secondary",
-    "layout_26.text.color": "semantic.text.secondary"
-  },
+  "variables": {},
   "styles": {
-    "layout_3.text": "text/heading/xl",
-    "layout_3.fill": "#1F2430",
-    "layout_6.text": "text/body/lg",
-    "layout_6.fill": "#5F6A7B",
-    "layout_8.fill": "#FFFFFF",
-    "layout_8.stroke": "#E0E6EE",
-    "layout_8.text": "#1F2430",
-    "layout_8.effect": "undefined",
-    "layout_8.radius": "0",
-    "layout_8.paddingX": "0",
-    "layout_8.paddingY": "0",
-    "layout_8.gap": "8",
-    "layout_8.fontSize": "17",
-    "layout_8.lineHeight": "26",
+    "layout_4.radius": "14",
+    "layout_4.paddingX": "14",
+    "layout_4.paddingY": "14",
+    "layout_4.gap": "0",
+    "layout_4.fontSize": "16",
+    "layout_4.lineHeight": "22",
+    "layout_4.fontWeight": "regular",
+    "layout_4.minWidth": "220",
+    "layout_5.radius": "14",
+    "layout_5.paddingX": "14",
+    "layout_5.paddingY": "14",
+    "layout_5.gap": "0",
+    "layout_5.fontSize": "16",
+    "layout_5.lineHeight": "22",
+    "layout_5.fontWeight": "regular",
+    "layout_5.minWidth": "220",
+    "layout_6.radius": "14",
+    "layout_6.paddingX": "14",
+    "layout_6.paddingY": "14",
+    "layout_6.gap": "0",
+    "layout_6.fontSize": "16",
+    "layout_6.lineHeight": "22",
+    "layout_6.fontWeight": "regular",
+    "layout_6.minWidth": "220",
+    "layout_8.radius": "14",
+    "layout_8.paddingX": "14",
+    "layout_8.paddingY": "12",
+    "layout_8.gap": "0",
+    "layout_8.fontSize": "15",
+    "layout_8.lineHeight": "20",
     "layout_8.fontWeight": "regular",
-    "layout_8.minWidth": "undefined",
-    "layout_9.fill": "#FFFFFF",
-    "layout_9.stroke": "#E0E6EE",
-    "layout_9.text": "#1F2430",
-    "layout_9.effect": "undefined",
-    "layout_9.radius": "0",
-    "layout_9.paddingX": "0",
-    "layout_9.paddingY": "0",
-    "layout_9.gap": "8",
-    "layout_9.fontSize": "17",
-    "layout_9.lineHeight": "26",
+    "layout_8.minWidth": "220",
+    "layout_9.radius": "14",
+    "layout_9.paddingX": "14",
+    "layout_9.paddingY": "14",
+    "layout_9.gap": "0",
+    "layout_9.fontSize": "16",
+    "layout_9.lineHeight": "22",
     "layout_9.fontWeight": "regular",
-    "layout_9.minWidth": "undefined",
-    "layout_10.fill": "#FFFFFF",
-    "layout_10.stroke": "#E0E6EE",
-    "layout_10.text": "#1F2430",
-    "layout_10.effect": "undefined",
-    "layout_10.radius": "0",
-    "layout_10.paddingX": "0",
-    "layout_10.paddingY": "0",
-    "layout_10.gap": "8",
+    "layout_9.minWidth": "220",
+    "layout_10.radius": "16",
+    "layout_10.paddingX": "16",
+    "layout_10.paddingY": "16",
+    "layout_10.gap": "0",
     "layout_10.fontSize": "17",
-    "layout_10.lineHeight": "26",
+    "layout_10.lineHeight": "24",
     "layout_10.fontWeight": "regular",
-    "layout_10.minWidth": "undefined",
-    "layout_11.text": "text/body/lg",
-    "layout_11.fill": "#5F6A7B",
-    "layout_13.fill": "#EEF1F5",
-    "layout_13.stroke": "#EEF1F5",
-    "layout_13.text": "#7E8A9C",
-    "layout_13.effect": "undefined",
-    "layout_13.radius": "0",
-    "layout_13.paddingX": "0",
-    "layout_13.paddingY": "0",
-    "layout_13.gap": "8",
-    "layout_13.fontSize": "17",
-    "layout_13.lineHeight": "26",
+    "layout_10.minWidth": "220",
+    "layout_12.radius": "14",
+    "layout_12.paddingX": "14",
+    "layout_12.paddingY": "14",
+    "layout_12.gap": "0",
+    "layout_12.fontSize": "16",
+    "layout_12.lineHeight": "22",
+    "layout_12.fontWeight": "regular",
+    "layout_12.minWidth": "220",
+    "layout_13.radius": "14",
+    "layout_13.paddingX": "14",
+    "layout_13.paddingY": "14",
+    "layout_13.gap": "0",
+    "layout_13.fontSize": "16",
+    "layout_13.lineHeight": "22",
     "layout_13.fontWeight": "regular",
-    "layout_13.minWidth": "undefined",
-    "layout_14.fill": "#EEF1F5",
-    "layout_14.stroke": "#E0E6EE",
-    "layout_14.text": "#5F6A7B",
-    "layout_14.effect": "undefined",
-    "layout_14.radius": "0",
-    "layout_14.paddingX": "0",
-    "layout_14.paddingY": "0",
-    "layout_14.gap": "8",
-    "layout_14.fontSize": "17",
-    "layout_14.lineHeight": "26",
+    "layout_13.minWidth": "220",
+    "layout_14.radius": "14",
+    "layout_14.paddingX": "14",
+    "layout_14.paddingY": "14",
+    "layout_14.gap": "0",
+    "layout_14.fontSize": "16",
+    "layout_14.lineHeight": "22",
     "layout_14.fontWeight": "regular",
-    "layout_14.minWidth": "undefined",
-    "layout_15.fill": "#FFFFFF",
-    "layout_15.stroke": "#E0E6EE",
-    "layout_15.text": "#1F2430",
-    "layout_15.effect": "undefined",
-    "layout_15.radius": "0",
-    "layout_15.paddingX": "0",
-    "layout_15.paddingY": "0",
-    "layout_15.gap": "8",
-    "layout_15.fontSize": "17",
-    "layout_15.lineHeight": "26",
-    "layout_15.fontWeight": "regular",
-    "layout_15.minWidth": "undefined",
-    "layout_17.fill": "#FFFFFF",
-    "layout_17.stroke": "#E0E6EE",
-    "layout_17.text": "#1F2430",
-    "layout_17.effect": "undefined",
-    "layout_17.radius": "0",
-    "layout_17.paddingX": "0",
-    "layout_17.paddingY": "0",
-    "layout_17.gap": "8",
-    "layout_17.fontSize": "17",
-    "layout_17.lineHeight": "26",
+    "layout_14.minWidth": "220",
+    "layout_16.radius": "14",
+    "layout_16.paddingX": "14",
+    "layout_16.paddingY": "14",
+    "layout_16.gap": "0",
+    "layout_16.fontSize": "16",
+    "layout_16.lineHeight": "22",
+    "layout_16.fontWeight": "regular",
+    "layout_16.minWidth": "220",
+    "layout_17.radius": "14",
+    "layout_17.paddingX": "14",
+    "layout_17.paddingY": "14",
+    "layout_17.gap": "0",
+    "layout_17.fontSize": "16",
+    "layout_17.lineHeight": "22",
     "layout_17.fontWeight": "regular",
-    "layout_17.minWidth": "undefined",
-    "layout_18.fill": "#FFFFFF",
-    "layout_18.stroke": "#E0E6EE",
-    "layout_18.text": "#1F2430",
-    "layout_18.effect": "undefined",
-    "layout_18.radius": "0",
-    "layout_18.paddingX": "0",
-    "layout_18.paddingY": "0",
-    "layout_18.gap": "8",
-    "layout_18.fontSize": "17",
-    "layout_18.lineHeight": "26",
+    "layout_17.minWidth": "220",
+    "layout_18.radius": "14",
+    "layout_18.paddingX": "14",
+    "layout_18.paddingY": "14",
+    "layout_18.gap": "0",
+    "layout_18.fontSize": "16",
+    "layout_18.lineHeight": "22",
     "layout_18.fontWeight": "regular",
-    "layout_18.minWidth": "undefined",
-    "layout_19.fill": "#FFFFFF",
-    "layout_19.stroke": "#E0E6EE",
-    "layout_19.text": "#1F2430",
-    "layout_19.effect": "undefined",
-    "layout_19.radius": "0",
-    "layout_19.paddingX": "0",
-    "layout_19.paddingY": "0",
-    "layout_19.gap": "8",
-    "layout_19.fontSize": "17",
-    "layout_19.lineHeight": "26",
-    "layout_19.fontWeight": "regular",
-    "layout_19.minWidth": "undefined",
-    "layout_22.text": "text/body/lg",
-    "layout_22.fill": "#5F6A7B",
-    "layout_24.fill": "undefined",
-    "layout_24.stroke": "undefined",
-    "layout_24.text": "undefined",
-    "layout_24.effect": "undefined",
-    "layout_24.radius": "undefined",
-    "layout_24.paddingX": "undefined",
-    "layout_24.paddingY": "9",
+    "layout_18.minWidth": "220",
+    "layout_20.radius": "14",
+    "layout_20.paddingX": "14",
+    "layout_20.paddingY": "14",
+    "layout_20.gap": "0",
+    "layout_20.fontSize": "16",
+    "layout_20.lineHeight": "22",
+    "layout_20.fontWeight": "regular",
+    "layout_20.minWidth": "220",
+    "layout_21.radius": "14",
+    "layout_21.paddingX": "14",
+    "layout_21.paddingY": "14",
+    "layout_21.gap": "0",
+    "layout_21.fontSize": "16",
+    "layout_21.lineHeight": "22",
+    "layout_21.fontWeight": "regular",
+    "layout_21.minWidth": "220",
+    "layout_22.radius": "16",
+    "layout_22.paddingX": "16",
+    "layout_22.paddingY": "16",
+    "layout_22.gap": "0",
+    "layout_22.fontSize": "17",
+    "layout_22.lineHeight": "24",
+    "layout_22.fontWeight": "regular",
+    "layout_22.minWidth": "220",
+    "layout_24.radius": "14",
+    "layout_24.paddingX": "14",
+    "layout_24.paddingY": "14",
     "layout_24.gap": "0",
-    "layout_24.fontSize": "15",
+    "layout_24.fontSize": "16",
     "layout_24.lineHeight": "22",
     "layout_24.fontWeight": "regular",
-    "layout_24.minWidth": "undefined",
-    "layout_25.fill": "undefined",
-    "layout_25.stroke": "undefined",
-    "layout_25.text": "undefined",
-    "layout_25.effect": "undefined",
-    "layout_25.radius": "undefined",
-    "layout_25.paddingX": "undefined",
-    "layout_25.paddingY": "9",
-    "layout_25.gap": "0",
-    "layout_25.fontSize": "15",
-    "layout_25.lineHeight": "22",
-    "layout_25.fontWeight": "regular",
-    "layout_25.minWidth": "undefined",
-    "layout_26.text": "text/body/lg",
-    "layout_26.fill": "#5F6A7B",
-    "layout_28.fill": "undefined",
-    "layout_28.stroke": "undefined",
-    "layout_28.text": "undefined",
-    "layout_28.effect": "undefined",
-    "layout_28.radius": "undefined",
-    "layout_28.paddingX": "undefined",
-    "layout_28.paddingY": "9",
-    "layout_28.gap": "0",
-    "layout_28.fontSize": "15",
-    "layout_28.lineHeight": "22",
-    "layout_28.fontWeight": "regular",
-    "layout_28.minWidth": "undefined",
-    "layout_29.fill": "undefined",
-    "layout_29.stroke": "undefined",
-    "layout_29.text": "undefined",
-    "layout_29.effect": "undefined",
-    "layout_29.radius": "undefined",
-    "layout_29.paddingX": "undefined",
-    "layout_29.paddingY": "9",
-    "layout_29.gap": "0",
-    "layout_29.fontSize": "15",
-    "layout_29.lineHeight": "22",
-    "layout_29.fontWeight": "regular",
-    "layout_29.minWidth": "undefined"
+    "layout_24.minWidth": "220"
   },
   "modes": {
     "brand": "core",
@@ -2514,6 +2442,6 @@
   "metadata": {
     "source": "miterlab-figma-generator",
     "version": "0.1.0",
-    "generatedAt": "2026-03-18T05:00:36.057Z"
+    "generatedAt": "2026-03-18T09:02:05.843Z"
   }
 }

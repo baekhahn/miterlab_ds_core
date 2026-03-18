@@ -1,5 +1,5 @@
 import type { DesignPrompt } from "../../types/designPrompt";
-import coreContracts from "../../../../ui-core/contracts/button-input.core.json";
+import coreContracts from "../../../../ui-core/contracts/mobile-core.json";
 
 export const createButtonInspectionPrompt = (theme = "core"): DesignPrompt => {
   const contract = coreContracts.button;

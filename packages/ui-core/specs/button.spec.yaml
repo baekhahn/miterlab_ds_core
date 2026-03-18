@@ -1,436 +1,55 @@
 component: Button
 status: draft
-purpose: adopt Ant Design Mobile button props directly for the core button family baseline
+purpose: define a platform-agnostic mobile button contract
 props:
-  color: [default, primary, success, warning, danger]
-  fill: [solid, outline, none]
-  size: [mini, small, middle, large]
-  shape: [default, rounded, rectangular]
-  block: [false, true]
-  loading: [false, true, auto]
-  loadingText: string
-  loadingIcon: reactNode
+  emphasis: [primary, secondary, tertiary, destructive]
+  size: [sm, md, lg]
+  width: [hug, full]
+  state: [enabled, pressed, disabled, loading]
+  label: string
   disabled: [false, true]
+  loading: [false, true]
   onClick: function
-  type: [button, submit, reset]
-  children: reactNode
-  onMouseDown: function
-  onMouseUp: function
-  onTouchStart: function
-  onTouchEnd: function
-  id: string
-  form: string
   className: string
   style: object
   tabIndex: number
-  --text-color: string
-  --background-color: string
-  --border-radius: string
-  --border-width: string
-  --border-style: string
-  --border-color: string
 propDefaults:
-  color: default
-  fill: solid
-  size: middle
-  shape: default
-  block: false
-  loading: false
-  loadingIcon: <DotLoading color='currentColor' />
+  emphasis: primary
+  size: md
+  width: hug
+  state: enabled
   disabled: false
-  type: button
-states: [default, active, focus, disabled, loading]
+  loading: false
+states: [enabled, pressed, disabled, loading]
 sizeDefaults:
-  mini:
-    height: auto
-    paddingX: 12
-    paddingY: 3
-    radius: 4
-    radiusRectangular: 0
-    iconGap: 0
-  small:
-    height: auto
-    paddingX: 12
-    paddingY: 3
-    radius: 4
-    radiusRectangular: 0
-    iconGap: 0
-  middle:
-    height: auto
-    paddingX: 12
-    paddingY: 7
-    radius: 4
-    radiusRectangular: 0
-    iconGap: 0
-  large:
-    height: auto
-    paddingX: 12
-    paddingY: 11
-    radius: 4
-    radiusRectangular: 0
-    iconGap: 0
+  sm:
+    height: 44
+    paddingX: 14
+    paddingY: 10
+    radius: 14
+    gap: 8
+  md:
+    height: 50
+    paddingX: 18
+    paddingY: 13
+    radius: 14
+    gap: 8
+  lg:
+    height: 56
+    paddingX: 20
+    paddingY: 16
+    radius: 16
+    gap: 8
+defaults:
+  minWidth: 128
+  fontSize: 16
+  lineHeight: 22
 internalLayout:
-  minWidth: 0
+  minWidth: 128
   textAlignX: center
   textAlignY: center
 slots: [container, label]
-tokens:
-  cssVars:
-    - --text-color
-    - --background-color
-    - --border-radius
-    - --border-width
-    - --border-style
-    - --border-color
-semanticMapping:
-  solid.default:
-    default:
-      container.background: semantic.surface.subtle
-      container.border: semantic.surface.subtle
-      label.color: semantic.text.primary
-    hover:
-      container.background: semantic.surface.sunken
-      container.border: semantic.surface.sunken
-      label.color: semantic.text.primary
-    pressed:
-      container.background: semantic.surface.sunken
-      container.border: semantic.border.strong
-      label.color: semantic.text.primary
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.action.disabled
-      container.border: semantic.action.disabled
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.surface.sunken
-      container.border: semantic.surface.sunken
-      label.color: semantic.text.primary
-  solid.primary:
-    default:
-      container.background: semantic.action.primary
-      container.border: semantic.action.primary
-      label.color: semantic.action.onPrimary
-    hover:
-      container.background: semantic.action.primaryHover
-      container.border: semantic.action.primaryHover
-      label.color: semantic.action.onPrimary
-    pressed:
-      container.background: semantic.action.primaryPressed
-      container.border: semantic.action.primaryPressed
-      label.color: semantic.action.onPrimary
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.action.disabled
-      container.border: semantic.action.disabled
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.action.primaryHover
-      container.border: semantic.action.primaryHover
-      label.color: semantic.action.onPrimary
-  solid.success:
-    default:
-      container.background: semantic.status.success
-      container.border: semantic.status.success
-      label.color: semantic.action.onPrimary
-    hover:
-      container.background: semantic.status.success
-      container.border: semantic.status.success
-      label.color: semantic.action.onPrimary
-    pressed:
-      container.background: semantic.status.success
-      container.border: semantic.border.strong
-      label.color: semantic.action.onPrimary
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.action.disabled
-      container.border: semantic.action.disabled
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.status.success
-      container.border: semantic.status.success
-      label.color: semantic.action.onPrimary
-  solid.warning:
-    default:
-      container.background: semantic.status.warning
-      container.border: semantic.status.warning
-      label.color: semantic.text.primary
-    hover:
-      container.background: semantic.status.warning
-      container.border: semantic.status.warning
-      label.color: semantic.text.primary
-    pressed:
-      container.background: semantic.status.warning
-      container.border: semantic.border.strong
-      label.color: semantic.text.primary
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.action.disabled
-      container.border: semantic.action.disabled
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.status.warning
-      container.border: semantic.status.warning
-      label.color: semantic.text.primary
-  solid.danger:
-    default:
-      container.background: semantic.status.critical
-      container.border: semantic.status.critical
-      label.color: semantic.action.onPrimary
-    hover:
-      container.background: semantic.status.critical
-      container.border: semantic.status.critical
-      label.color: semantic.action.onPrimary
-    pressed:
-      container.background: semantic.status.critical
-      container.border: semantic.border.strong
-      label.color: semantic.action.onPrimary
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.action.disabled
-      container.border: semantic.action.disabled
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.status.critical
-      container.border: semantic.status.critical
-      label.color: semantic.action.onPrimary
-  outline.default:
-    default:
-      container.background: semantic.surface.default
-      container.border: semantic.border.default
-      label.color: semantic.text.primary
-    hover:
-      container.background: semantic.surface.subtle
-      container.border: semantic.border.strong
-      label.color: semantic.text.primary
-    pressed:
-      container.background: semantic.surface.sunken
-      container.border: semantic.border.strong
-      label.color: semantic.text.primary
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.surface.subtle
-      container.border: semantic.border.subtle
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.surface.subtle
-      container.border: semantic.border.default
-      label.color: semantic.text.primary
-  outline.primary:
-    default:
-      container.background: semantic.surface.default
-      container.border: semantic.action.primary
-      label.color: semantic.action.primary
-    hover:
-      container.background: semantic.surface.subtle
-      container.border: semantic.action.primaryHover
-      label.color: semantic.action.primaryHover
-    pressed:
-      container.background: semantic.surface.sunken
-      container.border: semantic.action.primaryPressed
-      label.color: semantic.action.primaryPressed
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.surface.subtle
-      container.border: semantic.border.subtle
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.surface.subtle
-      container.border: semantic.action.primary
-      label.color: semantic.action.primary
-  outline.success:
-    default:
-      container.background: semantic.surface.default
-      container.border: semantic.status.success
-      label.color: semantic.status.success
-    hover:
-      container.background: semantic.surface.subtle
-      container.border: semantic.status.success
-      label.color: semantic.status.success
-    pressed:
-      container.background: semantic.surface.sunken
-      container.border: semantic.status.success
-      label.color: semantic.status.success
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.surface.subtle
-      container.border: semantic.border.subtle
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.surface.subtle
-      container.border: semantic.status.success
-      label.color: semantic.status.success
-  outline.warning:
-    default:
-      container.background: semantic.surface.default
-      container.border: semantic.status.warning
-      label.color: semantic.status.warning
-    hover:
-      container.background: semantic.surface.subtle
-      container.border: semantic.status.warning
-      label.color: semantic.status.warning
-    pressed:
-      container.background: semantic.surface.sunken
-      container.border: semantic.status.warning
-      label.color: semantic.status.warning
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.surface.subtle
-      container.border: semantic.border.subtle
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.surface.subtle
-      container.border: semantic.status.warning
-      label.color: semantic.status.warning
-  outline.danger:
-    default:
-      container.background: semantic.surface.default
-      container.border: semantic.status.critical
-      label.color: semantic.status.critical
-    hover:
-      container.background: semantic.surface.subtle
-      container.border: semantic.status.critical
-      label.color: semantic.status.critical
-    pressed:
-      container.background: semantic.surface.sunken
-      container.border: semantic.status.critical
-      label.color: semantic.status.critical
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.surface.subtle
-      container.border: semantic.border.subtle
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.surface.subtle
-      container.border: semantic.status.critical
-      label.color: semantic.status.critical
-  none.default:
-    default:
-      container.background: semantic.surface.default
-      container.border: semantic.surface.default
-      label.color: semantic.text.primary
-    hover:
-      container.background: semantic.surface.subtle
-      container.border: semantic.surface.subtle
-      label.color: semantic.text.primary
-    pressed:
-      container.background: semantic.surface.sunken
-      container.border: semantic.surface.sunken
-      label.color: semantic.text.primary
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.surface.default
-      container.border: semantic.surface.default
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.surface.subtle
-      container.border: semantic.surface.subtle
-      label.color: semantic.text.primary
-  none.primary:
-    default:
-      container.background: semantic.surface.default
-      container.border: semantic.surface.default
-      label.color: semantic.action.primary
-    hover:
-      container.background: semantic.surface.subtle
-      container.border: semantic.surface.subtle
-      label.color: semantic.action.primaryHover
-    pressed:
-      container.background: semantic.surface.sunken
-      container.border: semantic.surface.sunken
-      label.color: semantic.action.primaryPressed
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.surface.default
-      container.border: semantic.surface.default
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.surface.subtle
-      container.border: semantic.surface.subtle
-      label.color: semantic.action.primary
-  none.success:
-    default:
-      container.background: semantic.surface.default
-      container.border: semantic.surface.default
-      label.color: semantic.status.success
-    hover:
-      container.background: semantic.surface.subtle
-      container.border: semantic.surface.subtle
-      label.color: semantic.status.success
-    pressed:
-      container.background: semantic.surface.sunken
-      container.border: semantic.surface.sunken
-      label.color: semantic.status.success
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.surface.default
-      container.border: semantic.surface.default
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.surface.subtle
-      container.border: semantic.surface.subtle
-      label.color: semantic.status.success
-  none.warning:
-    default:
-      container.background: semantic.surface.default
-      container.border: semantic.surface.default
-      label.color: semantic.status.warning
-    hover:
-      container.background: semantic.surface.subtle
-      container.border: semantic.surface.subtle
-      label.color: semantic.status.warning
-    pressed:
-      container.background: semantic.surface.sunken
-      container.border: semantic.surface.sunken
-      label.color: semantic.status.warning
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.surface.default
-      container.border: semantic.surface.default
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.surface.subtle
-      container.border: semantic.surface.subtle
-      label.color: semantic.status.warning
-  none.danger:
-    default:
-      container.background: semantic.surface.default
-      container.border: semantic.surface.default
-      label.color: semantic.status.critical
-    hover:
-      container.background: semantic.surface.subtle
-      container.border: semantic.surface.subtle
-      label.color: semantic.status.critical
-    pressed:
-      container.background: semantic.surface.sunken
-      container.border: semantic.surface.sunken
-      label.color: semantic.status.critical
-    focus:
-      container.focusRing: semantic.focus.ring
-    disabled:
-      container.background: semantic.surface.default
-      container.border: semantic.surface.default
-      label.color: semantic.text.muted
-    loading:
-      container.background: semantic.surface.subtle
-      container.border: semantic.surface.subtle
-      label.color: semantic.status.critical
 notes:
-  - official NativeProps adds className, style, tabIndex, and aria/data attributes
-  - official ButtonProps does not define href, target, or icon props
-  - official ButtonProps does not define htmlType; native button type is exposed as type
-  - official loadingIcon default is <DotLoading color='currentColor' />
-  - source schema is Ant Design Mobile ButtonProps
+  - primary is the highest emphasis action in a section
+  - full width is used for primary bottom actions
+  - loading blocks repeat tap and preserves layout

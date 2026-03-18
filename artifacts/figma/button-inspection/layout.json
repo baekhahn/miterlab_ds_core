@@ -6,375 +6,268 @@
   "children": [
     {
       "type": "stack",
-      "name": "header-section",
+      "name": "preview-section",
       "x": 48,
       "y": 40,
-      "width": 1320,
-      "direction": "vertical",
-      "gap": 12,
-      "children": [
-        {
-          "type": "text",
-          "name": "Text 1",
-          "content": "Button Inspection",
-          "width": 358,
-          "height": 32,
-          "textStyle": "text/heading/xl",
-          "colorToken": "semantic.text.primary"
-        }
-      ]
-    },
-    {
-      "type": "stack",
-      "name": "content-section",
-      "x": 48,
-      "y": 116,
       "width": 1320,
       "direction": "vertical",
       "gap": 16,
       "children": [
         {
-          "type": "text",
-          "name": "Text 2",
-          "content": "Sizes",
-          "width": 358,
-          "height": 24,
-          "textStyle": "text/body/lg",
-          "colorToken": "semantic.text.secondary"
-        },
-        {
           "type": "stack",
-          "name": "content-row-1",
+          "name": "preview-row-1",
           "direction": "horizontal",
           "gap": 16,
           "width": 1320,
           "children": [
             {
               "type": "component",
-              "name": "Mini",
+              "name": "Primary",
               "component": "button",
               "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "mini"
+                "emphasis": "primary",
+                "width": "hug",
+                "size": "md",
+                "state": "enabled"
               },
-              "width": 92,
-              "height": 28,
-              "label": "Mini"
+              "width": 128,
+              "height": 50,
+              "label": "Primary"
+            },
+            {
+              "type": "component",
+              "name": "Secondary",
+              "component": "button",
+              "props": {
+                "emphasis": "secondary",
+                "width": "hug",
+                "size": "md",
+                "state": "enabled"
+              },
+              "width": 128,
+              "height": 50,
+              "label": "Secondary"
+            },
+            {
+              "type": "component",
+              "name": "Tertiary",
+              "component": "button",
+              "props": {
+                "emphasis": "tertiary",
+                "width": "hug",
+                "size": "md",
+                "state": "enabled"
+              },
+              "width": 128,
+              "height": 50,
+              "label": "Tertiary"
+            },
+            {
+              "type": "component",
+              "name": "Destructive",
+              "component": "button",
+              "props": {
+                "emphasis": "destructive",
+                "width": "hug",
+                "size": "md",
+                "state": "enabled"
+              },
+              "width": 128,
+              "height": 50,
+              "label": "Destructive"
             },
             {
               "type": "component",
               "name": "Small",
               "component": "button",
               "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "small"
+                "emphasis": "primary",
+                "width": "hug",
+                "size": "sm",
+                "state": "enabled"
               },
-              "width": 108,
-              "height": 32,
+              "width": 120,
+              "height": 44,
               "label": "Small"
             },
             {
               "type": "component",
-              "name": "Middle",
+              "name": "Medium",
               "component": "button",
               "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "middle"
+                "emphasis": "primary",
+                "width": "hug",
+                "size": "md",
+                "state": "enabled"
               },
               "width": 128,
-              "height": 36,
-              "label": "Middle"
+              "height": 50,
+              "label": "Medium"
             },
             {
               "type": "component",
               "name": "Large",
               "component": "button",
               "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "large"
+                "emphasis": "primary",
+                "width": "hug",
+                "size": "lg",
+                "state": "enabled"
               },
-              "width": 156,
-              "height": 44,
+              "width": 176,
+              "height": 56,
               "label": "Large"
-            }
-          ]
-        },
-        {
-          "type": "text",
-          "name": "Text 7",
-          "content": "Color and Fill",
-          "width": 358,
-          "height": 24,
-          "textStyle": "text/body/lg",
-          "colorToken": "semantic.text.secondary"
-        },
-        {
-          "type": "stack",
-          "name": "content-row-2",
-          "direction": "horizontal",
-          "gap": 16,
-          "width": 1320,
-          "children": [
-            {
-              "type": "component",
-              "name": "Primary Solid",
-              "component": "button",
-              "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "middle"
-              },
-              "width": 128,
-              "height": 36,
-              "label": "Primary Solid"
             },
             {
               "type": "component",
-              "name": "Default Outline",
+              "name": "Pressed",
               "component": "button",
               "props": {
-                "color": "default",
-                "fill": "outline",
-                "size": "middle"
+                "emphasis": "primary",
+                "width": "hug",
+                "size": "md",
+                "state": "pressed"
               },
               "width": 128,
-              "height": 36,
-              "label": "Default Outline"
-            },
-            {
-              "type": "component",
-              "name": "Danger None",
-              "component": "button",
-              "props": {
-                "color": "danger",
-                "fill": "none",
-                "size": "middle"
-              },
-              "width": 128,
-              "height": 36,
-              "label": "Danger None"
-            }
-          ]
-        },
-        {
-          "type": "text",
-          "name": "Text 11",
-          "content": "Shape",
-          "width": 358,
-          "height": 24,
-          "textStyle": "text/body/lg",
-          "colorToken": "semantic.text.secondary"
-        },
-        {
-          "type": "stack",
-          "name": "content-row-3",
-          "direction": "horizontal",
-          "gap": 16,
-          "width": 1320,
-          "children": [
-            {
-              "type": "component",
-              "name": "Default",
-              "component": "button",
-              "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "middle",
-                "shape": "default"
-              },
-              "width": 128,
-              "height": 36,
-              "label": "Default"
-            },
-            {
-              "type": "component",
-              "name": "Rounded",
-              "component": "button",
-              "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "middle",
-                "shape": "rounded"
-              },
-              "width": 128,
-              "height": 36,
-              "label": "Rounded"
-            },
-            {
-              "type": "component",
-              "name": "Rectangular",
-              "component": "button",
-              "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "middle",
-                "shape": "rectangular"
-              },
-              "width": 128,
-              "height": 36,
-              "label": "Rectangular"
-            }
-          ]
-        },
-        {
-          "type": "text",
-          "name": "Text 15",
-          "content": "Interactive States",
-          "width": 358,
-          "height": 24,
-          "textStyle": "text/body/lg",
-          "colorToken": "semantic.text.secondary"
-        },
-        {
-          "type": "stack",
-          "name": "content-row-4",
-          "direction": "horizontal",
-          "gap": 16,
-          "width": 1320,
-          "children": [
-            {
-              "type": "component",
-              "name": "Default State",
-              "component": "button",
-              "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "middle"
-              },
-              "width": 128,
-              "height": 36,
-              "label": "Default State"
-            },
-            {
-              "type": "component",
-              "name": "Active State",
-              "component": "button",
-              "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "middle",
-                "onMouseDown": "active"
-              },
-              "width": 128,
-              "height": 36,
-              "label": "Active State"
-            },
-            {
-              "type": "component",
-              "name": "Focus State",
-              "component": "button",
-              "props": {
-                "color": "primary",
-                "fill": "outline",
-                "size": "middle"
-              },
-              "width": 128,
-              "height": 36,
-              "label": "Focus State"
-            },
-            {
-              "type": "component",
-              "name": "Loading",
-              "component": "button",
-              "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "middle",
-                "loading": true,
-                "loadingText": "Loading"
-              },
-              "width": 128,
-              "height": 36,
-              "label": "Loading"
-            },
-            {
-              "type": "component",
-              "name": "Loading Text",
-              "component": "button",
-              "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "middle",
-                "loading": true,
-                "loadingText": "Submitting"
-              },
-              "width": 128,
-              "height": 36,
-              "label": "Loading Text"
+              "height": 50,
+              "label": "Pressed"
             },
             {
               "type": "component",
               "name": "Disabled",
               "component": "button",
               "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "middle",
+                "emphasis": "primary",
+                "width": "hug",
+                "size": "md",
+                "state": "disabled",
                 "disabled": true
               },
               "width": 128,
-              "height": 36,
+              "height": 50,
               "label": "Disabled"
             }
           ]
         },
         {
-          "type": "text",
-          "name": "Text 22",
-          "content": "Layout Behavior",
-          "width": 358,
-          "height": 24,
-          "textStyle": "text/body/lg",
-          "colorToken": "semantic.text.secondary"
-        },
-        {
           "type": "stack",
-          "name": "content-row-5",
+          "name": "preview-row-2",
           "direction": "horizontal",
           "gap": 16,
           "width": 1320,
           "children": [
             {
               "type": "component",
-              "name": "Block",
+              "name": "Loading",
               "component": "button",
               "props": {
-                "color": "primary",
-                "fill": "solid",
-                "size": "large",
-                "block": true
+                "emphasis": "primary",
+                "width": "hug",
+                "size": "md",
+                "state": "loading",
+                "loading": true
+              },
+              "width": 128,
+              "height": 50,
+              "label": "Loading"
+            },
+            {
+              "type": "component",
+              "name": "Hug Width",
+              "component": "button",
+              "props": {
+                "emphasis": "secondary",
+                "width": "hug",
+                "size": "md",
+                "state": "enabled"
+              },
+              "width": 128,
+              "height": 50,
+              "label": "Hug Width"
+            },
+            {
+              "type": "component",
+              "name": "Full Width",
+              "component": "button",
+              "props": {
+                "emphasis": "primary",
+                "width": "full",
+                "size": "lg",
+                "state": "enabled"
               },
               "width": 358,
-              "height": 44,
-              "label": "Block"
+              "height": 56,
+              "label": "Full Width"
+            },
+            {
+              "type": "component",
+              "name": "Leading Icon",
+              "component": "button",
+              "props": {
+                "emphasis": "secondary",
+                "width": "hug",
+                "size": "md",
+                "state": "enabled"
+              },
+              "width": 128,
+              "height": 50,
+              "label": "Leading Icon"
+            },
+            {
+              "type": "component",
+              "name": "Icon Only",
+              "component": "button",
+              "props": {
+                "emphasis": "tertiary",
+                "width": "hug",
+                "size": "md",
+                "state": "enabled",
+                "iconOnly": true
+              },
+              "width": 50,
+              "height": 50,
+              "label": "Icon Only"
+            },
+            {
+              "type": "component",
+              "name": "Bottom CTA",
+              "component": "button",
+              "props": {
+                "emphasis": "primary",
+                "width": "full",
+                "size": "lg",
+                "state": "enabled"
+              },
+              "width": 358,
+              "height": 56,
+              "label": "Bottom CTA"
+            }
+          ]
+        },
+        {
+          "type": "stack",
+          "name": "preview-row-3",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Danger CTA",
+              "component": "button",
+              "props": {
+                "emphasis": "destructive",
+                "width": "full",
+                "size": "lg",
+                "state": "enabled"
+              },
+              "width": 358,
+              "height": 56,
+              "label": "Danger CTA"
             }
           ]
         }
       ]
-    },
-    {
-      "type": "stack",
-      "name": "form-section",
-      "x": 48,
-      "y": 612,
-      "width": 1320,
-      "direction": "vertical",
-      "gap": 16,
-      "children": []
-    },
-    {
-      "type": "stack",
-      "name": "action-section",
-      "x": 48,
-      "y": 688,
-      "width": 1320,
-      "direction": "vertical",
-      "gap": 24,
-      "children": []
     }
   ]
 }

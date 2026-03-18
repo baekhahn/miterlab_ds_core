@@ -3,8 +3,13 @@ module.exports = {
     "intro",
     {
       type: "category",
-      label: "Families",
-      items: ["families/index", "families/button", "families/input"]
+      label: "Contracts",
+      items: ["contracts/button-contract", "contracts/input-contract"]
+    },
+    {
+      type: "category",
+      label: "Freeze Review",
+      items: ["freeze-review/status"]
     }
   ]
 };

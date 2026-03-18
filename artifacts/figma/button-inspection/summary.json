@@ -2,29 +2,479 @@
   "screen": "button-inspection",
   "theme": "core",
   "sectionsCreated": [
-    "header",
-    "content",
-    "form",
-    "action"
+    "preview"
   ],
-  "componentCount": 17,
-  "nodeCount": 33,
-  "warnings": [],
-  "evaluationScore": 100,
-  "passed": true,
+  "componentCount": 16,
+  "nodeCount": 21,
+  "warnings": [
+    "No variable bindings found in payload.variables",
+    "No primary action button found",
+    "Header section is missing"
+  ],
+  "evaluationScore": 0,
+  "passed": false,
   "payloadValidation": {
     "valid": true,
     "errors": [],
-    "warnings": []
+    "warnings": [
+      "No variable bindings found in payload.variables"
+    ]
   },
   "evaluation": {
-    "score": 100,
-    "passed": true,
-    "warnings": [],
-    "errors": [],
-    "improvementSuggestions": [],
-    "affectedNodes": [],
-    "affectedComponents": [],
-    "summary": "QA passed with score 100. 0 warning(s) found."
+    "score": 0,
+    "passed": false,
+    "warnings": [
+      {
+        "level": "warning",
+        "code": "missing_primary_action",
+        "message": "No primary action button found"
+      },
+      {
+        "level": "warning",
+        "code": "missing_header",
+        "message": "Header section is missing"
+      }
+    ],
+    "errors": [
+      {
+        "level": "error",
+        "code": "missing_required_section",
+        "message": "Missing required section: header",
+        "affectedNodes": [
+          "header"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "missing_required_section",
+        "message": "Missing required section: content",
+        "affectedNodes": [
+          "content"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "missing_required_section",
+        "message": "Missing required section: form",
+        "affectedNodes": [
+          "form"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "missing_required_section",
+        "message": "Missing required section: action",
+        "affectedNodes": [
+          "action"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Primary'",
+        "affectedComponents": [
+          "Primary"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Primary'",
+        "affectedComponents": [
+          "Primary"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Primary'",
+        "affectedComponents": [
+          "Primary"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Secondary'",
+        "affectedComponents": [
+          "Secondary"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Secondary'",
+        "affectedComponents": [
+          "Secondary"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Secondary'",
+        "affectedComponents": [
+          "Secondary"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Tertiary'",
+        "affectedComponents": [
+          "Tertiary"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Tertiary'",
+        "affectedComponents": [
+          "Tertiary"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Tertiary'",
+        "affectedComponents": [
+          "Tertiary"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Destructive'",
+        "affectedComponents": [
+          "Destructive"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Destructive'",
+        "affectedComponents": [
+          "Destructive"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Destructive'",
+        "affectedComponents": [
+          "Destructive"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Small'",
+        "affectedComponents": [
+          "Small"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Small'",
+        "affectedComponents": [
+          "Small"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Small'",
+        "affectedComponents": [
+          "Small"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Medium'",
+        "affectedComponents": [
+          "Medium"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Medium'",
+        "affectedComponents": [
+          "Medium"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Medium'",
+        "affectedComponents": [
+          "Medium"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Large'",
+        "affectedComponents": [
+          "Large"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Large'",
+        "affectedComponents": [
+          "Large"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Large'",
+        "affectedComponents": [
+          "Large"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Pressed'",
+        "affectedComponents": [
+          "Pressed"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Pressed'",
+        "affectedComponents": [
+          "Pressed"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Disabled'",
+        "affectedComponents": [
+          "Disabled"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Disabled'",
+        "affectedComponents": [
+          "Disabled"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Loading'",
+        "affectedComponents": [
+          "Loading"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Loading'",
+        "affectedComponents": [
+          "Loading"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Hug Width'",
+        "affectedComponents": [
+          "Hug Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Hug Width'",
+        "affectedComponents": [
+          "Hug Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Hug Width'",
+        "affectedComponents": [
+          "Hug Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Full Width'",
+        "affectedComponents": [
+          "Full Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Full Width'",
+        "affectedComponents": [
+          "Full Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Full Width'",
+        "affectedComponents": [
+          "Full Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Leading Icon'",
+        "affectedComponents": [
+          "Leading Icon"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Leading Icon'",
+        "affectedComponents": [
+          "Leading Icon"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Leading Icon'",
+        "affectedComponents": [
+          "Leading Icon"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Icon Only'",
+        "affectedComponents": [
+          "Icon Only"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Icon Only'",
+        "affectedComponents": [
+          "Icon Only"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Icon Only'",
+        "affectedComponents": [
+          "Icon Only"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Bottom CTA'",
+        "affectedComponents": [
+          "Bottom CTA"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Bottom CTA'",
+        "affectedComponents": [
+          "Bottom CTA"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Bottom CTA'",
+        "affectedComponents": [
+          "Bottom CTA"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'emphasis' on component 'Danger CTA'",
+        "affectedComponents": [
+          "Danger CTA"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Danger CTA'",
+        "affectedComponents": [
+          "Danger CTA"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Danger CTA'",
+        "affectedComponents": [
+          "Danger CTA"
+        ]
+      }
+    ],
+    "improvementSuggestions": [
+      {
+        "code": "missing_required_section",
+        "message": "필수 섹션을 패턴 정의에 맞게 추가해 주세요."
+      },
+      {
+        "code": "unsupported_variant_property",
+        "message": "지원 축(variant/size/state/selected 및 입력 메타)만 사용해 주세요."
+      },
+      {
+        "code": "invalid_state",
+        "message": "지원 상태(default/hover/pressed/disabled/focus/error/positive/readOnly)로 정규화해 주세요."
+      },
+      {
+        "code": "missing_primary_action",
+        "message": "action 영역에 primary 버튼을 추가해 주세요."
+      },
+      {
+        "code": "missing_header",
+        "message": "해당 이슈 코드에 대한 수동 검토가 필요합니다."
+      }
+    ],
+    "affectedNodes": [
+      "header",
+      "content",
+      "form",
+      "action"
+    ],
+    "affectedComponents": [
+      "Primary",
+      "Secondary",
+      "Tertiary",
+      "Destructive",
+      "Small",
+      "Medium",
+      "Large",
+      "Pressed",
+      "Disabled",
+      "Loading",
+      "Hug Width",
+      "Full Width",
+      "Leading Icon",
+      "Icon Only",
+      "Bottom CTA",
+      "Danger CTA"
+    ],
+    "summary": "QA failed with score 0. 49 error(s), 2 warning(s)."
   }
 }

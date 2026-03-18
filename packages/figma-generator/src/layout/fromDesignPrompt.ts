@@ -10,7 +10,7 @@ import { componentPlacementRules, defaultPlacementByType } from "../grammar/comp
 import { layoutRules } from "../grammar/layoutRules";
 import { resolvePattern } from "../grammar/screenPatterns";
 import type { LayoutFrameNode, LayoutNode } from "../types/layout";
-import { loadInputExtractionArtifacts } from "../examples/inputFamily/loadInputExtractionArtifacts";
+import mobileCore from "../../../ui-core/contracts/mobile-core.json";
 
 const toTitle = (screen: string): string => {
   const clean = screen.replace(/[-_]/g, " ");
@@ -115,18 +115,9 @@ const genericComponentTypes = new Set<ReturnType<typeof resolveComponentType>>([
   "framed-style"
 ]);
 
-const resolveButtonSize = (size?: GrammarComponent["size"]) => {
-  if (size === "mini" || size === "small" || size === "middle" || size === "large") return size;
-  if (size === "sm") return "small";
-  if (size === "lg") return "large";
-  return "middle";
-};
-
-const buttonHeightBySize = (size: ReturnType<typeof resolveButtonSize>) => {
-  if (size === "mini") return 28;
-  if (size === "small") return 32;
-  if (size === "large") return 44;
-  return 36;
+const resolveCoreButtonSize = (size?: GrammarComponent["size"]): "sm" | "md" | "lg" => {
+  if (size === "sm" || size === "lg") return size;
+  return "md";
 };
 
 const mapComponentToLayoutNode = (index: number, component: GrammarComponent, screen: string): LayoutNode => {
@@ -160,17 +151,33 @@ const mapComponentToLayoutNode = (index: number, component: GrammarComponent, sc
   }
 
   if (componentType === "input") {
-    const extractedSource = screen === "input-inspection" ? loadInputExtractionArtifacts().sources.at(-1) : undefined;
-    const extractedMetrics = extractedSource?.blueprint?.metrics;
-    const extractedWidth =
-      typeof extractedMetrics?.width === "number" && extractedMetrics.width > 0 ? extractedMetrics.width : undefined;
-    const defaultInputHeight = layoutRules.componentDefaults.input?.height ?? 24;
+    const inputSize =
+      component.size === "sm" || component.size === "md" || component.size === "lg"
+        ? component.size
+        : "md";
+    const sizeMetrics = mobileCore.input.render.sizes[inputSize];
+    const widthMode = component.width ?? (component.fullWidth === false ? "hug" : "full");
+    const widthValue = widthMode === "hug" ? mobileCore.input.render.widths.hug : mobileCore.input.render.widths.full;
 
     return {
       type: "component",
       name: toNodeName(component.name ?? component.label ?? "Input", `Input ${index + 1}`),
       component: "input",
       props: {
+        intent:
+          component.intent === "error" || component.intent === "success" || component.intent === "default"
+            ? component.intent
+            : "default",
+        width: widthMode,
+        size: inputSize,
+        state:
+          component.state === "focused" || component.state === "focus"
+            ? "focused"
+            : component.state === "readonly" || component.state === "readOnly"
+              ? "readonly"
+              : component.state === "disabled" || component.state === "loading"
+                ? component.state
+            : "enabled",
         maxLength: component.maxLength,
         minLength: component.minLength,
         autoComplete: component.autoComplete,
@@ -207,13 +214,8 @@ const mapComponentToLayoutNode = (index: number, component: GrammarComponent, sc
         max: component.max,
         role: component.role
       },
-      width:
-        screen === "input-inspection"
-          ? extractedWidth ?? 320
-          : component.fullWidth === false
-            ? 320
-            : layoutRules.contentWidth.form,
-      height: screen === "input-inspection" ? defaultInputHeight : component.height ?? defaultInputHeight,
+      width: component.fullWidth === false && component.width !== "full" ? widthValue : widthValue,
+      height: component.height ?? sizeMetrics.height,
       label: component.label
     };
   }
@@ -561,60 +563,49 @@ const mapComponentToLayoutNode = (index: number, component: GrammarComponent, sc
     };
   }
 
-  const size = resolveButtonSize(component.size);
+  const size = resolveCoreButtonSize(component.size);
+  const buttonMetrics = mobileCore.button.render.sizes[size];
   const inspectionButtonWidth =
-    component.iconOnly
-      ? buttonHeightBySize(size)
-      : size === "mini"
-        ? 92
-        : size === "small"
-          ? 108
-          : size === "large"
-            ? 156
-            : 128;
+    component.width === "full"
+      ? mobileCore.button.render.widths.full
+      : component.iconOnly
+        ? buttonMetrics.height
+        : buttonMetrics.minWidth;
   return {
     type: "component",
     name: toNodeName(component.name ?? component.label ?? "Button", `Button ${index + 1}`),
     component: "button",
     props: {
-      color:
-        component.color ??
-        (component.intent === "secondary-action" ? "default" : "primary"),
-      fill:
-        component.fill ??
-        (component.intent === "secondary-action" ? "outline" : "solid"),
+      emphasis:
+        component.emphasis === "primary" ||
+        component.emphasis === "secondary" ||
+        component.emphasis === "tertiary" ||
+        component.emphasis === "destructive"
+          ? component.emphasis
+          : "primary",
+      width: component.width ?? ((component.block ?? component.fullWidth) ? "full" : "hug"),
       size,
-      shape: component.shape,
-      block: component.block ?? component.fullWidth,
+      state:
+        component.state === "pressed" ||
+        component.state === "disabled" ||
+        component.state === "loading"
+          ? component.state
+          : "enabled",
       loading: component.loading,
-      loadingText: component.loadingText,
-      loadingIcon: component.loadingIcon,
       disabled: component.disabled,
       onClick: component.onClick,
-      type: typeof component.type === "string" && component.type !== "button" ? component.type : undefined,
       children: component.children,
-      onMouseDown: component.onMouseDown,
-      onMouseUp: component.onMouseUp,
-      onTouchStart: component.onTouchStart,
-      onTouchEnd: component.onTouchEnd,
-      id: component.id,
-      form: component.form,
-      "--text-color": component["--text-color"],
-      "--background-color": component["--background-color"],
-      "--border-radius": component["--border-radius"],
-      "--border-width": component["--border-width"],
-      "--border-style": component["--border-style"],
-      "--border-color": component["--border-color"]
+      iconOnly: component.iconOnly
     },
     width:
-      (component.block ?? component.fullWidth)
-        ? layoutRules.contentWidth.form
+      component.width === "full" || component.block || component.fullWidth
+        ? mobileCore.button.render.widths.full
         : isInspectionScreen
           ? inspectionButtonWidth
         : component.intent === "primary-action"
-          ? layoutRules.contentWidth.form
+          ? mobileCore.button.render.widths.full
           : undefined,
-    height: buttonHeightBySize(size),
+    height: buttonMetrics.height,
     label: component.label ?? "Action"
   };
 };
@@ -703,14 +694,18 @@ export const fromDesignPrompt = (prompt: GrammarDesignPrompt): LayoutFrameNode =
 
   const normalized = normalizePrompt(prompt);
   const pattern = resolvePattern(normalized.screen);
+  const isCoreInspectionScreen =
+    normalized.screen === "button-inspection" || normalized.screen === "input-inspection";
 
-  const sectionSet = new Set<SectionKey>([
-    ...(normalized.sections ?? []),
-    ...pattern.requiredSections,
-    ...pattern.optionalSections.filter((section) =>
-      normalized.components.some((component) => resolveSectionForComponent(component).section === section)
-    )
-  ]);
+  const sectionSet = isCoreInspectionScreen
+    ? new Set<SectionKey>(normalized.sections ?? ["preview"])
+    : new Set<SectionKey>([
+        ...(normalized.sections ?? []),
+        ...pattern.requiredSections,
+        ...pattern.optionalSections.filter((section) =>
+          normalized.components.some((component) => resolveSectionForComponent(component).section === section)
+        )
+      ]);
 
   const orderedSections = sectionOrder([...sectionSet], pattern.layoutFlow);
   const sectionBuckets: Record<string, Array<{ order: number; node: LayoutNode }>> = {};
@@ -747,7 +742,7 @@ export const fromDesignPrompt = (prompt: GrammarDesignPrompt): LayoutFrameNode =
 
   for (const section of orderedSections) {
     const entries = (sectionBuckets[section] ?? []).sort((a, b) => a.order - b.order);
-    if (entries.length === 0 && !pattern.requiredSections.includes(section)) {
+    if (entries.length === 0 && !(isCoreInspectionScreen && section === "preview") && !pattern.requiredSections.includes(section)) {
       continue;
     }
 

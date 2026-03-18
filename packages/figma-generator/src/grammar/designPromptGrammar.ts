@@ -140,6 +140,9 @@ export interface GrammarComponent {
   intent?: ComponentIntent;
   section?: SectionKey;
   variant?: string;
+  emphasis?: "primary" | "secondary" | "tertiary" | "destructive";
+  width?: "hug" | "full";
+  intent?: ComponentIntent | "default" | "error" | "success";
   color?: "default" | "primary" | "success" | "warning" | "danger";
   fill?: "solid" | "outline" | "none";
   shape?: "default" | "rounded" | "rectangular";
@@ -149,7 +152,7 @@ export interface GrammarComponent {
   clearable?: boolean;
   tone?: "default" | "success" | "warning" | "danger" | "info";
   size?: "mini" | "small" | "middle" | "large" | "sm" | "md" | "lg";
-  state?: "default" | "hover" | "pressed" | "disabled" | "focus" | "error" | "positive" | "readOnly" | "selected" | "active" | "open" | "closing" | "loading";
+  state?: "default" | "enabled" | "hover" | "pressed" | "disabled" | "focus" | "focused" | "error" | "positive" | "readOnly" | "readonly" | "selected" | "active" | "open" | "closing" | "loading";
   selected?: boolean;
   iconOnly?: boolean;
   fullWidth?: boolean;

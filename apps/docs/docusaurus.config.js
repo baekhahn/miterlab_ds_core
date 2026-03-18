@@ -40,7 +40,9 @@ const config = {
       title: "Miterlab AI Design System",
       items: [
         { to: "/", label: "Docs", position: "left" },
-        { to: "/families/", label: "Families", position: "left" }
+        { to: "/contracts/button-contract", label: "Button Contract", position: "left" },
+        { to: "/contracts/input-contract", label: "Input Contract", position: "left" },
+        { to: "/freeze-review/status", label: "Freeze Review", position: "left" }
       ]
     },
     footer: {
@@ -51,11 +53,16 @@ const config = {
           items: [{ label: "Home", to: "/" }]
         },
         {
-          title: "Families",
+          title: "Contracts",
           items: [
-            { label: "Families Overview", to: "/families/" },
-            { label: "Button", to: "/families/button" },
-            { label: "Input", to: "/families/input" }
+            { label: "Button Contract", to: "/contracts/button-contract" },
+            { label: "Input Contract", to: "/contracts/input-contract" }
+          ]
+        },
+        {
+          title: "Freeze Review",
+          items: [
+            { label: "Freeze Review", to: "/freeze-review/status" }
           ]
         }
       ]

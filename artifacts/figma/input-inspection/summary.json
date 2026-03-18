@@ -2,43 +2,487 @@
   "screen": "input-inspection",
   "theme": "core",
   "sectionsCreated": [
-    "header",
-    "content",
-    "form",
-    "action",
-    "list"
+    "preview"
   ],
-  "componentCount": 13,
-  "nodeCount": 29,
+  "componentCount": 16,
+  "nodeCount": 24,
   "warnings": [
-    "No primary action button found"
+    "No variable bindings found in payload.variables",
+    "No primary action button found",
+    "Header section is missing"
   ],
-  "evaluationScore": 96,
-  "passed": true,
+  "evaluationScore": 0,
+  "passed": false,
   "payloadValidation": {
     "valid": true,
     "errors": [],
-    "warnings": []
+    "warnings": [
+      "No variable bindings found in payload.variables"
+    ]
   },
   "evaluation": {
-    "score": 96,
-    "passed": true,
+    "score": 0,
+    "passed": false,
     "warnings": [
       {
         "level": "warning",
         "code": "missing_primary_action",
         "message": "No primary action button found"
+      },
+      {
+        "level": "warning",
+        "code": "missing_header",
+        "message": "Header section is missing"
       }
     ],
-    "errors": [],
+    "errors": [
+      {
+        "level": "error",
+        "code": "missing_required_section",
+        "message": "Missing required section: header",
+        "affectedNodes": [
+          "header"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "missing_required_section",
+        "message": "Missing required section: content",
+        "affectedNodes": [
+          "content"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "missing_required_section",
+        "message": "Missing required section: form",
+        "affectedNodes": [
+          "form"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "missing_required_section",
+        "message": "Missing required section: action",
+        "affectedNodes": [
+          "action"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Default'",
+        "affectedComponents": [
+          "Default"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Default'",
+        "affectedComponents": [
+          "Default"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Default'",
+        "affectedComponents": [
+          "Default"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Error'",
+        "affectedComponents": [
+          "Error"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Error'",
+        "affectedComponents": [
+          "Error"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'focused' on component 'Error'",
+        "affectedComponents": [
+          "Error"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Success'",
+        "affectedComponents": [
+          "Success"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Success'",
+        "affectedComponents": [
+          "Success"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Success'",
+        "affectedComponents": [
+          "Success"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Small'",
+        "affectedComponents": [
+          "Small"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Small'",
+        "affectedComponents": [
+          "Small"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Small'",
+        "affectedComponents": [
+          "Small"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Medium'",
+        "affectedComponents": [
+          "Medium"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Medium'",
+        "affectedComponents": [
+          "Medium"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Medium'",
+        "affectedComponents": [
+          "Medium"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Large'",
+        "affectedComponents": [
+          "Large"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Large'",
+        "affectedComponents": [
+          "Large"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Large'",
+        "affectedComponents": [
+          "Large"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Focused'",
+        "affectedComponents": [
+          "Focused"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Focused'",
+        "affectedComponents": [
+          "Focused"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'focused' on component 'Focused'",
+        "affectedComponents": [
+          "Focused"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Disabled'",
+        "affectedComponents": [
+          "Disabled"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Disabled'",
+        "affectedComponents": [
+          "Disabled"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Read Only'",
+        "affectedComponents": [
+          "Read Only"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Read Only'",
+        "affectedComponents": [
+          "Read Only"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'readonly' on component 'Read Only'",
+        "affectedComponents": [
+          "Read Only"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Loading'",
+        "affectedComponents": [
+          "Loading"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Loading'",
+        "affectedComponents": [
+          "Loading"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Hug Width'",
+        "affectedComponents": [
+          "Hug Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Hug Width'",
+        "affectedComponents": [
+          "Hug Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Hug Width'",
+        "affectedComponents": [
+          "Hug Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Full Width'",
+        "affectedComponents": [
+          "Full Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Full Width'",
+        "affectedComponents": [
+          "Full Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Full Width'",
+        "affectedComponents": [
+          "Full Width"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'With Helper'",
+        "affectedComponents": [
+          "With Helper"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'With Helper'",
+        "affectedComponents": [
+          "With Helper"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'With Helper'",
+        "affectedComponents": [
+          "With Helper"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'With Error Text'",
+        "affectedComponents": [
+          "With Error Text"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'With Error Text'",
+        "affectedComponents": [
+          "With Error Text"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'focused' on component 'With Error Text'",
+        "affectedComponents": [
+          "With Error Text"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Multiline'",
+        "affectedComponents": [
+          "Multiline"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Multiline'",
+        "affectedComponents": [
+          "Multiline"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'enabled' on component 'Multiline'",
+        "affectedComponents": [
+          "Multiline"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'intent' on component 'Readonly Field'",
+        "affectedComponents": [
+          "Readonly Field"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "unsupported_variant_property",
+        "message": "Unsupported variant property 'width' on component 'Readonly Field'",
+        "affectedComponents": [
+          "Readonly Field"
+        ]
+      },
+      {
+        "level": "error",
+        "code": "invalid_state",
+        "message": "Invalid state 'readonly' on component 'Readonly Field'",
+        "affectedComponents": [
+          "Readonly Field"
+        ]
+      }
+    ],
     "improvementSuggestions": [
+      {
+        "code": "missing_required_section",
+        "message": "필수 섹션을 패턴 정의에 맞게 추가해 주세요."
+      },
+      {
+        "code": "unsupported_variant_property",
+        "message": "지원 축(variant/size/state/selected 및 입력 메타)만 사용해 주세요."
+      },
+      {
+        "code": "invalid_state",
+        "message": "지원 상태(default/hover/pressed/disabled/focus/error/positive/readOnly)로 정규화해 주세요."
+      },
       {
         "code": "missing_primary_action",
         "message": "action 영역에 primary 버튼을 추가해 주세요."
+      },
+      {
+        "code": "missing_header",
+        "message": "해당 이슈 코드에 대한 수동 검토가 필요합니다."
       }
     ],
-    "affectedNodes": [],
-    "affectedComponents": [],
-    "summary": "QA passed with score 96. 1 warning(s) found."
+    "affectedNodes": [
+      "header",
+      "content",
+      "form",
+      "action"
+    ],
+    "affectedComponents": [
+      "Default",
+      "Error",
+      "Success",
+      "Small",
+      "Medium",
+      "Large",
+      "Focused",
+      "Disabled",
+      "Read Only",
+      "Loading",
+      "Hug Width",
+      "Full Width",
+      "With Helper",
+      "With Error Text",
+      "Multiline",
+      "Readonly Field"
+    ],
+    "summary": "QA failed with score 0. 50 error(s), 2 warning(s)."
   }
 }

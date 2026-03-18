@@ -1,97 +1,62 @@
 component: Input
 status: draft
-purpose: freeze the core input contract to the reference InputProps surface
+purpose: define a platform-agnostic mobile input contract
 props:
-  maxLength: number
-  minLength: number
-  autoComplete: string
-  autoFocus: [false, true]
-  pattern: string
-  inputMode: string
-  type: string
-  name: string
-  onFocus: function
-  onBlur: function
-  onPaste: function
-  autoCapitalize: string
-  autoCorrect: string
-  onKeyDown: function
-  onKeyUp: function
-  onCompositionStart: function
-  onCompositionEnd: function
-  onClick: function
-  step: number
-  id: string
-  placeholder: string
-  readOnly: [false, true]
-  disabled: [false, true]
-  enterKeyHint: string
+  intent: [default, error, success]
+  size: [sm, md, lg]
+  width: [hug, full]
+  state: [enabled, focused, disabled, readonly, loading]
+  label: string
   value: string
   defaultValue: string
+  placeholder: string
+  disabled: [false, true]
+  readOnly: [false, true]
+  type: string
+  maxLength: number
+  inputMode: string
+  autoFocus: [false, true]
   onChange: function
-  clearable: [false, true]
-  clearIcon: reactNode
-  onlyShowClearWhenFocus: [false, true]
-  onClear: function
-  onEnterPress: function
-  min: number
-  max: number
-  role: string
+  onFocus: function
+  onBlur: function
   className: string
   style: object
   tabIndex: number
-  --font-size: string
-  --color: string
-  --placeholder-color: string
-  --text-align: string
 propDefaults:
+  intent: default
+  size: md
+  width: full
+  state: enabled
   autoFocus: false
-  clearable: false
-  clearIcon: <CloseCircleFill />
-  defaultValue: ''
   disabled: false
-  onlyShowClearWhenFocus: true
   readOnly: false
-states: [default, focus, disabled, readOnly]
+states: [enabled, focused, disabled, readonly, loading]
+sizeDefaults:
+  sm:
+    height: 44
+    paddingX: 14
+    paddingY: 12
+    radius: 14
+  md:
+    height: 48
+    paddingX: 14
+    paddingY: 14
+    radius: 14
+  lg:
+    height: 56
+    paddingX: 16
+    paddingY: 16
+    radius: 16
 defaults:
-  height: 24
-  paddingX: 0
-  paddingY: 0
-  radius: 0
-  inset: 8
-  fontSize: 17
+  minWidth: 220
+  fontSize: 16
+  lineHeight: 22
 internalLayout:
-  minWidth: 0
+  minWidth: 220
   textAlignX: start
   textAlignY: center
-slots: [field, value, placeholder, action]
-tokens:
-  cssVars:
-    - --font-size
-    - --color
-    - --placeholder-color
-    - --text-align
-semanticMapping:
-  default:
-    default:
-      field.background: semantic.surface.default
-      field.border: semantic.border.default
-      value.color: semantic.text.primary
-      placeholder.color: semantic.text.muted
-    disabled:
-      field.background: semantic.surface.subtle
-      field.border: semantic.border.subtle
-      value.color: semantic.text.muted
-      placeholder.color: semantic.text.muted
-    readOnly:
-      field.background: semantic.surface.subtle
-      field.border: semantic.border.default
-      value.color: semantic.text.secondary
-      placeholder.color: semantic.text.muted
+slots: [field, value, placeholder]
 notes:
-  - NativeProps adds className, style, tabIndex, and aria/data attributes
-  - Input is layout-independent and only owns the basic text-entry field
-  - borders, titles, and action buttons belong to container families such as List or Form
-  - InputProps uses clearable instead of allowClear
-  - InputProps does not define size, status, prefix, or suffix props
-  - clearIcon default is <CloseCircleFill />
+  - placeholder is not a label
+  - focused state must be visually distinct from error intent
+  - readonly is different from disabled

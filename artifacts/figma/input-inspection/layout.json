@@ -6,120 +6,157 @@
   "children": [
     {
       "type": "stack",
-      "name": "header-section",
+      "name": "preview-section",
       "x": 48,
       "y": 40,
       "width": 1320,
       "direction": "vertical",
-      "gap": 12,
-      "children": [
-        {
-          "type": "text",
-          "name": "Text 1",
-          "content": "Input Inspection",
-          "width": 358,
-          "height": 32,
-          "textStyle": "text/heading/xl",
-          "colorToken": "semantic.text.primary"
-        }
-      ]
-    },
-    {
-      "type": "stack",
-      "name": "content-section",
-      "x": 48,
-      "y": 116,
-      "width": 1320,
-      "direction": "vertical",
-      "gap": 16,
-      "children": []
-    },
-    {
-      "type": "stack",
-      "name": "form-section",
-      "x": 48,
-      "y": 192,
-      "width": 1320,
-      "direction": "vertical",
       "gap": 16,
       "children": [
-        {
-          "type": "text",
-          "name": "Text 2",
-          "content": "Input Only",
-          "width": 358,
-          "height": 24,
-          "textStyle": "text/body/lg",
-          "colorToken": "semantic.text.secondary"
-        },
         {
           "type": "stack",
-          "name": "form-row-1",
+          "name": "preview-row-1",
           "direction": "horizontal",
           "gap": 16,
           "width": 1320,
           "children": [
             {
               "type": "component",
-              "name": "Placeholder",
+              "name": "Default",
               "component": "input",
               "props": {
+                "intent": "default",
+                "width": "full",
+                "size": "md",
+                "state": "enabled",
                 "placeholder": "Type here"
               },
-              "width": 320,
-              "height": 24,
-              "label": "Placeholder"
+              "width": 358,
+              "height": 48,
+              "label": "Default"
             },
             {
               "type": "component",
-              "name": "Value",
+              "name": "Error",
               "component": "input",
               "props": {
-                "value": "Current value"
+                "intent": "error",
+                "width": "full",
+                "size": "md",
+                "state": "focused",
+                "value": "Wrong value"
               },
-              "width": 320,
-              "height": 24,
-              "label": "Value"
+              "width": 358,
+              "height": 48,
+              "label": "Error"
             },
             {
               "type": "component",
-              "name": "Default Value",
+              "name": "Success",
               "component": "input",
               "props": {
-                "defaultValue": "Seed value"
+                "intent": "success",
+                "width": "full",
+                "size": "md",
+                "state": "enabled",
+                "value": "Correct value"
               },
-              "width": 320,
-              "height": 24,
-              "label": "Default Value"
+              "width": 358,
+              "height": 48,
+              "label": "Success"
             }
           ]
         },
         {
-          "type": "text",
-          "name": "Text 6",
-          "content": "Interaction Props",
-          "width": 358,
-          "height": 24,
-          "textStyle": "text/body/lg",
-          "colorToken": "semantic.text.secondary"
-        },
-        {
           "type": "stack",
-          "name": "form-row-2",
+          "name": "preview-row-2",
           "direction": "horizontal",
           "gap": 16,
           "width": 1320,
           "children": [
+            {
+              "type": "component",
+              "name": "Small",
+              "component": "input",
+              "props": {
+                "intent": "default",
+                "width": "full",
+                "size": "sm",
+                "state": "enabled",
+                "placeholder": "Small input"
+              },
+              "width": 358,
+              "height": 44,
+              "label": "Small"
+            },
+            {
+              "type": "component",
+              "name": "Medium",
+              "component": "input",
+              "props": {
+                "intent": "default",
+                "width": "full",
+                "size": "md",
+                "state": "enabled",
+                "placeholder": "Medium input"
+              },
+              "width": 358,
+              "height": 48,
+              "label": "Medium"
+            },
+            {
+              "type": "component",
+              "name": "Large",
+              "component": "input",
+              "props": {
+                "intent": "default",
+                "width": "full",
+                "size": "lg",
+                "state": "enabled",
+                "placeholder": "Large input"
+              },
+              "width": 358,
+              "height": 56,
+              "label": "Large"
+            }
+          ]
+        },
+        {
+          "type": "stack",
+          "name": "preview-row-3",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Focused",
+              "component": "input",
+              "props": {
+                "intent": "default",
+                "width": "full",
+                "size": "md",
+                "state": "focused",
+                "value": "Focused value"
+              },
+              "width": 358,
+              "height": 48,
+              "label": "Focused"
+            },
             {
               "type": "component",
               "name": "Disabled",
               "component": "input",
               "props": {
-                "placeholder": "Disabled placeholder",
-                "disabled": true
+                "intent": "default",
+                "width": "full",
+                "size": "md",
+                "state": "disabled",
+                "disabled": true,
+                "value": "Disabled value"
               },
-              "width": 320,
-              "height": 24,
+              "width": 358,
+              "height": 48,
               "label": "Disabled"
             },
             {
@@ -127,185 +164,149 @@
               "name": "Read Only",
               "component": "input",
               "props": {
+                "intent": "default",
+                "width": "full",
+                "size": "md",
+                "state": "readonly",
                 "readOnly": true,
-                "value": "Read only"
-              },
-              "width": 320,
-              "height": 24,
-              "label": "Read Only"
-            },
-            {
-              "type": "component",
-              "name": "Clearable",
-              "component": "input",
-              "props": {
-                "value": "Clear me",
-                "clearable": true
-              },
-              "width": 320,
-              "height": 24,
-              "label": "Clearable"
-            }
-          ]
-        },
-        {
-          "type": "stack",
-          "name": "form-row-3",
-          "direction": "horizontal",
-          "gap": 16,
-          "width": 1320,
-          "children": [
-            {
-              "type": "component",
-              "name": "Clear On Focus",
-              "component": "input",
-              "props": {
-                "value": "Focus clear",
-                "clearable": true,
-                "onlyShowClearWhenFocus": true
-              },
-              "width": 320,
-              "height": 24,
-              "label": "Clear On Focus"
-            },
-            {
-              "type": "component",
-              "name": "Password",
-              "component": "input",
-              "props": {
-                "type": "password",
-                "value": "secret123"
-              },
-              "width": 320,
-              "height": 24,
-              "label": "Password"
-            },
-            {
-              "type": "component",
-              "name": "Number",
-              "component": "input",
-              "props": {
-                "type": "number",
-                "step": 1,
-                "value": "12",
-                "min": 0,
-                "max": 20
-              },
-              "width": 320,
-              "height": 24,
-              "label": "Number"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "stack",
-      "name": "action-section",
-      "x": 48,
-      "y": 456,
-      "width": 1320,
-      "direction": "vertical",
-      "gap": 24,
-      "children": []
-    },
-    {
-      "type": "stack",
-      "name": "list-section",
-      "x": 48,
-      "y": 532,
-      "width": 1320,
-      "direction": "vertical",
-      "gap": 16,
-      "children": [
-        {
-          "type": "text",
-          "name": "Text 13",
-          "content": "Input + Cell",
-          "width": 358,
-          "height": 24,
-          "textStyle": "text/body/lg",
-          "colorToken": "semantic.text.secondary"
-        },
-        {
-          "type": "stack",
-          "name": "list-row-1",
-          "direction": "horizontal",
-          "gap": 16,
-          "width": 1320,
-          "children": [
-            {
-              "type": "component",
-              "name": "Email",
-              "component": "cell",
-              "props": {
-                "title": "Email",
-                "children": "input:email@example.com",
-                "description": "Cell container metrics",
-                "extra": "Required"
+                "value": "Read only value"
               },
               "width": 358,
-              "height": 72,
-              "label": "Email"
+              "height": 48,
+              "label": "Read Only"
+            }
+          ]
+        },
+        {
+          "type": "stack",
+          "name": "preview-row-4",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Loading",
+              "component": "input",
+              "props": {
+                "intent": "default",
+                "width": "full",
+                "size": "md",
+                "state": "loading",
+                "value": "Loading value"
+              },
+              "width": 358,
+              "height": 48,
+              "label": "Loading"
             },
             {
               "type": "component",
-              "name": "Search",
-              "component": "cell",
+              "name": "Hug Width",
+              "component": "input",
               "props": {
-                "title": "Search",
-                "children": "input:Search query",
-                "prefix": "S",
-                "clickable": true,
-                "arrowIcon": true
+                "intent": "default",
+                "width": "hug",
+                "size": "md",
+                "state": "enabled",
+                "placeholder": "Short"
+              },
+              "width": 220,
+              "height": 48,
+              "label": "Hug Width"
+            },
+            {
+              "type": "component",
+              "name": "Full Width",
+              "component": "input",
+              "props": {
+                "intent": "default",
+                "width": "full",
+                "size": "md",
+                "state": "enabled",
+                "placeholder": "Full width field"
+              },
+              "width": 358,
+              "height": 48,
+              "label": "Full Width"
+            }
+          ]
+        },
+        {
+          "type": "stack",
+          "name": "preview-row-5",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "With Helper",
+              "component": "input",
+              "props": {
+                "intent": "default",
+                "width": "full",
+                "size": "md",
+                "state": "enabled",
+                "placeholder": "Email address"
+              },
+              "width": 358,
+              "height": 48,
+              "label": "With Helper"
+            },
+            {
+              "type": "component",
+              "name": "With Error Text",
+              "component": "input",
+              "props": {
+                "intent": "error",
+                "width": "full",
+                "size": "md",
+                "state": "focused",
+                "value": "wrong@email"
+              },
+              "width": 358,
+              "height": 48,
+              "label": "With Error Text"
+            },
+            {
+              "type": "component",
+              "name": "Multiline",
+              "component": "input",
+              "props": {
+                "intent": "default",
+                "width": "full",
+                "size": "lg",
+                "state": "enabled",
+                "placeholder": "Type a longer message"
               },
               "width": 358,
               "height": 56,
-              "label": "Search"
+              "label": "Multiline"
             }
           ]
         },
         {
-          "type": "text",
-          "name": "Text 16",
-          "content": "Input + List",
-          "width": 358,
-          "height": 24,
-          "textStyle": "text/body/lg",
-          "colorToken": "semantic.text.secondary"
-        },
-        {
           "type": "stack",
-          "name": "list-row-2",
+          "name": "preview-row-6",
           "direction": "horizontal",
           "gap": 16,
           "width": 1320,
           "children": [
             {
               "type": "component",
-              "name": "Default List Shell",
-              "component": "list",
+              "name": "Readonly Field",
+              "component": "input",
               "props": {
-                "header": "Profile",
-                "mode": "default",
-                "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+                "intent": "default",
+                "width": "full",
+                "size": "md",
+                "state": "readonly",
+                "readOnly": true,
+                "value": "Generated project slug"
               },
               "width": 358,
-              "height": 160,
-              "label": "Default List Shell"
-            },
-            {
-              "type": "component",
-              "name": "Card List Shell",
-              "component": "list",
-              "props": {
-                "header": "Billing",
-                "mode": "card",
-                "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
-              },
-              "width": 358,
-              "height": 184,
-              "label": "Card List Shell"
+              "height": 48,
+              "label": "Readonly Field"
             }
           ]
         }

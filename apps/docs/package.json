@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "docs:generate": "node ./scripts/generate-docs.mjs",
-    "dev": "npm run docs:generate && docusaurus start --host 0.0.0.0",
-    "build": "npm run docs:generate && docusaurus build",
+    "dev": "docusaurus start --host 0.0.0.0",
+    "build": "docusaurus build",
     "serve": "docusaurus serve build",
+    "previews": "node ./scripts/generate-previews.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
