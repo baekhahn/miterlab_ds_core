@@ -1,0 +1,1 @@
+# Core Theme Full Package

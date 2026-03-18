@@ -4,7 +4,21 @@ module.exports = {
     {
       type: "category",
       label: "Core",
-      items: ["core/overview", "core/master-plan", "core/contract", "core/schema-contract", "core/ant-mobile-p1-source-of-truth", "core/p1-full-family-table", "core/p1-full-family-contract"]
+      items: [
+        "core/overview",
+        "core/master-plan",
+        "core/contract",
+        "core/schema-contract",
+        "core/core-theme-full-package",
+        "core/scope",
+        "core/core-theme",
+        "core/p1",
+        "core/p2",
+        "core/rules",
+        "core/ant-mobile-p1-source-of-truth",
+        "core/p1-full-family-table",
+        "core/p1-full-family-contract"
+      ]
     },
     {
       type: "category",
