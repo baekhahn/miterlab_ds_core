@@ -163,7 +163,7 @@
         {
           "type": "text",
           "name": "Text 11",
-          "content": "Shape and States",
+          "content": "Shape",
           "width": 358,
           "height": 24,
           "textStyle": "text/body/lg",
@@ -217,6 +217,64 @@
               "width": 128,
               "height": 36,
               "label": "Rectangular"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "Text 15",
+          "content": "Interactive States",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
+        },
+        {
+          "type": "stack",
+          "name": "content-row-4",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Default State",
+              "component": "button",
+              "props": {
+                "color": "primary",
+                "fill": "solid",
+                "size": "middle"
+              },
+              "width": 128,
+              "height": 36,
+              "label": "Default State"
+            },
+            {
+              "type": "component",
+              "name": "Active State",
+              "component": "button",
+              "props": {
+                "color": "primary",
+                "fill": "solid",
+                "size": "middle",
+                "onMouseDown": "active"
+              },
+              "width": 128,
+              "height": 36,
+              "label": "Active State"
+            },
+            {
+              "type": "component",
+              "name": "Focus State",
+              "component": "button",
+              "props": {
+                "color": "primary",
+                "fill": "outline",
+                "size": "middle"
+              },
+              "width": 128,
+              "height": 36,
+              "label": "Focus State"
             },
             {
               "type": "component",
@@ -235,6 +293,21 @@
             },
             {
               "type": "component",
+              "name": "Loading Text",
+              "component": "button",
+              "props": {
+                "color": "primary",
+                "fill": "solid",
+                "size": "middle",
+                "loading": true,
+                "loadingText": "Submitting"
+              },
+              "width": 128,
+              "height": 36,
+              "label": "Loading Text"
+            },
+            {
+              "type": "component",
               "name": "Disabled",
               "component": "button",
               "props": {
@@ -246,7 +319,25 @@
               "width": 128,
               "height": 36,
               "label": "Disabled"
-            },
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "Text 22",
+          "content": "Layout Behavior",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
+        },
+        {
+          "type": "stack",
+          "name": "content-row-5",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
             {
               "type": "component",
               "name": "Block",
@@ -269,7 +360,7 @@
       "type": "stack",
       "name": "form-section",
       "x": 48,
-      "y": 420,
+      "y": 612,
       "width": 1320,
       "direction": "vertical",
       "gap": 16,
@@ -279,7 +370,7 @@
       "type": "stack",
       "name": "action-section",
       "x": 48,
-      "y": 496,
+      "y": 688,
       "width": 1320,
       "direction": "vertical",
       "gap": 24,

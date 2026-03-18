@@ -5,10 +5,11 @@
     "header",
     "content",
     "form",
-    "action"
+    "action",
+    "list"
   ],
-  "componentCount": 9,
-  "nodeCount": 20,
+  "componentCount": 13,
+  "nodeCount": 29,
   "warnings": [
     "No primary action button found"
   ],

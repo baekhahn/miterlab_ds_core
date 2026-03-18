@@ -4,14 +4,18 @@ import yaml from "js-yaml";
 
 const repoRoot = path.resolve(process.cwd(), "..", "..");
 const docsRoot = path.join(repoRoot, "apps/docs/docs");
+const minimalFamilyIds = new Set(["button", "input"]);
+const coreContracts = JSON.parse(
+  fs.readFileSync(path.join(repoRoot, "packages/ui-core/contracts/button-input.core.json"), "utf8")
+);
 
 const familyConfigs = [
   {
     id: "button",
     title: "Button",
     docPath: "families/button.md",
-    baseline: "Ant Design Mobile ButtonProps",
-    purpose: "Core action control baseline for Ant Design Mobile Button behavior.",
+    baseline: coreContracts.button.baseline,
+    purpose: coreContracts.button.purpose,
     specFiles: ["button.spec.yaml"],
     parityFile: "button.json",
     inspection: {
@@ -26,8 +30,8 @@ const familyConfigs = [
     id: "input",
     title: "Input",
     docPath: "families/input.md",
-    baseline: "Ant Design Mobile InputProps",
-    purpose: "Core text entry baseline for Ant Design Mobile Input behavior.",
+    baseline: coreContracts.input.baseline,
+    purpose: coreContracts.input.purpose,
     specFiles: ["input.spec.yaml"],
     parityFile: "input.json",
     inspection: {
@@ -42,8 +46,8 @@ const familyConfigs = [
     id: "tabs",
     title: "Tabs",
     docPath: "families/tabs.md",
-    baseline: "Ant Design Mobile TabsProps and TabProps",
-    purpose: "Primary segmented navigation baseline for Ant Design Mobile Tabs behavior.",
+    baseline: "Reference prop contract: `TabsProps` and `TabProps`",
+    purpose: "Core segmented navigation family for same-level content switching.",
     specFiles: ["tabs.spec.yaml"],
     parityFile: "tabs.json",
     inspection: {
@@ -58,8 +62,8 @@ const familyConfigs = [
     id: "list-cell",
     title: "List / Cell",
     docPath: "families/list-cell.md",
-    baseline: "Ant Design Mobile ListProps and ListItemProps",
-    purpose: "Structured list and row presentation baseline for Ant Design Mobile List and Cell behavior.",
+    baseline: "Reference prop contract: `ListProps` and `ListItemProps`",
+    purpose: "Core list and row family for structured content presentation.",
     specFiles: ["list.spec.yaml", "cell.spec.yaml"],
     parityFile: "list-cell.json",
     inspection: {
@@ -74,8 +78,8 @@ const familyConfigs = [
     id: "overlay",
     title: "Dialog / Popup / Toast",
     docPath: "families/dialog-popup-toast.md",
-    baseline: "Ant Design Mobile DialogProps, PopupProps, and ToastShowProps",
-    purpose: "Overlay and transient messaging baseline for Ant Design Mobile dialog, popup, and toast behaviors.",
+    baseline: "Reference prop contract: `DialogProps`, `PopupProps`, and `ToastShowProps`",
+    purpose: "Core overlay family for interruptive and transient feedback.",
     specFiles: ["dialog.spec.yaml", "popup.spec.yaml", "toast.spec.yaml"],
     parityFile: "overlay.json",
     inspection: {
@@ -90,8 +94,8 @@ const familyConfigs = [
     id: "navigation",
     title: "NavBar / TabBar",
     docPath: "families/nav-bar-tab-bar.md",
-    baseline: "Ant Design Mobile NavBarProps and TabBarProps",
-    purpose: "Top and bottom navigation baseline for Ant Design Mobile navigation components.",
+    baseline: "Reference prop contract: `NavBarProps`, `TabBarProps`, and `TabBarItemProps`",
+    purpose: "Core navigation family for top and bottom navigation surfaces.",
     specFiles: ["nav-bar.spec.yaml", "tab-bar.spec.yaml"],
     parityFile: "navigation.json",
     inspection: {
@@ -106,8 +110,8 @@ const familyConfigs = [
     id: "form",
     title: "Form",
     docPath: "families/form.md",
-    baseline: "Ant Design Mobile FormProps and FormItemProps",
-    purpose: "Field grouping and validation baseline for Ant Design Mobile Form behavior.",
+    baseline: "Reference prop contract: `FormProps` and `FormItemProps`",
+    purpose: "Core form family for grouped fields, validation, and submission flow.",
     specFiles: ["form.spec.yaml"],
     parityFile: "form.json",
     inspection: {
@@ -122,99 +126,56 @@ const familyConfigs = [
 
 const familyContracts = {
   button: {
-    renderExpectations: [
-      "All four sizes must be visibly different in padding and type scale, while official height remains content-driven.",
-      "`fill=solid`, `fill=outline`, and `fill=none` must preserve distinct background and border behavior.",
-      "`shape=default`, `shape=rounded`, and `shape=rectangular` must produce visibly different corner treatment.",
-      "`block=true` must expand the control to the full inspection row width.",
-      "`loading=true` must keep button height stable and display the loading label or indicator state.",
-      "`disabled=true` must suppress the interactive color set and render disabled tokens."
-    ],
-    failureCases: [
-      "Size axis dropped or normalized to a single height.",
-      "Fill axis flattened into one visual preset.",
-      "Shape axis ignored and always rendered with the same radius.",
-      "Block button rendered at content width instead of row width.",
-      "Loading state rendered as plain text with no state token change.",
-      "Disabled state still uses primary action colors."
-    ],
-    unsupportedNotes: [
-      "`icon` is not an official Button prop in Ant Design Mobile 5.x.",
-      "`href`, `target`, and `htmlType` are not official Button props. The official prop is `type` for the native button element.",
-      "`className`, `style`, `tabIndex`, and `aria-*` / `data-*` support come from `NativeProps`."
-    ],
+    sizeTableRows: coreContracts.button.sizeTableRows,
+    tokenTableRows: coreContracts.button.tokenTableRows,
+    renderExpectations: coreContracts.button.renderExpectations,
+    failureCases: coreContracts.button.failureCases,
+    unsupportedNotes: coreContracts.button.unsupportedNotes,
     inspectionMapping: [
-      "Inspection row `Sizes` verifies `size=mini|small|middle|large`.",
-      "Inspection row `Color and Fill` verifies `color` and `fill` combinations.",
-      "Inspection row `Shape and States` verifies `shape`, `loading`, `disabled`, and `block`."
+      "Inspection row `Sizes`는 `size=mini|small|middle|large`를 검증합니다.",
+      "Inspection row `Color and Fill`은 action emphasis와 fill 차이를 검증합니다.",
+      "Inspection row `Shape and States`는 `shape`, `loading`, `disabled`, `block`을 검증합니다."
     ],
-    stateMapping: [
-      ["default", "Uses the merged official defaults for `color`, `fill`, `size`, `shape`, and `type`."],
-      ["active", "Maps to the `:active::before` overlay in the official Less source."],
-      ["focus", "The native button removes browser outline and preserves the component border radius."],
-      ["disabled", "Runtime disabled state is `props.disabled || loading` in the official source."],
-      ["loading", "Loading uses `loadingIcon`, `loadingText`, and can be controlled by `loading='auto'`."]
-    ],
+    stateMapping: coreContracts.button.stateMapping,
     metricsNotes: [
-      "Official defaults come from `src/components/button/button.tsx` and `button.less`.",
-      "The public API does not define `href`, `target`, or `icon` props."
+      "Atlassian baseline에서는 action hierarchy가 metrics보다 먼저 읽혀야 합니다.",
+      "현재 runtime은 `size` 네 축을 유지하지만, 사용 목적은 `compact` 대 `default` 밀도 차이처럼 해석하는 편이 자연스럽습니다."
     ],
     tokenNotes: [
-      "Button styling is driven by component CSS variables and Ant Mobile color variables.",
-      "Primary, success, warning, and danger map through `--color` to `--adm-color-*` values."
+      "button token은 배경보다 action emphasis를 먼저 표현해야 합니다.",
+      "text, border, background가 각각 따로 놀지 않고 하나의 hierarchy로 읽혀야 합니다."
     ],
     runtimeGaps: [
-      "Current inspection payload now matches the official mini Button radius and padding, but still uses fixed frame heights and semantic token paths instead of the documented Ant token contract.",
-      "Phase A freeze remains pending until generator and plugin output match the official Button metrics and token mapping on the payload/write path."
-    ]
+      "현재 inspection payload는 mini Button radius와 padding은 맞지만, 고정 frame height와 semantic token path가 아직 남아 있습니다.",
+      "generator와 plugin output이 payload/write path에서 reference Button metrics와 token mapping을 정확히 따를 때까지 Phase A freeze는 pending입니다."
+    ],
+    verificationChecklist: coreContracts.button.verificationChecklist
   },
   input: {
-    renderExpectations: [
-      "Text input wrapper and element metrics must follow the official CSS variable defaults and Less rules.",
-      "Placeholder text must render with placeholder tokens until `value` or `defaultValue` is present.",
-      "`readOnly=true` must keep value visible while switching to read-only token treatment.",
-      "`disabled=true` must suppress interactive styling and use muted field/value tokens.",
-      "`clearable=true` must render an action affordance when clear behavior is available.",
-      "`onlyShowClearWhenFocus=true` must keep the clear affordance hidden until focus."
-    ],
-    failureCases: [
-      "Placeholder and value text rendered with the same token treatment.",
-      "Disabled and read-only collapsed into one visual state.",
-      "Clearable prop ignored in payload or plugin write path.",
-      "Number/password `type` props dropped during mapping.",
-      "Field padding changed independently from frozen defaults.",
-      "Text alignment or vertical centering broken in the rendered node."
-    ],
-    unsupportedNotes: [
-      "`allowClear` is not an official Input prop in Ant Design Mobile 5.x. The official prop is `clearable`.",
-      "`size`, `status`, `prefix`, and `suffix` are not official Input props in Ant Design Mobile 5.x.",
-      "`className`, `style`, `tabIndex`, and `aria-*` / `data-*` support come from `NativeProps`."
-    ],
+    sizeTableRows: coreContracts.input.sizeTableRows,
+    tokenTableRows: coreContracts.input.tokenTableRows,
+    renderExpectations: coreContracts.input.renderExpectations,
+    failureCases: coreContracts.input.failureCases,
+    unsupportedNotes: coreContracts.input.unsupportedNotes,
     inspectionMapping: [
-      "Inspection group `Text Values` verifies `placeholder`, `value`, and `defaultValue`.",
-      "Inspection group `Interaction Props` verifies `disabled`, `readOnly`, `clearable`, and `onlyShowClearWhenFocus`.",
-      "Password and number examples verify `type`, `min`, `max`, and `step`."
+      "Inspection group `Input Only`는 기본 field content path를 검증합니다.",
+      "Inspection group `Interaction Props`는 `disabled`, `readOnly`, `clearable`, `onlyShowClearWhenFocus`를 검증합니다.",
+      "Inspection group `Input + Cell/List`는 field와 container가 함께 읽히는지 검증합니다."
     ],
-    stateMapping: [
-      ["default", "Uses the official CSS variable defaults for font size, color, placeholder color, and text alignment."],
-      ["focus", "Focus is tracked internally with `hasFocus` and gates clear button visibility."],
-      ["disabled", "Disabled state applies wrapper opacity and keeps the native element enabled styling at 1."],
-      ["readOnly", "Read-only blocks pointer events on the native element while preserving value rendering."],
-      ["clearable", "Clear button appears when `clearable` is true and visibility conditions are satisfied."],
-      ["placeholder", "Placeholder remains visible only when `value` and `defaultValue` are absent."]
-    ],
+    stateMapping: coreContracts.input.stateMapping,
     metricsNotes: [
-      "Official defaults come from `src/components/input/input.tsx` and `input.less`.",
-      "The official Input API does not define `size`, `status`, `prefix`, or `suffix` props."
+      "Atlassian forms 기준 field 길이는 75px, 150px, 250px, 350px, 500px 중 하나로 선택합니다.",
+      "field 길이는 예상 입력 길이를 반영해야 하며, label보다 field가 먼저 레이아웃을 지배하지 않도록 합니다."
     ],
     tokenNotes: [
-      "Input styling is driven by official CSS variables instead of dedicated size/status props.",
-      "Value and placeholder colors remain distinct through `--color` and `--placeholder-color`."
+      "textfield token은 focus, error, helper, placeholder가 각각 다른 읽힘을 가져야 합니다.",
+      "입력값 텍스트와 placeholder 텍스트는 같은 강도로 보이면 안 됩니다."
     ],
     runtimeGaps: [
-      "Current inspection payload now matches the official Input height, radius, padding, inset, and type scale, but the token paths still diverge from the documented Ant contract.",
-      "Phase A freeze remains pending until generator and plugin output match the official Input metrics and token mapping on the payload/write path."
-    ]
+      "현재 inspection payload는 Input height, radius, padding, inset, type scale은 맞지만 token path가 아직 documented reference contract와 다릅니다.",
+      "generator와 plugin output이 payload/write path에서 reference Input metrics와 token mapping을 정확히 따를 때까지 Phase A freeze는 pending입니다."
+    ],
+    verificationChecklist: coreContracts.input.verificationChecklist
   },
   tabs: {
     inspectionMapping: [
@@ -310,18 +271,18 @@ const canvasDefault = {
   reviewApproved: "pending"
 };
 
-const antTokenContractRows = [
-  ["`colorPrimary`", "`#1677ff`", "global Ant token", "primary accent token"],
-  ["`colorText`", "`#333333`", "global Ant token", "primary foreground text"],
-  ["`colorTextSecondary`", "`#666666`", "global Ant token", "secondary foreground text"],
+const referenceTokenContractRows = [
+  ["`colorPrimary`", "`#1677ff`", "global reference token", "primary accent token"],
+  ["`colorText`", "`#333333`", "global reference token", "primary foreground text"],
+  ["`colorTextSecondary`", "`#666666`", "global reference token", "secondary foreground text"],
   ["`colorTextDisabled`", "not exposed by name", "derived behavior", "commonly represented through component opacity or muted text treatment"],
-  ["`colorBorder`", "`#eeeeee`", "global Ant token", "default border token"],
-  ["`colorBorderSecondary`", "not exposed by name", "TODO", "no direct Ant Mobile 5.x token name in theme-default.less"],
-  ["`colorBgContainer`", "`#ffffff`", "global Ant token", "container background token"],
+  ["`colorBorder`", "`#eeeeee`", "global reference token", "default border token"],
+  ["`colorBorderSecondary`", "not exposed by name", "TODO", "no direct reference token name in theme-default.less"],
+  ["`colorBgContainer`", "`#ffffff`", "global reference token", "container background token"],
   ["`colorBgContainerDisabled`", "not exposed by name", "derived behavior", "commonly represented through muted surface + opacity"],
-  ["`colorFill`", "`#f5f5f5` nearest: --adm-color-fill-content", "compatibility token", "nearest exposed fill token in Ant Mobile 5.x"],
-  ["`colorFillSecondary`", "not exposed by name", "TODO", "no direct Ant Mobile 5.x token name in theme-default.less"],
-  ["`colorFillTertiary`", "not exposed by name", "TODO", "no direct Ant Mobile 5.x token name in theme-default.less"],
+  ["`colorFill`", "`#f5f5f5` nearest: --adm-color-fill-content", "compatibility token", "nearest exposed fill token in the current reference theme"],
+  ["`colorFillSecondary`", "not exposed by name", "TODO", "no direct reference token name in theme-default.less"],
+  ["`colorFillTertiary`", "not exposed by name", "TODO", "no direct reference token name in theme-default.less"],
   ["`fontSizeSM`", "`13px`", "derived from --adm-font-size-main", "used by Button mini and compact text cases"],
   ["`fontSizeMD`", "`17px`", "derived from --adm-font-size-9", "default body/control text size"],
   ["`fontSizeLG`", "`18px`", "derived from --adm-font-size-10", "large control text size"],
@@ -333,8 +294,8 @@ const antTokenContractRows = [
   ["`paddingLG`", "`12px / 11px`", "component-derived", "large control horizontal/vertical padding from Button"],
   ["`controlHeight`", "content-driven or `24px` wrapper min-height", "component-derived", "Button is content-driven; Input wrapper min-height is `24px`"],
   ["`lineHeight`", "`1.4` Button / `1.5` Input", "component-derived", "line-height varies by component family"],
-  ["`motionDuration`", "not exposed by name", "TODO", "no direct Ant Mobile 5.x token name in theme-default.less"],
-  ["`motionEase`", "not exposed by name", "TODO", "no direct Ant Mobile 5.x token name in theme-default.less"]
+  ["`motionDuration`", "not exposed by name", "TODO", "no direct reference token name in theme-default.less"],
+  ["`motionEase`", "not exposed by name", "TODO", "no direct reference token name in theme-default.less"]
 ];
 
 const officialComponentData = {
@@ -349,41 +310,41 @@ const officialComponentData = {
       "rectangular: borderRadius=0"
     ],
     metricRows: [
-      ["`default`", "`height`", "`auto`", "official button.less"],
-      ["`default`", "`paddingX`", "`12px`", "official button.less"],
-      ["`default`", "`paddingY`", "`7px`", "official button.less"],
-      ["`default`", "`borderRadius`", "`4px`", "official button.less"],
-      ["`default`", "`fontSize`", "`17px`", "official button.less + theme-default.less"],
-      ["`default`", "`lineHeight`", "`1.4`", "official button.less"],
-      ["`mini`", "`paddingY`", "`3px`", "official button.less"],
-      ["`mini`", "`fontSize`", "`13px`", "official button.less + theme-default.less"],
-      ["`small`", "`paddingY`", "`3px`", "official button.less"],
-      ["`small`", "`fontSize`", "`15px`", "official button.less + theme-default.less"],
-      ["`middle`", "`fontSize`", "`17px`", "official button.less + theme-default.less"],
-      ["`large`", "`paddingY`", "`11px`", "official button.less"],
-      ["`large`", "`fontSize`", "`18px`", "official button.less + theme-default.less"]
+      ["`default`", "`height`", "`auto`", "reference button stylesheet"],
+      ["`default`", "`paddingX`", "`12px`", "reference button stylesheet"],
+      ["`default`", "`paddingY`", "`7px`", "reference button stylesheet"],
+      ["`default`", "`borderRadius`", "`4px`", "reference button stylesheet"],
+      ["`default`", "`fontSize`", "`17px`", "reference button stylesheet + theme defaults"],
+      ["`default`", "`lineHeight`", "`1.4`", "reference button stylesheet"],
+      ["`mini`", "`paddingY`", "`3px`", "reference button stylesheet"],
+      ["`mini`", "`fontSize`", "`13px`", "reference button stylesheet + theme defaults"],
+      ["`small`", "`paddingY`", "`3px`", "reference button stylesheet"],
+      ["`small`", "`fontSize`", "`15px`", "reference button stylesheet + theme defaults"],
+      ["`middle`", "`fontSize`", "`17px`", "reference button stylesheet + theme defaults"],
+      ["`large`", "`paddingY`", "`11px`", "reference button stylesheet"],
+      ["`large`", "`fontSize`", "`18px`", "reference button stylesheet + theme defaults"]
     ],
     sizeRows: [
-      ["`mini`", "`auto`", "`12px`", "`3px`", "`4px`", "`0`", "`0px` official prop gap not defined"],
-      ["`small`", "`auto`", "`12px`", "`3px`", "`4px`", "`0`", "`0px` official prop gap not defined"],
-      ["`middle`", "`auto`", "`12px`", "`7px`", "`4px`", "`0`", "`0px` official prop gap not defined"],
-      ["`large`", "`auto`", "`12px`", "`11px`", "`4px`", "`0`", "`0px` official prop gap not defined"]
+      ["`mini`", "`auto`", "`12px`", "`3px`", "`4px`", "`0`", "`0px` reference prop gap not defined"],
+      ["`small`", "`auto`", "`12px`", "`3px`", "`4px`", "`0`", "`0px` reference prop gap not defined"],
+      ["`middle`", "`auto`", "`12px`", "`7px`", "`4px`", "`0`", "`0px` reference prop gap not defined"],
+      ["`large`", "`auto`", "`12px`", "`11px`", "`4px`", "`0`", "`0px` reference prop gap not defined"]
     ],
     tokenRows: [
       ["Button", "`--text-color`", "cssVar", "default `#333333` via `var(--adm-color-text)`"],
       ["Button", "`--background-color`", "cssVar", "default `#ffffff` via `var(--adm-color-background)`"],
-      ["Button", "`--border-radius`", "cssVar", "default `4px` in official button.less"],
-      ["Button", "`--border-width`", "cssVar", "default `1px` in official button.less"],
-      ["Button", "`--border-style`", "cssVar", "default `solid` in official button.less"],
+      ["Button", "`--border-radius`", "cssVar", "default `4px` in the reference button stylesheet"],
+      ["Button", "`--border-width`", "cssVar", "default `1px` in the reference button stylesheet"],
+      ["Button", "`--border-style`", "cssVar", "default `solid` in the reference button stylesheet"],
       ["Button", "`--border-color`", "cssVar", "default `#eeeeee` via `var(--adm-color-border)`"],
-      ["Button", "`colorPrimary`", "antToken", "`#1677ff` via `--adm-color-primary`"],
-      ["Button", "`colorText`", "antToken", "`#333333` via `--adm-color-text`"],
-      ["Button", "`colorBorder`", "antToken", "`#eeeeee` via `--adm-color-border`"],
-      ["Button", "`colorBgContainer`", "antToken", "`#ffffff` via `--adm-color-background`"],
-      ["Button", "`colorFill`", "antToken", "Ant Design Mobile 5.x does not expose `colorFill` by name; nearest exposed fill token is `--adm-color-fill-content` -> `#f5f5f5`"],
-      ["Button", "`colorFillSecondary`", "antToken", "Ant Design Mobile 5.x does not expose `colorFillSecondary` by name in theme-default.less"],
-      ["Button", "`colorTextDisabled`", "antToken", "Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled button uses `opacity: 0.4` over current text/background colors"],
-      ["Button", "`controlHeight`", "antToken", "no explicit component token; effective height is content-driven"]
+      ["Button", "`colorPrimary`", "referenceToken", "`#1677ff` via `--adm-color-primary`"],
+      ["Button", "`colorText`", "referenceToken", "`#333333` via `--adm-color-text`"],
+      ["Button", "`colorBorder`", "referenceToken", "`#eeeeee` via `--adm-color-border`"],
+      ["Button", "`colorBgContainer`", "referenceToken", "`#ffffff` via `--adm-color-background`"],
+      ["Button", "`colorFill`", "referenceToken", "not exposed by name; nearest fill token is `--adm-color-fill-content` -> `#f5f5f5`"],
+      ["Button", "`colorFillSecondary`", "referenceToken", "not exposed by name in the reference theme defaults"],
+      ["Button", "`colorTextDisabled`", "referenceToken", "not exposed by name; disabled button uses `opacity: 0.4` over current text/background colors"],
+      ["Button", "`controlHeight`", "referenceToken", "no explicit component token; effective height is content-driven"]
     ]
   },
   Input: {
@@ -393,16 +354,16 @@ const officialComponentData = {
       "clear: marginLeft=8px, padding=4px, iconFontSize=15px"
     ],
     metricRows: [
-      ["`wrapper`", "`minHeight`", "`24px`", "official input.less"],
-      ["`wrapper`", "`width`", "`100%`", "official input.less"],
-      ["`wrapper`", "`alignItems`", "`center`", "official input.less"],
-      ["`element`", "`lineHeight`", "`1.5`", "official input.less"],
-      ["`element`", "`minHeight`", "`1.5em`", "official input.less"],
-      ["`element`", "`padding`", "`0`", "official input.less"],
-      ["`clear`", "`marginLeft`", "`8px`", "official input.less"],
-      ["`clear`", "`padding`", "`4px`", "official input.less"],
-      ["`element`", "`fontSize`", "`17px`", "official input.less + theme-default.less"],
-      ["`clear`", "`iconFontSize`", "`15px`", "official input.less + theme-default.less"]
+      ["`wrapper`", "`minHeight`", "`24px`", "reference input stylesheet"],
+      ["`wrapper`", "`width`", "`100%`", "reference input stylesheet"],
+      ["`wrapper`", "`alignItems`", "`center`", "reference input stylesheet"],
+      ["`element`", "`lineHeight`", "`1.5`", "reference input stylesheet"],
+      ["`element`", "`minHeight`", "`1.5em`", "reference input stylesheet"],
+      ["`element`", "`padding`", "`0`", "reference input stylesheet"],
+      ["`clear`", "`marginLeft`", "`8px`", "reference input stylesheet"],
+      ["`clear`", "`padding`", "`4px`", "reference input stylesheet"],
+      ["`element`", "`fontSize`", "`17px`", "reference input stylesheet + theme defaults"],
+      ["`clear`", "`iconFontSize`", "`15px`", "reference input stylesheet + theme defaults"]
     ],
     sizeRows: [
       ["`default`", "`24px`", "`0px`", "`0px`", "`0px` official input itself has no border radius", "`0px`", "`8px` clear inset"]
@@ -411,52 +372,52 @@ const officialComponentData = {
       ["Input", "`--font-size`", "cssVar", "default `17px` via `var(--adm-font-size-9)`"],
       ["Input", "`--color`", "cssVar", "default `#333333` via `var(--adm-color-text)`"],
       ["Input", "`--placeholder-color`", "cssVar", "default `#cccccc` via `var(--adm-color-light)`"],
-      ["Input", "`--text-align`", "cssVar", "default `left` in official input.less"],
-      ["Input", "`colorText`", "antToken", "`#333333` via `--adm-color-text`"],
-      ["Input", "`colorBorder`", "antToken", "native input border is removed; wrapper integrations commonly use `#eeeeee` via `--adm-color-border`"],
-      ["Input", "`colorPrimary`", "antToken", "`#1677ff` global token; no dedicated Input status prop"],
-      ["Input", "`colorError`", "antToken", "`#ff3141` global token; not exposed by official InputProps"],
-      ["Input", "`colorWarning`", "antToken", "`#ff8f1f` global token; not exposed by official InputProps"],
-      ["Input", "`colorTextSecondary`", "antToken", "`#666666` via `--adm-color-text-secondary`"],
-      ["Input", "`colorTextDisabled`", "antToken", "Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled input uses wrapper `opacity: 0.4`"],
-      ["Input", "`controlHeight`", "antToken", "no explicit component token; effective wrapper min-height is `24px` in official input.less"]
+      ["Input", "`--text-align`", "cssVar", "default `left` in the reference input stylesheet"],
+      ["Input", "`colorText`", "referenceToken", "`#333333` via `--adm-color-text`"],
+      ["Input", "`colorBorder`", "referenceToken", "native input border is removed; wrapper integrations commonly use `#eeeeee` via `--adm-color-border`"],
+      ["Input", "`colorPrimary`", "referenceToken", "`#1677ff`; no dedicated public Input status prop"],
+      ["Input", "`colorError`", "referenceToken", "`#ff3141`; not exposed as a public Input prop"],
+      ["Input", "`colorWarning`", "referenceToken", "`#ff8f1f`; not exposed as a public Input prop"],
+      ["Input", "`colorTextSecondary`", "referenceToken", "`#666666` via `--adm-color-text-secondary`"],
+      ["Input", "`colorTextDisabled`", "referenceToken", "not exposed by name; disabled input uses wrapper `opacity: 0.4`"],
+      ["Input", "`controlHeight`", "referenceToken", "no explicit component token; effective wrapper min-height is `24px` in the reference input stylesheet"]
     ]
   },
   Tabs: {
     tokenRows: [
-      ["Tabs", "`--title-font-size`", "cssVar", "default `var(--adm-font-size-9)` in official tabs.less"],
-      ["Tabs", "`--content-padding`", "cssVar", "default `12px` in official tabs.less"],
-      ["Tabs", "`--active-line-height`", "cssVar", "default `2px` in official tabs.less"],
-      ["Tabs", "`--active-line-border-radius`", "cssVar", "default `var(--active-line-height)` in official tabs.less"],
-      ["Tabs", "`--active-line-color`", "cssVar", "default `var(--adm-color-primary)` in official tabs.less"],
-      ["Tabs", "`--active-title-color`", "cssVar", "default `var(--adm-color-primary)` in official tabs.less"]
+      ["Tabs", "`--title-font-size`", "cssVar", "default `var(--adm-font-size-9)` in the reference tabs stylesheet"],
+      ["Tabs", "`--content-padding`", "cssVar", "default `12px` in the reference tabs stylesheet"],
+      ["Tabs", "`--active-line-height`", "cssVar", "default `2px` in the reference tabs stylesheet"],
+      ["Tabs", "`--active-line-border-radius`", "cssVar", "default `var(--active-line-height)` in the reference tabs stylesheet"],
+      ["Tabs", "`--active-line-color`", "cssVar", "default `var(--adm-color-primary)` in the reference tabs stylesheet"],
+      ["Tabs", "`--active-title-color`", "cssVar", "default `var(--adm-color-primary)` in the reference tabs stylesheet"]
     ]
   },
   List: {
     tokenRows: [
-      ["List", "`--header-font-size`", "cssVar", "default `var(--adm-font-size-7)` in official list.less"],
-      ["List", "`--prefix-padding-right`", "cssVar", "default `12px` in official list.less"],
-      ["List", "`--align-items`", "cssVar", "default `center` in official list.less"],
-      ["List", "`--active-background-color`", "cssVar", "default `var(--adm-color-border)` in official list.less"],
-      ["List", "`--font-size`", "cssVar", "default `var(--adm-font-size-9)` in official list.less"],
-      ["List", "`--extra-max-width`", "cssVar", "default `70%` in official list.less"]
+      ["List", "`--header-font-size`", "cssVar", "default `var(--adm-font-size-7)` in the reference list stylesheet"],
+      ["List", "`--prefix-padding-right`", "cssVar", "default `12px` in the reference list stylesheet"],
+      ["List", "`--align-items`", "cssVar", "default `center` in the reference list stylesheet"],
+      ["List", "`--active-background-color`", "cssVar", "default `var(--adm-color-border)` in the reference list stylesheet"],
+      ["List", "`--font-size`", "cssVar", "default `var(--adm-font-size-9)` in the reference list stylesheet"],
+      ["List", "`--extra-max-width`", "cssVar", "default `70%` in the reference list stylesheet"]
     ]
   },
   Dialog: {
     tokenRows: [
-      ["Dialog", "`--z-index`", "cssVar", "default `var(--adm-dialog-z-index, 1000)` in official dialog.less"]
+      ["Dialog", "`--z-index`", "cssVar", "default `var(--adm-dialog-z-index, 1000)` in the reference dialog stylesheet"]
     ]
   },
   NavBar: {
     tokenRows: [
-      ["NavBar", "`--height`", "cssVar", "default `45px` in official nav-bar.less"],
-      ["NavBar", "`--border-bottom`", "cssVar", "default `none` in official nav-bar.less"]
+      ["NavBar", "`--height`", "cssVar", "default `45px` in the reference nav-bar stylesheet"],
+      ["NavBar", "`--border-bottom`", "cssVar", "default `none` in the reference nav-bar stylesheet"]
     ]
   },
   TabBar: {
     tokenRows: [
-      ["TabBar", "`colorPrimary`", "antToken", "active item color is `var(--adm-color-primary)` in official tab-bar.less"],
-      ["TabBar", "`colorTextSecondary`", "antToken", "inactive item color is `var(--adm-color-text-secondary)` in official tab-bar.less"]
+      ["TabBar", "`colorPrimary`", "referenceToken", "active item color is `var(--adm-color-primary)` in the reference tab-bar stylesheet"],
+      ["TabBar", "`colorTextSecondary`", "referenceToken", "inactive item color is `var(--adm-color-text-secondary)` in the reference tab-bar stylesheet"]
     ]
   }
 };
@@ -477,6 +438,23 @@ function writeDoc(relativePath, content) {
   const fullPath = path.join(docsRoot, relativePath);
   ensureDir(path.dirname(fullPath));
   fs.writeFileSync(fullPath, content.trim() + "\n");
+}
+
+function cleanupDocsForMinimalFamilies() {
+  for (const relativeDir of ["contracts", "core", "freeze-review", "generation", "inspection", "runtime", "schema"]) {
+    fs.rmSync(path.join(docsRoot, relativeDir), { recursive: true, force: true });
+  }
+
+  for (const relativeFile of [
+    ".DS_Store",
+    "families/tabs.md",
+    "families/list-cell.md",
+    "families/dialog-popup-toast.md",
+    "families/nav-bar-tab-bar.md",
+    "families/form.md"
+  ]) {
+    fs.rmSync(path.join(docsRoot, relativeFile), { force: true });
+  }
 }
 
 function titleFrontmatter(title) {
@@ -538,12 +516,12 @@ function propRows(spec, sectionName = "props") {
     const { type, allowedValues } = normalizeTypeAndValues(value);
     const defaultValue = spec?.propDefaults?.[prop];
     let notes = "TODO";
-    if (prop.startsWith("--")) notes = "CSS variable from the official API.";
-    if (prop === "arrow" || prop === "backArrow") notes = "Deprecated in the official API but retained in the frozen contract.";
+    if (prop.startsWith("--")) notes = "CSS variable from the reference contract.";
+    if (prop === "arrow" || prop === "backArrow") notes = "Deprecated in the reference API but retained in the frozen contract.";
     if (prop === "loading") notes = "Boolean and `auto` must remain distinct in the contract.";
     if (prop === "onlyShowClearWhenFocus") notes = "Clear affordance must remain conditional on focus.";
     if (prop === "className" || prop === "style" || prop === "tabIndex") notes = "Supported through `NativeProps`.";
-    if (prop === "activeKey" || prop === "defaultActiveKey") notes = "Official API allows string or null.";
+    if (prop === "activeKey" || prop === "defaultActiveKey") notes = "Reference API allows string or null.";
     return [`\`${prop}\``, type, allowedValues, defaultValue === undefined ? "TODO" : formatPrimitive(defaultValue), "`false`", notes];
   });
 }
@@ -558,6 +536,20 @@ function markdownTable(headers, rows) {
 
 function toBulletList(items, emptyLabel = "TODO") {
   return items.length ? items.map((item) => `- ${item}`).join("\n") : `- ${emptyLabel}`;
+}
+
+function normalizeSpecNote(note) {
+  return note
+    .replaceAll("official NativeProps", "reference NativeProps")
+    .replaceAll("official ButtonProps", "reference ButtonProps")
+    .replaceAll("official InputProps", "reference InputProps")
+    .replaceAll("Ant Design Mobile uses clearable", "the reference contract uses clearable")
+    .replaceAll("official API", "reference API")
+    .replaceAll("exists in the official API", "remains in the reference API")
+    .replaceAll("official loadingIcon default", "reference loadingIcon default")
+    .replaceAll("official clearIcon default", "reference clearIcon default")
+    .replaceAll("source schema is Ant Design Mobile ", "frozen schema matches the reference ")
+    .replaceAll("source schema is ", "frozen schema matches the reference ");
 }
 
 function collectSemanticTokens(value, output = new Set()) {
@@ -733,7 +725,7 @@ ${markdownTable(
 
 ## Global Token Contract
 
-${markdownTable(["Token", "Default", "Source", "Notes"], antTokenContractRows)}
+${markdownTable(["Token", "Default", "Source", "Notes"], referenceTokenContractRows)}
 `
   );
 }
@@ -825,14 +817,23 @@ Official Ant Mobile metric and token defaults are shown first when they are know
 
 ## Global Ant Token Contract
 
-${markdownTable(["Token", "Default", "Source", "Notes"], antTokenContractRows)}
+${markdownTable(["Token", "Default", "Source", "Notes"], referenceTokenContractRows)}
 
 ${sections}
 `
   );
 }
 
-function sizeMetricsTableForSpec(spec) {
+function sizeMetricsTableForSpec(spec, familyId) {
+  const contract = familyContracts[familyId] || {};
+  if (contract.sizeTableRows?.length) {
+    if (familyId === "button") {
+      return markdownTable(["Size", "Density", "Usage"], contract.sizeTableRows);
+    }
+    if (familyId === "input") {
+      return markdownTable(["Field tier", "Width guidance", "Usage"], contract.sizeTableRows);
+    }
+  }
   const official = officialComponentData[spec.component];
   if (official?.sizeRows) {
     return markdownTable(["Size", "Height", "Padding X", "Padding Y", "Radius", "Rectangular Radius", "Icon Gap"], official.sizeRows);
@@ -885,7 +886,11 @@ function stateTable(spec, familyId) {
   return markdownTable(["State", "Expectation"], rows);
 }
 
-function tokenReferenceTable(spec) {
+function tokenReferenceTable(spec, familyId) {
+  const contract = familyContracts[familyId] || {};
+  if (contract.tokenTableRows?.length) {
+    return markdownTable(["Token", "Kind", "Usage"], contract.tokenTableRows);
+  }
   const official = officialComponentData[spec.component];
   const rows = official?.tokenRows
     ? official.tokenRows.map((row) => [row[1], row[2], row[3]])
@@ -894,6 +899,125 @@ function tokenReferenceTable(spec) {
         ...Array.from(collectSemanticTokens(spec.semanticMapping)).map((token) => [`\`${token}\``, "semantic", "Semantic token referenced in the frozen spec"])
       ];
   return markdownTable(["Token", "Kind", "Notes"], rows.length ? rows : [["TODO", "TODO", "TODO"]]);
+}
+
+function buildContractFirstFamilyDoc(family, payloadNode, layoutExample) {
+  const contract = familyContracts[family.id] || {};
+  const propsSection = family.specs
+    .map((spec) => `### ${spec.component}\n\n${componentAxesTable(spec)}`)
+    .join("\n\n");
+  const stateSection = family.specs
+    .map((spec) => `### ${spec.component}\n\n${stateTable(spec, family.id)}`)
+    .join("\n\n");
+  const sizeSection = family.specs
+    .map((spec) => `### ${spec.component}\n\n${sizeMetricsTableForSpec(spec, family.id)}`)
+    .join("\n\n");
+  const tokenSection = family.specs
+    .map((spec) => `### ${spec.component}\n\n${tokenReferenceTable(spec, family.id)}`)
+    .join("\n\n");
+
+  const extraContractSections = [];
+  if (family.id === "button") {
+    const appearance = coreContracts.button.appearanceMapping;
+    extraContractSections.push(
+      `## Appearance Mapping
+
+### Action hierarchy
+
+${markdownTable(["Current runtime", "Interpretation"], appearance.actionHierarchy)}`,
+      `### Width behavior
+
+${markdownTable(["Current runtime", "Interpretation"], appearance.widthBehavior)}`,
+      `### Density
+
+${markdownTable(["Current runtime", "Interpretation"], appearance.density)}`,
+      `## Form Placement Rules
+
+${toBulletList(appearance.formPlacementRules)}`
+    );
+  }
+
+  if (family.id === "input") {
+    const composition = coreContracts.input.formComposition;
+    extraContractSections.push(
+      `## Form Composition Contract
+
+### Label and field
+
+${toBulletList(composition.labelAndField)}
+
+### Field lengths
+
+${toBulletList(composition.fieldLengths)}
+
+### Help and validation
+
+${toBulletList(composition.helpAndValidation)}`,
+      `## Interaction Rules
+
+- placeholder는 \`value\`와 \`defaultValue\`가 모두 없을 때만 보입니다.
+- focus는 별도 공개 prop이 아니라 runtime state로 취급합니다.
+- \`clearable=true\`는 clear affordance를 활성화합니다.
+- \`onlyShowClearWhenFocus=true\`는 focus 중일 때만 clear affordance를 보여줍니다.
+- \`readOnly=true\`는 value는 유지하고 수정 affordance만 제거합니다.
+- \`disabled=true\`는 interaction을 막고 muted treatment를 사용합니다.`,
+      `## Non-Public Fields
+
+- \`status\`는 frozen Input 공개 계약에 포함되지 않습니다.
+- \`size\`, \`prefix\`, \`suffix\`도 현재 공개 계약에 포함되지 않습니다.
+- runtime에서 필요하더라도 공개 prop으로 승격하려면 spec 변경이 먼저 필요합니다.`
+    );
+  }
+
+  return `${titleFrontmatter(family.title)}
+# ${family.title}
+
+## Purpose
+
+${family.purpose}
+
+## Implementation Priority
+
+- 이 페이지는 설명 문서가 아니라 구현 계약 문서입니다.
+- 구현은 spec보다 앞설 수 없고, generator와 plugin은 아래 계약을 그대로 따라야 합니다.
+- reference baseline은 배경 정보입니다. 실제 구현 입력은 이 페이지의 계약 표와 규칙만 사용하면 됩니다.
+
+## Public Props Contract
+
+${propsSection}
+
+## State Contract
+
+${stateSection}
+
+## ${family.id === "input" ? "Field Metrics Contract" : "Size Contract"}
+
+${sizeSection}
+
+## Token Contract
+
+${tokenSection}
+
+${extraContractSections.join("\n\n")}
+
+## Render Rules
+
+${toBulletList(contract.renderExpectations || [])}
+
+## Forbidden Changes
+
+${toBulletList(contract.failureCases || [])}
+
+## Verification Checklist
+
+${toBulletList(contract.verificationChecklist || [])}
+
+## Reference Notes
+
+- ${family.baseline}
+- Spec files: ${family.specFiles.map((file) => `\`packages/ui-core/specs/${file}\``).join(", ")}
+${contract.unsupportedNotes?.length ? toBulletList(contract.unsupportedNotes) : ""}
+`;
 }
 
 function buildFamilyDocs(families) {
@@ -921,6 +1045,11 @@ function buildFamilyDocs(families) {
     const primaryComponent = family.specs[0]?.component;
     const payloadNode = findFirstComponentNode(family.payload.nodes, primaryComponent) || family.payload.nodes[0] || {};
     const layoutExample = family.layout.children?.slice(0, 2) || family.layout.sections?.slice(0, 2) || family.layout;
+
+    if (family.id === "button" || family.id === "input") {
+      writeDoc(family.docPath, buildContractFirstFamilyDoc(family, payloadNode, layoutExample));
+      continue;
+    }
 
     const extraSections = [];
     if (family.id === "button" || family.id === "input") {
@@ -973,7 +1102,7 @@ ${markdownTable(
 - Disabled state must override interactive color tokens.
 - Disabled state must keep layout metrics stable and remove active emphasis.`
         );
-        contractSections.push(`## Official Non-Props
+        contractSections.push(`## Reference Notes
 
 ${toBulletList(contract.unsupportedNotes || [])}`);
       }
@@ -1002,7 +1131,7 @@ ${toBulletList(contract.unsupportedNotes || [])}`);
 
 - \`disabled=true\` applies the disabled token set and suppresses interaction while preserving layout metrics.`
         );
-        contractSections.push(`## Official Non-Props
+        contractSections.push(`## Reference Notes
 
 ${toBulletList(contract.unsupportedNotes || [])}`);
       }
@@ -1041,7 +1170,7 @@ ${family.purpose}
 - ${family.baseline}
 - Spec files: ${family.specFiles.map((file) => `\`packages/ui-core/specs/${file}\``).join(", ")}
 - Parity mismatch count: \`${family.parity.afterFixMismatchCount}\`
-- Spec notes: ${family.specs.flatMap((spec) => spec.notes || []).length ? family.specs.flatMap((spec) => spec.notes || []).map((note) => `\`${note}\``).join(", ") : "none"}
+- Spec notes: ${family.specs.flatMap((spec) => spec.notes || []).length ? family.specs.flatMap((spec) => spec.notes || []).map((note) => `\`${normalizeSpecNote(note)}\``).join(", ") : "none"}
 
 ## Inspection Screen
 
@@ -1098,20 +1227,17 @@ ${codeBlock("json", truncateJson(layoutExample))}
 
   writeDoc(
     "families/index.md",
-    `${titleFrontmatter("Families")}
-# Families
+    `${titleFrontmatter("Families Overview")}
+# Families Overview
 
-The families below are the currently frozen runtime families documented from the live spec, parity, and inspection artifacts.
+이 섹션은 AI가 바로 구현에 사용할 핵심 family contract만 제공합니다.
 
 ${markdownTable(
-  ["Family", "Purpose", "Inspection screen", "Mismatch count", "Phase A", "Phase B"],
+  ["Family", "Purpose", "Inspection screen"],
   families.map((family) => [
     family.title,
     family.purpose,
-    `\`${family.inspection.name}\``,
-    `\`${family.parity.afterFixMismatchCount}\``,
-    family.freeze.implementation.specParity === "verified" && family.freeze.implementation.generatorParity === "verified" && family.freeze.implementation.pluginParity === "verified" ? "verified" : "blocked",
-    family.freeze.canvas.figmaWriteVerified
+    `\`${family.inspection.name}\``
   ])
 )}
 `
@@ -1477,22 +1603,6 @@ ${markdownTable(
 
 function buildCoreDocs() {
   writeDoc(
-    "core/overview.md",
-    `${titleFrontmatter("Core Overview")}
-# Core Overview
-
-This site is the internal source-of-truth documentation for the frozen core runtime.
-
-## Core Rules
-
-- Ant Design Mobile API is the source baseline for the current frozen families.
-- Spec is the source of truth for props, states, metrics, and tokens.
-- Generator and plugin must adapt to the frozen spec, not the reverse.
-- Figma canvas is an output verification step, not a schema source.
-`
-  );
-
-  writeDoc(
     "intro.md",
     `---
 title: Miterlab AI Design System
@@ -1501,32 +1611,21 @@ slug: /
 
 # Miterlab AI Design System
 
-This documentation site records the current frozen core runtime state: family contracts, schema, generation flow, runtime expectations, and freeze review status.
+이 문서 사이트는 AI가 바로 구현에 사용할 Button과 Input contract만 남깁니다.
 
-## Current Coverage
+## Current Families
 
 - Button
 - Input
-- Tabs
-- List / Cell
-- Dialog / Popup / Toast
-- NavBar / TabBar
-- Form
 `
   );
 }
 
 function main() {
-  const families = loadFamilies();
+  cleanupDocsForMinimalFamilies();
+  const families = loadFamilies().filter((family) => minimalFamilyIds.has(family.id));
   buildCoreDocs();
-  buildSchemaIndex(families);
-  buildAxesAndProps(families);
-  buildMetricsAndTokens(families);
   buildFamilyDocs(families);
-  buildGenerationDocs(families);
-  buildInspectionDocs(families);
-  buildRuntimeDocs(families);
-  buildFreezeReview(families);
 }
 
 main();

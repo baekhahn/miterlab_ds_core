@@ -21,6 +21,7 @@
     "docs:serve": "npm run serve -w @miterlab/docs",
     "plugin:build": "npm run build -w @miterlab/figma-plugin",
     "plugin:typecheck": "npm run typecheck -w @miterlab/figma-plugin",
+    "sync:button-input": "npm run docs:generate -w @miterlab/docs && npm run generate:button-inspection -w @miterlab/figma-generator && npm run generate:input-inspection -w @miterlab/figma-generator && npm run plugin:build",
     "generate:button-inspection": "npm run generate:button-inspection -w @miterlab/figma-generator",
     "generate:input-inspection": "npm run generate:input-inspection -w @miterlab/figma-generator",
     "generate:tabs-inspection": "npm run generate:tabs-inspection -w @miterlab/figma-generator",

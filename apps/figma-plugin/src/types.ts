@@ -37,6 +37,11 @@ export interface PluginLoadExtractionMessage {
   render?: boolean;
 }
 
+export interface PluginRenderInspectionFamilyMessage {
+  type: "renderInspectionFamily";
+  family: string;
+}
+
 export interface PluginWriteResult {
   createdNodeCount: number;
   createdFrameName: string;
@@ -48,6 +53,7 @@ export type PluginUiMessage =
   | PluginExtractSelectionMessage
   | PluginReadyMessage
   | PluginRefreshExtractionStateMessage
-  | PluginLoadExtractionMessage;
+  | PluginLoadExtractionMessage
+  | PluginRenderInspectionFamilyMessage;
 export type { FigmaWritePayload };
 export type { DesignPrompt };

@@ -46,7 +46,7 @@
         {
           "type": "text",
           "name": "Text 2",
-          "content": "Text Values",
+          "content": "Input Only",
           "width": 358,
           "height": 24,
           "textStyle": "text/body/lg",
@@ -208,6 +208,108 @@
       "direction": "vertical",
       "gap": 24,
       "children": []
+    },
+    {
+      "type": "stack",
+      "name": "list-section",
+      "x": 48,
+      "y": 532,
+      "width": 1320,
+      "direction": "vertical",
+      "gap": 16,
+      "children": [
+        {
+          "type": "text",
+          "name": "Text 13",
+          "content": "Input + Cell",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
+        },
+        {
+          "type": "stack",
+          "name": "list-row-1",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Email",
+              "component": "cell",
+              "props": {
+                "title": "Email",
+                "children": "input:email@example.com",
+                "description": "Cell container metrics",
+                "extra": "Required"
+              },
+              "width": 358,
+              "height": 72,
+              "label": "Email"
+            },
+            {
+              "type": "component",
+              "name": "Search",
+              "component": "cell",
+              "props": {
+                "title": "Search",
+                "children": "input:Search query",
+                "prefix": "S",
+                "clickable": true,
+                "arrowIcon": true
+              },
+              "width": 358,
+              "height": 56,
+              "label": "Search"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "Text 16",
+          "content": "Input + List",
+          "width": 358,
+          "height": 24,
+          "textStyle": "text/body/lg",
+          "colorToken": "semantic.text.secondary"
+        },
+        {
+          "type": "stack",
+          "name": "list-row-2",
+          "direction": "horizontal",
+          "gap": 16,
+          "width": 1320,
+          "children": [
+            {
+              "type": "component",
+              "name": "Default List Shell",
+              "component": "list",
+              "props": {
+                "header": "Profile",
+                "mode": "default",
+                "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+              },
+              "width": 358,
+              "height": 160,
+              "label": "Default List Shell"
+            },
+            {
+              "type": "component",
+              "name": "Card List Shell",
+              "component": "list",
+              "props": {
+                "header": "Billing",
+                "mode": "card",
+                "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
+              },
+              "width": 358,
+              "height": 184,
+              "label": "Card List Shell"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

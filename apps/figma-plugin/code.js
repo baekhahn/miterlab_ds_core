@@ -274,14 +274,6 @@
     if (size === "lg") return "large";
     return "middle";
   };
-  var getInputSizeKey = (node) => {
-    var _a;
-    const size = (_a = node.variant) == null ? void 0 : _a.size;
-    if (size === "small" || size === "middle" || size === "large") return size;
-    if (size === "sm") return "small";
-    if (size === "lg") return "large";
-    return "middle";
-  };
   var getVariantKey = (node) => {
     var _a;
     const value = (_a = node.variant) == null ? void 0 : _a.variant;
@@ -511,6 +503,28 @@
     await addLabel(badge, label, textColor, "MIN", 11, "medium", 14);
     return badge;
   };
+  var parseEmbeddedInputValue = (value) => {
+    if (typeof value !== "string") return void 0;
+    if (!value.startsWith("input:")) return void 0;
+    return value.slice("input:".length).trim();
+  };
+  var createEmbeddedInputField = async (value, options) => {
+    const field = figma.createFrame();
+    field.layoutMode = "HORIZONTAL";
+    field.primaryAxisAlignItems = "CENTER";
+    field.counterAxisAlignItems = "CENTER";
+    field.layoutGrow = 1;
+    field.paddingLeft = 12;
+    field.paddingRight = 12;
+    field.paddingTop = 10;
+    field.paddingBottom = 10;
+    field.itemSpacing = 8;
+    field.cornerRadius = 10;
+    field.fills = [{ type: "SOLID", color: rgb2((options == null ? void 0 : options.readOnly) ? "#F2F4F7" : "#FFFFFF") }];
+    field.strokes = [{ type: "SOLID", color: rgb2("#D0D5DD") }];
+    await addLabel(field, value || "Input", (options == null ? void 0 : options.readOnly) ? "#98A2B3" : "#667085", "MIN", 14, "regular", 20);
+    return field;
+  };
   var toneStyle = (variant) => {
     var _a;
     const palette = {
@@ -527,7 +541,6 @@
   };
   var createInputNode = async (node) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
-    const size = getInputSizeKey(node);
     const state = ((_a = node.variant) == null ? void 0 : _a.disabled) === true ? "disabled" : ((_b = node.variant) == null ? void 0 : _b.readOnly) === true ? "readOnly" : "default";
     const style = inputStyle(state);
     const blueprint = await loadInputBlueprint();
@@ -556,18 +569,18 @@
     frame.layoutMode = "HORIZONTAL";
     frame.primaryAxisAlignItems = "MIN";
     frame.counterAxisAlignItems = "CENTER";
-    frame.paddingLeft = stylePaddingX(node, (_k = blueprintMetrics == null ? void 0 : blueprintMetrics.paddingLeft) != null ? _k : size === "small" ? 12 : size === "large" ? 16 : 14);
-    frame.paddingRight = stylePaddingX(node, (_l = blueprintMetrics == null ? void 0 : blueprintMetrics.paddingRight) != null ? _l : size === "small" ? 12 : size === "large" ? 16 : 14);
-    frame.paddingTop = stylePaddingY(node, (_m = blueprintMetrics == null ? void 0 : blueprintMetrics.paddingTop) != null ? _m : size === "small" ? 8 : size === "large" ? 12 : 10);
-    frame.paddingBottom = stylePaddingY(node, (_n = blueprintMetrics == null ? void 0 : blueprintMetrics.paddingBottom) != null ? _n : size === "small" ? 8 : size === "large" ? 12 : 10);
+    frame.paddingLeft = stylePaddingX(node, (_k = blueprintMetrics == null ? void 0 : blueprintMetrics.paddingLeft) != null ? _k : 0);
+    frame.paddingRight = stylePaddingX(node, (_l = blueprintMetrics == null ? void 0 : blueprintMetrics.paddingRight) != null ? _l : 0);
+    frame.paddingTop = stylePaddingY(node, (_m = blueprintMetrics == null ? void 0 : blueprintMetrics.paddingTop) != null ? _m : 0);
+    frame.paddingBottom = stylePaddingY(node, (_n = blueprintMetrics == null ? void 0 : blueprintMetrics.paddingBottom) != null ? _n : 0);
     frame.itemSpacing = (_o = blueprintMetrics == null ? void 0 : blueprintMetrics.itemSpacing) != null ? _o : 8;
-    frame.cornerRadius = styleRadius(node, (_p = blueprintMetrics == null ? void 0 : blueprintMetrics.radius) != null ? _p : size === "large" ? 14 : size === "small" ? 10 : 12);
+    frame.cornerRadius = styleRadius(node, (_p = blueprintMetrics == null ? void 0 : blueprintMetrics.radius) != null ? _p : 0);
     frame.strokeWeight = 1;
     frame.strokes = [{ type: "SOLID", color: rgb2(styleStroke(node, style.stroke)) }];
     frame.fills = [{ type: "SOLID", color: rgb2(styleFill(node, style.fill)) }];
     frame.layoutAlign = "STRETCH";
-    const fontSize = styleFontSize(node, size === "small" ? 14 : size === "large" ? 16 : 15);
-    const lineHeight = styleLineHeight(node, size === "small" ? 20 : size === "large" ? 24 : 22);
+    const fontSize = styleFontSize(node, 17);
+    const lineHeight = styleLineHeight(node, 26);
     const valueNode = await createInlineText(
       inputType === "password" && inputValue ? "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" : inputValue || placeholderText || "Input",
       inputValue ? styleText(node, style.text) : style.subtle,
@@ -1211,7 +1224,7 @@
     });
   };
   var createCellNode = async (node) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
     const disabled = ((_a = node.variant) == null ? void 0 : _a.disabled) === true;
     const clickable = ((_b = node.variant) == null ? void 0 : _b.clickable) === true;
     const frame = figma.createFrame();
@@ -1263,11 +1276,14 @@
       await addLabel(content, node.variant.description, disabled ? "#B0B8C4" : "#667085", "MIN", 13, "regular", 18);
     }
     frame.appendChild(content);
-    if (typeof ((_f = node.variant) == null ? void 0 : _f.extra) === "string" && node.variant.extra) {
+    const embeddedInputValue = parseEmbeddedInputValue((_f = node.variant) == null ? void 0 : _f.children);
+    if (embeddedInputValue) {
+      frame.appendChild(await createEmbeddedInputField(embeddedInputValue, { readOnly: disabled }));
+    } else if (typeof ((_g = node.variant) == null ? void 0 : _g.extra) === "string" && node.variant.extra) {
       const extra = await createInlineText(node.variant.extra, disabled ? "#B0B8C4" : "#667085", 13, 18, "regular");
       frame.appendChild(extra);
     }
-    if (((_g = node.variant) == null ? void 0 : _g.arrowIcon) === true || ((_h = node.variant) == null ? void 0 : _h.arrow) === true || typeof ((_i = node.variant) == null ? void 0 : _i.arrowIcon) === "string" || typeof ((_j = node.variant) == null ? void 0 : _j.arrow) === "string") {
+    if (((_h = node.variant) == null ? void 0 : _h.arrowIcon) === true || ((_i = node.variant) == null ? void 0 : _i.arrow) === true || typeof ((_j = node.variant) == null ? void 0 : _j.arrowIcon) === "string" || typeof ((_k = node.variant) == null ? void 0 : _k.arrow) === "string") {
       frame.appendChild(await createCellArrow(disabled ? "#B0B8C4" : "#98A2B3"));
     }
     return frame;
@@ -1334,7 +1350,23 @@
       row.strokeLeftWeight = 0;
       row.strokeRightWeight = 0;
       row.strokeBottomWeight = index < items.length - 1 ? 1 : 0;
-      await addLabel(row, item, "#101828", "MIN", 15, "regular", 22);
+      const embeddedInputMarker = "::input:";
+      if (item.includes(embeddedInputMarker)) {
+        const [label, value] = item.split(embeddedInputMarker);
+        const content = figma.createFrame();
+        content.layoutMode = "VERTICAL";
+        content.primaryAxisAlignItems = "MIN";
+        content.counterAxisAlignItems = "MIN";
+        content.itemSpacing = 8;
+        content.layoutGrow = 1;
+        content.fills = [];
+        content.strokes = [];
+        await addLabel(content, label.trim(), "#101828", "MIN", 15, "regular", 22);
+        content.appendChild(await createEmbeddedInputField(value.trim()));
+        row.appendChild(content);
+      } else {
+        await addLabel(row, item, "#101828", "MIN", 15, "regular", 22);
+      }
       body.appendChild(row);
     }
     frame.appendChild(body);
@@ -1773,8 +1805,9620 @@
     };
   };
 
-  // ../../artifacts/figma/core-families/mcp-payload.json
+  // ../../artifacts/figma/button-inspection/mcp-payload.json
   var mcp_payload_default = {
+    document: {
+      name: "button-inspection screen",
+      screen: "button-inspection",
+      theme: "core"
+    },
+    nodes: [
+      {
+        id: "layout_1",
+        type: "FRAME",
+        name: "Button inspection Screen",
+        x: 0,
+        y: 0,
+        width: 1440,
+        height: 1240,
+        children: [
+          {
+            id: "layout_2",
+            type: "FRAME",
+            name: "header-section",
+            x: 48,
+            y: 40,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_3",
+                type: "TEXT",
+                name: "Text 1",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 32,
+                text: "Button Inspection",
+                variables: {
+                  "text.color": "semantic.text.primary"
+                },
+                style: {
+                  text: "text/heading/xl",
+                  fill: "#1F2430"
+                }
+              }
+            ]
+          },
+          {
+            id: "layout_4",
+            type: "FRAME",
+            name: "content-section",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_5",
+                type: "TEXT",
+                name: "Text 2",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 24,
+                text: "Sizes",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_6",
+                type: "FRAME",
+                name: "content-row-1",
+                x: 48,
+                y: 116,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_7",
+                    type: "INSTANCE",
+                    name: "Mini",
+                    x: 48,
+                    y: 116,
+                    width: 92,
+                    height: 28,
+                    component: "Button",
+                    style: {
+                      fill: "#2E6CFF",
+                      stroke: "#2E6CFF",
+                      text: "#FFFFFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 3,
+                      gap: 0,
+                      fontSize: 13,
+                      lineHeight: 18,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      size: "mini"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primary",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Mini"
+                  },
+                  {
+                    id: "layout_8",
+                    type: "INSTANCE",
+                    name: "Small",
+                    x: 48,
+                    y: 116,
+                    width: 108,
+                    height: 32,
+                    component: "Button",
+                    style: {
+                      fill: "#2E6CFF",
+                      stroke: "#2E6CFF",
+                      text: "#FFFFFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 3,
+                      gap: 0,
+                      fontSize: 15,
+                      lineHeight: 21,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      size: "small"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primary",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Small"
+                  },
+                  {
+                    id: "layout_9",
+                    type: "INSTANCE",
+                    name: "Middle",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#2E6CFF",
+                      stroke: "#2E6CFF",
+                      text: "#FFFFFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      size: "middle"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primary",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Middle"
+                  },
+                  {
+                    id: "layout_10",
+                    type: "INSTANCE",
+                    name: "Large",
+                    x: 48,
+                    y: 116,
+                    width: 156,
+                    height: 44,
+                    component: "Button",
+                    style: {
+                      fill: "#2E6CFF",
+                      stroke: "#2E6CFF",
+                      text: "#FFFFFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 11,
+                      gap: 0,
+                      fontSize: 18,
+                      lineHeight: 25,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      size: "large"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primary",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Large"
+                  }
+                ]
+              },
+              {
+                id: "layout_11",
+                type: "TEXT",
+                name: "Text 7",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 24,
+                text: "Color and Fill",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_12",
+                type: "FRAME",
+                name: "content-row-2",
+                x: 48,
+                y: 116,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_13",
+                    type: "INSTANCE",
+                    name: "Primary Solid",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#2E6CFF",
+                      stroke: "#2E6CFF",
+                      text: "#FFFFFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      size: "middle"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primary",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Primary Solid"
+                  },
+                  {
+                    id: "layout_14",
+                    type: "INSTANCE",
+                    name: "Default Outline",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#FFFFFF",
+                      stroke: "#E0E6EE",
+                      text: "#1F2430",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "default",
+                      fill: "outline",
+                      size: "middle"
+                    },
+                    variables: {
+                      "container.background": "Semantic/surface/default",
+                      "container.border": "Semantic/border/default",
+                      "label.color": "Semantic/text/primary"
+                    },
+                    text: "Default Outline"
+                  },
+                  {
+                    id: "layout_15",
+                    type: "INSTANCE",
+                    name: "Danger None",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#FFFFFF",
+                      stroke: "#FFFFFF",
+                      text: "#D34B4B",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "danger",
+                      fill: "none",
+                      size: "middle"
+                    },
+                    variables: {
+                      "container.background": "Semantic/surface/default",
+                      "container.border": "Semantic/surface/default",
+                      "label.color": "Semantic/status/critical"
+                    },
+                    text: "Danger None"
+                  }
+                ]
+              },
+              {
+                id: "layout_16",
+                type: "TEXT",
+                name: "Text 11",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 24,
+                text: "Shape",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_17",
+                type: "FRAME",
+                name: "content-row-3",
+                x: 48,
+                y: 116,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_18",
+                    type: "INSTANCE",
+                    name: "Default",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#2E6CFF",
+                      stroke: "#2E6CFF",
+                      text: "#FFFFFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      shape: "default",
+                      size: "middle"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primary",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Default"
+                  },
+                  {
+                    id: "layout_19",
+                    type: "INSTANCE",
+                    name: "Rounded",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#2E6CFF",
+                      stroke: "#2E6CFF",
+                      text: "#FFFFFF",
+                      radius: 999,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      shape: "rounded",
+                      size: "middle"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primary",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Rounded"
+                  },
+                  {
+                    id: "layout_20",
+                    type: "INSTANCE",
+                    name: "Rectangular",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#2E6CFF",
+                      stroke: "#2E6CFF",
+                      text: "#FFFFFF",
+                      radius: 0,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      shape: "rectangular",
+                      size: "middle"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primary",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Rectangular"
+                  }
+                ]
+              },
+              {
+                id: "layout_21",
+                type: "TEXT",
+                name: "Text 15",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 24,
+                text: "Interactive States",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_22",
+                type: "FRAME",
+                name: "content-row-4",
+                x: 48,
+                y: 116,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_23",
+                    type: "INSTANCE",
+                    name: "Default State",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#2E6CFF",
+                      stroke: "#2E6CFF",
+                      text: "#FFFFFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      size: "middle"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primary",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Default State"
+                  },
+                  {
+                    id: "layout_24",
+                    type: "INSTANCE",
+                    name: "Active State",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#2E6CFF",
+                      stroke: "#2E6CFF",
+                      text: "#FFFFFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      size: "middle",
+                      onMouseDown: "active"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primary",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Active State"
+                  },
+                  {
+                    id: "layout_25",
+                    type: "INSTANCE",
+                    name: "Focus State",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#FFFFFF",
+                      stroke: "#2E6CFF",
+                      text: "#2E6CFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "outline",
+                      size: "middle"
+                    },
+                    variables: {
+                      "container.background": "Semantic/surface/default",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/primary"
+                    },
+                    text: "Focus State"
+                  },
+                  {
+                    id: "layout_26",
+                    type: "INSTANCE",
+                    name: "Loading",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#2458D9",
+                      stroke: "#2458D9",
+                      text: "#FFFFFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      size: "middle",
+                      loading: true,
+                      loadingText: "Loading"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primaryHover",
+                      "container.border": "Semantic/action/primaryHover",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Loading"
+                  },
+                  {
+                    id: "layout_27",
+                    type: "INSTANCE",
+                    name: "Loading Text",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#2458D9",
+                      stroke: "#2458D9",
+                      text: "#FFFFFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      size: "middle",
+                      loading: true,
+                      loadingText: "Submitting"
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primaryHover",
+                      "container.border": "Semantic/action/primaryHover",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Loading Text"
+                  },
+                  {
+                    id: "layout_28",
+                    type: "INSTANCE",
+                    name: "Disabled",
+                    x: 48,
+                    y: 116,
+                    width: 128,
+                    height: 36,
+                    component: "Button",
+                    style: {
+                      fill: "#E0E6EE",
+                      stroke: "#E0E6EE",
+                      text: "#7E8A9C",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 7,
+                      gap: 0,
+                      fontSize: 17,
+                      lineHeight: 24,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      size: "middle",
+                      disabled: true
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/disabled",
+                      "container.border": "Semantic/action/disabled",
+                      "label.color": "Semantic/text/muted"
+                    },
+                    text: "Disabled"
+                  }
+                ]
+              },
+              {
+                id: "layout_29",
+                type: "TEXT",
+                name: "Text 22",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 24,
+                text: "Layout Behavior",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_30",
+                type: "FRAME",
+                name: "content-row-5",
+                x: 48,
+                y: 116,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_31",
+                    type: "INSTANCE",
+                    name: "Block",
+                    x: 48,
+                    y: 116,
+                    width: 358,
+                    height: 44,
+                    component: "Button",
+                    style: {
+                      fill: "#2E6CFF",
+                      stroke: "#2E6CFF",
+                      text: "#FFFFFF",
+                      radius: 4,
+                      paddingX: 12,
+                      paddingY: 11,
+                      gap: 0,
+                      fontSize: 18,
+                      lineHeight: 25,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      color: "primary",
+                      fill: "solid",
+                      size: "large",
+                      block: true
+                    },
+                    variables: {
+                      "container.background": "Semantic/action/primary",
+                      "container.border": "Semantic/action/primary",
+                      "label.color": "Semantic/action/onPrimary"
+                    },
+                    text: "Block"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            id: "layout_32",
+            type: "FRAME",
+            name: "form-section",
+            x: 48,
+            y: 612,
+            width: 1320,
+            height: 100,
+            children: []
+          },
+          {
+            id: "layout_33",
+            type: "FRAME",
+            name: "action-section",
+            x: 48,
+            y: 688,
+            width: 1320,
+            height: 100,
+            children: []
+          }
+        ]
+      },
+      {
+        id: "layout_2",
+        type: "FRAME",
+        name: "header-section",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_3",
+            type: "TEXT",
+            name: "Text 1",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 32,
+            text: "Button Inspection",
+            variables: {
+              "text.color": "semantic.text.primary"
+            },
+            style: {
+              text: "text/heading/xl",
+              fill: "#1F2430"
+            }
+          }
+        ]
+      },
+      {
+        id: "layout_3",
+        type: "TEXT",
+        name: "Text 1",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 32,
+        text: "Button Inspection",
+        variables: {
+          "text.color": "semantic.text.primary"
+        },
+        style: {
+          text: "text/heading/xl",
+          fill: "#1F2430"
+        }
+      },
+      {
+        id: "layout_4",
+        type: "FRAME",
+        name: "content-section",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_5",
+            type: "TEXT",
+            name: "Text 2",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 24,
+            text: "Sizes",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_6",
+            type: "FRAME",
+            name: "content-row-1",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_7",
+                type: "INSTANCE",
+                name: "Mini",
+                x: 48,
+                y: 116,
+                width: 92,
+                height: 28,
+                component: "Button",
+                style: {
+                  fill: "#2E6CFF",
+                  stroke: "#2E6CFF",
+                  text: "#FFFFFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 3,
+                  gap: 0,
+                  fontSize: 13,
+                  lineHeight: 18,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  size: "mini"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primary",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Mini"
+              },
+              {
+                id: "layout_8",
+                type: "INSTANCE",
+                name: "Small",
+                x: 48,
+                y: 116,
+                width: 108,
+                height: 32,
+                component: "Button",
+                style: {
+                  fill: "#2E6CFF",
+                  stroke: "#2E6CFF",
+                  text: "#FFFFFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 3,
+                  gap: 0,
+                  fontSize: 15,
+                  lineHeight: 21,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  size: "small"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primary",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Small"
+              },
+              {
+                id: "layout_9",
+                type: "INSTANCE",
+                name: "Middle",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#2E6CFF",
+                  stroke: "#2E6CFF",
+                  text: "#FFFFFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  size: "middle"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primary",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Middle"
+              },
+              {
+                id: "layout_10",
+                type: "INSTANCE",
+                name: "Large",
+                x: 48,
+                y: 116,
+                width: 156,
+                height: 44,
+                component: "Button",
+                style: {
+                  fill: "#2E6CFF",
+                  stroke: "#2E6CFF",
+                  text: "#FFFFFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 11,
+                  gap: 0,
+                  fontSize: 18,
+                  lineHeight: 25,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  size: "large"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primary",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Large"
+              }
+            ]
+          },
+          {
+            id: "layout_11",
+            type: "TEXT",
+            name: "Text 7",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 24,
+            text: "Color and Fill",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_12",
+            type: "FRAME",
+            name: "content-row-2",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_13",
+                type: "INSTANCE",
+                name: "Primary Solid",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#2E6CFF",
+                  stroke: "#2E6CFF",
+                  text: "#FFFFFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  size: "middle"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primary",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Primary Solid"
+              },
+              {
+                id: "layout_14",
+                type: "INSTANCE",
+                name: "Default Outline",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#FFFFFF",
+                  stroke: "#E0E6EE",
+                  text: "#1F2430",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "default",
+                  fill: "outline",
+                  size: "middle"
+                },
+                variables: {
+                  "container.background": "Semantic/surface/default",
+                  "container.border": "Semantic/border/default",
+                  "label.color": "Semantic/text/primary"
+                },
+                text: "Default Outline"
+              },
+              {
+                id: "layout_15",
+                type: "INSTANCE",
+                name: "Danger None",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#FFFFFF",
+                  stroke: "#FFFFFF",
+                  text: "#D34B4B",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "danger",
+                  fill: "none",
+                  size: "middle"
+                },
+                variables: {
+                  "container.background": "Semantic/surface/default",
+                  "container.border": "Semantic/surface/default",
+                  "label.color": "Semantic/status/critical"
+                },
+                text: "Danger None"
+              }
+            ]
+          },
+          {
+            id: "layout_16",
+            type: "TEXT",
+            name: "Text 11",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 24,
+            text: "Shape",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_17",
+            type: "FRAME",
+            name: "content-row-3",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_18",
+                type: "INSTANCE",
+                name: "Default",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#2E6CFF",
+                  stroke: "#2E6CFF",
+                  text: "#FFFFFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  shape: "default",
+                  size: "middle"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primary",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Default"
+              },
+              {
+                id: "layout_19",
+                type: "INSTANCE",
+                name: "Rounded",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#2E6CFF",
+                  stroke: "#2E6CFF",
+                  text: "#FFFFFF",
+                  radius: 999,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  shape: "rounded",
+                  size: "middle"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primary",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Rounded"
+              },
+              {
+                id: "layout_20",
+                type: "INSTANCE",
+                name: "Rectangular",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#2E6CFF",
+                  stroke: "#2E6CFF",
+                  text: "#FFFFFF",
+                  radius: 0,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  shape: "rectangular",
+                  size: "middle"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primary",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Rectangular"
+              }
+            ]
+          },
+          {
+            id: "layout_21",
+            type: "TEXT",
+            name: "Text 15",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 24,
+            text: "Interactive States",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_22",
+            type: "FRAME",
+            name: "content-row-4",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_23",
+                type: "INSTANCE",
+                name: "Default State",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#2E6CFF",
+                  stroke: "#2E6CFF",
+                  text: "#FFFFFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  size: "middle"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primary",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Default State"
+              },
+              {
+                id: "layout_24",
+                type: "INSTANCE",
+                name: "Active State",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#2E6CFF",
+                  stroke: "#2E6CFF",
+                  text: "#FFFFFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  size: "middle",
+                  onMouseDown: "active"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primary",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Active State"
+              },
+              {
+                id: "layout_25",
+                type: "INSTANCE",
+                name: "Focus State",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#FFFFFF",
+                  stroke: "#2E6CFF",
+                  text: "#2E6CFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "outline",
+                  size: "middle"
+                },
+                variables: {
+                  "container.background": "Semantic/surface/default",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/primary"
+                },
+                text: "Focus State"
+              },
+              {
+                id: "layout_26",
+                type: "INSTANCE",
+                name: "Loading",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#2458D9",
+                  stroke: "#2458D9",
+                  text: "#FFFFFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  size: "middle",
+                  loading: true,
+                  loadingText: "Loading"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primaryHover",
+                  "container.border": "Semantic/action/primaryHover",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Loading"
+              },
+              {
+                id: "layout_27",
+                type: "INSTANCE",
+                name: "Loading Text",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#2458D9",
+                  stroke: "#2458D9",
+                  text: "#FFFFFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  size: "middle",
+                  loading: true,
+                  loadingText: "Submitting"
+                },
+                variables: {
+                  "container.background": "Semantic/action/primaryHover",
+                  "container.border": "Semantic/action/primaryHover",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Loading Text"
+              },
+              {
+                id: "layout_28",
+                type: "INSTANCE",
+                name: "Disabled",
+                x: 48,
+                y: 116,
+                width: 128,
+                height: 36,
+                component: "Button",
+                style: {
+                  fill: "#E0E6EE",
+                  stroke: "#E0E6EE",
+                  text: "#7E8A9C",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 7,
+                  gap: 0,
+                  fontSize: 17,
+                  lineHeight: 24,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  size: "middle",
+                  disabled: true
+                },
+                variables: {
+                  "container.background": "Semantic/action/disabled",
+                  "container.border": "Semantic/action/disabled",
+                  "label.color": "Semantic/text/muted"
+                },
+                text: "Disabled"
+              }
+            ]
+          },
+          {
+            id: "layout_29",
+            type: "TEXT",
+            name: "Text 22",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 24,
+            text: "Layout Behavior",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_30",
+            type: "FRAME",
+            name: "content-row-5",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_31",
+                type: "INSTANCE",
+                name: "Block",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 44,
+                component: "Button",
+                style: {
+                  fill: "#2E6CFF",
+                  stroke: "#2E6CFF",
+                  text: "#FFFFFF",
+                  radius: 4,
+                  paddingX: 12,
+                  paddingY: 11,
+                  gap: 0,
+                  fontSize: 18,
+                  lineHeight: 25,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  color: "primary",
+                  fill: "solid",
+                  size: "large",
+                  block: true
+                },
+                variables: {
+                  "container.background": "Semantic/action/primary",
+                  "container.border": "Semantic/action/primary",
+                  "label.color": "Semantic/action/onPrimary"
+                },
+                text: "Block"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_5",
+        type: "TEXT",
+        name: "Text 2",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 24,
+        text: "Sizes",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_6",
+        type: "FRAME",
+        name: "content-row-1",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_7",
+            type: "INSTANCE",
+            name: "Mini",
+            x: 48,
+            y: 116,
+            width: 92,
+            height: 28,
+            component: "Button",
+            style: {
+              fill: "#2E6CFF",
+              stroke: "#2E6CFF",
+              text: "#FFFFFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 3,
+              gap: 0,
+              fontSize: 13,
+              lineHeight: 18,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              size: "mini"
+            },
+            variables: {
+              "container.background": "Semantic/action/primary",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Mini"
+          },
+          {
+            id: "layout_8",
+            type: "INSTANCE",
+            name: "Small",
+            x: 48,
+            y: 116,
+            width: 108,
+            height: 32,
+            component: "Button",
+            style: {
+              fill: "#2E6CFF",
+              stroke: "#2E6CFF",
+              text: "#FFFFFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 3,
+              gap: 0,
+              fontSize: 15,
+              lineHeight: 21,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              size: "small"
+            },
+            variables: {
+              "container.background": "Semantic/action/primary",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Small"
+          },
+          {
+            id: "layout_9",
+            type: "INSTANCE",
+            name: "Middle",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#2E6CFF",
+              stroke: "#2E6CFF",
+              text: "#FFFFFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              size: "middle"
+            },
+            variables: {
+              "container.background": "Semantic/action/primary",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Middle"
+          },
+          {
+            id: "layout_10",
+            type: "INSTANCE",
+            name: "Large",
+            x: 48,
+            y: 116,
+            width: 156,
+            height: 44,
+            component: "Button",
+            style: {
+              fill: "#2E6CFF",
+              stroke: "#2E6CFF",
+              text: "#FFFFFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 11,
+              gap: 0,
+              fontSize: 18,
+              lineHeight: 25,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              size: "large"
+            },
+            variables: {
+              "container.background": "Semantic/action/primary",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Large"
+          }
+        ]
+      },
+      {
+        id: "layout_7",
+        type: "INSTANCE",
+        name: "Mini",
+        x: 48,
+        y: 116,
+        width: 92,
+        height: 28,
+        component: "Button",
+        style: {
+          fill: "#2E6CFF",
+          stroke: "#2E6CFF",
+          text: "#FFFFFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 3,
+          gap: 0,
+          fontSize: 13,
+          lineHeight: 18,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "mini"
+        },
+        variables: {
+          "container.background": "Semantic/action/primary",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Mini"
+      },
+      {
+        id: "layout_8",
+        type: "INSTANCE",
+        name: "Small",
+        x: 48,
+        y: 116,
+        width: 108,
+        height: 32,
+        component: "Button",
+        style: {
+          fill: "#2E6CFF",
+          stroke: "#2E6CFF",
+          text: "#FFFFFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 3,
+          gap: 0,
+          fontSize: 15,
+          lineHeight: 21,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "small"
+        },
+        variables: {
+          "container.background": "Semantic/action/primary",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Small"
+      },
+      {
+        id: "layout_9",
+        type: "INSTANCE",
+        name: "Middle",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#2E6CFF",
+          stroke: "#2E6CFF",
+          text: "#FFFFFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle"
+        },
+        variables: {
+          "container.background": "Semantic/action/primary",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Middle"
+      },
+      {
+        id: "layout_10",
+        type: "INSTANCE",
+        name: "Large",
+        x: 48,
+        y: 116,
+        width: 156,
+        height: 44,
+        component: "Button",
+        style: {
+          fill: "#2E6CFF",
+          stroke: "#2E6CFF",
+          text: "#FFFFFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 11,
+          gap: 0,
+          fontSize: 18,
+          lineHeight: 25,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "large"
+        },
+        variables: {
+          "container.background": "Semantic/action/primary",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Large"
+      },
+      {
+        id: "layout_11",
+        type: "TEXT",
+        name: "Text 7",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 24,
+        text: "Color and Fill",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_12",
+        type: "FRAME",
+        name: "content-row-2",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_13",
+            type: "INSTANCE",
+            name: "Primary Solid",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#2E6CFF",
+              stroke: "#2E6CFF",
+              text: "#FFFFFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              size: "middle"
+            },
+            variables: {
+              "container.background": "Semantic/action/primary",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Primary Solid"
+          },
+          {
+            id: "layout_14",
+            type: "INSTANCE",
+            name: "Default Outline",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#FFFFFF",
+              stroke: "#E0E6EE",
+              text: "#1F2430",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "default",
+              fill: "outline",
+              size: "middle"
+            },
+            variables: {
+              "container.background": "Semantic/surface/default",
+              "container.border": "Semantic/border/default",
+              "label.color": "Semantic/text/primary"
+            },
+            text: "Default Outline"
+          },
+          {
+            id: "layout_15",
+            type: "INSTANCE",
+            name: "Danger None",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#FFFFFF",
+              stroke: "#FFFFFF",
+              text: "#D34B4B",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "danger",
+              fill: "none",
+              size: "middle"
+            },
+            variables: {
+              "container.background": "Semantic/surface/default",
+              "container.border": "Semantic/surface/default",
+              "label.color": "Semantic/status/critical"
+            },
+            text: "Danger None"
+          }
+        ]
+      },
+      {
+        id: "layout_13",
+        type: "INSTANCE",
+        name: "Primary Solid",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#2E6CFF",
+          stroke: "#2E6CFF",
+          text: "#FFFFFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle"
+        },
+        variables: {
+          "container.background": "Semantic/action/primary",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Primary Solid"
+      },
+      {
+        id: "layout_14",
+        type: "INSTANCE",
+        name: "Default Outline",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#FFFFFF",
+          stroke: "#E0E6EE",
+          text: "#1F2430",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "default",
+          fill: "outline",
+          size: "middle"
+        },
+        variables: {
+          "container.background": "Semantic/surface/default",
+          "container.border": "Semantic/border/default",
+          "label.color": "Semantic/text/primary"
+        },
+        text: "Default Outline"
+      },
+      {
+        id: "layout_15",
+        type: "INSTANCE",
+        name: "Danger None",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#FFFFFF",
+          stroke: "#FFFFFF",
+          text: "#D34B4B",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "danger",
+          fill: "none",
+          size: "middle"
+        },
+        variables: {
+          "container.background": "Semantic/surface/default",
+          "container.border": "Semantic/surface/default",
+          "label.color": "Semantic/status/critical"
+        },
+        text: "Danger None"
+      },
+      {
+        id: "layout_16",
+        type: "TEXT",
+        name: "Text 11",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 24,
+        text: "Shape",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_17",
+        type: "FRAME",
+        name: "content-row-3",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_18",
+            type: "INSTANCE",
+            name: "Default",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#2E6CFF",
+              stroke: "#2E6CFF",
+              text: "#FFFFFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              shape: "default",
+              size: "middle"
+            },
+            variables: {
+              "container.background": "Semantic/action/primary",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Default"
+          },
+          {
+            id: "layout_19",
+            type: "INSTANCE",
+            name: "Rounded",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#2E6CFF",
+              stroke: "#2E6CFF",
+              text: "#FFFFFF",
+              radius: 999,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              shape: "rounded",
+              size: "middle"
+            },
+            variables: {
+              "container.background": "Semantic/action/primary",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Rounded"
+          },
+          {
+            id: "layout_20",
+            type: "INSTANCE",
+            name: "Rectangular",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#2E6CFF",
+              stroke: "#2E6CFF",
+              text: "#FFFFFF",
+              radius: 0,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              shape: "rectangular",
+              size: "middle"
+            },
+            variables: {
+              "container.background": "Semantic/action/primary",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Rectangular"
+          }
+        ]
+      },
+      {
+        id: "layout_18",
+        type: "INSTANCE",
+        name: "Default",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#2E6CFF",
+          stroke: "#2E6CFF",
+          text: "#FFFFFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          shape: "default",
+          size: "middle"
+        },
+        variables: {
+          "container.background": "Semantic/action/primary",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Default"
+      },
+      {
+        id: "layout_19",
+        type: "INSTANCE",
+        name: "Rounded",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#2E6CFF",
+          stroke: "#2E6CFF",
+          text: "#FFFFFF",
+          radius: 999,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          shape: "rounded",
+          size: "middle"
+        },
+        variables: {
+          "container.background": "Semantic/action/primary",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Rounded"
+      },
+      {
+        id: "layout_20",
+        type: "INSTANCE",
+        name: "Rectangular",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#2E6CFF",
+          stroke: "#2E6CFF",
+          text: "#FFFFFF",
+          radius: 0,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          shape: "rectangular",
+          size: "middle"
+        },
+        variables: {
+          "container.background": "Semantic/action/primary",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Rectangular"
+      },
+      {
+        id: "layout_21",
+        type: "TEXT",
+        name: "Text 15",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 24,
+        text: "Interactive States",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_22",
+        type: "FRAME",
+        name: "content-row-4",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_23",
+            type: "INSTANCE",
+            name: "Default State",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#2E6CFF",
+              stroke: "#2E6CFF",
+              text: "#FFFFFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              size: "middle"
+            },
+            variables: {
+              "container.background": "Semantic/action/primary",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Default State"
+          },
+          {
+            id: "layout_24",
+            type: "INSTANCE",
+            name: "Active State",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#2E6CFF",
+              stroke: "#2E6CFF",
+              text: "#FFFFFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              size: "middle",
+              onMouseDown: "active"
+            },
+            variables: {
+              "container.background": "Semantic/action/primary",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Active State"
+          },
+          {
+            id: "layout_25",
+            type: "INSTANCE",
+            name: "Focus State",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#FFFFFF",
+              stroke: "#2E6CFF",
+              text: "#2E6CFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "outline",
+              size: "middle"
+            },
+            variables: {
+              "container.background": "Semantic/surface/default",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/primary"
+            },
+            text: "Focus State"
+          },
+          {
+            id: "layout_26",
+            type: "INSTANCE",
+            name: "Loading",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#2458D9",
+              stroke: "#2458D9",
+              text: "#FFFFFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              size: "middle",
+              loading: true,
+              loadingText: "Loading"
+            },
+            variables: {
+              "container.background": "Semantic/action/primaryHover",
+              "container.border": "Semantic/action/primaryHover",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Loading"
+          },
+          {
+            id: "layout_27",
+            type: "INSTANCE",
+            name: "Loading Text",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#2458D9",
+              stroke: "#2458D9",
+              text: "#FFFFFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              size: "middle",
+              loading: true,
+              loadingText: "Submitting"
+            },
+            variables: {
+              "container.background": "Semantic/action/primaryHover",
+              "container.border": "Semantic/action/primaryHover",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Loading Text"
+          },
+          {
+            id: "layout_28",
+            type: "INSTANCE",
+            name: "Disabled",
+            x: 48,
+            y: 116,
+            width: 128,
+            height: 36,
+            component: "Button",
+            style: {
+              fill: "#E0E6EE",
+              stroke: "#E0E6EE",
+              text: "#7E8A9C",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 7,
+              gap: 0,
+              fontSize: 17,
+              lineHeight: 24,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              size: "middle",
+              disabled: true
+            },
+            variables: {
+              "container.background": "Semantic/action/disabled",
+              "container.border": "Semantic/action/disabled",
+              "label.color": "Semantic/text/muted"
+            },
+            text: "Disabled"
+          }
+        ]
+      },
+      {
+        id: "layout_23",
+        type: "INSTANCE",
+        name: "Default State",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#2E6CFF",
+          stroke: "#2E6CFF",
+          text: "#FFFFFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle"
+        },
+        variables: {
+          "container.background": "Semantic/action/primary",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Default State"
+      },
+      {
+        id: "layout_24",
+        type: "INSTANCE",
+        name: "Active State",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#2E6CFF",
+          stroke: "#2E6CFF",
+          text: "#FFFFFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle",
+          onMouseDown: "active"
+        },
+        variables: {
+          "container.background": "Semantic/action/primary",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Active State"
+      },
+      {
+        id: "layout_25",
+        type: "INSTANCE",
+        name: "Focus State",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#FFFFFF",
+          stroke: "#2E6CFF",
+          text: "#2E6CFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "outline",
+          size: "middle"
+        },
+        variables: {
+          "container.background": "Semantic/surface/default",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/primary"
+        },
+        text: "Focus State"
+      },
+      {
+        id: "layout_26",
+        type: "INSTANCE",
+        name: "Loading",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#2458D9",
+          stroke: "#2458D9",
+          text: "#FFFFFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle",
+          loading: true,
+          loadingText: "Loading"
+        },
+        variables: {
+          "container.background": "Semantic/action/primaryHover",
+          "container.border": "Semantic/action/primaryHover",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Loading"
+      },
+      {
+        id: "layout_27",
+        type: "INSTANCE",
+        name: "Loading Text",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#2458D9",
+          stroke: "#2458D9",
+          text: "#FFFFFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle",
+          loading: true,
+          loadingText: "Submitting"
+        },
+        variables: {
+          "container.background": "Semantic/action/primaryHover",
+          "container.border": "Semantic/action/primaryHover",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Loading Text"
+      },
+      {
+        id: "layout_28",
+        type: "INSTANCE",
+        name: "Disabled",
+        x: 48,
+        y: 116,
+        width: 128,
+        height: 36,
+        component: "Button",
+        style: {
+          fill: "#E0E6EE",
+          stroke: "#E0E6EE",
+          text: "#7E8A9C",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 7,
+          gap: 0,
+          fontSize: 17,
+          lineHeight: 24,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle",
+          disabled: true
+        },
+        variables: {
+          "container.background": "Semantic/action/disabled",
+          "container.border": "Semantic/action/disabled",
+          "label.color": "Semantic/text/muted"
+        },
+        text: "Disabled"
+      },
+      {
+        id: "layout_29",
+        type: "TEXT",
+        name: "Text 22",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 24,
+        text: "Layout Behavior",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_30",
+        type: "FRAME",
+        name: "content-row-5",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_31",
+            type: "INSTANCE",
+            name: "Block",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 44,
+            component: "Button",
+            style: {
+              fill: "#2E6CFF",
+              stroke: "#2E6CFF",
+              text: "#FFFFFF",
+              radius: 4,
+              paddingX: 12,
+              paddingY: 11,
+              gap: 0,
+              fontSize: 18,
+              lineHeight: 25,
+              fontWeight: "medium"
+            },
+            variant: {
+              color: "primary",
+              fill: "solid",
+              size: "large",
+              block: true
+            },
+            variables: {
+              "container.background": "Semantic/action/primary",
+              "container.border": "Semantic/action/primary",
+              "label.color": "Semantic/action/onPrimary"
+            },
+            text: "Block"
+          }
+        ]
+      },
+      {
+        id: "layout_31",
+        type: "INSTANCE",
+        name: "Block",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 44,
+        component: "Button",
+        style: {
+          fill: "#2E6CFF",
+          stroke: "#2E6CFF",
+          text: "#FFFFFF",
+          radius: 4,
+          paddingX: 12,
+          paddingY: 11,
+          gap: 0,
+          fontSize: 18,
+          lineHeight: 25,
+          fontWeight: "medium"
+        },
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "large",
+          block: true
+        },
+        variables: {
+          "container.background": "Semantic/action/primary",
+          "container.border": "Semantic/action/primary",
+          "label.color": "Semantic/action/onPrimary"
+        },
+        text: "Block"
+      },
+      {
+        id: "layout_32",
+        type: "FRAME",
+        name: "form-section",
+        x: 48,
+        y: 612,
+        width: 1320,
+        height: 100,
+        children: []
+      },
+      {
+        id: "layout_33",
+        type: "FRAME",
+        name: "action-section",
+        x: 48,
+        y: 688,
+        width: 1320,
+        height: 100,
+        children: []
+      }
+    ],
+    frames: [
+      {
+        id: "layout_1",
+        name: "Button inspection Screen"
+      },
+      {
+        id: "layout_2",
+        name: "header-section"
+      },
+      {
+        id: "layout_4",
+        name: "content-section"
+      },
+      {
+        id: "layout_6",
+        name: "content-row-1"
+      },
+      {
+        id: "layout_12",
+        name: "content-row-2"
+      },
+      {
+        id: "layout_17",
+        name: "content-row-3"
+      },
+      {
+        id: "layout_22",
+        name: "content-row-4"
+      },
+      {
+        id: "layout_30",
+        name: "content-row-5"
+      },
+      {
+        id: "layout_32",
+        name: "form-section"
+      },
+      {
+        id: "layout_33",
+        name: "action-section"
+      }
+    ],
+    components: [
+      {
+        id: "layout_7",
+        name: "Mini",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "mini"
+        }
+      },
+      {
+        id: "layout_8",
+        name: "Small",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "small"
+        }
+      },
+      {
+        id: "layout_9",
+        name: "Middle",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle"
+        }
+      },
+      {
+        id: "layout_10",
+        name: "Large",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "large"
+        }
+      },
+      {
+        id: "layout_13",
+        name: "Primary Solid",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle"
+        }
+      },
+      {
+        id: "layout_14",
+        name: "Default Outline",
+        component: "Button",
+        variant: {
+          color: "default",
+          fill: "outline",
+          size: "middle"
+        }
+      },
+      {
+        id: "layout_15",
+        name: "Danger None",
+        component: "Button",
+        variant: {
+          color: "danger",
+          fill: "none",
+          size: "middle"
+        }
+      },
+      {
+        id: "layout_18",
+        name: "Default",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          shape: "default",
+          size: "middle"
+        }
+      },
+      {
+        id: "layout_19",
+        name: "Rounded",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          shape: "rounded",
+          size: "middle"
+        }
+      },
+      {
+        id: "layout_20",
+        name: "Rectangular",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          shape: "rectangular",
+          size: "middle"
+        }
+      },
+      {
+        id: "layout_23",
+        name: "Default State",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle"
+        }
+      },
+      {
+        id: "layout_24",
+        name: "Active State",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle",
+          onMouseDown: "active"
+        }
+      },
+      {
+        id: "layout_25",
+        name: "Focus State",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "outline",
+          size: "middle"
+        }
+      },
+      {
+        id: "layout_26",
+        name: "Loading",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle",
+          loading: true,
+          loadingText: "Loading"
+        }
+      },
+      {
+        id: "layout_27",
+        name: "Loading Text",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle",
+          loading: true,
+          loadingText: "Submitting"
+        }
+      },
+      {
+        id: "layout_28",
+        name: "Disabled",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "middle",
+          disabled: true
+        }
+      },
+      {
+        id: "layout_31",
+        name: "Block",
+        component: "Button",
+        variant: {
+          color: "primary",
+          fill: "solid",
+          size: "large",
+          block: true
+        }
+      }
+    ],
+    variables: {
+      "layout_3.text.color": "semantic.text.primary",
+      "layout_5.text.color": "semantic.text.secondary",
+      "layout_7.container.background": "Semantic/action/primary",
+      "layout_7.container.border": "Semantic/action/primary",
+      "layout_7.label.color": "Semantic/action/onPrimary",
+      "layout_8.container.background": "Semantic/action/primary",
+      "layout_8.container.border": "Semantic/action/primary",
+      "layout_8.label.color": "Semantic/action/onPrimary",
+      "layout_9.container.background": "Semantic/action/primary",
+      "layout_9.container.border": "Semantic/action/primary",
+      "layout_9.label.color": "Semantic/action/onPrimary",
+      "layout_10.container.background": "Semantic/action/primary",
+      "layout_10.container.border": "Semantic/action/primary",
+      "layout_10.label.color": "Semantic/action/onPrimary",
+      "layout_11.text.color": "semantic.text.secondary",
+      "layout_13.container.background": "Semantic/action/primary",
+      "layout_13.container.border": "Semantic/action/primary",
+      "layout_13.label.color": "Semantic/action/onPrimary",
+      "layout_14.container.background": "Semantic/surface/default",
+      "layout_14.container.border": "Semantic/border/default",
+      "layout_14.label.color": "Semantic/text/primary",
+      "layout_15.container.background": "Semantic/surface/default",
+      "layout_15.container.border": "Semantic/surface/default",
+      "layout_15.label.color": "Semantic/status/critical",
+      "layout_16.text.color": "semantic.text.secondary",
+      "layout_18.container.background": "Semantic/action/primary",
+      "layout_18.container.border": "Semantic/action/primary",
+      "layout_18.label.color": "Semantic/action/onPrimary",
+      "layout_19.container.background": "Semantic/action/primary",
+      "layout_19.container.border": "Semantic/action/primary",
+      "layout_19.label.color": "Semantic/action/onPrimary",
+      "layout_20.container.background": "Semantic/action/primary",
+      "layout_20.container.border": "Semantic/action/primary",
+      "layout_20.label.color": "Semantic/action/onPrimary",
+      "layout_21.text.color": "semantic.text.secondary",
+      "layout_23.container.background": "Semantic/action/primary",
+      "layout_23.container.border": "Semantic/action/primary",
+      "layout_23.label.color": "Semantic/action/onPrimary",
+      "layout_24.container.background": "Semantic/action/primary",
+      "layout_24.container.border": "Semantic/action/primary",
+      "layout_24.label.color": "Semantic/action/onPrimary",
+      "layout_25.container.background": "Semantic/surface/default",
+      "layout_25.container.border": "Semantic/action/primary",
+      "layout_25.label.color": "Semantic/action/primary",
+      "layout_26.container.background": "Semantic/action/primaryHover",
+      "layout_26.container.border": "Semantic/action/primaryHover",
+      "layout_26.label.color": "Semantic/action/onPrimary",
+      "layout_27.container.background": "Semantic/action/primaryHover",
+      "layout_27.container.border": "Semantic/action/primaryHover",
+      "layout_27.label.color": "Semantic/action/onPrimary",
+      "layout_28.container.background": "Semantic/action/disabled",
+      "layout_28.container.border": "Semantic/action/disabled",
+      "layout_28.label.color": "Semantic/text/muted",
+      "layout_29.text.color": "semantic.text.secondary",
+      "layout_31.container.background": "Semantic/action/primary",
+      "layout_31.container.border": "Semantic/action/primary",
+      "layout_31.label.color": "Semantic/action/onPrimary"
+    },
+    styles: {
+      "layout_3.text": "text/heading/xl",
+      "layout_3.fill": "#1F2430",
+      "layout_5.text": "text/body/lg",
+      "layout_5.fill": "#5F6A7B",
+      "layout_7.fill": "#2E6CFF",
+      "layout_7.stroke": "#2E6CFF",
+      "layout_7.text": "#FFFFFF",
+      "layout_7.effect": "undefined",
+      "layout_7.radius": "4",
+      "layout_7.paddingX": "12",
+      "layout_7.paddingY": "3",
+      "layout_7.gap": "0",
+      "layout_7.fontSize": "13",
+      "layout_7.lineHeight": "18",
+      "layout_7.fontWeight": "medium",
+      "layout_7.minWidth": "undefined",
+      "layout_8.fill": "#2E6CFF",
+      "layout_8.stroke": "#2E6CFF",
+      "layout_8.text": "#FFFFFF",
+      "layout_8.effect": "undefined",
+      "layout_8.radius": "4",
+      "layout_8.paddingX": "12",
+      "layout_8.paddingY": "3",
+      "layout_8.gap": "0",
+      "layout_8.fontSize": "15",
+      "layout_8.lineHeight": "21",
+      "layout_8.fontWeight": "medium",
+      "layout_8.minWidth": "undefined",
+      "layout_9.fill": "#2E6CFF",
+      "layout_9.stroke": "#2E6CFF",
+      "layout_9.text": "#FFFFFF",
+      "layout_9.effect": "undefined",
+      "layout_9.radius": "4",
+      "layout_9.paddingX": "12",
+      "layout_9.paddingY": "7",
+      "layout_9.gap": "0",
+      "layout_9.fontSize": "17",
+      "layout_9.lineHeight": "24",
+      "layout_9.fontWeight": "medium",
+      "layout_9.minWidth": "undefined",
+      "layout_10.fill": "#2E6CFF",
+      "layout_10.stroke": "#2E6CFF",
+      "layout_10.text": "#FFFFFF",
+      "layout_10.effect": "undefined",
+      "layout_10.radius": "4",
+      "layout_10.paddingX": "12",
+      "layout_10.paddingY": "11",
+      "layout_10.gap": "0",
+      "layout_10.fontSize": "18",
+      "layout_10.lineHeight": "25",
+      "layout_10.fontWeight": "medium",
+      "layout_10.minWidth": "undefined",
+      "layout_11.text": "text/body/lg",
+      "layout_11.fill": "#5F6A7B",
+      "layout_13.fill": "#2E6CFF",
+      "layout_13.stroke": "#2E6CFF",
+      "layout_13.text": "#FFFFFF",
+      "layout_13.effect": "undefined",
+      "layout_13.radius": "4",
+      "layout_13.paddingX": "12",
+      "layout_13.paddingY": "7",
+      "layout_13.gap": "0",
+      "layout_13.fontSize": "17",
+      "layout_13.lineHeight": "24",
+      "layout_13.fontWeight": "medium",
+      "layout_13.minWidth": "undefined",
+      "layout_14.fill": "#FFFFFF",
+      "layout_14.stroke": "#E0E6EE",
+      "layout_14.text": "#1F2430",
+      "layout_14.effect": "undefined",
+      "layout_14.radius": "4",
+      "layout_14.paddingX": "12",
+      "layout_14.paddingY": "7",
+      "layout_14.gap": "0",
+      "layout_14.fontSize": "17",
+      "layout_14.lineHeight": "24",
+      "layout_14.fontWeight": "medium",
+      "layout_14.minWidth": "undefined",
+      "layout_15.fill": "#FFFFFF",
+      "layout_15.stroke": "#FFFFFF",
+      "layout_15.text": "#D34B4B",
+      "layout_15.effect": "undefined",
+      "layout_15.radius": "4",
+      "layout_15.paddingX": "12",
+      "layout_15.paddingY": "7",
+      "layout_15.gap": "0",
+      "layout_15.fontSize": "17",
+      "layout_15.lineHeight": "24",
+      "layout_15.fontWeight": "medium",
+      "layout_15.minWidth": "undefined",
+      "layout_16.text": "text/body/lg",
+      "layout_16.fill": "#5F6A7B",
+      "layout_18.fill": "#2E6CFF",
+      "layout_18.stroke": "#2E6CFF",
+      "layout_18.text": "#FFFFFF",
+      "layout_18.effect": "undefined",
+      "layout_18.radius": "4",
+      "layout_18.paddingX": "12",
+      "layout_18.paddingY": "7",
+      "layout_18.gap": "0",
+      "layout_18.fontSize": "17",
+      "layout_18.lineHeight": "24",
+      "layout_18.fontWeight": "medium",
+      "layout_18.minWidth": "undefined",
+      "layout_19.fill": "#2E6CFF",
+      "layout_19.stroke": "#2E6CFF",
+      "layout_19.text": "#FFFFFF",
+      "layout_19.effect": "undefined",
+      "layout_19.radius": "999",
+      "layout_19.paddingX": "12",
+      "layout_19.paddingY": "7",
+      "layout_19.gap": "0",
+      "layout_19.fontSize": "17",
+      "layout_19.lineHeight": "24",
+      "layout_19.fontWeight": "medium",
+      "layout_19.minWidth": "undefined",
+      "layout_20.fill": "#2E6CFF",
+      "layout_20.stroke": "#2E6CFF",
+      "layout_20.text": "#FFFFFF",
+      "layout_20.effect": "undefined",
+      "layout_20.radius": "0",
+      "layout_20.paddingX": "12",
+      "layout_20.paddingY": "7",
+      "layout_20.gap": "0",
+      "layout_20.fontSize": "17",
+      "layout_20.lineHeight": "24",
+      "layout_20.fontWeight": "medium",
+      "layout_20.minWidth": "undefined",
+      "layout_21.text": "text/body/lg",
+      "layout_21.fill": "#5F6A7B",
+      "layout_23.fill": "#2E6CFF",
+      "layout_23.stroke": "#2E6CFF",
+      "layout_23.text": "#FFFFFF",
+      "layout_23.effect": "undefined",
+      "layout_23.radius": "4",
+      "layout_23.paddingX": "12",
+      "layout_23.paddingY": "7",
+      "layout_23.gap": "0",
+      "layout_23.fontSize": "17",
+      "layout_23.lineHeight": "24",
+      "layout_23.fontWeight": "medium",
+      "layout_23.minWidth": "undefined",
+      "layout_24.fill": "#2E6CFF",
+      "layout_24.stroke": "#2E6CFF",
+      "layout_24.text": "#FFFFFF",
+      "layout_24.effect": "undefined",
+      "layout_24.radius": "4",
+      "layout_24.paddingX": "12",
+      "layout_24.paddingY": "7",
+      "layout_24.gap": "0",
+      "layout_24.fontSize": "17",
+      "layout_24.lineHeight": "24",
+      "layout_24.fontWeight": "medium",
+      "layout_24.minWidth": "undefined",
+      "layout_25.fill": "#FFFFFF",
+      "layout_25.stroke": "#2E6CFF",
+      "layout_25.text": "#2E6CFF",
+      "layout_25.effect": "undefined",
+      "layout_25.radius": "4",
+      "layout_25.paddingX": "12",
+      "layout_25.paddingY": "7",
+      "layout_25.gap": "0",
+      "layout_25.fontSize": "17",
+      "layout_25.lineHeight": "24",
+      "layout_25.fontWeight": "medium",
+      "layout_25.minWidth": "undefined",
+      "layout_26.fill": "#2458D9",
+      "layout_26.stroke": "#2458D9",
+      "layout_26.text": "#FFFFFF",
+      "layout_26.effect": "undefined",
+      "layout_26.radius": "4",
+      "layout_26.paddingX": "12",
+      "layout_26.paddingY": "7",
+      "layout_26.gap": "0",
+      "layout_26.fontSize": "17",
+      "layout_26.lineHeight": "24",
+      "layout_26.fontWeight": "medium",
+      "layout_26.minWidth": "undefined",
+      "layout_27.fill": "#2458D9",
+      "layout_27.stroke": "#2458D9",
+      "layout_27.text": "#FFFFFF",
+      "layout_27.effect": "undefined",
+      "layout_27.radius": "4",
+      "layout_27.paddingX": "12",
+      "layout_27.paddingY": "7",
+      "layout_27.gap": "0",
+      "layout_27.fontSize": "17",
+      "layout_27.lineHeight": "24",
+      "layout_27.fontWeight": "medium",
+      "layout_27.minWidth": "undefined",
+      "layout_28.fill": "#E0E6EE",
+      "layout_28.stroke": "#E0E6EE",
+      "layout_28.text": "#7E8A9C",
+      "layout_28.effect": "undefined",
+      "layout_28.radius": "4",
+      "layout_28.paddingX": "12",
+      "layout_28.paddingY": "7",
+      "layout_28.gap": "0",
+      "layout_28.fontSize": "17",
+      "layout_28.lineHeight": "24",
+      "layout_28.fontWeight": "medium",
+      "layout_28.minWidth": "undefined",
+      "layout_29.text": "text/body/lg",
+      "layout_29.fill": "#5F6A7B",
+      "layout_31.fill": "#2E6CFF",
+      "layout_31.stroke": "#2E6CFF",
+      "layout_31.text": "#FFFFFF",
+      "layout_31.effect": "undefined",
+      "layout_31.radius": "4",
+      "layout_31.paddingX": "12",
+      "layout_31.paddingY": "11",
+      "layout_31.gap": "0",
+      "layout_31.fontSize": "18",
+      "layout_31.lineHeight": "25",
+      "layout_31.fontWeight": "medium",
+      "layout_31.minWidth": "undefined"
+    },
+    modes: {
+      brand: "core",
+      theme: "core"
+    },
+    metadata: {
+      source: "miterlab-figma-generator",
+      version: "0.1.0",
+      generatedAt: "2026-03-18T05:00:35.821Z"
+    }
+  };
+
+  // ../../artifacts/figma/input-inspection/mcp-payload.json
+  var mcp_payload_default2 = {
+    document: {
+      name: "input-inspection screen",
+      screen: "input-inspection",
+      theme: "core"
+    },
+    nodes: [
+      {
+        id: "layout_1",
+        type: "FRAME",
+        name: "Input inspection Screen",
+        x: 0,
+        y: 0,
+        width: 1440,
+        height: 1240,
+        children: [
+          {
+            id: "layout_2",
+            type: "FRAME",
+            name: "header-section",
+            x: 48,
+            y: 40,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_3",
+                type: "TEXT",
+                name: "Text 1",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 32,
+                text: "Input Inspection",
+                variables: {
+                  "text.color": "semantic.text.primary"
+                },
+                style: {
+                  text: "text/heading/xl",
+                  fill: "#1F2430"
+                }
+              }
+            ]
+          },
+          {
+            id: "layout_4",
+            type: "FRAME",
+            name: "content-section",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: []
+          },
+          {
+            id: "layout_5",
+            type: "FRAME",
+            name: "form-section",
+            x: 48,
+            y: 192,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_6",
+                type: "TEXT",
+                name: "Text 2",
+                x: 48,
+                y: 192,
+                width: 358,
+                height: 24,
+                text: "Input Only",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_7",
+                type: "FRAME",
+                name: "form-row-1",
+                x: 48,
+                y: 192,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_8",
+                    type: "INSTANCE",
+                    name: "Placeholder",
+                    x: 48,
+                    y: 192,
+                    width: 320,
+                    height: 24,
+                    component: "Input",
+                    style: {
+                      fill: "#FFFFFF",
+                      stroke: "#E0E6EE",
+                      text: "#1F2430",
+                      radius: 0,
+                      paddingX: 0,
+                      paddingY: 0,
+                      gap: 8,
+                      fontSize: 17,
+                      lineHeight: 26,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      placeholder: "Type here"
+                    },
+                    variables: {
+                      "field.background": "Semantic/surface/default",
+                      "field.border": "Semantic/border/default",
+                      "value.color": "Semantic/text/primary",
+                      "placeholder.color": "Semantic/text/muted"
+                    }
+                  },
+                  {
+                    id: "layout_9",
+                    type: "INSTANCE",
+                    name: "Value",
+                    x: 48,
+                    y: 192,
+                    width: 320,
+                    height: 24,
+                    component: "Input",
+                    style: {
+                      fill: "#FFFFFF",
+                      stroke: "#E0E6EE",
+                      text: "#1F2430",
+                      radius: 0,
+                      paddingX: 0,
+                      paddingY: 0,
+                      gap: 8,
+                      fontSize: 17,
+                      lineHeight: 26,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      value: "Current value"
+                    },
+                    variables: {
+                      "field.background": "Semantic/surface/default",
+                      "field.border": "Semantic/border/default",
+                      "value.color": "Semantic/text/primary",
+                      "placeholder.color": "Semantic/text/muted"
+                    },
+                    text: "Current value"
+                  },
+                  {
+                    id: "layout_10",
+                    type: "INSTANCE",
+                    name: "Default Value",
+                    x: 48,
+                    y: 192,
+                    width: 320,
+                    height: 24,
+                    component: "Input",
+                    style: {
+                      fill: "#FFFFFF",
+                      stroke: "#E0E6EE",
+                      text: "#1F2430",
+                      radius: 0,
+                      paddingX: 0,
+                      paddingY: 0,
+                      gap: 8,
+                      fontSize: 17,
+                      lineHeight: 26,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      defaultValue: "Seed value"
+                    },
+                    variables: {
+                      "field.background": "Semantic/surface/default",
+                      "field.border": "Semantic/border/default",
+                      "value.color": "Semantic/text/primary",
+                      "placeholder.color": "Semantic/text/muted"
+                    },
+                    text: "Seed value"
+                  }
+                ]
+              },
+              {
+                id: "layout_11",
+                type: "TEXT",
+                name: "Text 6",
+                x: 48,
+                y: 192,
+                width: 358,
+                height: 24,
+                text: "Interaction Props",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_12",
+                type: "FRAME",
+                name: "form-row-2",
+                x: 48,
+                y: 192,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_13",
+                    type: "INSTANCE",
+                    name: "Disabled",
+                    x: 48,
+                    y: 192,
+                    width: 320,
+                    height: 24,
+                    component: "Input",
+                    style: {
+                      fill: "#EEF1F5",
+                      stroke: "#EEF1F5",
+                      text: "#7E8A9C",
+                      radius: 0,
+                      paddingX: 0,
+                      paddingY: 0,
+                      gap: 8,
+                      fontSize: 17,
+                      lineHeight: 26,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      disabled: true,
+                      placeholder: "Disabled placeholder"
+                    },
+                    variables: {
+                      "field.background": "Semantic/surface/subtle",
+                      "field.border": "Semantic/border/subtle",
+                      "value.color": "Semantic/text/muted",
+                      "placeholder.color": "Semantic/text/muted"
+                    }
+                  },
+                  {
+                    id: "layout_14",
+                    type: "INSTANCE",
+                    name: "Read Only",
+                    x: 48,
+                    y: 192,
+                    width: 320,
+                    height: 24,
+                    component: "Input",
+                    style: {
+                      fill: "#EEF1F5",
+                      stroke: "#E0E6EE",
+                      text: "#5F6A7B",
+                      radius: 0,
+                      paddingX: 0,
+                      paddingY: 0,
+                      gap: 8,
+                      fontSize: 17,
+                      lineHeight: 26,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      readOnly: true,
+                      value: "Read only"
+                    },
+                    variables: {
+                      "field.background": "Semantic/surface/subtle",
+                      "field.border": "Semantic/border/default",
+                      "value.color": "Semantic/text/secondary",
+                      "placeholder.color": "Semantic/text/muted"
+                    },
+                    text: "Read only"
+                  },
+                  {
+                    id: "layout_15",
+                    type: "INSTANCE",
+                    name: "Clearable",
+                    x: 48,
+                    y: 192,
+                    width: 320,
+                    height: 24,
+                    component: "Input",
+                    style: {
+                      fill: "#FFFFFF",
+                      stroke: "#E0E6EE",
+                      text: "#1F2430",
+                      radius: 0,
+                      paddingX: 0,
+                      paddingY: 0,
+                      gap: 8,
+                      fontSize: 17,
+                      lineHeight: 26,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      clearable: true,
+                      value: "Clear me"
+                    },
+                    variables: {
+                      "field.background": "Semantic/surface/default",
+                      "field.border": "Semantic/border/default",
+                      "value.color": "Semantic/text/primary",
+                      "placeholder.color": "Semantic/text/muted"
+                    },
+                    text: "Clear me"
+                  }
+                ]
+              },
+              {
+                id: "layout_16",
+                type: "FRAME",
+                name: "form-row-3",
+                x: 48,
+                y: 192,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_17",
+                    type: "INSTANCE",
+                    name: "Clear On Focus",
+                    x: 48,
+                    y: 192,
+                    width: 320,
+                    height: 24,
+                    component: "Input",
+                    style: {
+                      fill: "#FFFFFF",
+                      stroke: "#E0E6EE",
+                      text: "#1F2430",
+                      radius: 0,
+                      paddingX: 0,
+                      paddingY: 0,
+                      gap: 8,
+                      fontSize: 17,
+                      lineHeight: 26,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      clearable: true,
+                      value: "Focus clear",
+                      onlyShowClearWhenFocus: true
+                    },
+                    variables: {
+                      "field.background": "Semantic/surface/default",
+                      "field.border": "Semantic/border/default",
+                      "value.color": "Semantic/text/primary",
+                      "placeholder.color": "Semantic/text/muted"
+                    },
+                    text: "Focus clear"
+                  },
+                  {
+                    id: "layout_18",
+                    type: "INSTANCE",
+                    name: "Password",
+                    x: 48,
+                    y: 192,
+                    width: 320,
+                    height: 24,
+                    component: "Input",
+                    style: {
+                      fill: "#FFFFFF",
+                      stroke: "#E0E6EE",
+                      text: "#1F2430",
+                      radius: 0,
+                      paddingX: 0,
+                      paddingY: 0,
+                      gap: 8,
+                      fontSize: 17,
+                      lineHeight: 26,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      value: "secret123",
+                      type: "password"
+                    },
+                    variables: {
+                      "field.background": "Semantic/surface/default",
+                      "field.border": "Semantic/border/default",
+                      "value.color": "Semantic/text/primary",
+                      "placeholder.color": "Semantic/text/muted"
+                    },
+                    text: "secret123"
+                  },
+                  {
+                    id: "layout_19",
+                    type: "INSTANCE",
+                    name: "Number",
+                    x: 48,
+                    y: 192,
+                    width: 320,
+                    height: 24,
+                    component: "Input",
+                    style: {
+                      fill: "#FFFFFF",
+                      stroke: "#E0E6EE",
+                      text: "#1F2430",
+                      radius: 0,
+                      paddingX: 0,
+                      paddingY: 0,
+                      gap: 8,
+                      fontSize: 17,
+                      lineHeight: 26,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      value: "12",
+                      step: 1,
+                      min: 0,
+                      max: 20,
+                      type: "number"
+                    },
+                    variables: {
+                      "field.background": "Semantic/surface/default",
+                      "field.border": "Semantic/border/default",
+                      "value.color": "Semantic/text/primary",
+                      "placeholder.color": "Semantic/text/muted"
+                    },
+                    text: "12"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            id: "layout_20",
+            type: "FRAME",
+            name: "action-section",
+            x: 48,
+            y: 456,
+            width: 1320,
+            height: 100,
+            children: []
+          },
+          {
+            id: "layout_21",
+            type: "FRAME",
+            name: "list-section",
+            x: 48,
+            y: 532,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_22",
+                type: "TEXT",
+                name: "Text 13",
+                x: 48,
+                y: 532,
+                width: 358,
+                height: 24,
+                text: "Input + Cell",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_23",
+                type: "FRAME",
+                name: "list-row-1",
+                x: 48,
+                y: 532,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_24",
+                    type: "INSTANCE",
+                    name: "Email",
+                    x: 48,
+                    y: 532,
+                    width: 358,
+                    height: 72,
+                    component: "Cell",
+                    style: {
+                      paddingY: 9,
+                      gap: 0,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      title: "Email",
+                      children: "input:email@example.com",
+                      description: "Cell container metrics",
+                      extra: "Required"
+                    },
+                    variables: {},
+                    text: "Email"
+                  },
+                  {
+                    id: "layout_25",
+                    type: "INSTANCE",
+                    name: "Search",
+                    x: 48,
+                    y: 532,
+                    width: 358,
+                    height: 56,
+                    component: "Cell",
+                    style: {
+                      paddingY: 9,
+                      gap: 0,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      title: "Search",
+                      children: "input:Search query",
+                      prefix: "S",
+                      clickable: true,
+                      arrowIcon: true
+                    },
+                    variables: {},
+                    text: "Search"
+                  }
+                ]
+              },
+              {
+                id: "layout_26",
+                type: "TEXT",
+                name: "Text 16",
+                x: 48,
+                y: 532,
+                width: 358,
+                height: 24,
+                text: "Input + List",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_27",
+                type: "FRAME",
+                name: "list-row-2",
+                x: 48,
+                y: 532,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_28",
+                    type: "INSTANCE",
+                    name: "Default List Shell",
+                    x: 48,
+                    y: 532,
+                    width: 358,
+                    height: 160,
+                    component: "List",
+                    style: {
+                      paddingY: 9,
+                      gap: 0,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      header: "Profile",
+                      mode: "default",
+                      children: "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+                    },
+                    variables: {},
+                    text: "Profile"
+                  },
+                  {
+                    id: "layout_29",
+                    type: "INSTANCE",
+                    name: "Card List Shell",
+                    x: 48,
+                    y: 532,
+                    width: 358,
+                    height: 184,
+                    component: "List",
+                    style: {
+                      paddingY: 9,
+                      gap: 0,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      header: "Billing",
+                      mode: "card",
+                      children: "Card::input:4111 1111 1111 1111|Address::input:Seoul"
+                    },
+                    variables: {},
+                    text: "Billing"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_2",
+        type: "FRAME",
+        name: "header-section",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_3",
+            type: "TEXT",
+            name: "Text 1",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 32,
+            text: "Input Inspection",
+            variables: {
+              "text.color": "semantic.text.primary"
+            },
+            style: {
+              text: "text/heading/xl",
+              fill: "#1F2430"
+            }
+          }
+        ]
+      },
+      {
+        id: "layout_3",
+        type: "TEXT",
+        name: "Text 1",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 32,
+        text: "Input Inspection",
+        variables: {
+          "text.color": "semantic.text.primary"
+        },
+        style: {
+          text: "text/heading/xl",
+          fill: "#1F2430"
+        }
+      },
+      {
+        id: "layout_4",
+        type: "FRAME",
+        name: "content-section",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: []
+      },
+      {
+        id: "layout_5",
+        type: "FRAME",
+        name: "form-section",
+        x: 48,
+        y: 192,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_6",
+            type: "TEXT",
+            name: "Text 2",
+            x: 48,
+            y: 192,
+            width: 358,
+            height: 24,
+            text: "Input Only",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_7",
+            type: "FRAME",
+            name: "form-row-1",
+            x: 48,
+            y: 192,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_8",
+                type: "INSTANCE",
+                name: "Placeholder",
+                x: 48,
+                y: 192,
+                width: 320,
+                height: 24,
+                component: "Input",
+                style: {
+                  fill: "#FFFFFF",
+                  stroke: "#E0E6EE",
+                  text: "#1F2430",
+                  radius: 0,
+                  paddingX: 0,
+                  paddingY: 0,
+                  gap: 8,
+                  fontSize: 17,
+                  lineHeight: 26,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  placeholder: "Type here"
+                },
+                variables: {
+                  "field.background": "Semantic/surface/default",
+                  "field.border": "Semantic/border/default",
+                  "value.color": "Semantic/text/primary",
+                  "placeholder.color": "Semantic/text/muted"
+                }
+              },
+              {
+                id: "layout_9",
+                type: "INSTANCE",
+                name: "Value",
+                x: 48,
+                y: 192,
+                width: 320,
+                height: 24,
+                component: "Input",
+                style: {
+                  fill: "#FFFFFF",
+                  stroke: "#E0E6EE",
+                  text: "#1F2430",
+                  radius: 0,
+                  paddingX: 0,
+                  paddingY: 0,
+                  gap: 8,
+                  fontSize: 17,
+                  lineHeight: 26,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  value: "Current value"
+                },
+                variables: {
+                  "field.background": "Semantic/surface/default",
+                  "field.border": "Semantic/border/default",
+                  "value.color": "Semantic/text/primary",
+                  "placeholder.color": "Semantic/text/muted"
+                },
+                text: "Current value"
+              },
+              {
+                id: "layout_10",
+                type: "INSTANCE",
+                name: "Default Value",
+                x: 48,
+                y: 192,
+                width: 320,
+                height: 24,
+                component: "Input",
+                style: {
+                  fill: "#FFFFFF",
+                  stroke: "#E0E6EE",
+                  text: "#1F2430",
+                  radius: 0,
+                  paddingX: 0,
+                  paddingY: 0,
+                  gap: 8,
+                  fontSize: 17,
+                  lineHeight: 26,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  defaultValue: "Seed value"
+                },
+                variables: {
+                  "field.background": "Semantic/surface/default",
+                  "field.border": "Semantic/border/default",
+                  "value.color": "Semantic/text/primary",
+                  "placeholder.color": "Semantic/text/muted"
+                },
+                text: "Seed value"
+              }
+            ]
+          },
+          {
+            id: "layout_11",
+            type: "TEXT",
+            name: "Text 6",
+            x: 48,
+            y: 192,
+            width: 358,
+            height: 24,
+            text: "Interaction Props",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_12",
+            type: "FRAME",
+            name: "form-row-2",
+            x: 48,
+            y: 192,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_13",
+                type: "INSTANCE",
+                name: "Disabled",
+                x: 48,
+                y: 192,
+                width: 320,
+                height: 24,
+                component: "Input",
+                style: {
+                  fill: "#EEF1F5",
+                  stroke: "#EEF1F5",
+                  text: "#7E8A9C",
+                  radius: 0,
+                  paddingX: 0,
+                  paddingY: 0,
+                  gap: 8,
+                  fontSize: 17,
+                  lineHeight: 26,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  disabled: true,
+                  placeholder: "Disabled placeholder"
+                },
+                variables: {
+                  "field.background": "Semantic/surface/subtle",
+                  "field.border": "Semantic/border/subtle",
+                  "value.color": "Semantic/text/muted",
+                  "placeholder.color": "Semantic/text/muted"
+                }
+              },
+              {
+                id: "layout_14",
+                type: "INSTANCE",
+                name: "Read Only",
+                x: 48,
+                y: 192,
+                width: 320,
+                height: 24,
+                component: "Input",
+                style: {
+                  fill: "#EEF1F5",
+                  stroke: "#E0E6EE",
+                  text: "#5F6A7B",
+                  radius: 0,
+                  paddingX: 0,
+                  paddingY: 0,
+                  gap: 8,
+                  fontSize: 17,
+                  lineHeight: 26,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  readOnly: true,
+                  value: "Read only"
+                },
+                variables: {
+                  "field.background": "Semantic/surface/subtle",
+                  "field.border": "Semantic/border/default",
+                  "value.color": "Semantic/text/secondary",
+                  "placeholder.color": "Semantic/text/muted"
+                },
+                text: "Read only"
+              },
+              {
+                id: "layout_15",
+                type: "INSTANCE",
+                name: "Clearable",
+                x: 48,
+                y: 192,
+                width: 320,
+                height: 24,
+                component: "Input",
+                style: {
+                  fill: "#FFFFFF",
+                  stroke: "#E0E6EE",
+                  text: "#1F2430",
+                  radius: 0,
+                  paddingX: 0,
+                  paddingY: 0,
+                  gap: 8,
+                  fontSize: 17,
+                  lineHeight: 26,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  clearable: true,
+                  value: "Clear me"
+                },
+                variables: {
+                  "field.background": "Semantic/surface/default",
+                  "field.border": "Semantic/border/default",
+                  "value.color": "Semantic/text/primary",
+                  "placeholder.color": "Semantic/text/muted"
+                },
+                text: "Clear me"
+              }
+            ]
+          },
+          {
+            id: "layout_16",
+            type: "FRAME",
+            name: "form-row-3",
+            x: 48,
+            y: 192,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_17",
+                type: "INSTANCE",
+                name: "Clear On Focus",
+                x: 48,
+                y: 192,
+                width: 320,
+                height: 24,
+                component: "Input",
+                style: {
+                  fill: "#FFFFFF",
+                  stroke: "#E0E6EE",
+                  text: "#1F2430",
+                  radius: 0,
+                  paddingX: 0,
+                  paddingY: 0,
+                  gap: 8,
+                  fontSize: 17,
+                  lineHeight: 26,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  clearable: true,
+                  value: "Focus clear",
+                  onlyShowClearWhenFocus: true
+                },
+                variables: {
+                  "field.background": "Semantic/surface/default",
+                  "field.border": "Semantic/border/default",
+                  "value.color": "Semantic/text/primary",
+                  "placeholder.color": "Semantic/text/muted"
+                },
+                text: "Focus clear"
+              },
+              {
+                id: "layout_18",
+                type: "INSTANCE",
+                name: "Password",
+                x: 48,
+                y: 192,
+                width: 320,
+                height: 24,
+                component: "Input",
+                style: {
+                  fill: "#FFFFFF",
+                  stroke: "#E0E6EE",
+                  text: "#1F2430",
+                  radius: 0,
+                  paddingX: 0,
+                  paddingY: 0,
+                  gap: 8,
+                  fontSize: 17,
+                  lineHeight: 26,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  value: "secret123",
+                  type: "password"
+                },
+                variables: {
+                  "field.background": "Semantic/surface/default",
+                  "field.border": "Semantic/border/default",
+                  "value.color": "Semantic/text/primary",
+                  "placeholder.color": "Semantic/text/muted"
+                },
+                text: "secret123"
+              },
+              {
+                id: "layout_19",
+                type: "INSTANCE",
+                name: "Number",
+                x: 48,
+                y: 192,
+                width: 320,
+                height: 24,
+                component: "Input",
+                style: {
+                  fill: "#FFFFFF",
+                  stroke: "#E0E6EE",
+                  text: "#1F2430",
+                  radius: 0,
+                  paddingX: 0,
+                  paddingY: 0,
+                  gap: 8,
+                  fontSize: 17,
+                  lineHeight: 26,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  value: "12",
+                  step: 1,
+                  min: 0,
+                  max: 20,
+                  type: "number"
+                },
+                variables: {
+                  "field.background": "Semantic/surface/default",
+                  "field.border": "Semantic/border/default",
+                  "value.color": "Semantic/text/primary",
+                  "placeholder.color": "Semantic/text/muted"
+                },
+                text: "12"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_6",
+        type: "TEXT",
+        name: "Text 2",
+        x: 48,
+        y: 192,
+        width: 358,
+        height: 24,
+        text: "Input Only",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_7",
+        type: "FRAME",
+        name: "form-row-1",
+        x: 48,
+        y: 192,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_8",
+            type: "INSTANCE",
+            name: "Placeholder",
+            x: 48,
+            y: 192,
+            width: 320,
+            height: 24,
+            component: "Input",
+            style: {
+              fill: "#FFFFFF",
+              stroke: "#E0E6EE",
+              text: "#1F2430",
+              radius: 0,
+              paddingX: 0,
+              paddingY: 0,
+              gap: 8,
+              fontSize: 17,
+              lineHeight: 26,
+              fontWeight: "regular"
+            },
+            variant: {
+              placeholder: "Type here"
+            },
+            variables: {
+              "field.background": "Semantic/surface/default",
+              "field.border": "Semantic/border/default",
+              "value.color": "Semantic/text/primary",
+              "placeholder.color": "Semantic/text/muted"
+            }
+          },
+          {
+            id: "layout_9",
+            type: "INSTANCE",
+            name: "Value",
+            x: 48,
+            y: 192,
+            width: 320,
+            height: 24,
+            component: "Input",
+            style: {
+              fill: "#FFFFFF",
+              stroke: "#E0E6EE",
+              text: "#1F2430",
+              radius: 0,
+              paddingX: 0,
+              paddingY: 0,
+              gap: 8,
+              fontSize: 17,
+              lineHeight: 26,
+              fontWeight: "regular"
+            },
+            variant: {
+              value: "Current value"
+            },
+            variables: {
+              "field.background": "Semantic/surface/default",
+              "field.border": "Semantic/border/default",
+              "value.color": "Semantic/text/primary",
+              "placeholder.color": "Semantic/text/muted"
+            },
+            text: "Current value"
+          },
+          {
+            id: "layout_10",
+            type: "INSTANCE",
+            name: "Default Value",
+            x: 48,
+            y: 192,
+            width: 320,
+            height: 24,
+            component: "Input",
+            style: {
+              fill: "#FFFFFF",
+              stroke: "#E0E6EE",
+              text: "#1F2430",
+              radius: 0,
+              paddingX: 0,
+              paddingY: 0,
+              gap: 8,
+              fontSize: 17,
+              lineHeight: 26,
+              fontWeight: "regular"
+            },
+            variant: {
+              defaultValue: "Seed value"
+            },
+            variables: {
+              "field.background": "Semantic/surface/default",
+              "field.border": "Semantic/border/default",
+              "value.color": "Semantic/text/primary",
+              "placeholder.color": "Semantic/text/muted"
+            },
+            text: "Seed value"
+          }
+        ]
+      },
+      {
+        id: "layout_8",
+        type: "INSTANCE",
+        name: "Placeholder",
+        x: 48,
+        y: 192,
+        width: 320,
+        height: 24,
+        component: "Input",
+        style: {
+          fill: "#FFFFFF",
+          stroke: "#E0E6EE",
+          text: "#1F2430",
+          radius: 0,
+          paddingX: 0,
+          paddingY: 0,
+          gap: 8,
+          fontSize: 17,
+          lineHeight: 26,
+          fontWeight: "regular"
+        },
+        variant: {
+          placeholder: "Type here"
+        },
+        variables: {
+          "field.background": "Semantic/surface/default",
+          "field.border": "Semantic/border/default",
+          "value.color": "Semantic/text/primary",
+          "placeholder.color": "Semantic/text/muted"
+        }
+      },
+      {
+        id: "layout_9",
+        type: "INSTANCE",
+        name: "Value",
+        x: 48,
+        y: 192,
+        width: 320,
+        height: 24,
+        component: "Input",
+        style: {
+          fill: "#FFFFFF",
+          stroke: "#E0E6EE",
+          text: "#1F2430",
+          radius: 0,
+          paddingX: 0,
+          paddingY: 0,
+          gap: 8,
+          fontSize: 17,
+          lineHeight: 26,
+          fontWeight: "regular"
+        },
+        variant: {
+          value: "Current value"
+        },
+        variables: {
+          "field.background": "Semantic/surface/default",
+          "field.border": "Semantic/border/default",
+          "value.color": "Semantic/text/primary",
+          "placeholder.color": "Semantic/text/muted"
+        },
+        text: "Current value"
+      },
+      {
+        id: "layout_10",
+        type: "INSTANCE",
+        name: "Default Value",
+        x: 48,
+        y: 192,
+        width: 320,
+        height: 24,
+        component: "Input",
+        style: {
+          fill: "#FFFFFF",
+          stroke: "#E0E6EE",
+          text: "#1F2430",
+          radius: 0,
+          paddingX: 0,
+          paddingY: 0,
+          gap: 8,
+          fontSize: 17,
+          lineHeight: 26,
+          fontWeight: "regular"
+        },
+        variant: {
+          defaultValue: "Seed value"
+        },
+        variables: {
+          "field.background": "Semantic/surface/default",
+          "field.border": "Semantic/border/default",
+          "value.color": "Semantic/text/primary",
+          "placeholder.color": "Semantic/text/muted"
+        },
+        text: "Seed value"
+      },
+      {
+        id: "layout_11",
+        type: "TEXT",
+        name: "Text 6",
+        x: 48,
+        y: 192,
+        width: 358,
+        height: 24,
+        text: "Interaction Props",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_12",
+        type: "FRAME",
+        name: "form-row-2",
+        x: 48,
+        y: 192,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_13",
+            type: "INSTANCE",
+            name: "Disabled",
+            x: 48,
+            y: 192,
+            width: 320,
+            height: 24,
+            component: "Input",
+            style: {
+              fill: "#EEF1F5",
+              stroke: "#EEF1F5",
+              text: "#7E8A9C",
+              radius: 0,
+              paddingX: 0,
+              paddingY: 0,
+              gap: 8,
+              fontSize: 17,
+              lineHeight: 26,
+              fontWeight: "regular"
+            },
+            variant: {
+              disabled: true,
+              placeholder: "Disabled placeholder"
+            },
+            variables: {
+              "field.background": "Semantic/surface/subtle",
+              "field.border": "Semantic/border/subtle",
+              "value.color": "Semantic/text/muted",
+              "placeholder.color": "Semantic/text/muted"
+            }
+          },
+          {
+            id: "layout_14",
+            type: "INSTANCE",
+            name: "Read Only",
+            x: 48,
+            y: 192,
+            width: 320,
+            height: 24,
+            component: "Input",
+            style: {
+              fill: "#EEF1F5",
+              stroke: "#E0E6EE",
+              text: "#5F6A7B",
+              radius: 0,
+              paddingX: 0,
+              paddingY: 0,
+              gap: 8,
+              fontSize: 17,
+              lineHeight: 26,
+              fontWeight: "regular"
+            },
+            variant: {
+              readOnly: true,
+              value: "Read only"
+            },
+            variables: {
+              "field.background": "Semantic/surface/subtle",
+              "field.border": "Semantic/border/default",
+              "value.color": "Semantic/text/secondary",
+              "placeholder.color": "Semantic/text/muted"
+            },
+            text: "Read only"
+          },
+          {
+            id: "layout_15",
+            type: "INSTANCE",
+            name: "Clearable",
+            x: 48,
+            y: 192,
+            width: 320,
+            height: 24,
+            component: "Input",
+            style: {
+              fill: "#FFFFFF",
+              stroke: "#E0E6EE",
+              text: "#1F2430",
+              radius: 0,
+              paddingX: 0,
+              paddingY: 0,
+              gap: 8,
+              fontSize: 17,
+              lineHeight: 26,
+              fontWeight: "regular"
+            },
+            variant: {
+              clearable: true,
+              value: "Clear me"
+            },
+            variables: {
+              "field.background": "Semantic/surface/default",
+              "field.border": "Semantic/border/default",
+              "value.color": "Semantic/text/primary",
+              "placeholder.color": "Semantic/text/muted"
+            },
+            text: "Clear me"
+          }
+        ]
+      },
+      {
+        id: "layout_13",
+        type: "INSTANCE",
+        name: "Disabled",
+        x: 48,
+        y: 192,
+        width: 320,
+        height: 24,
+        component: "Input",
+        style: {
+          fill: "#EEF1F5",
+          stroke: "#EEF1F5",
+          text: "#7E8A9C",
+          radius: 0,
+          paddingX: 0,
+          paddingY: 0,
+          gap: 8,
+          fontSize: 17,
+          lineHeight: 26,
+          fontWeight: "regular"
+        },
+        variant: {
+          disabled: true,
+          placeholder: "Disabled placeholder"
+        },
+        variables: {
+          "field.background": "Semantic/surface/subtle",
+          "field.border": "Semantic/border/subtle",
+          "value.color": "Semantic/text/muted",
+          "placeholder.color": "Semantic/text/muted"
+        }
+      },
+      {
+        id: "layout_14",
+        type: "INSTANCE",
+        name: "Read Only",
+        x: 48,
+        y: 192,
+        width: 320,
+        height: 24,
+        component: "Input",
+        style: {
+          fill: "#EEF1F5",
+          stroke: "#E0E6EE",
+          text: "#5F6A7B",
+          radius: 0,
+          paddingX: 0,
+          paddingY: 0,
+          gap: 8,
+          fontSize: 17,
+          lineHeight: 26,
+          fontWeight: "regular"
+        },
+        variant: {
+          readOnly: true,
+          value: "Read only"
+        },
+        variables: {
+          "field.background": "Semantic/surface/subtle",
+          "field.border": "Semantic/border/default",
+          "value.color": "Semantic/text/secondary",
+          "placeholder.color": "Semantic/text/muted"
+        },
+        text: "Read only"
+      },
+      {
+        id: "layout_15",
+        type: "INSTANCE",
+        name: "Clearable",
+        x: 48,
+        y: 192,
+        width: 320,
+        height: 24,
+        component: "Input",
+        style: {
+          fill: "#FFFFFF",
+          stroke: "#E0E6EE",
+          text: "#1F2430",
+          radius: 0,
+          paddingX: 0,
+          paddingY: 0,
+          gap: 8,
+          fontSize: 17,
+          lineHeight: 26,
+          fontWeight: "regular"
+        },
+        variant: {
+          clearable: true,
+          value: "Clear me"
+        },
+        variables: {
+          "field.background": "Semantic/surface/default",
+          "field.border": "Semantic/border/default",
+          "value.color": "Semantic/text/primary",
+          "placeholder.color": "Semantic/text/muted"
+        },
+        text: "Clear me"
+      },
+      {
+        id: "layout_16",
+        type: "FRAME",
+        name: "form-row-3",
+        x: 48,
+        y: 192,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_17",
+            type: "INSTANCE",
+            name: "Clear On Focus",
+            x: 48,
+            y: 192,
+            width: 320,
+            height: 24,
+            component: "Input",
+            style: {
+              fill: "#FFFFFF",
+              stroke: "#E0E6EE",
+              text: "#1F2430",
+              radius: 0,
+              paddingX: 0,
+              paddingY: 0,
+              gap: 8,
+              fontSize: 17,
+              lineHeight: 26,
+              fontWeight: "regular"
+            },
+            variant: {
+              clearable: true,
+              value: "Focus clear",
+              onlyShowClearWhenFocus: true
+            },
+            variables: {
+              "field.background": "Semantic/surface/default",
+              "field.border": "Semantic/border/default",
+              "value.color": "Semantic/text/primary",
+              "placeholder.color": "Semantic/text/muted"
+            },
+            text: "Focus clear"
+          },
+          {
+            id: "layout_18",
+            type: "INSTANCE",
+            name: "Password",
+            x: 48,
+            y: 192,
+            width: 320,
+            height: 24,
+            component: "Input",
+            style: {
+              fill: "#FFFFFF",
+              stroke: "#E0E6EE",
+              text: "#1F2430",
+              radius: 0,
+              paddingX: 0,
+              paddingY: 0,
+              gap: 8,
+              fontSize: 17,
+              lineHeight: 26,
+              fontWeight: "regular"
+            },
+            variant: {
+              value: "secret123",
+              type: "password"
+            },
+            variables: {
+              "field.background": "Semantic/surface/default",
+              "field.border": "Semantic/border/default",
+              "value.color": "Semantic/text/primary",
+              "placeholder.color": "Semantic/text/muted"
+            },
+            text: "secret123"
+          },
+          {
+            id: "layout_19",
+            type: "INSTANCE",
+            name: "Number",
+            x: 48,
+            y: 192,
+            width: 320,
+            height: 24,
+            component: "Input",
+            style: {
+              fill: "#FFFFFF",
+              stroke: "#E0E6EE",
+              text: "#1F2430",
+              radius: 0,
+              paddingX: 0,
+              paddingY: 0,
+              gap: 8,
+              fontSize: 17,
+              lineHeight: 26,
+              fontWeight: "regular"
+            },
+            variant: {
+              value: "12",
+              step: 1,
+              min: 0,
+              max: 20,
+              type: "number"
+            },
+            variables: {
+              "field.background": "Semantic/surface/default",
+              "field.border": "Semantic/border/default",
+              "value.color": "Semantic/text/primary",
+              "placeholder.color": "Semantic/text/muted"
+            },
+            text: "12"
+          }
+        ]
+      },
+      {
+        id: "layout_17",
+        type: "INSTANCE",
+        name: "Clear On Focus",
+        x: 48,
+        y: 192,
+        width: 320,
+        height: 24,
+        component: "Input",
+        style: {
+          fill: "#FFFFFF",
+          stroke: "#E0E6EE",
+          text: "#1F2430",
+          radius: 0,
+          paddingX: 0,
+          paddingY: 0,
+          gap: 8,
+          fontSize: 17,
+          lineHeight: 26,
+          fontWeight: "regular"
+        },
+        variant: {
+          clearable: true,
+          value: "Focus clear",
+          onlyShowClearWhenFocus: true
+        },
+        variables: {
+          "field.background": "Semantic/surface/default",
+          "field.border": "Semantic/border/default",
+          "value.color": "Semantic/text/primary",
+          "placeholder.color": "Semantic/text/muted"
+        },
+        text: "Focus clear"
+      },
+      {
+        id: "layout_18",
+        type: "INSTANCE",
+        name: "Password",
+        x: 48,
+        y: 192,
+        width: 320,
+        height: 24,
+        component: "Input",
+        style: {
+          fill: "#FFFFFF",
+          stroke: "#E0E6EE",
+          text: "#1F2430",
+          radius: 0,
+          paddingX: 0,
+          paddingY: 0,
+          gap: 8,
+          fontSize: 17,
+          lineHeight: 26,
+          fontWeight: "regular"
+        },
+        variant: {
+          value: "secret123",
+          type: "password"
+        },
+        variables: {
+          "field.background": "Semantic/surface/default",
+          "field.border": "Semantic/border/default",
+          "value.color": "Semantic/text/primary",
+          "placeholder.color": "Semantic/text/muted"
+        },
+        text: "secret123"
+      },
+      {
+        id: "layout_19",
+        type: "INSTANCE",
+        name: "Number",
+        x: 48,
+        y: 192,
+        width: 320,
+        height: 24,
+        component: "Input",
+        style: {
+          fill: "#FFFFFF",
+          stroke: "#E0E6EE",
+          text: "#1F2430",
+          radius: 0,
+          paddingX: 0,
+          paddingY: 0,
+          gap: 8,
+          fontSize: 17,
+          lineHeight: 26,
+          fontWeight: "regular"
+        },
+        variant: {
+          value: "12",
+          step: 1,
+          min: 0,
+          max: 20,
+          type: "number"
+        },
+        variables: {
+          "field.background": "Semantic/surface/default",
+          "field.border": "Semantic/border/default",
+          "value.color": "Semantic/text/primary",
+          "placeholder.color": "Semantic/text/muted"
+        },
+        text: "12"
+      },
+      {
+        id: "layout_20",
+        type: "FRAME",
+        name: "action-section",
+        x: 48,
+        y: 456,
+        width: 1320,
+        height: 100,
+        children: []
+      },
+      {
+        id: "layout_21",
+        type: "FRAME",
+        name: "list-section",
+        x: 48,
+        y: 532,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_22",
+            type: "TEXT",
+            name: "Text 13",
+            x: 48,
+            y: 532,
+            width: 358,
+            height: 24,
+            text: "Input + Cell",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_23",
+            type: "FRAME",
+            name: "list-row-1",
+            x: 48,
+            y: 532,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_24",
+                type: "INSTANCE",
+                name: "Email",
+                x: 48,
+                y: 532,
+                width: 358,
+                height: 72,
+                component: "Cell",
+                style: {
+                  paddingY: 9,
+                  gap: 0,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  title: "Email",
+                  children: "input:email@example.com",
+                  description: "Cell container metrics",
+                  extra: "Required"
+                },
+                variables: {},
+                text: "Email"
+              },
+              {
+                id: "layout_25",
+                type: "INSTANCE",
+                name: "Search",
+                x: 48,
+                y: 532,
+                width: 358,
+                height: 56,
+                component: "Cell",
+                style: {
+                  paddingY: 9,
+                  gap: 0,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  title: "Search",
+                  children: "input:Search query",
+                  prefix: "S",
+                  clickable: true,
+                  arrowIcon: true
+                },
+                variables: {},
+                text: "Search"
+              }
+            ]
+          },
+          {
+            id: "layout_26",
+            type: "TEXT",
+            name: "Text 16",
+            x: 48,
+            y: 532,
+            width: 358,
+            height: 24,
+            text: "Input + List",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_27",
+            type: "FRAME",
+            name: "list-row-2",
+            x: 48,
+            y: 532,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_28",
+                type: "INSTANCE",
+                name: "Default List Shell",
+                x: 48,
+                y: 532,
+                width: 358,
+                height: 160,
+                component: "List",
+                style: {
+                  paddingY: 9,
+                  gap: 0,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  header: "Profile",
+                  mode: "default",
+                  children: "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+                },
+                variables: {},
+                text: "Profile"
+              },
+              {
+                id: "layout_29",
+                type: "INSTANCE",
+                name: "Card List Shell",
+                x: 48,
+                y: 532,
+                width: 358,
+                height: 184,
+                component: "List",
+                style: {
+                  paddingY: 9,
+                  gap: 0,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  header: "Billing",
+                  mode: "card",
+                  children: "Card::input:4111 1111 1111 1111|Address::input:Seoul"
+                },
+                variables: {},
+                text: "Billing"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_22",
+        type: "TEXT",
+        name: "Text 13",
+        x: 48,
+        y: 532,
+        width: 358,
+        height: 24,
+        text: "Input + Cell",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_23",
+        type: "FRAME",
+        name: "list-row-1",
+        x: 48,
+        y: 532,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_24",
+            type: "INSTANCE",
+            name: "Email",
+            x: 48,
+            y: 532,
+            width: 358,
+            height: 72,
+            component: "Cell",
+            style: {
+              paddingY: 9,
+              gap: 0,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              title: "Email",
+              children: "input:email@example.com",
+              description: "Cell container metrics",
+              extra: "Required"
+            },
+            variables: {},
+            text: "Email"
+          },
+          {
+            id: "layout_25",
+            type: "INSTANCE",
+            name: "Search",
+            x: 48,
+            y: 532,
+            width: 358,
+            height: 56,
+            component: "Cell",
+            style: {
+              paddingY: 9,
+              gap: 0,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              title: "Search",
+              children: "input:Search query",
+              prefix: "S",
+              clickable: true,
+              arrowIcon: true
+            },
+            variables: {},
+            text: "Search"
+          }
+        ]
+      },
+      {
+        id: "layout_24",
+        type: "INSTANCE",
+        name: "Email",
+        x: 48,
+        y: 532,
+        width: 358,
+        height: 72,
+        component: "Cell",
+        style: {
+          paddingY: 9,
+          gap: 0,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          title: "Email",
+          children: "input:email@example.com",
+          description: "Cell container metrics",
+          extra: "Required"
+        },
+        variables: {},
+        text: "Email"
+      },
+      {
+        id: "layout_25",
+        type: "INSTANCE",
+        name: "Search",
+        x: 48,
+        y: 532,
+        width: 358,
+        height: 56,
+        component: "Cell",
+        style: {
+          paddingY: 9,
+          gap: 0,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          title: "Search",
+          children: "input:Search query",
+          prefix: "S",
+          clickable: true,
+          arrowIcon: true
+        },
+        variables: {},
+        text: "Search"
+      },
+      {
+        id: "layout_26",
+        type: "TEXT",
+        name: "Text 16",
+        x: 48,
+        y: 532,
+        width: 358,
+        height: 24,
+        text: "Input + List",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_27",
+        type: "FRAME",
+        name: "list-row-2",
+        x: 48,
+        y: 532,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_28",
+            type: "INSTANCE",
+            name: "Default List Shell",
+            x: 48,
+            y: 532,
+            width: 358,
+            height: 160,
+            component: "List",
+            style: {
+              paddingY: 9,
+              gap: 0,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              header: "Profile",
+              mode: "default",
+              children: "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+            },
+            variables: {},
+            text: "Profile"
+          },
+          {
+            id: "layout_29",
+            type: "INSTANCE",
+            name: "Card List Shell",
+            x: 48,
+            y: 532,
+            width: 358,
+            height: 184,
+            component: "List",
+            style: {
+              paddingY: 9,
+              gap: 0,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              header: "Billing",
+              mode: "card",
+              children: "Card::input:4111 1111 1111 1111|Address::input:Seoul"
+            },
+            variables: {},
+            text: "Billing"
+          }
+        ]
+      },
+      {
+        id: "layout_28",
+        type: "INSTANCE",
+        name: "Default List Shell",
+        x: 48,
+        y: 532,
+        width: 358,
+        height: 160,
+        component: "List",
+        style: {
+          paddingY: 9,
+          gap: 0,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          header: "Profile",
+          mode: "default",
+          children: "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+        },
+        variables: {},
+        text: "Profile"
+      },
+      {
+        id: "layout_29",
+        type: "INSTANCE",
+        name: "Card List Shell",
+        x: 48,
+        y: 532,
+        width: 358,
+        height: 184,
+        component: "List",
+        style: {
+          paddingY: 9,
+          gap: 0,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          header: "Billing",
+          mode: "card",
+          children: "Card::input:4111 1111 1111 1111|Address::input:Seoul"
+        },
+        variables: {},
+        text: "Billing"
+      }
+    ],
+    frames: [
+      {
+        id: "layout_1",
+        name: "Input inspection Screen"
+      },
+      {
+        id: "layout_2",
+        name: "header-section"
+      },
+      {
+        id: "layout_4",
+        name: "content-section"
+      },
+      {
+        id: "layout_5",
+        name: "form-section"
+      },
+      {
+        id: "layout_7",
+        name: "form-row-1"
+      },
+      {
+        id: "layout_12",
+        name: "form-row-2"
+      },
+      {
+        id: "layout_16",
+        name: "form-row-3"
+      },
+      {
+        id: "layout_20",
+        name: "action-section"
+      },
+      {
+        id: "layout_21",
+        name: "list-section"
+      },
+      {
+        id: "layout_23",
+        name: "list-row-1"
+      },
+      {
+        id: "layout_27",
+        name: "list-row-2"
+      }
+    ],
+    components: [
+      {
+        id: "layout_8",
+        name: "Placeholder",
+        component: "Input",
+        variant: {
+          placeholder: "Type here"
+        }
+      },
+      {
+        id: "layout_9",
+        name: "Value",
+        component: "Input",
+        variant: {
+          value: "Current value"
+        }
+      },
+      {
+        id: "layout_10",
+        name: "Default Value",
+        component: "Input",
+        variant: {
+          defaultValue: "Seed value"
+        }
+      },
+      {
+        id: "layout_13",
+        name: "Disabled",
+        component: "Input",
+        variant: {
+          disabled: true,
+          placeholder: "Disabled placeholder"
+        }
+      },
+      {
+        id: "layout_14",
+        name: "Read Only",
+        component: "Input",
+        variant: {
+          readOnly: true,
+          value: "Read only"
+        }
+      },
+      {
+        id: "layout_15",
+        name: "Clearable",
+        component: "Input",
+        variant: {
+          clearable: true,
+          value: "Clear me"
+        }
+      },
+      {
+        id: "layout_17",
+        name: "Clear On Focus",
+        component: "Input",
+        variant: {
+          clearable: true,
+          value: "Focus clear",
+          onlyShowClearWhenFocus: true
+        }
+      },
+      {
+        id: "layout_18",
+        name: "Password",
+        component: "Input",
+        variant: {
+          value: "secret123",
+          type: "password"
+        }
+      },
+      {
+        id: "layout_19",
+        name: "Number",
+        component: "Input",
+        variant: {
+          value: "12",
+          step: 1,
+          min: 0,
+          max: 20,
+          type: "number"
+        }
+      },
+      {
+        id: "layout_24",
+        name: "Email",
+        component: "Cell",
+        variant: {
+          title: "Email",
+          children: "input:email@example.com",
+          description: "Cell container metrics",
+          extra: "Required"
+        }
+      },
+      {
+        id: "layout_25",
+        name: "Search",
+        component: "Cell",
+        variant: {
+          title: "Search",
+          children: "input:Search query",
+          prefix: "S",
+          clickable: true,
+          arrowIcon: true
+        }
+      },
+      {
+        id: "layout_28",
+        name: "Default List Shell",
+        component: "List",
+        variant: {
+          header: "Profile",
+          mode: "default",
+          children: "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+        }
+      },
+      {
+        id: "layout_29",
+        name: "Card List Shell",
+        component: "List",
+        variant: {
+          header: "Billing",
+          mode: "card",
+          children: "Card::input:4111 1111 1111 1111|Address::input:Seoul"
+        }
+      }
+    ],
+    variables: {
+      "layout_3.text.color": "semantic.text.primary",
+      "layout_6.text.color": "semantic.text.secondary",
+      "layout_8.field.background": "Semantic/surface/default",
+      "layout_8.field.border": "Semantic/border/default",
+      "layout_8.value.color": "Semantic/text/primary",
+      "layout_8.placeholder.color": "Semantic/text/muted",
+      "layout_9.field.background": "Semantic/surface/default",
+      "layout_9.field.border": "Semantic/border/default",
+      "layout_9.value.color": "Semantic/text/primary",
+      "layout_9.placeholder.color": "Semantic/text/muted",
+      "layout_10.field.background": "Semantic/surface/default",
+      "layout_10.field.border": "Semantic/border/default",
+      "layout_10.value.color": "Semantic/text/primary",
+      "layout_10.placeholder.color": "Semantic/text/muted",
+      "layout_11.text.color": "semantic.text.secondary",
+      "layout_13.field.background": "Semantic/surface/subtle",
+      "layout_13.field.border": "Semantic/border/subtle",
+      "layout_13.value.color": "Semantic/text/muted",
+      "layout_13.placeholder.color": "Semantic/text/muted",
+      "layout_14.field.background": "Semantic/surface/subtle",
+      "layout_14.field.border": "Semantic/border/default",
+      "layout_14.value.color": "Semantic/text/secondary",
+      "layout_14.placeholder.color": "Semantic/text/muted",
+      "layout_15.field.background": "Semantic/surface/default",
+      "layout_15.field.border": "Semantic/border/default",
+      "layout_15.value.color": "Semantic/text/primary",
+      "layout_15.placeholder.color": "Semantic/text/muted",
+      "layout_17.field.background": "Semantic/surface/default",
+      "layout_17.field.border": "Semantic/border/default",
+      "layout_17.value.color": "Semantic/text/primary",
+      "layout_17.placeholder.color": "Semantic/text/muted",
+      "layout_18.field.background": "Semantic/surface/default",
+      "layout_18.field.border": "Semantic/border/default",
+      "layout_18.value.color": "Semantic/text/primary",
+      "layout_18.placeholder.color": "Semantic/text/muted",
+      "layout_19.field.background": "Semantic/surface/default",
+      "layout_19.field.border": "Semantic/border/default",
+      "layout_19.value.color": "Semantic/text/primary",
+      "layout_19.placeholder.color": "Semantic/text/muted",
+      "layout_22.text.color": "semantic.text.secondary",
+      "layout_26.text.color": "semantic.text.secondary"
+    },
+    styles: {
+      "layout_3.text": "text/heading/xl",
+      "layout_3.fill": "#1F2430",
+      "layout_6.text": "text/body/lg",
+      "layout_6.fill": "#5F6A7B",
+      "layout_8.fill": "#FFFFFF",
+      "layout_8.stroke": "#E0E6EE",
+      "layout_8.text": "#1F2430",
+      "layout_8.effect": "undefined",
+      "layout_8.radius": "0",
+      "layout_8.paddingX": "0",
+      "layout_8.paddingY": "0",
+      "layout_8.gap": "8",
+      "layout_8.fontSize": "17",
+      "layout_8.lineHeight": "26",
+      "layout_8.fontWeight": "regular",
+      "layout_8.minWidth": "undefined",
+      "layout_9.fill": "#FFFFFF",
+      "layout_9.stroke": "#E0E6EE",
+      "layout_9.text": "#1F2430",
+      "layout_9.effect": "undefined",
+      "layout_9.radius": "0",
+      "layout_9.paddingX": "0",
+      "layout_9.paddingY": "0",
+      "layout_9.gap": "8",
+      "layout_9.fontSize": "17",
+      "layout_9.lineHeight": "26",
+      "layout_9.fontWeight": "regular",
+      "layout_9.minWidth": "undefined",
+      "layout_10.fill": "#FFFFFF",
+      "layout_10.stroke": "#E0E6EE",
+      "layout_10.text": "#1F2430",
+      "layout_10.effect": "undefined",
+      "layout_10.radius": "0",
+      "layout_10.paddingX": "0",
+      "layout_10.paddingY": "0",
+      "layout_10.gap": "8",
+      "layout_10.fontSize": "17",
+      "layout_10.lineHeight": "26",
+      "layout_10.fontWeight": "regular",
+      "layout_10.minWidth": "undefined",
+      "layout_11.text": "text/body/lg",
+      "layout_11.fill": "#5F6A7B",
+      "layout_13.fill": "#EEF1F5",
+      "layout_13.stroke": "#EEF1F5",
+      "layout_13.text": "#7E8A9C",
+      "layout_13.effect": "undefined",
+      "layout_13.radius": "0",
+      "layout_13.paddingX": "0",
+      "layout_13.paddingY": "0",
+      "layout_13.gap": "8",
+      "layout_13.fontSize": "17",
+      "layout_13.lineHeight": "26",
+      "layout_13.fontWeight": "regular",
+      "layout_13.minWidth": "undefined",
+      "layout_14.fill": "#EEF1F5",
+      "layout_14.stroke": "#E0E6EE",
+      "layout_14.text": "#5F6A7B",
+      "layout_14.effect": "undefined",
+      "layout_14.radius": "0",
+      "layout_14.paddingX": "0",
+      "layout_14.paddingY": "0",
+      "layout_14.gap": "8",
+      "layout_14.fontSize": "17",
+      "layout_14.lineHeight": "26",
+      "layout_14.fontWeight": "regular",
+      "layout_14.minWidth": "undefined",
+      "layout_15.fill": "#FFFFFF",
+      "layout_15.stroke": "#E0E6EE",
+      "layout_15.text": "#1F2430",
+      "layout_15.effect": "undefined",
+      "layout_15.radius": "0",
+      "layout_15.paddingX": "0",
+      "layout_15.paddingY": "0",
+      "layout_15.gap": "8",
+      "layout_15.fontSize": "17",
+      "layout_15.lineHeight": "26",
+      "layout_15.fontWeight": "regular",
+      "layout_15.minWidth": "undefined",
+      "layout_17.fill": "#FFFFFF",
+      "layout_17.stroke": "#E0E6EE",
+      "layout_17.text": "#1F2430",
+      "layout_17.effect": "undefined",
+      "layout_17.radius": "0",
+      "layout_17.paddingX": "0",
+      "layout_17.paddingY": "0",
+      "layout_17.gap": "8",
+      "layout_17.fontSize": "17",
+      "layout_17.lineHeight": "26",
+      "layout_17.fontWeight": "regular",
+      "layout_17.minWidth": "undefined",
+      "layout_18.fill": "#FFFFFF",
+      "layout_18.stroke": "#E0E6EE",
+      "layout_18.text": "#1F2430",
+      "layout_18.effect": "undefined",
+      "layout_18.radius": "0",
+      "layout_18.paddingX": "0",
+      "layout_18.paddingY": "0",
+      "layout_18.gap": "8",
+      "layout_18.fontSize": "17",
+      "layout_18.lineHeight": "26",
+      "layout_18.fontWeight": "regular",
+      "layout_18.minWidth": "undefined",
+      "layout_19.fill": "#FFFFFF",
+      "layout_19.stroke": "#E0E6EE",
+      "layout_19.text": "#1F2430",
+      "layout_19.effect": "undefined",
+      "layout_19.radius": "0",
+      "layout_19.paddingX": "0",
+      "layout_19.paddingY": "0",
+      "layout_19.gap": "8",
+      "layout_19.fontSize": "17",
+      "layout_19.lineHeight": "26",
+      "layout_19.fontWeight": "regular",
+      "layout_19.minWidth": "undefined",
+      "layout_22.text": "text/body/lg",
+      "layout_22.fill": "#5F6A7B",
+      "layout_24.fill": "undefined",
+      "layout_24.stroke": "undefined",
+      "layout_24.text": "undefined",
+      "layout_24.effect": "undefined",
+      "layout_24.radius": "undefined",
+      "layout_24.paddingX": "undefined",
+      "layout_24.paddingY": "9",
+      "layout_24.gap": "0",
+      "layout_24.fontSize": "15",
+      "layout_24.lineHeight": "22",
+      "layout_24.fontWeight": "regular",
+      "layout_24.minWidth": "undefined",
+      "layout_25.fill": "undefined",
+      "layout_25.stroke": "undefined",
+      "layout_25.text": "undefined",
+      "layout_25.effect": "undefined",
+      "layout_25.radius": "undefined",
+      "layout_25.paddingX": "undefined",
+      "layout_25.paddingY": "9",
+      "layout_25.gap": "0",
+      "layout_25.fontSize": "15",
+      "layout_25.lineHeight": "22",
+      "layout_25.fontWeight": "regular",
+      "layout_25.minWidth": "undefined",
+      "layout_26.text": "text/body/lg",
+      "layout_26.fill": "#5F6A7B",
+      "layout_28.fill": "undefined",
+      "layout_28.stroke": "undefined",
+      "layout_28.text": "undefined",
+      "layout_28.effect": "undefined",
+      "layout_28.radius": "undefined",
+      "layout_28.paddingX": "undefined",
+      "layout_28.paddingY": "9",
+      "layout_28.gap": "0",
+      "layout_28.fontSize": "15",
+      "layout_28.lineHeight": "22",
+      "layout_28.fontWeight": "regular",
+      "layout_28.minWidth": "undefined",
+      "layout_29.fill": "undefined",
+      "layout_29.stroke": "undefined",
+      "layout_29.text": "undefined",
+      "layout_29.effect": "undefined",
+      "layout_29.radius": "undefined",
+      "layout_29.paddingX": "undefined",
+      "layout_29.paddingY": "9",
+      "layout_29.gap": "0",
+      "layout_29.fontSize": "15",
+      "layout_29.lineHeight": "22",
+      "layout_29.fontWeight": "regular",
+      "layout_29.minWidth": "undefined"
+    },
+    modes: {
+      brand: "core",
+      theme: "core"
+    },
+    metadata: {
+      source: "miterlab-figma-generator",
+      version: "0.1.0",
+      generatedAt: "2026-03-18T05:00:36.057Z"
+    }
+  };
+
+  // ../../artifacts/figma/tabs-inspection/mcp-payload.json
+  var mcp_payload_default3 = {
+    document: {
+      name: "tabs-inspection screen",
+      screen: "tabs-inspection",
+      theme: "core"
+    },
+    nodes: [
+      {
+        id: "layout_1",
+        type: "FRAME",
+        name: "Tabs inspection Screen",
+        x: 0,
+        y: 0,
+        width: 1440,
+        height: 1240,
+        children: [
+          {
+            id: "layout_2",
+            type: "FRAME",
+            name: "header-section",
+            x: 48,
+            y: 40,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_3",
+                type: "TEXT",
+                name: "Text 1",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 32,
+                text: "Tabs Inspection",
+                variables: {
+                  "text.color": "semantic.text.primary"
+                },
+                style: {
+                  text: "text/heading/xl",
+                  fill: "#1F2430"
+                }
+              }
+            ]
+          },
+          {
+            id: "layout_4",
+            type: "FRAME",
+            name: "content-section",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_5",
+                type: "TEXT",
+                name: "Text 2",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 24,
+                text: "Tabs Props",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_6",
+                type: "FRAME",
+                name: "content-row-1",
+                x: 48,
+                y: 116,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_7",
+                    type: "INSTANCE",
+                    name: "Auto Line",
+                    x: 48,
+                    y: 116,
+                    width: 320,
+                    height: 92,
+                    component: "Tabs",
+                    style: {
+                      paddingY: 10,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      activeKey: "activity",
+                      activeLineMode: "auto",
+                      children: "overview:Overview|activity:Activity|settings:Settings"
+                    },
+                    variables: {},
+                    text: "overview:Overview|activity:Activity|settings:Settings"
+                  },
+                  {
+                    id: "layout_8",
+                    type: "INSTANCE",
+                    name: "Full Line Stretch",
+                    x: 48,
+                    y: 116,
+                    width: 320,
+                    height: 92,
+                    component: "Tabs",
+                    style: {
+                      paddingY: 10,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      activeKey: "home",
+                      activeLineMode: "full",
+                      stretch: true,
+                      children: "home:Home|search:Search|library:Library"
+                    },
+                    variables: {},
+                    text: "home:Home|search:Search|library:Library"
+                  },
+                  {
+                    id: "layout_9",
+                    type: "INSTANCE",
+                    name: "Fixed Line RTL",
+                    x: 48,
+                    y: 116,
+                    width: 320,
+                    height: 92,
+                    component: "Tabs",
+                    style: {
+                      paddingY: 10,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      defaultActiveKey: "three",
+                      activeLineMode: "fixed",
+                      children: "one:One|two:Two|three:Three",
+                      direction: "rtl",
+                      autoScroll: true
+                    },
+                    variables: {},
+                    text: "one:One|two:Two|three:Three"
+                  }
+                ]
+              },
+              {
+                id: "layout_10",
+                type: "TEXT",
+                name: "Text 6",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 24,
+                text: "Tab Props",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_11",
+                type: "FRAME",
+                name: "content-row-2",
+                x: 48,
+                y: 116,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_12",
+                    type: "INSTANCE",
+                    name: "Enabled Tab",
+                    x: 48,
+                    y: 116,
+                    width: 120,
+                    height: 40,
+                    component: "Tab",
+                    style: {
+                      paddingY: 10,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      title: "Enabled Tab",
+                      children: "Enabled tab body"
+                    },
+                    variables: {},
+                    text: "Enabled Tab"
+                  },
+                  {
+                    id: "layout_13",
+                    type: "INSTANCE",
+                    name: "Disabled Tab",
+                    x: 48,
+                    y: 116,
+                    width: 120,
+                    height: 40,
+                    component: "Tab",
+                    style: {
+                      paddingY: 10,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      title: "Disabled Tab",
+                      disabled: true,
+                      children: "Disabled tab body"
+                    },
+                    variables: {},
+                    text: "Disabled Tab"
+                  },
+                  {
+                    id: "layout_14",
+                    type: "INSTANCE",
+                    name: "Force Render",
+                    x: 48,
+                    y: 116,
+                    width: 120,
+                    height: 40,
+                    component: "Tab",
+                    style: {
+                      paddingY: 10,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      title: "Force Render",
+                      forceRender: true,
+                      children: "Rendered immediately"
+                    },
+                    variables: {},
+                    text: "Force Render"
+                  },
+                  {
+                    id: "layout_15",
+                    type: "INSTANCE",
+                    name: "Destroy On Close",
+                    x: 48,
+                    y: 116,
+                    width: 120,
+                    height: 40,
+                    component: "Tab",
+                    style: {
+                      paddingY: 10,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "medium"
+                    },
+                    variant: {
+                      title: "Destroy On Close",
+                      destroyOnClose: true,
+                      children: "Destroyed when hidden"
+                    },
+                    variables: {},
+                    text: "Destroy On Close"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_2",
+        type: "FRAME",
+        name: "header-section",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_3",
+            type: "TEXT",
+            name: "Text 1",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 32,
+            text: "Tabs Inspection",
+            variables: {
+              "text.color": "semantic.text.primary"
+            },
+            style: {
+              text: "text/heading/xl",
+              fill: "#1F2430"
+            }
+          }
+        ]
+      },
+      {
+        id: "layout_3",
+        type: "TEXT",
+        name: "Text 1",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 32,
+        text: "Tabs Inspection",
+        variables: {
+          "text.color": "semantic.text.primary"
+        },
+        style: {
+          text: "text/heading/xl",
+          fill: "#1F2430"
+        }
+      },
+      {
+        id: "layout_4",
+        type: "FRAME",
+        name: "content-section",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_5",
+            type: "TEXT",
+            name: "Text 2",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 24,
+            text: "Tabs Props",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_6",
+            type: "FRAME",
+            name: "content-row-1",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_7",
+                type: "INSTANCE",
+                name: "Auto Line",
+                x: 48,
+                y: 116,
+                width: 320,
+                height: 92,
+                component: "Tabs",
+                style: {
+                  paddingY: 10,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  activeKey: "activity",
+                  activeLineMode: "auto",
+                  children: "overview:Overview|activity:Activity|settings:Settings"
+                },
+                variables: {},
+                text: "overview:Overview|activity:Activity|settings:Settings"
+              },
+              {
+                id: "layout_8",
+                type: "INSTANCE",
+                name: "Full Line Stretch",
+                x: 48,
+                y: 116,
+                width: 320,
+                height: 92,
+                component: "Tabs",
+                style: {
+                  paddingY: 10,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  activeKey: "home",
+                  activeLineMode: "full",
+                  stretch: true,
+                  children: "home:Home|search:Search|library:Library"
+                },
+                variables: {},
+                text: "home:Home|search:Search|library:Library"
+              },
+              {
+                id: "layout_9",
+                type: "INSTANCE",
+                name: "Fixed Line RTL",
+                x: 48,
+                y: 116,
+                width: 320,
+                height: 92,
+                component: "Tabs",
+                style: {
+                  paddingY: 10,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  defaultActiveKey: "three",
+                  activeLineMode: "fixed",
+                  children: "one:One|two:Two|three:Three",
+                  direction: "rtl",
+                  autoScroll: true
+                },
+                variables: {},
+                text: "one:One|two:Two|three:Three"
+              }
+            ]
+          },
+          {
+            id: "layout_10",
+            type: "TEXT",
+            name: "Text 6",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 24,
+            text: "Tab Props",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_11",
+            type: "FRAME",
+            name: "content-row-2",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_12",
+                type: "INSTANCE",
+                name: "Enabled Tab",
+                x: 48,
+                y: 116,
+                width: 120,
+                height: 40,
+                component: "Tab",
+                style: {
+                  paddingY: 10,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  title: "Enabled Tab",
+                  children: "Enabled tab body"
+                },
+                variables: {},
+                text: "Enabled Tab"
+              },
+              {
+                id: "layout_13",
+                type: "INSTANCE",
+                name: "Disabled Tab",
+                x: 48,
+                y: 116,
+                width: 120,
+                height: 40,
+                component: "Tab",
+                style: {
+                  paddingY: 10,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  title: "Disabled Tab",
+                  disabled: true,
+                  children: "Disabled tab body"
+                },
+                variables: {},
+                text: "Disabled Tab"
+              },
+              {
+                id: "layout_14",
+                type: "INSTANCE",
+                name: "Force Render",
+                x: 48,
+                y: 116,
+                width: 120,
+                height: 40,
+                component: "Tab",
+                style: {
+                  paddingY: 10,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  title: "Force Render",
+                  forceRender: true,
+                  children: "Rendered immediately"
+                },
+                variables: {},
+                text: "Force Render"
+              },
+              {
+                id: "layout_15",
+                type: "INSTANCE",
+                name: "Destroy On Close",
+                x: 48,
+                y: 116,
+                width: 120,
+                height: 40,
+                component: "Tab",
+                style: {
+                  paddingY: 10,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "medium"
+                },
+                variant: {
+                  title: "Destroy On Close",
+                  destroyOnClose: true,
+                  children: "Destroyed when hidden"
+                },
+                variables: {},
+                text: "Destroy On Close"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_5",
+        type: "TEXT",
+        name: "Text 2",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 24,
+        text: "Tabs Props",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_6",
+        type: "FRAME",
+        name: "content-row-1",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_7",
+            type: "INSTANCE",
+            name: "Auto Line",
+            x: 48,
+            y: 116,
+            width: 320,
+            height: 92,
+            component: "Tabs",
+            style: {
+              paddingY: 10,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "medium"
+            },
+            variant: {
+              activeKey: "activity",
+              activeLineMode: "auto",
+              children: "overview:Overview|activity:Activity|settings:Settings"
+            },
+            variables: {},
+            text: "overview:Overview|activity:Activity|settings:Settings"
+          },
+          {
+            id: "layout_8",
+            type: "INSTANCE",
+            name: "Full Line Stretch",
+            x: 48,
+            y: 116,
+            width: 320,
+            height: 92,
+            component: "Tabs",
+            style: {
+              paddingY: 10,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "medium"
+            },
+            variant: {
+              activeKey: "home",
+              activeLineMode: "full",
+              stretch: true,
+              children: "home:Home|search:Search|library:Library"
+            },
+            variables: {},
+            text: "home:Home|search:Search|library:Library"
+          },
+          {
+            id: "layout_9",
+            type: "INSTANCE",
+            name: "Fixed Line RTL",
+            x: 48,
+            y: 116,
+            width: 320,
+            height: 92,
+            component: "Tabs",
+            style: {
+              paddingY: 10,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "medium"
+            },
+            variant: {
+              defaultActiveKey: "three",
+              activeLineMode: "fixed",
+              children: "one:One|two:Two|three:Three",
+              direction: "rtl",
+              autoScroll: true
+            },
+            variables: {},
+            text: "one:One|two:Two|three:Three"
+          }
+        ]
+      },
+      {
+        id: "layout_7",
+        type: "INSTANCE",
+        name: "Auto Line",
+        x: 48,
+        y: 116,
+        width: 320,
+        height: 92,
+        component: "Tabs",
+        style: {
+          paddingY: 10,
+          fontSize: 14,
+          lineHeight: 20,
+          fontWeight: "medium"
+        },
+        variant: {
+          activeKey: "activity",
+          activeLineMode: "auto",
+          children: "overview:Overview|activity:Activity|settings:Settings"
+        },
+        variables: {},
+        text: "overview:Overview|activity:Activity|settings:Settings"
+      },
+      {
+        id: "layout_8",
+        type: "INSTANCE",
+        name: "Full Line Stretch",
+        x: 48,
+        y: 116,
+        width: 320,
+        height: 92,
+        component: "Tabs",
+        style: {
+          paddingY: 10,
+          fontSize: 14,
+          lineHeight: 20,
+          fontWeight: "medium"
+        },
+        variant: {
+          activeKey: "home",
+          activeLineMode: "full",
+          stretch: true,
+          children: "home:Home|search:Search|library:Library"
+        },
+        variables: {},
+        text: "home:Home|search:Search|library:Library"
+      },
+      {
+        id: "layout_9",
+        type: "INSTANCE",
+        name: "Fixed Line RTL",
+        x: 48,
+        y: 116,
+        width: 320,
+        height: 92,
+        component: "Tabs",
+        style: {
+          paddingY: 10,
+          fontSize: 14,
+          lineHeight: 20,
+          fontWeight: "medium"
+        },
+        variant: {
+          defaultActiveKey: "three",
+          activeLineMode: "fixed",
+          children: "one:One|two:Two|three:Three",
+          direction: "rtl",
+          autoScroll: true
+        },
+        variables: {},
+        text: "one:One|two:Two|three:Three"
+      },
+      {
+        id: "layout_10",
+        type: "TEXT",
+        name: "Text 6",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 24,
+        text: "Tab Props",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_11",
+        type: "FRAME",
+        name: "content-row-2",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_12",
+            type: "INSTANCE",
+            name: "Enabled Tab",
+            x: 48,
+            y: 116,
+            width: 120,
+            height: 40,
+            component: "Tab",
+            style: {
+              paddingY: 10,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "medium"
+            },
+            variant: {
+              title: "Enabled Tab",
+              children: "Enabled tab body"
+            },
+            variables: {},
+            text: "Enabled Tab"
+          },
+          {
+            id: "layout_13",
+            type: "INSTANCE",
+            name: "Disabled Tab",
+            x: 48,
+            y: 116,
+            width: 120,
+            height: 40,
+            component: "Tab",
+            style: {
+              paddingY: 10,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "medium"
+            },
+            variant: {
+              title: "Disabled Tab",
+              disabled: true,
+              children: "Disabled tab body"
+            },
+            variables: {},
+            text: "Disabled Tab"
+          },
+          {
+            id: "layout_14",
+            type: "INSTANCE",
+            name: "Force Render",
+            x: 48,
+            y: 116,
+            width: 120,
+            height: 40,
+            component: "Tab",
+            style: {
+              paddingY: 10,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "medium"
+            },
+            variant: {
+              title: "Force Render",
+              forceRender: true,
+              children: "Rendered immediately"
+            },
+            variables: {},
+            text: "Force Render"
+          },
+          {
+            id: "layout_15",
+            type: "INSTANCE",
+            name: "Destroy On Close",
+            x: 48,
+            y: 116,
+            width: 120,
+            height: 40,
+            component: "Tab",
+            style: {
+              paddingY: 10,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "medium"
+            },
+            variant: {
+              title: "Destroy On Close",
+              destroyOnClose: true,
+              children: "Destroyed when hidden"
+            },
+            variables: {},
+            text: "Destroy On Close"
+          }
+        ]
+      },
+      {
+        id: "layout_12",
+        type: "INSTANCE",
+        name: "Enabled Tab",
+        x: 48,
+        y: 116,
+        width: 120,
+        height: 40,
+        component: "Tab",
+        style: {
+          paddingY: 10,
+          fontSize: 14,
+          lineHeight: 20,
+          fontWeight: "medium"
+        },
+        variant: {
+          title: "Enabled Tab",
+          children: "Enabled tab body"
+        },
+        variables: {},
+        text: "Enabled Tab"
+      },
+      {
+        id: "layout_13",
+        type: "INSTANCE",
+        name: "Disabled Tab",
+        x: 48,
+        y: 116,
+        width: 120,
+        height: 40,
+        component: "Tab",
+        style: {
+          paddingY: 10,
+          fontSize: 14,
+          lineHeight: 20,
+          fontWeight: "medium"
+        },
+        variant: {
+          title: "Disabled Tab",
+          disabled: true,
+          children: "Disabled tab body"
+        },
+        variables: {},
+        text: "Disabled Tab"
+      },
+      {
+        id: "layout_14",
+        type: "INSTANCE",
+        name: "Force Render",
+        x: 48,
+        y: 116,
+        width: 120,
+        height: 40,
+        component: "Tab",
+        style: {
+          paddingY: 10,
+          fontSize: 14,
+          lineHeight: 20,
+          fontWeight: "medium"
+        },
+        variant: {
+          title: "Force Render",
+          forceRender: true,
+          children: "Rendered immediately"
+        },
+        variables: {},
+        text: "Force Render"
+      },
+      {
+        id: "layout_15",
+        type: "INSTANCE",
+        name: "Destroy On Close",
+        x: 48,
+        y: 116,
+        width: 120,
+        height: 40,
+        component: "Tab",
+        style: {
+          paddingY: 10,
+          fontSize: 14,
+          lineHeight: 20,
+          fontWeight: "medium"
+        },
+        variant: {
+          title: "Destroy On Close",
+          destroyOnClose: true,
+          children: "Destroyed when hidden"
+        },
+        variables: {},
+        text: "Destroy On Close"
+      }
+    ],
+    frames: [
+      {
+        id: "layout_1",
+        name: "Tabs inspection Screen"
+      },
+      {
+        id: "layout_2",
+        name: "header-section"
+      },
+      {
+        id: "layout_4",
+        name: "content-section"
+      },
+      {
+        id: "layout_6",
+        name: "content-row-1"
+      },
+      {
+        id: "layout_11",
+        name: "content-row-2"
+      }
+    ],
+    components: [
+      {
+        id: "layout_7",
+        name: "Auto Line",
+        component: "Tabs",
+        variant: {
+          activeKey: "activity",
+          activeLineMode: "auto",
+          children: "overview:Overview|activity:Activity|settings:Settings"
+        }
+      },
+      {
+        id: "layout_8",
+        name: "Full Line Stretch",
+        component: "Tabs",
+        variant: {
+          activeKey: "home",
+          activeLineMode: "full",
+          stretch: true,
+          children: "home:Home|search:Search|library:Library"
+        }
+      },
+      {
+        id: "layout_9",
+        name: "Fixed Line RTL",
+        component: "Tabs",
+        variant: {
+          defaultActiveKey: "three",
+          activeLineMode: "fixed",
+          children: "one:One|two:Two|three:Three",
+          direction: "rtl",
+          autoScroll: true
+        }
+      },
+      {
+        id: "layout_12",
+        name: "Enabled Tab",
+        component: "Tab",
+        variant: {
+          title: "Enabled Tab",
+          children: "Enabled tab body"
+        }
+      },
+      {
+        id: "layout_13",
+        name: "Disabled Tab",
+        component: "Tab",
+        variant: {
+          title: "Disabled Tab",
+          disabled: true,
+          children: "Disabled tab body"
+        }
+      },
+      {
+        id: "layout_14",
+        name: "Force Render",
+        component: "Tab",
+        variant: {
+          title: "Force Render",
+          forceRender: true,
+          children: "Rendered immediately"
+        }
+      },
+      {
+        id: "layout_15",
+        name: "Destroy On Close",
+        component: "Tab",
+        variant: {
+          title: "Destroy On Close",
+          destroyOnClose: true,
+          children: "Destroyed when hidden"
+        }
+      }
+    ],
+    variables: {
+      "layout_3.text.color": "semantic.text.primary",
+      "layout_5.text.color": "semantic.text.secondary",
+      "layout_10.text.color": "semantic.text.secondary"
+    },
+    styles: {
+      "layout_3.text": "text/heading/xl",
+      "layout_3.fill": "#1F2430",
+      "layout_5.text": "text/body/lg",
+      "layout_5.fill": "#5F6A7B",
+      "layout_7.fill": "undefined",
+      "layout_7.stroke": "undefined",
+      "layout_7.text": "undefined",
+      "layout_7.effect": "undefined",
+      "layout_7.radius": "undefined",
+      "layout_7.paddingX": "undefined",
+      "layout_7.paddingY": "10",
+      "layout_7.gap": "undefined",
+      "layout_7.fontSize": "14",
+      "layout_7.lineHeight": "20",
+      "layout_7.fontWeight": "medium",
+      "layout_7.minWidth": "undefined",
+      "layout_8.fill": "undefined",
+      "layout_8.stroke": "undefined",
+      "layout_8.text": "undefined",
+      "layout_8.effect": "undefined",
+      "layout_8.radius": "undefined",
+      "layout_8.paddingX": "undefined",
+      "layout_8.paddingY": "10",
+      "layout_8.gap": "undefined",
+      "layout_8.fontSize": "14",
+      "layout_8.lineHeight": "20",
+      "layout_8.fontWeight": "medium",
+      "layout_8.minWidth": "undefined",
+      "layout_9.fill": "undefined",
+      "layout_9.stroke": "undefined",
+      "layout_9.text": "undefined",
+      "layout_9.effect": "undefined",
+      "layout_9.radius": "undefined",
+      "layout_9.paddingX": "undefined",
+      "layout_9.paddingY": "10",
+      "layout_9.gap": "undefined",
+      "layout_9.fontSize": "14",
+      "layout_9.lineHeight": "20",
+      "layout_9.fontWeight": "medium",
+      "layout_9.minWidth": "undefined",
+      "layout_10.text": "text/body/lg",
+      "layout_10.fill": "#5F6A7B",
+      "layout_12.fill": "undefined",
+      "layout_12.stroke": "undefined",
+      "layout_12.text": "undefined",
+      "layout_12.effect": "undefined",
+      "layout_12.radius": "undefined",
+      "layout_12.paddingX": "undefined",
+      "layout_12.paddingY": "10",
+      "layout_12.gap": "undefined",
+      "layout_12.fontSize": "14",
+      "layout_12.lineHeight": "20",
+      "layout_12.fontWeight": "medium",
+      "layout_12.minWidth": "undefined",
+      "layout_13.fill": "undefined",
+      "layout_13.stroke": "undefined",
+      "layout_13.text": "undefined",
+      "layout_13.effect": "undefined",
+      "layout_13.radius": "undefined",
+      "layout_13.paddingX": "undefined",
+      "layout_13.paddingY": "10",
+      "layout_13.gap": "undefined",
+      "layout_13.fontSize": "14",
+      "layout_13.lineHeight": "20",
+      "layout_13.fontWeight": "medium",
+      "layout_13.minWidth": "undefined",
+      "layout_14.fill": "undefined",
+      "layout_14.stroke": "undefined",
+      "layout_14.text": "undefined",
+      "layout_14.effect": "undefined",
+      "layout_14.radius": "undefined",
+      "layout_14.paddingX": "undefined",
+      "layout_14.paddingY": "10",
+      "layout_14.gap": "undefined",
+      "layout_14.fontSize": "14",
+      "layout_14.lineHeight": "20",
+      "layout_14.fontWeight": "medium",
+      "layout_14.minWidth": "undefined",
+      "layout_15.fill": "undefined",
+      "layout_15.stroke": "undefined",
+      "layout_15.text": "undefined",
+      "layout_15.effect": "undefined",
+      "layout_15.radius": "undefined",
+      "layout_15.paddingX": "undefined",
+      "layout_15.paddingY": "10",
+      "layout_15.gap": "undefined",
+      "layout_15.fontSize": "14",
+      "layout_15.lineHeight": "20",
+      "layout_15.fontWeight": "medium",
+      "layout_15.minWidth": "undefined"
+    },
+    modes: {
+      brand: "core",
+      theme: "core"
+    },
+    metadata: {
+      source: "miterlab-figma-generator",
+      version: "0.1.0",
+      generatedAt: "2026-03-17T13:31:34.341Z"
+    }
+  };
+
+  // ../../artifacts/figma/list-cell-inspection/mcp-payload.json
+  var mcp_payload_default4 = {
+    document: {
+      name: "list-cell-inspection screen",
+      screen: "list-cell-inspection",
+      theme: "core"
+    },
+    nodes: [
+      {
+        id: "layout_1",
+        type: "FRAME",
+        name: "List cell inspection Screen",
+        x: 0,
+        y: 0,
+        width: 1440,
+        height: 1240,
+        children: [
+          {
+            id: "layout_2",
+            type: "FRAME",
+            name: "header-section",
+            x: 48,
+            y: 40,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_3",
+                type: "TEXT",
+                name: "Text 1",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 32,
+                text: "List / Cell Inspection",
+                variables: {
+                  "text.color": "semantic.text.primary"
+                },
+                style: {
+                  text: "text/heading/xl",
+                  fill: "#1F2430"
+                }
+              }
+            ]
+          },
+          {
+            id: "layout_4",
+            type: "FRAME",
+            name: "list-section",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_5",
+                type: "TEXT",
+                name: "Text 2",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 24,
+                text: "List Props",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_6",
+                type: "FRAME",
+                name: "list-row-1",
+                x: 48,
+                y: 116,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_7",
+                    type: "INSTANCE",
+                    name: "Default List",
+                    x: 48,
+                    y: 116,
+                    width: 358,
+                    height: 160,
+                    component: "List",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      header: "Settings",
+                      mode: "default",
+                      children: "General|Notifications|Privacy"
+                    },
+                    variables: {},
+                    text: "Settings"
+                  },
+                  {
+                    id: "layout_8",
+                    type: "INSTANCE",
+                    name: "Card List",
+                    x: 48,
+                    y: 116,
+                    width: 358,
+                    height: 184,
+                    component: "List",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      header: "Account",
+                      mode: "card",
+                      children: "Profile|Billing|Security"
+                    },
+                    variables: {},
+                    text: "Account"
+                  }
+                ]
+              },
+              {
+                id: "layout_9",
+                type: "TEXT",
+                name: "Text 5",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 24,
+                text: "Cell Props",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_10",
+                type: "FRAME",
+                name: "list-row-2",
+                x: 48,
+                y: 116,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_11",
+                    type: "INSTANCE",
+                    name: "Basic Cell",
+                    x: 48,
+                    y: 116,
+                    width: 358,
+                    height: 72,
+                    component: "Cell",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      title: "Basic Cell",
+                      description: "Default description",
+                      extra: "Extra"
+                    },
+                    variables: {},
+                    text: "Basic Cell"
+                  },
+                  {
+                    id: "layout_12",
+                    type: "INSTANCE",
+                    name: "Clickable Cell",
+                    x: 48,
+                    y: 116,
+                    width: 358,
+                    height: 56,
+                    component: "Cell",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      title: "Clickable Cell",
+                      prefix: "P",
+                      extra: "More",
+                      clickable: true,
+                      arrowIcon: true
+                    },
+                    variables: {},
+                    text: "Clickable Cell"
+                  },
+                  {
+                    id: "layout_13",
+                    type: "INSTANCE",
+                    name: "Disabled Cell",
+                    x: 48,
+                    y: 116,
+                    width: 358,
+                    height: 72,
+                    component: "Cell",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      title: "Disabled Cell",
+                      description: "Unavailable",
+                      disabled: true,
+                      arrow: true
+                    },
+                    variables: {},
+                    text: "Disabled Cell"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_2",
+        type: "FRAME",
+        name: "header-section",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_3",
+            type: "TEXT",
+            name: "Text 1",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 32,
+            text: "List / Cell Inspection",
+            variables: {
+              "text.color": "semantic.text.primary"
+            },
+            style: {
+              text: "text/heading/xl",
+              fill: "#1F2430"
+            }
+          }
+        ]
+      },
+      {
+        id: "layout_3",
+        type: "TEXT",
+        name: "Text 1",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 32,
+        text: "List / Cell Inspection",
+        variables: {
+          "text.color": "semantic.text.primary"
+        },
+        style: {
+          text: "text/heading/xl",
+          fill: "#1F2430"
+        }
+      },
+      {
+        id: "layout_4",
+        type: "FRAME",
+        name: "list-section",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_5",
+            type: "TEXT",
+            name: "Text 2",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 24,
+            text: "List Props",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_6",
+            type: "FRAME",
+            name: "list-row-1",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_7",
+                type: "INSTANCE",
+                name: "Default List",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 160,
+                component: "List",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  header: "Settings",
+                  mode: "default",
+                  children: "General|Notifications|Privacy"
+                },
+                variables: {},
+                text: "Settings"
+              },
+              {
+                id: "layout_8",
+                type: "INSTANCE",
+                name: "Card List",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 184,
+                component: "List",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  header: "Account",
+                  mode: "card",
+                  children: "Profile|Billing|Security"
+                },
+                variables: {},
+                text: "Account"
+              }
+            ]
+          },
+          {
+            id: "layout_9",
+            type: "TEXT",
+            name: "Text 5",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 24,
+            text: "Cell Props",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_10",
+            type: "FRAME",
+            name: "list-row-2",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_11",
+                type: "INSTANCE",
+                name: "Basic Cell",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 72,
+                component: "Cell",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  title: "Basic Cell",
+                  description: "Default description",
+                  extra: "Extra"
+                },
+                variables: {},
+                text: "Basic Cell"
+              },
+              {
+                id: "layout_12",
+                type: "INSTANCE",
+                name: "Clickable Cell",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 56,
+                component: "Cell",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  title: "Clickable Cell",
+                  prefix: "P",
+                  extra: "More",
+                  clickable: true,
+                  arrowIcon: true
+                },
+                variables: {},
+                text: "Clickable Cell"
+              },
+              {
+                id: "layout_13",
+                type: "INSTANCE",
+                name: "Disabled Cell",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 72,
+                component: "Cell",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  title: "Disabled Cell",
+                  description: "Unavailable",
+                  disabled: true,
+                  arrow: true
+                },
+                variables: {},
+                text: "Disabled Cell"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_5",
+        type: "TEXT",
+        name: "Text 2",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 24,
+        text: "List Props",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_6",
+        type: "FRAME",
+        name: "list-row-1",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_7",
+            type: "INSTANCE",
+            name: "Default List",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 160,
+            component: "List",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              header: "Settings",
+              mode: "default",
+              children: "General|Notifications|Privacy"
+            },
+            variables: {},
+            text: "Settings"
+          },
+          {
+            id: "layout_8",
+            type: "INSTANCE",
+            name: "Card List",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 184,
+            component: "List",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              header: "Account",
+              mode: "card",
+              children: "Profile|Billing|Security"
+            },
+            variables: {},
+            text: "Account"
+          }
+        ]
+      },
+      {
+        id: "layout_7",
+        type: "INSTANCE",
+        name: "Default List",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 160,
+        component: "List",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          header: "Settings",
+          mode: "default",
+          children: "General|Notifications|Privacy"
+        },
+        variables: {},
+        text: "Settings"
+      },
+      {
+        id: "layout_8",
+        type: "INSTANCE",
+        name: "Card List",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 184,
+        component: "List",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          header: "Account",
+          mode: "card",
+          children: "Profile|Billing|Security"
+        },
+        variables: {},
+        text: "Account"
+      },
+      {
+        id: "layout_9",
+        type: "TEXT",
+        name: "Text 5",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 24,
+        text: "Cell Props",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_10",
+        type: "FRAME",
+        name: "list-row-2",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_11",
+            type: "INSTANCE",
+            name: "Basic Cell",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 72,
+            component: "Cell",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              title: "Basic Cell",
+              description: "Default description",
+              extra: "Extra"
+            },
+            variables: {},
+            text: "Basic Cell"
+          },
+          {
+            id: "layout_12",
+            type: "INSTANCE",
+            name: "Clickable Cell",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 56,
+            component: "Cell",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              title: "Clickable Cell",
+              prefix: "P",
+              extra: "More",
+              clickable: true,
+              arrowIcon: true
+            },
+            variables: {},
+            text: "Clickable Cell"
+          },
+          {
+            id: "layout_13",
+            type: "INSTANCE",
+            name: "Disabled Cell",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 72,
+            component: "Cell",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              title: "Disabled Cell",
+              description: "Unavailable",
+              disabled: true,
+              arrow: true
+            },
+            variables: {},
+            text: "Disabled Cell"
+          }
+        ]
+      },
+      {
+        id: "layout_11",
+        type: "INSTANCE",
+        name: "Basic Cell",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 72,
+        component: "Cell",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          title: "Basic Cell",
+          description: "Default description",
+          extra: "Extra"
+        },
+        variables: {},
+        text: "Basic Cell"
+      },
+      {
+        id: "layout_12",
+        type: "INSTANCE",
+        name: "Clickable Cell",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 56,
+        component: "Cell",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          title: "Clickable Cell",
+          prefix: "P",
+          extra: "More",
+          clickable: true,
+          arrowIcon: true
+        },
+        variables: {},
+        text: "Clickable Cell"
+      },
+      {
+        id: "layout_13",
+        type: "INSTANCE",
+        name: "Disabled Cell",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 72,
+        component: "Cell",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          title: "Disabled Cell",
+          description: "Unavailable",
+          disabled: true,
+          arrow: true
+        },
+        variables: {},
+        text: "Disabled Cell"
+      }
+    ],
+    frames: [
+      {
+        id: "layout_1",
+        name: "List cell inspection Screen"
+      },
+      {
+        id: "layout_2",
+        name: "header-section"
+      },
+      {
+        id: "layout_4",
+        name: "list-section"
+      },
+      {
+        id: "layout_6",
+        name: "list-row-1"
+      },
+      {
+        id: "layout_10",
+        name: "list-row-2"
+      }
+    ],
+    components: [
+      {
+        id: "layout_7",
+        name: "Default List",
+        component: "List",
+        variant: {
+          header: "Settings",
+          mode: "default",
+          children: "General|Notifications|Privacy"
+        }
+      },
+      {
+        id: "layout_8",
+        name: "Card List",
+        component: "List",
+        variant: {
+          header: "Account",
+          mode: "card",
+          children: "Profile|Billing|Security"
+        }
+      },
+      {
+        id: "layout_11",
+        name: "Basic Cell",
+        component: "Cell",
+        variant: {
+          title: "Basic Cell",
+          description: "Default description",
+          extra: "Extra"
+        }
+      },
+      {
+        id: "layout_12",
+        name: "Clickable Cell",
+        component: "Cell",
+        variant: {
+          title: "Clickable Cell",
+          prefix: "P",
+          extra: "More",
+          clickable: true,
+          arrowIcon: true
+        }
+      },
+      {
+        id: "layout_13",
+        name: "Disabled Cell",
+        component: "Cell",
+        variant: {
+          title: "Disabled Cell",
+          description: "Unavailable",
+          disabled: true,
+          arrow: true
+        }
+      }
+    ],
+    variables: {
+      "layout_3.text.color": "semantic.text.primary",
+      "layout_5.text.color": "semantic.text.secondary",
+      "layout_9.text.color": "semantic.text.secondary"
+    },
+    styles: {
+      "layout_3.text": "text/heading/xl",
+      "layout_3.fill": "#1F2430",
+      "layout_5.text": "text/body/lg",
+      "layout_5.fill": "#5F6A7B",
+      "layout_7.fill": "undefined",
+      "layout_7.stroke": "undefined",
+      "layout_7.text": "undefined",
+      "layout_7.effect": "undefined",
+      "layout_7.radius": "undefined",
+      "layout_7.paddingX": "undefined",
+      "layout_7.paddingY": "9",
+      "layout_7.gap": "undefined",
+      "layout_7.fontSize": "15",
+      "layout_7.lineHeight": "22",
+      "layout_7.fontWeight": "regular",
+      "layout_7.minWidth": "undefined",
+      "layout_8.fill": "undefined",
+      "layout_8.stroke": "undefined",
+      "layout_8.text": "undefined",
+      "layout_8.effect": "undefined",
+      "layout_8.radius": "undefined",
+      "layout_8.paddingX": "undefined",
+      "layout_8.paddingY": "9",
+      "layout_8.gap": "undefined",
+      "layout_8.fontSize": "15",
+      "layout_8.lineHeight": "22",
+      "layout_8.fontWeight": "regular",
+      "layout_8.minWidth": "undefined",
+      "layout_9.text": "text/body/lg",
+      "layout_9.fill": "#5F6A7B",
+      "layout_11.fill": "undefined",
+      "layout_11.stroke": "undefined",
+      "layout_11.text": "undefined",
+      "layout_11.effect": "undefined",
+      "layout_11.radius": "undefined",
+      "layout_11.paddingX": "undefined",
+      "layout_11.paddingY": "9",
+      "layout_11.gap": "undefined",
+      "layout_11.fontSize": "15",
+      "layout_11.lineHeight": "22",
+      "layout_11.fontWeight": "regular",
+      "layout_11.minWidth": "undefined",
+      "layout_12.fill": "undefined",
+      "layout_12.stroke": "undefined",
+      "layout_12.text": "undefined",
+      "layout_12.effect": "undefined",
+      "layout_12.radius": "undefined",
+      "layout_12.paddingX": "undefined",
+      "layout_12.paddingY": "9",
+      "layout_12.gap": "undefined",
+      "layout_12.fontSize": "15",
+      "layout_12.lineHeight": "22",
+      "layout_12.fontWeight": "regular",
+      "layout_12.minWidth": "undefined",
+      "layout_13.fill": "undefined",
+      "layout_13.stroke": "undefined",
+      "layout_13.text": "undefined",
+      "layout_13.effect": "undefined",
+      "layout_13.radius": "undefined",
+      "layout_13.paddingX": "undefined",
+      "layout_13.paddingY": "9",
+      "layout_13.gap": "undefined",
+      "layout_13.fontSize": "15",
+      "layout_13.lineHeight": "22",
+      "layout_13.fontWeight": "regular",
+      "layout_13.minWidth": "undefined"
+    },
+    modes: {
+      brand: "core",
+      theme: "core"
+    },
+    metadata: {
+      source: "miterlab-figma-generator",
+      version: "0.1.0",
+      generatedAt: "2026-03-17T13:34:45.286Z"
+    }
+  };
+
+  // ../../artifacts/figma/overlay-inspection/mcp-payload.json
+  var mcp_payload_default5 = {
+    document: {
+      name: "overlay-inspection screen",
+      screen: "overlay-inspection",
+      theme: "core"
+    },
+    nodes: [
+      {
+        id: "layout_1",
+        type: "FRAME",
+        name: "Overlay inspection Screen",
+        x: 0,
+        y: 0,
+        width: 1440,
+        height: 1240,
+        children: [
+          {
+            id: "layout_2",
+            type: "FRAME",
+            name: "header-section",
+            x: 48,
+            y: 40,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_3",
+                type: "TEXT",
+                name: "Text 1",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 32,
+                text: "Overlay Inspection",
+                variables: {
+                  "text.color": "semantic.text.primary"
+                },
+                style: {
+                  text: "text/heading/xl",
+                  fill: "#1F2430"
+                }
+              }
+            ]
+          },
+          {
+            id: "layout_4",
+            type: "FRAME",
+            name: "modal-section",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_5",
+                type: "TEXT",
+                name: "Text 2",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 24,
+                text: "Dialog / Popup / Toast",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              },
+              {
+                id: "layout_6",
+                type: "FRAME",
+                name: "modal-row-1",
+                x: 48,
+                y: 116,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_7",
+                    type: "INSTANCE",
+                    name: "Delete file",
+                    x: 48,
+                    y: 116,
+                    width: 320,
+                    height: 220,
+                    component: "Dialog",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      visible: true,
+                      title: "Delete file",
+                      content: "This action cannot be undone.",
+                      actions: "Cancel|Delete",
+                      closeOnMaskClick: true
+                    },
+                    variables: {},
+                    text: "Delete file"
+                  },
+                  {
+                    id: "layout_8",
+                    type: "INSTANCE",
+                    name: "Bottom Popup",
+                    x: 48,
+                    y: 116,
+                    width: 358,
+                    height: 240,
+                    component: "Popup",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      visible: true,
+                      position: "bottom",
+                      showCloseButton: true,
+                      children: "Popup content"
+                    },
+                    variables: {},
+                    text: "Popup content"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            id: "layout_9",
+            type: "FRAME",
+            name: "action-section",
+            x: 48,
+            y: 228,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_10",
+                type: "FRAME",
+                name: "action-row-1",
+                x: 48,
+                y: 228,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_11",
+                    type: "INSTANCE",
+                    name: "Saved toast",
+                    x: 48,
+                    y: 228,
+                    width: 220,
+                    height: 72,
+                    component: "Toast",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      content: "Saved successfully",
+                      icon: "success",
+                      duration: 2e3,
+                      position: "bottom"
+                    },
+                    variables: {},
+                    text: "Saved successfully"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_2",
+        type: "FRAME",
+        name: "header-section",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_3",
+            type: "TEXT",
+            name: "Text 1",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 32,
+            text: "Overlay Inspection",
+            variables: {
+              "text.color": "semantic.text.primary"
+            },
+            style: {
+              text: "text/heading/xl",
+              fill: "#1F2430"
+            }
+          }
+        ]
+      },
+      {
+        id: "layout_3",
+        type: "TEXT",
+        name: "Text 1",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 32,
+        text: "Overlay Inspection",
+        variables: {
+          "text.color": "semantic.text.primary"
+        },
+        style: {
+          text: "text/heading/xl",
+          fill: "#1F2430"
+        }
+      },
+      {
+        id: "layout_4",
+        type: "FRAME",
+        name: "modal-section",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_5",
+            type: "TEXT",
+            name: "Text 2",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 24,
+            text: "Dialog / Popup / Toast",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          },
+          {
+            id: "layout_6",
+            type: "FRAME",
+            name: "modal-row-1",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_7",
+                type: "INSTANCE",
+                name: "Delete file",
+                x: 48,
+                y: 116,
+                width: 320,
+                height: 220,
+                component: "Dialog",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  visible: true,
+                  title: "Delete file",
+                  content: "This action cannot be undone.",
+                  actions: "Cancel|Delete",
+                  closeOnMaskClick: true
+                },
+                variables: {},
+                text: "Delete file"
+              },
+              {
+                id: "layout_8",
+                type: "INSTANCE",
+                name: "Bottom Popup",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 240,
+                component: "Popup",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  visible: true,
+                  position: "bottom",
+                  showCloseButton: true,
+                  children: "Popup content"
+                },
+                variables: {},
+                text: "Popup content"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_5",
+        type: "TEXT",
+        name: "Text 2",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 24,
+        text: "Dialog / Popup / Toast",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_6",
+        type: "FRAME",
+        name: "modal-row-1",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_7",
+            type: "INSTANCE",
+            name: "Delete file",
+            x: 48,
+            y: 116,
+            width: 320,
+            height: 220,
+            component: "Dialog",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              visible: true,
+              title: "Delete file",
+              content: "This action cannot be undone.",
+              actions: "Cancel|Delete",
+              closeOnMaskClick: true
+            },
+            variables: {},
+            text: "Delete file"
+          },
+          {
+            id: "layout_8",
+            type: "INSTANCE",
+            name: "Bottom Popup",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 240,
+            component: "Popup",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              visible: true,
+              position: "bottom",
+              showCloseButton: true,
+              children: "Popup content"
+            },
+            variables: {},
+            text: "Popup content"
+          }
+        ]
+      },
+      {
+        id: "layout_7",
+        type: "INSTANCE",
+        name: "Delete file",
+        x: 48,
+        y: 116,
+        width: 320,
+        height: 220,
+        component: "Dialog",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          visible: true,
+          title: "Delete file",
+          content: "This action cannot be undone.",
+          actions: "Cancel|Delete",
+          closeOnMaskClick: true
+        },
+        variables: {},
+        text: "Delete file"
+      },
+      {
+        id: "layout_8",
+        type: "INSTANCE",
+        name: "Bottom Popup",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 240,
+        component: "Popup",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          visible: true,
+          position: "bottom",
+          showCloseButton: true,
+          children: "Popup content"
+        },
+        variables: {},
+        text: "Popup content"
+      },
+      {
+        id: "layout_9",
+        type: "FRAME",
+        name: "action-section",
+        x: 48,
+        y: 228,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_10",
+            type: "FRAME",
+            name: "action-row-1",
+            x: 48,
+            y: 228,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_11",
+                type: "INSTANCE",
+                name: "Saved toast",
+                x: 48,
+                y: 228,
+                width: 220,
+                height: 72,
+                component: "Toast",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  content: "Saved successfully",
+                  icon: "success",
+                  duration: 2e3,
+                  position: "bottom"
+                },
+                variables: {},
+                text: "Saved successfully"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_10",
+        type: "FRAME",
+        name: "action-row-1",
+        x: 48,
+        y: 228,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_11",
+            type: "INSTANCE",
+            name: "Saved toast",
+            x: 48,
+            y: 228,
+            width: 220,
+            height: 72,
+            component: "Toast",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              content: "Saved successfully",
+              icon: "success",
+              duration: 2e3,
+              position: "bottom"
+            },
+            variables: {},
+            text: "Saved successfully"
+          }
+        ]
+      },
+      {
+        id: "layout_11",
+        type: "INSTANCE",
+        name: "Saved toast",
+        x: 48,
+        y: 228,
+        width: 220,
+        height: 72,
+        component: "Toast",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          content: "Saved successfully",
+          icon: "success",
+          duration: 2e3,
+          position: "bottom"
+        },
+        variables: {},
+        text: "Saved successfully"
+      }
+    ],
+    frames: [
+      {
+        id: "layout_1",
+        name: "Overlay inspection Screen"
+      },
+      {
+        id: "layout_2",
+        name: "header-section"
+      },
+      {
+        id: "layout_4",
+        name: "modal-section"
+      },
+      {
+        id: "layout_6",
+        name: "modal-row-1"
+      },
+      {
+        id: "layout_9",
+        name: "action-section"
+      },
+      {
+        id: "layout_10",
+        name: "action-row-1"
+      }
+    ],
+    components: [
+      {
+        id: "layout_7",
+        name: "Delete file",
+        component: "Dialog",
+        variant: {
+          visible: true,
+          title: "Delete file",
+          content: "This action cannot be undone.",
+          actions: "Cancel|Delete",
+          closeOnMaskClick: true
+        }
+      },
+      {
+        id: "layout_8",
+        name: "Bottom Popup",
+        component: "Popup",
+        variant: {
+          visible: true,
+          position: "bottom",
+          showCloseButton: true,
+          children: "Popup content"
+        }
+      },
+      {
+        id: "layout_11",
+        name: "Saved toast",
+        component: "Toast",
+        variant: {
+          content: "Saved successfully",
+          icon: "success",
+          duration: 2e3,
+          position: "bottom"
+        }
+      }
+    ],
+    variables: {
+      "layout_3.text.color": "semantic.text.primary",
+      "layout_5.text.color": "semantic.text.secondary"
+    },
+    styles: {
+      "layout_3.text": "text/heading/xl",
+      "layout_3.fill": "#1F2430",
+      "layout_5.text": "text/body/lg",
+      "layout_5.fill": "#5F6A7B",
+      "layout_7.fill": "undefined",
+      "layout_7.stroke": "undefined",
+      "layout_7.text": "undefined",
+      "layout_7.effect": "undefined",
+      "layout_7.radius": "undefined",
+      "layout_7.paddingX": "undefined",
+      "layout_7.paddingY": "9",
+      "layout_7.gap": "undefined",
+      "layout_7.fontSize": "15",
+      "layout_7.lineHeight": "22",
+      "layout_7.fontWeight": "regular",
+      "layout_7.minWidth": "undefined",
+      "layout_8.fill": "undefined",
+      "layout_8.stroke": "undefined",
+      "layout_8.text": "undefined",
+      "layout_8.effect": "undefined",
+      "layout_8.radius": "undefined",
+      "layout_8.paddingX": "undefined",
+      "layout_8.paddingY": "9",
+      "layout_8.gap": "undefined",
+      "layout_8.fontSize": "15",
+      "layout_8.lineHeight": "22",
+      "layout_8.fontWeight": "regular",
+      "layout_8.minWidth": "undefined",
+      "layout_11.fill": "undefined",
+      "layout_11.stroke": "undefined",
+      "layout_11.text": "undefined",
+      "layout_11.effect": "undefined",
+      "layout_11.radius": "undefined",
+      "layout_11.paddingX": "undefined",
+      "layout_11.paddingY": "9",
+      "layout_11.gap": "undefined",
+      "layout_11.fontSize": "15",
+      "layout_11.lineHeight": "22",
+      "layout_11.fontWeight": "regular",
+      "layout_11.minWidth": "undefined"
+    },
+    modes: {
+      brand: "core",
+      theme: "core"
+    },
+    metadata: {
+      source: "miterlab-figma-generator",
+      version: "0.1.0",
+      generatedAt: "2026-03-17T13:40:49.882Z"
+    }
+  };
+
+  // ../../artifacts/figma/navigation-inspection/mcp-payload.json
+  var mcp_payload_default6 = {
+    document: {
+      name: "navigation-inspection screen",
+      screen: "navigation-inspection",
+      theme: "core"
+    },
+    nodes: [
+      {
+        id: "layout_1",
+        type: "FRAME",
+        name: "Navigation inspection Screen",
+        x: 0,
+        y: 0,
+        width: 1440,
+        height: 1240,
+        children: [
+          {
+            id: "layout_2",
+            type: "FRAME",
+            name: "header-section",
+            x: 48,
+            y: 40,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_3",
+                type: "TEXT",
+                name: "Text 1",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 32,
+                text: "Navigation Inspection",
+                variables: {
+                  "text.color": "semantic.text.primary"
+                },
+                style: {
+                  text: "text/heading/xl",
+                  fill: "#1F2430"
+                }
+              },
+              {
+                id: "layout_4",
+                type: "FRAME",
+                name: "header-row-1",
+                x: 48,
+                y: 40,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_5",
+                    type: "INSTANCE",
+                    name: "NavBar",
+                    x: 48,
+                    y: 40,
+                    width: 358,
+                    height: 45,
+                    component: "NavBar",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      backIcon: true,
+                      right: "Edit",
+                      children: "Page title"
+                    },
+                    variables: {},
+                    text: "Page title"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            id: "layout_6",
+            type: "FRAME",
+            name: "content-section",
+            x: 48,
+            y: 156,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_7",
+                type: "TEXT",
+                name: "Text 3",
+                x: 48,
+                y: 156,
+                width: 358,
+                height: 24,
+                text: "TabBar Props",
+                variables: {
+                  "text.color": "semantic.text.secondary"
+                },
+                style: {
+                  text: "text/body/lg",
+                  fill: "#5F6A7B"
+                }
+              }
+            ]
+          },
+          {
+            id: "layout_8",
+            type: "FRAME",
+            name: "footer-section",
+            x: 48,
+            y: 232,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_9",
+                type: "FRAME",
+                name: "footer-row-1",
+                x: 48,
+                y: 232,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_10",
+                    type: "INSTANCE",
+                    name: "TabBar",
+                    x: 48,
+                    y: 232,
+                    width: 358,
+                    height: 64,
+                    component: "TabBar",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      activeKey: "home",
+                      safeArea: true,
+                      children: "home:Home|search:Search|profile:Profile",
+                      badge: "3"
+                    },
+                    variables: {},
+                    text: "home:Home|search:Search|profile:Profile"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_2",
+        type: "FRAME",
+        name: "header-section",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_3",
+            type: "TEXT",
+            name: "Text 1",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 32,
+            text: "Navigation Inspection",
+            variables: {
+              "text.color": "semantic.text.primary"
+            },
+            style: {
+              text: "text/heading/xl",
+              fill: "#1F2430"
+            }
+          },
+          {
+            id: "layout_4",
+            type: "FRAME",
+            name: "header-row-1",
+            x: 48,
+            y: 40,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_5",
+                type: "INSTANCE",
+                name: "NavBar",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 45,
+                component: "NavBar",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  backIcon: true,
+                  right: "Edit",
+                  children: "Page title"
+                },
+                variables: {},
+                text: "Page title"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_3",
+        type: "TEXT",
+        name: "Text 1",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 32,
+        text: "Navigation Inspection",
+        variables: {
+          "text.color": "semantic.text.primary"
+        },
+        style: {
+          text: "text/heading/xl",
+          fill: "#1F2430"
+        }
+      },
+      {
+        id: "layout_4",
+        type: "FRAME",
+        name: "header-row-1",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_5",
+            type: "INSTANCE",
+            name: "NavBar",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 45,
+            component: "NavBar",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              backIcon: true,
+              right: "Edit",
+              children: "Page title"
+            },
+            variables: {},
+            text: "Page title"
+          }
+        ]
+      },
+      {
+        id: "layout_5",
+        type: "INSTANCE",
+        name: "NavBar",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 45,
+        component: "NavBar",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          backIcon: true,
+          right: "Edit",
+          children: "Page title"
+        },
+        variables: {},
+        text: "Page title"
+      },
+      {
+        id: "layout_6",
+        type: "FRAME",
+        name: "content-section",
+        x: 48,
+        y: 156,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_7",
+            type: "TEXT",
+            name: "Text 3",
+            x: 48,
+            y: 156,
+            width: 358,
+            height: 24,
+            text: "TabBar Props",
+            variables: {
+              "text.color": "semantic.text.secondary"
+            },
+            style: {
+              text: "text/body/lg",
+              fill: "#5F6A7B"
+            }
+          }
+        ]
+      },
+      {
+        id: "layout_7",
+        type: "TEXT",
+        name: "Text 3",
+        x: 48,
+        y: 156,
+        width: 358,
+        height: 24,
+        text: "TabBar Props",
+        variables: {
+          "text.color": "semantic.text.secondary"
+        },
+        style: {
+          text: "text/body/lg",
+          fill: "#5F6A7B"
+        }
+      },
+      {
+        id: "layout_8",
+        type: "FRAME",
+        name: "footer-section",
+        x: 48,
+        y: 232,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_9",
+            type: "FRAME",
+            name: "footer-row-1",
+            x: 48,
+            y: 232,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_10",
+                type: "INSTANCE",
+                name: "TabBar",
+                x: 48,
+                y: 232,
+                width: 358,
+                height: 64,
+                component: "TabBar",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  activeKey: "home",
+                  safeArea: true,
+                  children: "home:Home|search:Search|profile:Profile",
+                  badge: "3"
+                },
+                variables: {},
+                text: "home:Home|search:Search|profile:Profile"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_9",
+        type: "FRAME",
+        name: "footer-row-1",
+        x: 48,
+        y: 232,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_10",
+            type: "INSTANCE",
+            name: "TabBar",
+            x: 48,
+            y: 232,
+            width: 358,
+            height: 64,
+            component: "TabBar",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              activeKey: "home",
+              safeArea: true,
+              children: "home:Home|search:Search|profile:Profile",
+              badge: "3"
+            },
+            variables: {},
+            text: "home:Home|search:Search|profile:Profile"
+          }
+        ]
+      },
+      {
+        id: "layout_10",
+        type: "INSTANCE",
+        name: "TabBar",
+        x: 48,
+        y: 232,
+        width: 358,
+        height: 64,
+        component: "TabBar",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          activeKey: "home",
+          safeArea: true,
+          children: "home:Home|search:Search|profile:Profile",
+          badge: "3"
+        },
+        variables: {},
+        text: "home:Home|search:Search|profile:Profile"
+      }
+    ],
+    frames: [
+      {
+        id: "layout_1",
+        name: "Navigation inspection Screen"
+      },
+      {
+        id: "layout_2",
+        name: "header-section"
+      },
+      {
+        id: "layout_4",
+        name: "header-row-1"
+      },
+      {
+        id: "layout_6",
+        name: "content-section"
+      },
+      {
+        id: "layout_8",
+        name: "footer-section"
+      },
+      {
+        id: "layout_9",
+        name: "footer-row-1"
+      }
+    ],
+    components: [
+      {
+        id: "layout_5",
+        name: "NavBar",
+        component: "NavBar",
+        variant: {
+          backIcon: true,
+          right: "Edit",
+          children: "Page title"
+        }
+      },
+      {
+        id: "layout_10",
+        name: "TabBar",
+        component: "TabBar",
+        variant: {
+          activeKey: "home",
+          safeArea: true,
+          children: "home:Home|search:Search|profile:Profile",
+          badge: "3"
+        }
+      }
+    ],
+    variables: {
+      "layout_3.text.color": "semantic.text.primary",
+      "layout_7.text.color": "semantic.text.secondary"
+    },
+    styles: {
+      "layout_3.text": "text/heading/xl",
+      "layout_3.fill": "#1F2430",
+      "layout_5.fill": "undefined",
+      "layout_5.stroke": "undefined",
+      "layout_5.text": "undefined",
+      "layout_5.effect": "undefined",
+      "layout_5.radius": "undefined",
+      "layout_5.paddingX": "undefined",
+      "layout_5.paddingY": "9",
+      "layout_5.gap": "undefined",
+      "layout_5.fontSize": "15",
+      "layout_5.lineHeight": "22",
+      "layout_5.fontWeight": "regular",
+      "layout_5.minWidth": "undefined",
+      "layout_7.text": "text/body/lg",
+      "layout_7.fill": "#5F6A7B",
+      "layout_10.fill": "undefined",
+      "layout_10.stroke": "undefined",
+      "layout_10.text": "undefined",
+      "layout_10.effect": "undefined",
+      "layout_10.radius": "undefined",
+      "layout_10.paddingX": "undefined",
+      "layout_10.paddingY": "9",
+      "layout_10.gap": "undefined",
+      "layout_10.fontSize": "15",
+      "layout_10.lineHeight": "22",
+      "layout_10.fontWeight": "regular",
+      "layout_10.minWidth": "undefined"
+    },
+    modes: {
+      brand: "core",
+      theme: "core"
+    },
+    metadata: {
+      source: "miterlab-figma-generator",
+      version: "0.1.0",
+      generatedAt: "2026-03-17T13:40:30.704Z"
+    }
+  };
+
+  // ../../artifacts/figma/form-inspection/mcp-payload.json
+  var mcp_payload_default7 = {
+    document: {
+      name: "form-inspection screen",
+      screen: "form-inspection",
+      theme: "core"
+    },
+    nodes: [
+      {
+        id: "layout_1",
+        type: "FRAME",
+        name: "Form inspection Screen",
+        x: 0,
+        y: 0,
+        width: 1440,
+        height: 1240,
+        children: [
+          {
+            id: "layout_2",
+            type: "FRAME",
+            name: "header-section",
+            x: 48,
+            y: 40,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_3",
+                type: "TEXT",
+                name: "Text 1",
+                x: 48,
+                y: 40,
+                width: 358,
+                height: 32,
+                text: "Form Inspection",
+                variables: {
+                  "text.color": "semantic.text.primary"
+                },
+                style: {
+                  text: "text/heading/xl",
+                  fill: "#1F2430"
+                }
+              }
+            ]
+          },
+          {
+            id: "layout_4",
+            type: "FRAME",
+            name: "form-section",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_5",
+                type: "FRAME",
+                name: "form-row-1",
+                x: 48,
+                y: 116,
+                width: 1320,
+                height: 100,
+                children: [
+                  {
+                    id: "layout_6",
+                    type: "INSTANCE",
+                    name: "Email",
+                    x: 48,
+                    y: 116,
+                    width: 358,
+                    height: 280,
+                    component: "Form",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      footer: "Submit",
+                      mode: "default",
+                      layout: "vertical",
+                      label: "Email",
+                      help: "We will never share your email.",
+                      required: true,
+                      childElementPosition: "normal",
+                      description: "Primary account email"
+                    },
+                    variables: {},
+                    text: "Email"
+                  },
+                  {
+                    id: "layout_7",
+                    type: "INSTANCE",
+                    name: "Phone",
+                    x: 48,
+                    y: 116,
+                    width: 358,
+                    height: 240,
+                    component: "Form",
+                    style: {
+                      paddingY: 9,
+                      fontSize: 15,
+                      lineHeight: 22,
+                      fontWeight: "regular"
+                    },
+                    variant: {
+                      mode: "card",
+                      layout: "horizontal",
+                      label: "Phone",
+                      help: "Optional",
+                      childElementPosition: "right",
+                      extra: "Verified",
+                      clickable: true,
+                      arrowIcon: true
+                    },
+                    variables: {},
+                    text: "Phone"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_2",
+        type: "FRAME",
+        name: "header-section",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_3",
+            type: "TEXT",
+            name: "Text 1",
+            x: 48,
+            y: 40,
+            width: 358,
+            height: 32,
+            text: "Form Inspection",
+            variables: {
+              "text.color": "semantic.text.primary"
+            },
+            style: {
+              text: "text/heading/xl",
+              fill: "#1F2430"
+            }
+          }
+        ]
+      },
+      {
+        id: "layout_3",
+        type: "TEXT",
+        name: "Text 1",
+        x: 48,
+        y: 40,
+        width: 358,
+        height: 32,
+        text: "Form Inspection",
+        variables: {
+          "text.color": "semantic.text.primary"
+        },
+        style: {
+          text: "text/heading/xl",
+          fill: "#1F2430"
+        }
+      },
+      {
+        id: "layout_4",
+        type: "FRAME",
+        name: "form-section",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_5",
+            type: "FRAME",
+            name: "form-row-1",
+            x: 48,
+            y: 116,
+            width: 1320,
+            height: 100,
+            children: [
+              {
+                id: "layout_6",
+                type: "INSTANCE",
+                name: "Email",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 280,
+                component: "Form",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  footer: "Submit",
+                  mode: "default",
+                  layout: "vertical",
+                  label: "Email",
+                  help: "We will never share your email.",
+                  required: true,
+                  childElementPosition: "normal",
+                  description: "Primary account email"
+                },
+                variables: {},
+                text: "Email"
+              },
+              {
+                id: "layout_7",
+                type: "INSTANCE",
+                name: "Phone",
+                x: 48,
+                y: 116,
+                width: 358,
+                height: 240,
+                component: "Form",
+                style: {
+                  paddingY: 9,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  fontWeight: "regular"
+                },
+                variant: {
+                  mode: "card",
+                  layout: "horizontal",
+                  label: "Phone",
+                  help: "Optional",
+                  childElementPosition: "right",
+                  extra: "Verified",
+                  clickable: true,
+                  arrowIcon: true
+                },
+                variables: {},
+                text: "Phone"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "layout_5",
+        type: "FRAME",
+        name: "form-row-1",
+        x: 48,
+        y: 116,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_6",
+            type: "INSTANCE",
+            name: "Email",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 280,
+            component: "Form",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              footer: "Submit",
+              mode: "default",
+              layout: "vertical",
+              label: "Email",
+              help: "We will never share your email.",
+              required: true,
+              childElementPosition: "normal",
+              description: "Primary account email"
+            },
+            variables: {},
+            text: "Email"
+          },
+          {
+            id: "layout_7",
+            type: "INSTANCE",
+            name: "Phone",
+            x: 48,
+            y: 116,
+            width: 358,
+            height: 240,
+            component: "Form",
+            style: {
+              paddingY: 9,
+              fontSize: 15,
+              lineHeight: 22,
+              fontWeight: "regular"
+            },
+            variant: {
+              mode: "card",
+              layout: "horizontal",
+              label: "Phone",
+              help: "Optional",
+              childElementPosition: "right",
+              extra: "Verified",
+              clickable: true,
+              arrowIcon: true
+            },
+            variables: {},
+            text: "Phone"
+          }
+        ]
+      },
+      {
+        id: "layout_6",
+        type: "INSTANCE",
+        name: "Email",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 280,
+        component: "Form",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          footer: "Submit",
+          mode: "default",
+          layout: "vertical",
+          label: "Email",
+          help: "We will never share your email.",
+          required: true,
+          childElementPosition: "normal",
+          description: "Primary account email"
+        },
+        variables: {},
+        text: "Email"
+      },
+      {
+        id: "layout_7",
+        type: "INSTANCE",
+        name: "Phone",
+        x: 48,
+        y: 116,
+        width: 358,
+        height: 240,
+        component: "Form",
+        style: {
+          paddingY: 9,
+          fontSize: 15,
+          lineHeight: 22,
+          fontWeight: "regular"
+        },
+        variant: {
+          mode: "card",
+          layout: "horizontal",
+          label: "Phone",
+          help: "Optional",
+          childElementPosition: "right",
+          extra: "Verified",
+          clickable: true,
+          arrowIcon: true
+        },
+        variables: {},
+        text: "Phone"
+      }
+    ],
+    frames: [
+      {
+        id: "layout_1",
+        name: "Form inspection Screen"
+      },
+      {
+        id: "layout_2",
+        name: "header-section"
+      },
+      {
+        id: "layout_4",
+        name: "form-section"
+      },
+      {
+        id: "layout_5",
+        name: "form-row-1"
+      }
+    ],
+    components: [
+      {
+        id: "layout_6",
+        name: "Email",
+        component: "Form",
+        variant: {
+          footer: "Submit",
+          mode: "default",
+          layout: "vertical",
+          label: "Email",
+          help: "We will never share your email.",
+          required: true,
+          childElementPosition: "normal",
+          description: "Primary account email"
+        }
+      },
+      {
+        id: "layout_7",
+        name: "Phone",
+        component: "Form",
+        variant: {
+          mode: "card",
+          layout: "horizontal",
+          label: "Phone",
+          help: "Optional",
+          childElementPosition: "right",
+          extra: "Verified",
+          clickable: true,
+          arrowIcon: true
+        }
+      }
+    ],
+    variables: {
+      "layout_3.text.color": "semantic.text.primary"
+    },
+    styles: {
+      "layout_3.text": "text/heading/xl",
+      "layout_3.fill": "#1F2430",
+      "layout_6.fill": "undefined",
+      "layout_6.stroke": "undefined",
+      "layout_6.text": "undefined",
+      "layout_6.effect": "undefined",
+      "layout_6.radius": "undefined",
+      "layout_6.paddingX": "undefined",
+      "layout_6.paddingY": "9",
+      "layout_6.gap": "undefined",
+      "layout_6.fontSize": "15",
+      "layout_6.lineHeight": "22",
+      "layout_6.fontWeight": "regular",
+      "layout_6.minWidth": "undefined",
+      "layout_7.fill": "undefined",
+      "layout_7.stroke": "undefined",
+      "layout_7.text": "undefined",
+      "layout_7.effect": "undefined",
+      "layout_7.radius": "undefined",
+      "layout_7.paddingX": "undefined",
+      "layout_7.paddingY": "9",
+      "layout_7.gap": "undefined",
+      "layout_7.fontSize": "15",
+      "layout_7.lineHeight": "22",
+      "layout_7.fontWeight": "regular",
+      "layout_7.minWidth": "undefined"
+    },
+    modes: {
+      brand: "core",
+      theme: "core"
+    },
+    metadata: {
+      source: "miterlab-figma-generator",
+      version: "0.1.0",
+      generatedAt: "2026-03-17T13:40:49.881Z"
+    }
+  };
+
+  // ../../artifacts/figma/core-families/mcp-payload.json
+  var mcp_payload_default8 = {
     document: {
       name: "core-families screen",
       screen: "core-families",
@@ -5090,8 +14734,27 @@
   var EXTRACTION_INDEX_KEY = "miterlab.extraction.index.v1";
   var INPUT_BLUEPRINT_KEY3 = "miterlab.blueprint.input.v1";
   var EXTRACTION_RESET_MARKER_KEY = "miterlab.extraction.reset-once.v1";
+  var inspectionFamilyPayloads = {
+    "core-families": mcp_payload_default8,
+    "button-inspection": mcp_payload_default,
+    "input-inspection": mcp_payload_default2,
+    "tabs-inspection": mcp_payload_default3,
+    "list-cell-inspection": mcp_payload_default4,
+    "overlay-inspection": mcp_payload_default5,
+    "navigation-inspection": mcp_payload_default6,
+    "form-inspection": mcp_payload_default7
+  };
   var renderCoreFamilies = async () => {
-    const result = await renderPayload(mcp_payload_default);
+    const result = await renderPayload(mcp_payload_default8);
+    figma.notify(`Rendered ${result.createdFrameName} (${result.createdNodeCount} nodes)`);
+    return result;
+  };
+  var renderInspectionFamily = async (family) => {
+    const payload = inspectionFamilyPayloads[family];
+    if (!payload) {
+      throw new Error(`Unknown inspection family: ${family}`);
+    }
+    const result = await renderPayload(payload);
     figma.notify(`Rendered ${result.createdFrameName} (${result.createdNodeCount} nodes)`);
     return result;
   };
@@ -6198,7 +15861,7 @@
     <div class="app">
       <div class="tabs">
         <button id="tabGenerate" class="tab active">\uC0DD\uC131</button>
-        <button id="tabRaw" class="tab">raw JSON</button>
+        <button id="tabRaw" class="tab">Families</button>
         <button id="tabExtract" class="tab">\uCD94\uCD9C</button>
       </div>
 
@@ -6250,21 +15913,24 @@ fullWidth"></textarea>
 
       <div id="viewRaw" class="view">
         <div class="panel">
-          <div class="selection-title">\uCD94\uCD9C\uB41C Component Sets</div>
+          <div class="selection-title">Inspection Family</div>
           <div class="row">
-            <select id="extractComponentSelect">
-              <option value="">\uCD94\uCD9C\uB41C component set \uC5C6\uC74C</option>
+            <label>Family</label>
+            <select id="inspectionFamily">
+              <option value="core-families">core-families</option>
+              <option value="button-inspection">button-inspection</option>
+              <option value="input-inspection">input-inspection</option>
+              <option value="tabs-inspection">tabs-inspection</option>
+              <option value="list-cell-inspection">list-cell-inspection</option>
+              <option value="overlay-inspection">overlay-inspection</option>
+              <option value="navigation-inspection">navigation-inspection</option>
+              <option value="form-inspection">form-inspection</option>
             </select>
           </div>
+          <div class="hint">\uD655\uC778\uD560 family inspection payload\uB97C \uACE0\uB978 \uB4A4 \uD604\uC7AC Figma \uD398\uC774\uC9C0\uC5D0 \uBC14\uB85C \uB80C\uB354\uD569\uB2C8\uB2E4.</div>
           <div class="actions">
-            <button id="inspectExtracted">raw JSON \uBCF4\uAE30</button>
-            <button id="renderExtracted">\uC7AC\uD604 \uD655\uC778</button>
+            <button id="renderInspectionFamily">Render Selected Family</button>
           </div>
-          <div class="hint">\uD604\uC7AC\uB294 \uC7AC\uD574\uC11D \uC5C6\uC774 raw JSON\uB9CC \uD655\uC778\uD569\uB2C8\uB2E4.</div>
-        </div>
-        <div class="panel">
-          <div class="selection-title">\uCD94\uCD9C\uB41C raw JSON</div>
-          <textarea id="extractOutput" class="extract-output" placeholder="\uC120\uD0DD\uD55C component set\uC758 raw JSON\uC774 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4." readonly></textarea>
         </div>
       </div>
 
@@ -6297,11 +15963,9 @@ fullWidth"></textarea>
       const selectionSummary = document.getElementById("selectionSummary");
       const extractSelectionSummary = document.getElementById("extractSelectionSummary");
       const selectionPromptWrap = document.getElementById("selectionPromptWrap");
-      const extractOutput = document.getElementById("extractOutput");
+      const inspectionFamily = document.getElementById("inspectionFamily");
+      const renderInspectionFamilyBtn = document.getElementById("renderInspectionFamily");
       const extractLogs = document.getElementById("extractLogs");
-      const extractComponentSelect = document.getElementById("extractComponentSelect");
-      const inspectExtracted = document.getElementById("inspectExtracted");
-      const renderExtracted = document.getElementById("renderExtracted");
       const extractBusy = document.getElementById("extractBusy");
       const tabGenerate = document.getElementById("tabGenerate");
       const tabRaw = document.getElementById("tabRaw");
@@ -6344,21 +16008,6 @@ fullWidth"></textarea>
         }).join('');
       };
 
-      const renderComponents = (components) => {
-        if (!components || components.length === 0) {
-          extractComponentSelect.innerHTML = '<option value="">\uCD94\uCD9C\uB41C component set \uC5C6\uC74C</option>';
-          inspectExtracted.disabled = true;
-          renderExtracted.disabled = true;
-          return;
-        }
-        extractComponentSelect.innerHTML = components.map((item, index) => {
-          const time = new Date(item.updatedAt).toLocaleString();
-          return \`<option value="\${item.key}" \${index===0?'selected':''}>\${item.name} \xB7 parts \${item.partCount} \xB7 \${time}</option>\`;
-        }).join('');
-        inspectExtracted.disabled = false;
-        renderExtracted.disabled = false;
-      };
-
       tabGenerate.onclick = () => setTab("generate");
       tabRaw.onclick = () => setTab("raw");
       tabExtract.onclick = () => setTab("extract");
@@ -6368,6 +16017,7 @@ fullWidth"></textarea>
         refreshBtn.disabled = busy;
         extractBusy.className = busy ? "busy" : "busy hidden-inline";
       };
+
       btn.onclick = () => {
         const promptText = document.getElementById("promptText").value.trim();
         const selectionPromptText = document.getElementById("selectionPromptText")?.value?.trim?.() ?? "";
@@ -6385,6 +16035,17 @@ fullWidth"></textarea>
           "*"
         );
       };
+      renderInspectionFamilyBtn.onclick = () => {
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: "renderInspectionFamily",
+              family: inspectionFamily.value
+            }
+          },
+          "*"
+        );
+      };
       extractBtn.onclick = () => {
         setExtractBusy(true);
         parent.postMessage(
@@ -6395,24 +16056,6 @@ fullWidth"></textarea>
       refreshBtn.onclick = () => {
         if (extractionInFlight) return;
         parent.postMessage({ pluginMessage: { type: "refreshExtractionState" } }, "*");
-      };
-      inspectExtracted.onclick = () => {
-        const extractionKey = extractComponentSelect.value;
-        if (!extractionKey) return;
-        setExtractBusy(true);
-        parent.postMessage(
-          { pluginMessage: { type: "loadExtraction", bridgeUrl: document.getElementById("bridgeUrl").value, extractionKey, render: false } },
-          "*"
-        );
-      };
-      renderExtracted.onclick = () => {
-        const extractionKey = extractComponentSelect.value;
-        if (!extractionKey) return;
-        setExtractBusy(true);
-        parent.postMessage(
-          { pluginMessage: { type: "loadExtraction", bridgeUrl: document.getElementById("bridgeUrl").value, extractionKey, render: true } },
-          "*"
-        );
       };
       window.onmessage = (event) => {
         const msg = event.data.pluginMessage;
@@ -6425,20 +16068,16 @@ fullWidth"></textarea>
         }
         if (msg.type === "selectionExtracted") {
           setExtractBusy(false);
-          extractOutput.value = msg.rawPayload || msg.payload;
           if (msg.logs) renderLogs(msg.logs);
-          if (msg.components) renderComponents(msg.components);
           return;
         }
         if (msg.type === "extractionLoaded") {
           setExtractBusy(false);
-          extractOutput.value = msg.payload;
           return;
         }
         if (msg.type === "extractionState") {
           setExtractBusy(false);
           renderLogs(msg.logs);
-          renderComponents(msg.components);
           return;
         }
         if (msg.type === "pluginError") {
@@ -6530,6 +16169,10 @@ fullWidth"></textarea>
           if (saveWarning) {
             console.error("[miterlab][extract]", saveWarning);
           }
+          return;
+        }
+        if (message.type === "renderInspectionFamily") {
+          await renderInspectionFamily(message.family);
           return;
         }
         if (message.type === "generateFromText" && ((_a = message.selectionPromptText) == null ? void 0 : _a.trim())) {

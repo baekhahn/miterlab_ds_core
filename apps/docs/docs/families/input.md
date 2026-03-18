@@ -6,69 +6,17 @@ title: Input
 
 ## Purpose
 
-Core text entry baseline for Ant Design Mobile Input behavior.
+텍스트 입력과 폼 데이터 수집을 담당하는 core text entry family입니다.
 
-## Source Baseline
+## Implementation Priority
 
-- Ant Design Mobile InputProps
-- Spec files: `packages/ui-core/specs/input.spec.yaml`
-- Parity mismatch count: `0`
-- Spec notes: `official NativeProps adds className, style, tabIndex, and aria/data attributes`, `official InputProps does not define allowClear; Ant Design Mobile uses clearable`, `official InputProps does not define size, status, prefix, or suffix props`, `official clearIcon default is <CloseCircleFill />`, `source schema is Ant Design Mobile InputProps`
+- 이 페이지는 설명 문서가 아니라 구현 계약 문서입니다.
+- 구현은 spec보다 앞설 수 없고, generator와 plugin은 아래 계약을 그대로 따라야 합니다.
+- reference baseline은 배경 정보입니다. 실제 구현 입력은 이 페이지의 계약 표와 규칙만 사용하면 됩니다.
 
-## Inspection Screen
+## Public Props Contract
 
-- Screen name: `input-inspection`
-- Summary artifact: `artifacts/figma/input-inspection/summary.json`
-- Payload artifact: `artifacts/figma/input-inspection/mcp-payload.json`
-- Layout artifact: `artifacts/figma/input-inspection/layout.json`
-
-## Freeze Status
-
-| Check | Status |
-| --- | --- |
-| Spec parity | verified |
-| Generator parity | pending |
-| Plugin parity | pending |
-| Figma write verification | pending |
-| Screenshot attached | pending |
-| Review approved | pending |
-
-## Inspection Result
-
-- Generation score: `96`
-- Passed: `true`
-- Node count: `20`
-- Component count: `9`
-- Warnings: `No primary action button found`
-
-## Metrics
-
-- Official defaults come from `src/components/input/input.tsx` and `input.less`.
-- The official Input API does not define `size`, `status`, `prefix`, or `suffix` props.
-- wrapper: minHeight=24px, width=100%, alignItems=center
-- element: lineHeight=1.5, minHeight=1.5em, padding=0, border=0, fontSize=17px
-- clear: marginLeft=8px, padding=4px, iconFontSize=15px
-
-## Token References
-
-- Input styling is driven by official CSS variables instead of dedicated size/status props.
-- Value and placeholder colors remain distinct through `--color` and `--placeholder-color`.
-- cssVar: `--font-size` -> default `17px` via `var(--adm-font-size-9)`
-- cssVar: `--color` -> default `#333333` via `var(--adm-color-text)`
-- cssVar: `--placeholder-color` -> default `#cccccc` via `var(--adm-color-light)`
-- cssVar: `--text-align` -> default `left` in official input.less
-- antToken: `colorText` -> `#333333` via `--adm-color-text`
-- antToken: `colorBorder` -> native input border is removed; wrapper integrations commonly use `#eeeeee` via `--adm-color-border`
-- antToken: `colorPrimary` -> `#1677ff` global token; no dedicated Input status prop
-- antToken: `colorError` -> `#ff3141` global token; not exposed by official InputProps
-- antToken: `colorWarning` -> `#ff8f1f` global token; not exposed by official InputProps
-- antToken: `colorTextSecondary` -> `#666666` via `--adm-color-text-secondary`
-- antToken: `colorTextDisabled` -> Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled input uses wrapper `opacity: 0.4`
-- antToken: `controlHeight` -> no explicit component token; effective wrapper min-height is `24px` in official input.less
-
-## Input
-
-### Props / Axes
+### Input
 
 | Axis / prop | Type | Allowed values | Notes |
 | --- | --- | --- | --- |
@@ -115,249 +63,113 @@ Core text entry baseline for Ant Design Mobile Input behavior.
 | `--placeholder-color` | `string` | TODO | Official CSS variable contract. |
 | `--text-align` | `string` | TODO | Official CSS variable contract. |
 
-### States
+## State Contract
+
+### Input
 
 | State | Expectation |
 | --- | --- |
-| `default` | Uses the official CSS variable defaults for font size, color, placeholder color, and text alignment. |
-| `focus` | Focus is tracked internally with `hasFocus` and gates clear button visibility. |
-| `disabled` | Disabled state applies wrapper opacity and keeps the native element enabled styling at 1. |
-| `readOnly` | Read-only blocks pointer events on the native element while preserving value rendering. |
-| `clearable` | Clear button appears when `clearable` is true and visibility conditions are satisfied. |
-| `placeholder` | Placeholder remains visible only when `value` and `defaultValue` are absent. |
+| `default` | 기본 텍스트 입력 상태이며 label, field, helper의 관계가 가장 자연스럽게 보여야 합니다. |
+| `focus` | 사용자가 현재 입력 중인 필드로 읽혀야 하며 blue focus treatment가 분명해야 합니다. |
+| `disabled` | 사용 불가 상태로 읽혀야 하며 정보는 남겨두되 interaction affordance는 제거해야 합니다. |
+| `readOnly` | 값은 보여주되 수정 중인 필드처럼 보이지 않아야 합니다. |
+| `clearable` | `clearable=true`일 때 clear affordance가 실제 편집 가능 상태와 함께 읽혀야 합니다. |
+| `placeholder` | `value`와 `defaultValue`가 없을 때만 placeholder가 보여야 합니다. |
 
-### Metrics
+## Field Metrics Contract
 
-- wrapper: minHeight=24px, width=100%, alignItems=center
-- element: lineHeight=1.5, minHeight=1.5em, padding=0, border=0, fontSize=17px
-- clear: marginLeft=8px, padding=4px, iconFontSize=15px
+### Input
 
-### Tokens
-
-| Token | Kind | Notes |
+| Field tier | Width guidance | Usage |
 | --- | --- | --- |
-| `--font-size` | cssVar | default `17px` via `var(--adm-font-size-9)` |
-| `--color` | cssVar | default `#333333` via `var(--adm-color-text)` |
-| `--placeholder-color` | cssVar | default `#cccccc` via `var(--adm-color-light)` |
-| `--text-align` | cssVar | default `left` in official input.less |
-| `colorText` | antToken | `#333333` via `--adm-color-text` |
-| `colorBorder` | antToken | native input border is removed; wrapper integrations commonly use `#eeeeee` via `--adm-color-border` |
-| `colorPrimary` | antToken | `#1677ff` global token; no dedicated Input status prop |
-| `colorError` | antToken | `#ff3141` global token; not exposed by official InputProps |
-| `colorWarning` | antToken | `#ff8f1f` global token; not exposed by official InputProps |
-| `colorTextSecondary` | antToken | `#666666` via `--adm-color-text-secondary` |
-| `colorTextDisabled` | antToken | Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled input uses wrapper `opacity: 0.4` |
-| `controlHeight` | antToken | no explicit component token; effective wrapper min-height is `24px` in official input.less |
+| `default` | single-line field | 기본 텍스트 입력 필드입니다. |
+| `short` | 75px | 짧은 코드, 숫자, 약어 입력에 사용합니다. |
+| `medium` | 150px~250px | 이름, 태그, 짧은 라벨 입력에 사용합니다. |
+| `long` | 350px~500px | 이메일, 주소, 긴 텍스트 입력에 사용합니다. |
+| `full-width` | container width | 폼 레이아웃이 전폭 필드를 요구할 때만 사용합니다. |
 
-## Variant Axes Table
+## Token Contract
 
 ### Input
 
-| Axis / prop | Type | Allowed values | Notes |
-| --- | --- | --- | --- |
-| `maxLength` | `number` | TODO | General prop contract. |
-| `minLength` | `number` | TODO | General prop contract. |
-| `autoComplete` | `string` | TODO | General prop contract. |
-| `autoFocus` | `boolean` | `false`, `true` | General prop contract. |
-| `pattern` | `string` | TODO | General prop contract. |
-| `inputMode` | `string` | TODO | General prop contract. |
-| `type` | `string` | TODO | General prop contract. |
-| `name` | `string` | TODO | General prop contract. |
-| `onFocus` | `function` | TODO | General prop contract. |
-| `onBlur` | `function` | TODO | General prop contract. |
-| `onPaste` | `function` | TODO | General prop contract. |
-| `autoCapitalize` | `string` | TODO | General prop contract. |
-| `autoCorrect` | `string` | TODO | General prop contract. |
-| `onKeyDown` | `function` | TODO | General prop contract. |
-| `onKeyUp` | `function` | TODO | General prop contract. |
-| `onCompositionStart` | `function` | TODO | General prop contract. |
-| `onCompositionEnd` | `function` | TODO | General prop contract. |
-| `onClick` | `function` | TODO | General prop contract. |
-| `step` | `number` | TODO | General prop contract. |
-| `id` | `string` | TODO | General prop contract. |
-| `placeholder` | `string` | TODO | General prop contract. |
-| `readOnly` | `boolean` | `false`, `true` | General prop contract. |
-| `disabled` | `boolean` | `false`, `true` | General prop contract. |
-| `enterKeyHint` | `string` | TODO | General prop contract. |
-| `value` | `string` | TODO | General prop contract. |
-| `defaultValue` | `string` | TODO | General prop contract. |
-| `onChange` | `function` | TODO | General prop contract. |
-| `clearable` | `boolean` | `false`, `true` | General prop contract. |
-| `clearIcon` | `reactNode` | TODO | General prop contract. |
-| `onlyShowClearWhenFocus` | `boolean` | `false`, `true` | Visibility of the clear affordance is gated by focus. |
-| `onClear` | `function` | TODO | General prop contract. |
-| `onEnterPress` | `function` | TODO | General prop contract. |
-| `min` | `number` | TODO | General prop contract. |
-| `max` | `number` | TODO | General prop contract. |
-| `role` | `string` | TODO | General prop contract. |
-| `className` | `string` | TODO | General prop contract. |
-| `style` | `object` | TODO | General prop contract. |
-| `tabIndex` | `number` | TODO | General prop contract. |
-| `--font-size` | `string` | TODO | Official CSS variable contract. |
-| `--color` | `string` | TODO | Official CSS variable contract. |
-| `--placeholder-color` | `string` | TODO | Official CSS variable contract. |
-| `--text-align` | `string` | TODO | Official CSS variable contract. |
+| Token | Kind | Usage |
+| --- | --- | --- |
+| `field.background` | token | 기본 입력 표면입니다. |
+| `field.border.default` | token | 기본 field 경계입니다. |
+| `field.border.focused` | token | focus 상태에서 분명히 읽히는 blue treatment입니다. |
+| `field.border.invalid` | token | error 또는 invalid 상태의 경계입니다. |
+| `field.text.default` | token | 입력값 본문 텍스트에 사용합니다. |
+| `field.text.placeholder` | token | placeholder에 사용하며 본문보다 한 단계 낮게 읽혀야 합니다. |
+| `field.text.helper` | token | helper text에 사용합니다. |
+| `field.text.error` | token | error message와 invalid helper에 사용합니다. |
+| `field.text.disabled` | token | disabled field 텍스트에 사용합니다. |
+| `field.surface.disabled` | token | disabled field 배경에 사용합니다. |
+| `field.icon.clear` | token | clear affordance icon에 사용합니다. |
 
-## Size Metrics Table
+## Form Composition Contract
 
-### Input
+### Label and field
 
-| Size | Height | Padding X | Padding Y | Radius | Rectangular Radius | Icon Gap |
-| --- | --- | --- | --- | --- | --- | --- |
-| `default` | `24px` | `0px` | `0px` | `0px` official input itself has no border radius | `0px` | `8px` clear inset |
+- label은 왼쪽 정렬하고 field는 그 아래에 두는 구성을 기본으로 봅니다.
+- placeholder도 sentence case와 왼쪽 정렬을 기본으로 봅니다.
+- required field는 label에 `*`를 붙여 드러냅니다.
 
-## Inspection Mapping
+### Field lengths
 
-- Inspection group `Text Values` verifies `placeholder`, `value`, and `defaultValue`.
-- Inspection group `Interaction Props` verifies `disabled`, `readOnly`, `clearable`, and `onlyShowClearWhenFocus`.
-- Password and number examples verify `type`, `min`, `max`, and `step`.
+- field 길이는 예상 입력 길이를 반영해야 합니다.
+- 기본 길이 단계는 `75px`, `150px`, `250px`, `350px`, `500px`입니다.
+- 모든 field를 한 가지 폭으로만 늘어놓지 않고, 입력 의도에 맞는 길이를 선택합니다.
 
-## State Mapping
+### Help and validation
 
-### Input
+- helper text와 error text는 field 아래에서 읽혀야 합니다.
+- unfocused field도 error 상태를 명확히 드러낼 수 있어야 합니다.
+- focus 중에는 error와 구분되는 blue focus treatment가 보여야 합니다.
 
-| State | Expectation |
-| --- | --- |
-| `default` | Uses the official CSS variable defaults for font size, color, placeholder color, and text alignment. |
-| `focus` | Focus is tracked internally with `hasFocus` and gates clear button visibility. |
-| `disabled` | Disabled state applies wrapper opacity and keeps the native element enabled styling at 1. |
-| `readOnly` | Read-only blocks pointer events on the native element while preserving value rendering. |
-| `clearable` | Clear button appears when `clearable` is true and visibility conditions are satisfied. |
-| `placeholder` | Placeholder remains visible only when `value` and `defaultValue` are absent. |
+## Interaction Rules
 
-## Placeholder Behavior
+- placeholder는 `value`와 `defaultValue`가 모두 없을 때만 보입니다.
+- focus는 별도 공개 prop이 아니라 runtime state로 취급합니다.
+- `clearable=true`는 clear affordance를 활성화합니다.
+- `onlyShowClearWhenFocus=true`는 focus 중일 때만 clear affordance를 보여줍니다.
+- `readOnly=true`는 value는 유지하고 수정 affordance만 제거합니다.
+- `disabled=true`는 interaction을 막고 muted treatment를 사용합니다.
 
-- Placeholder renders only when `value` and `defaultValue` are absent.
-- Placeholder uses `placeholder.color`, not the value color token.
+## Non-Public Fields
 
-## Focus State
+- `status`는 frozen Input 공개 계약에 포함되지 않습니다.
+- `size`, `prefix`, `suffix`도 현재 공개 계약에 포함되지 않습니다.
+- runtime에서 필요하더라도 공개 prop으로 승격하려면 spec 변경이 먼저 필요합니다.
 
-- Focus is part of runtime expectations even though it is not a standalone prop in the frozen spec.
-- Focus treatment must preserve the frozen metrics and action slot positioning.
+## Render Rules
 
-## Status Mapping
+- label은 왼쪽 정렬, field는 그 아래 배치되는 폼 구조를 기본으로 봅니다.
+- field width는 입력될 내용 길이를 반영해야 하며, 동일한 화면 안에서 과도하게 넓거나 좁지 않아야 합니다.
+- focus 상태에서는 blue focus treatment가 분명히 보여야 합니다.
+- error는 field 아래 메시지와 함께 읽혀야 하며, unfocused field에서도 오류 상태가 드러나야 합니다.
+- `readOnly=true`는 값을 유지한 채 편집 affordance만 제거해야 합니다.
+- `disabled=true`는 사용할 수 없는 필드로 읽혀야 합니다.
 
-- `status` is not part of the frozen Input spec.
-- Any runtime status styling must not add a new public Input prop without a spec change.
+## Forbidden Changes
 
-## Clearable Mapping
+- field 길이가 입력 내용과 무관하게 전부 같은 폭으로만 보임.
+- label, helper, error가 field와 분리되지 않고 한 덩어리처럼 보임.
+- focus와 error가 같은 색 처리로 섞임.
+- disabled와 readOnly가 하나의 시각 상태로 합쳐짐.
+- `type=number|password`가 mapping 과정에서 사라짐.
 
-- `clearable=true` enables the action slot for clear affordance rendering.
-- `onlyShowClearWhenFocus=true` limits that affordance to the focused runtime path.
+## Verification Checklist
 
-## ReadOnly Mapping
+- `placeholder`, `value`, `defaultValue`가 서로 다른 render path를 유지하는지 확인합니다.
+- `disabled`, `readOnly`, `clearable`, `onlyShowClearWhenFocus`가 payload와 render에서 모두 유지되는지 확인합니다.
+- `type`, `min`, `max`, `step`이 mapping 과정에서 사라지지 않는지 확인합니다.
+- field 길이, 배치, focus treatment가 계약과 일치하는지 확인합니다.
+- token path가 documented contract를 따르는지 확인합니다.
 
-- `readOnly=true` keeps the value visible, applies the read-only token set, and suppresses edit affordances.
+## Reference Notes
 
-## Disabled Mapping
-
-- `disabled=true` applies the disabled token set and suppresses interaction while preserving layout metrics.
-
-## Official Non-Props
-
-- `allowClear` is not an official Input prop in Ant Design Mobile 5.x. The official prop is `clearable`.
-- `size`, `status`, `prefix`, and `suffix` are not official Input props in Ant Design Mobile 5.x.
-- `className`, `style`, `tabIndex`, and `aria-*` / `data-*` support come from `NativeProps`.
-
-## Render Expectations
-
-- Text input wrapper and element metrics must follow the official CSS variable defaults and Less rules.
-- Placeholder text must render with placeholder tokens until `value` or `defaultValue` is present.
-- `readOnly=true` must keep value visible while switching to read-only token treatment.
-- `disabled=true` must suppress interactive styling and use muted field/value tokens.
-- `clearable=true` must render an action affordance when clear behavior is available.
-- `onlyShowClearWhenFocus=true` must keep the clear affordance hidden until focus.
-
-## Current Runtime Gaps
-
-- Current inspection payload now matches the official Input height, radius, padding, inset, and type scale, but the token paths still diverge from the documented Ant contract.
-- Phase A freeze remains pending until generator and plugin output match the official Input metrics and token mapping on the payload/write path.
-
-## Failure Cases
-
-- Placeholder and value text rendered with the same token treatment.
-- Disabled and read-only collapsed into one visual state.
-- Clearable prop ignored in payload or plugin write path.
-- Number/password `type` props dropped during mapping.
-- Field padding changed independently from frozen defaults.
-- Text alignment or vertical centering broken in the rendered node.
-
-## Inspection Payload Example
-
-```json
-{
-  "document": {
-    "name": "input-inspection screen",
-    "screen": "input-inspection",
-    "theme": "core"
-  },
-  "node": {
-    "id": "layout_8",
-    "type": "INSTANCE",
-    "name": "Placeholder",
-    "x": 48,
-    "y": 192,
-    "width": 320,
-    "height": 24,
-    "component": "Input",
-    "style": {
-      "fill": "#FFFFFF",
-      "stroke": "#E0E6EE",
-      "text": "#1F2430",
-      "radius": 0,
-      "paddingX": 0,
-      "paddingY": 0,
-      "gap": 8,
-      "fontSize": 17,
-      "lineHeight": 26,
-      "fontWeight": "regular"
-    },
-    "variant": {
-      "placeholder": "Type here"
-    },
-    "variables": {
-      "field.background": "Semantic/surface/default",
-      "field.border": "Semantic/border/default",
-      "value.color": "Semantic/text/primary",
-      "placeholder.color": "Semantic/text/muted"
-    }
-  }
-}
-```
-
-## Inspection Layout Example
-
-```json
-[
-  {
-    "type": "stack",
-    "name": "header-section",
-    "x": 48,
-    "y": 40,
-    "width": 1320,
-    "direction": "vertical",
-    "gap": 12,
-    "children": [
-      {
-        "type": "text",
-        "name": "Text 1",
-        "content": "Input Inspection",
-        "width": 358,
-        "height": 32,
-        "textStyle": "text/heading/xl",
-        "colorToken": "semantic.text.primary"
-      }
-    ]
-  },
-  {
-    "type": "stack",
-    "name": "content-section",
-    "x": 48,
-    "y": 116,
-    "width": 1320,
-    "direction": "vertical",
-    "gap": 16,
-    "children": []
-  }
-]
-```
+- Reference baseline: Atlassian Design System `Text field` and `Forms`
+- Spec files: `packages/ui-core/specs/input.spec.yaml`
+- `allowClear`는 현재 공개 Input 계약 밖의 항목이며, frozen contract는 `clearable`을 사용합니다.
+- `size`, `status`, `prefix`, `suffix`는 현재 공개 Input 계약 밖의 항목입니다.
+- `className`, `style`, `tabIndex`, `aria-*`, `data-*`는 `NativeProps`를 통해 지원됩니다.

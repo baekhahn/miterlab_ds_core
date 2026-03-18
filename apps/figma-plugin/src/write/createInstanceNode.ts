@@ -100,14 +100,6 @@ const getButtonSizeKey = (node: FigmaWriteNode): "mini" | "small" | "middle" | "
   return "middle";
 };
 
-const getInputSizeKey = (node: FigmaWriteNode): "small" | "middle" | "large" => {
-  const size = node.variant?.size;
-  if (size === "small" || size === "middle" || size === "large") return size;
-  if (size === "sm") return "small";
-  if (size === "lg") return "large";
-  return "middle";
-};
-
 const getVariantKey = (node: FigmaWriteNode): string => {
   const value = node.variant?.variant;
   return typeof value === "string" ? value : "default";
@@ -369,6 +361,30 @@ const createInputMetaBadge = async (label: string, fill: string, textColor: stri
   return badge;
 };
 
+const parseEmbeddedInputValue = (value: unknown): string | undefined => {
+  if (typeof value !== "string") return undefined;
+  if (!value.startsWith("input:")) return undefined;
+  return value.slice("input:".length).trim();
+};
+
+const createEmbeddedInputField = async (value: string, options?: { readOnly?: boolean }) => {
+  const field = figma.createFrame();
+  field.layoutMode = "HORIZONTAL";
+  field.primaryAxisAlignItems = "CENTER";
+  field.counterAxisAlignItems = "CENTER";
+  field.layoutGrow = 1;
+  field.paddingLeft = 12;
+  field.paddingRight = 12;
+  field.paddingTop = 10;
+  field.paddingBottom = 10;
+  field.itemSpacing = 8;
+  field.cornerRadius = 10;
+  field.fills = [{ type: "SOLID", color: rgb(options?.readOnly ? "#F2F4F7" : "#FFFFFF") }];
+  field.strokes = [{ type: "SOLID", color: rgb("#D0D5DD") }];
+  await addLabel(field, value || "Input", options?.readOnly ? "#98A2B3" : "#667085", "MIN", 14, "regular", 20);
+  return field;
+};
+
 const toneStyle = (variant: string) => {
   const palette: Record<string, { fill: string; stroke: string; text: string }> = {
     neutral: { fill: "#F7F8FA", stroke: "#E0E6EE", text: "#5F6A7B" },
@@ -385,7 +401,6 @@ const toneStyle = (variant: string) => {
 };
 
 const createInputNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
-  const size = getInputSizeKey(node);
   const state =
     node.variant?.disabled === true
       ? "disabled"
@@ -426,18 +441,18 @@ const createInputNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   frame.layoutMode = "HORIZONTAL";
   frame.primaryAxisAlignItems = "MIN";
   frame.counterAxisAlignItems = "CENTER";
-  frame.paddingLeft = stylePaddingX(node, blueprintMetrics?.paddingLeft ?? (size === "small" ? 12 : size === "large" ? 16 : 14));
-  frame.paddingRight = stylePaddingX(node, blueprintMetrics?.paddingRight ?? (size === "small" ? 12 : size === "large" ? 16 : 14));
-  frame.paddingTop = stylePaddingY(node, blueprintMetrics?.paddingTop ?? (size === "small" ? 8 : size === "large" ? 12 : 10));
-  frame.paddingBottom = stylePaddingY(node, blueprintMetrics?.paddingBottom ?? (size === "small" ? 8 : size === "large" ? 12 : 10));
+  frame.paddingLeft = stylePaddingX(node, blueprintMetrics?.paddingLeft ?? 0);
+  frame.paddingRight = stylePaddingX(node, blueprintMetrics?.paddingRight ?? 0);
+  frame.paddingTop = stylePaddingY(node, blueprintMetrics?.paddingTop ?? 0);
+  frame.paddingBottom = stylePaddingY(node, blueprintMetrics?.paddingBottom ?? 0);
   frame.itemSpacing = blueprintMetrics?.itemSpacing ?? 8;
-  frame.cornerRadius = styleRadius(node, blueprintMetrics?.radius ?? (size === "large" ? 14 : size === "small" ? 10 : 12));
+  frame.cornerRadius = styleRadius(node, blueprintMetrics?.radius ?? 0);
   frame.strokeWeight = 1;
   frame.strokes = [{ type: "SOLID", color: rgb(styleStroke(node, style.stroke)) }];
   frame.fills = [{ type: "SOLID", color: rgb(styleFill(node, style.fill)) }];
   frame.layoutAlign = "STRETCH";
-  const fontSize = styleFontSize(node, size === "small" ? 14 : size === "large" ? 16 : 15);
-  const lineHeight = styleLineHeight(node, size === "small" ? 20 : size === "large" ? 24 : 22);
+  const fontSize = styleFontSize(node, 17);
+  const lineHeight = styleLineHeight(node, 26);
 
   const valueNode = await createInlineText(
     inputType === "password" && inputValue ? "••••••••" : inputValue || placeholderText || "Input",
@@ -1184,7 +1199,10 @@ const createCellNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   }
   frame.appendChild(content);
 
-  if (typeof node.variant?.extra === "string" && node.variant.extra) {
+  const embeddedInputValue = parseEmbeddedInputValue(node.variant?.children);
+  if (embeddedInputValue) {
+    frame.appendChild(await createEmbeddedInputField(embeddedInputValue, { readOnly: disabled }));
+  } else if (typeof node.variant?.extra === "string" && node.variant.extra) {
     const extra = await createInlineText(node.variant.extra, disabled ? "#B0B8C4" : "#667085", 13, 18, "regular");
     frame.appendChild(extra);
   }
@@ -1264,7 +1282,23 @@ const createListNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
     row.strokeLeftWeight = 0;
     row.strokeRightWeight = 0;
     row.strokeBottomWeight = index < items.length - 1 ? 1 : 0;
-    await addLabel(row, item, "#101828", "MIN", 15, "regular", 22);
+    const embeddedInputMarker = "::input:";
+    if (item.includes(embeddedInputMarker)) {
+      const [label, value] = item.split(embeddedInputMarker);
+      const content = figma.createFrame();
+      content.layoutMode = "VERTICAL";
+      content.primaryAxisAlignItems = "MIN";
+      content.counterAxisAlignItems = "MIN";
+      content.itemSpacing = 8;
+      content.layoutGrow = 1;
+      content.fills = [];
+      content.strokes = [];
+      await addLabel(content, label.trim(), "#101828", "MIN", 15, "regular", 22);
+      content.appendChild(await createEmbeddedInputField(value.trim()));
+      row.appendChild(content);
+    } else {
+      await addLabel(row, item, "#101828", "MIN", 15, "regular", 22);
+    }
     body.appendChild(row);
   }
 

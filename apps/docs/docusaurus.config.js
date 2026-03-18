@@ -2,7 +2,7 @@
 
 const config = {
   title: "Miterlab AI Design System",
-  tagline: "Frozen core schema, parity, and runtime reference",
+  tagline: "Button and Input core contracts for AI generation",
   favicon: "img/favicon.ico",
   url: "https://mads.fly.dev",
   baseUrl: "/",
@@ -40,23 +40,23 @@ const config = {
       title: "Miterlab AI Design System",
       items: [
         { to: "/", label: "Docs", position: "left" },
-        { to: "/freeze-review/status", label: "Freeze Review", position: "left" }
+        { to: "/families/", label: "Families", position: "left" }
       ]
     },
     footer: {
       style: "dark",
       links: [
         {
-          title: "Core",
-          items: [{ label: "Overview", to: "/core/overview" }]
+          title: "Docs",
+          items: [{ label: "Home", to: "/" }]
         },
         {
           title: "Families",
-          items: [{ label: "Family Index", to: "/families/" }]
-        },
-        {
-          title: "Runtime",
-          items: [{ label: "Plugin Contract", to: "/runtime/plugin-contract" }]
+          items: [
+            { label: "Families Overview", to: "/families/" },
+            { label: "Button", to: "/families/button" },
+            { label: "Input", to: "/families/input" }
+          ]
         }
       ]
     }

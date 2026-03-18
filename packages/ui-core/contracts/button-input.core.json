@@ -1,0 +1,206 @@
+{
+  "button": {
+    "baseline": "Reference baseline: Atlassian Design System `Button`",
+    "purpose": "주요 액션과 보조 액션의 우선순위를 드러내는 core action family입니다.",
+    "sizeTableRows": [
+      ["`mini`", "compact", "짧은 라벨, 보조 액션, 밀도 높은 컨텍스트에 사용합니다."],
+      ["`small`", "compact", "compact group 안의 일반 액션에 사용합니다."],
+      ["`middle`", "default", "기본 화면 밀도의 표준 액션입니다."],
+      ["`large`", "roomy", "강한 CTA 또는 넓은 터치 영역이 필요한 경우에 사용합니다."]
+    ],
+    "tokenTableRows": [
+      ["`action.primary.background`", "token", "가장 강한 액션 계층의 배경입니다."],
+      ["`action.primary.text`", "token", "primary action label에 사용합니다."],
+      ["`action.secondary.border`", "token", "secondary action의 outline 경계에 사용합니다."],
+      ["`action.secondary.text`", "token", "outline 및 low-emphasis action label에 사용합니다."],
+      ["`action.subtle.background`", "token", "none 또는 subtle action hover/pressed treatment에 사용합니다."],
+      ["`action.disabled.text`", "token", "disabled action label에 사용합니다."],
+      ["`action.disabled.surface`", "token", "disabled action surface에 사용합니다."],
+      ["`action.focus.ring`", "token", "키보드 focus가 분명히 읽히는 ring 또는 outline에 사용합니다."],
+      ["`action.loading.foreground`", "token", "loading label과 indicator가 같은 상태로 읽히도록 사용합니다."]
+    ],
+    "stateMapping": [
+      ["default", "기본 액션 상태이며 현재 화면에서의 우선순위를 가장 잘 보여주는 외형을 사용합니다."],
+      ["active", "pressed 순간의 피드백이 즉시 보여야 하며 action intent는 유지되어야 합니다."],
+      ["focus", "키보드 이동 시 focus ring 또는 focus border가 또렷하게 보여야 합니다."],
+      ["disabled", "비활성 액션으로 읽혀야 하며 interaction affordance가 제거되어야 합니다."],
+      ["loading", "현재 액션 진행 중임을 보여야 하며 버튼 레이아웃은 유지되어야 합니다."]
+    ],
+    "renderExpectations": [
+      "한 화면 안에서는 primary emphasis가 가장 먼저 읽혀야 하며, 보조 액션은 그보다 낮은 시각 우선순위를 가져야 합니다.",
+      "`fill=solid`, `fill=outline`, `fill=none`은 서로 다른 action hierarchy로 읽혀야 합니다.",
+      "`block=true`는 shouldFitContainer와 같은 전폭 액션으로 동작해야 합니다.",
+      "`loading=true`는 레이블 점프 없이 현재 액션 진행 상태를 보여야 합니다.",
+      "`disabled=true`는 클릭 가능해 보이지 않아야 하며, hover/pressed affordance도 제거되어야 합니다."
+    ],
+    "failureCases": [
+      "primary와 secondary가 같은 강조도로 보여 액션 우선순위가 사라짐.",
+      "fill 축이 하나의 시각 preset으로 납작해짐.",
+      "block button이 전폭 액션처럼 보이지 않음.",
+      "loading state가 레이블 이동이나 높이 점프로 보임.",
+      "disabled state가 여전히 클릭 가능해 보임."
+    ],
+    "verificationChecklist": [
+      "`size` 네 축이 payload와 render 결과에서 모두 구분되는지 확인합니다.",
+      "`fill`과 `color`가 함께 유지되고 flatten되지 않았는지 확인합니다.",
+      "`shape`, `block`, `loading`, `disabled`가 payload와 render 양쪽에서 유지되는지 확인합니다.",
+      "padding, radius, text scale이 size 계약과 일치하는지 확인합니다.",
+      "token path가 documented contract를 따르는지 확인합니다."
+    ],
+    "unsupportedNotes": [
+      "`icon`은 현재 공개 Button 계약에 포함되지 않습니다.",
+      "`href`, `target`, `htmlType`는 현재 공개 Button 계약 밖의 항목입니다. 네이티브 버튼 필드는 `type`을 유지합니다.",
+      "`className`, `style`, `tabIndex`, `aria-*`, `data-*`는 `NativeProps`를 통해 지원됩니다."
+    ],
+    "appearanceMapping": {
+      "actionHierarchy": [
+        ["`fill=solid` + emphasized color", "주요 액션. 화면에서 가장 먼저 읽혀야 합니다."],
+        ["`fill=outline`", "보조 액션. primary보다 한 단계 낮은 강조를 가집니다."],
+        ["`fill=none`", "링크성 또는 취소성 액션. 가장 낮은 강조를 가집니다."]
+      ],
+      "widthBehavior": [
+        ["`block=false`", "콘텐츠 폭에 맞는 일반 버튼입니다."],
+        ["`block=true`", "전폭 액션으로 해석합니다."]
+      ],
+      "density": [
+        ["`mini`, `small`", "compact action density로 해석합니다."],
+        ["`middle`, `large`", "default 또는 roomy action density로 해석합니다."]
+      ],
+      "formPlacementRules": [
+        "단일 페이지 form에서는 primary action을 field 왼쪽 정렬선에 맞춰 두는 것이 자연스럽습니다.",
+        "modal이나 dialog 계열에서는 primary action이 가장 마지막 위치에서 읽히도록 배치할 수 있습니다.",
+        "한 그룹 안에서 primary emphasis는 하나만 두는 것을 기본으로 봅니다.",
+        "cancel 성격의 액션은 `fill=none` 또는 가장 낮은 강조로 두는 편이 자연스럽습니다."
+      ]
+    },
+    "inspection": {
+      "title": "Button Inspection",
+      "sections": ["header", "content"],
+      "components": [
+        { "component": "text", "intent": "title", "label": "Button Inspection" },
+        { "component": "text", "section": "content", "intent": "subtitle", "label": "Sizes" },
+        { "component": "button", "section": "content", "label": "Mini", "color": "primary", "fill": "solid", "size": "mini" },
+        { "component": "button", "section": "content", "label": "Small", "color": "primary", "fill": "solid", "size": "small" },
+        { "component": "button", "section": "content", "label": "Middle", "color": "primary", "fill": "solid", "size": "middle" },
+        { "component": "button", "section": "content", "label": "Large", "color": "primary", "fill": "solid", "size": "large" },
+        { "component": "text", "section": "content", "intent": "subtitle", "label": "Color and Fill" },
+        { "component": "button", "section": "content", "label": "Primary Solid", "color": "primary", "fill": "solid", "size": "middle" },
+        { "component": "button", "section": "content", "label": "Default Outline", "color": "default", "fill": "outline", "size": "middle" },
+        { "component": "button", "section": "content", "label": "Danger None", "color": "danger", "fill": "none", "size": "middle" },
+        { "component": "text", "section": "content", "intent": "subtitle", "label": "Shape" },
+        { "component": "button", "section": "content", "label": "Default", "color": "primary", "fill": "solid", "size": "middle", "shape": "default" },
+        { "component": "button", "section": "content", "label": "Rounded", "color": "primary", "fill": "solid", "size": "middle", "shape": "rounded" },
+        { "component": "button", "section": "content", "label": "Rectangular", "color": "primary", "fill": "solid", "size": "middle", "shape": "rectangular" },
+        { "component": "text", "section": "content", "intent": "subtitle", "label": "Interactive States" },
+        { "component": "button", "section": "content", "label": "Default State", "color": "primary", "fill": "solid", "size": "middle" },
+        { "component": "button", "section": "content", "label": "Active State", "color": "primary", "fill": "solid", "size": "middle", "state": "pressed", "onMouseDown": "active" },
+        { "component": "button", "section": "content", "label": "Focus State", "color": "primary", "fill": "outline", "size": "middle", "state": "focus" },
+        { "component": "button", "section": "content", "label": "Loading", "color": "primary", "fill": "solid", "size": "middle", "loading": true, "loadingText": "Loading" },
+        { "component": "button", "section": "content", "label": "Loading Text", "color": "primary", "fill": "solid", "size": "middle", "loading": true, "loadingText": "Submitting" },
+        { "component": "button", "section": "content", "label": "Disabled", "color": "primary", "fill": "solid", "size": "middle", "disabled": true },
+        { "component": "text", "section": "content", "intent": "subtitle", "label": "Layout Behavior" },
+        { "component": "button", "section": "content", "label": "Block", "color": "primary", "fill": "solid", "size": "large", "block": true }
+      ]
+    }
+  },
+  "input": {
+    "baseline": "Reference baseline: Atlassian Design System `Text field` and `Forms`",
+    "purpose": "텍스트 입력과 폼 데이터 수집을 담당하는 core text entry family입니다.",
+    "sizeTableRows": [
+      ["`default`", "single-line field", "기본 텍스트 입력 필드입니다."],
+      ["`short`", "75px", "짧은 코드, 숫자, 약어 입력에 사용합니다."],
+      ["`medium`", "150px~250px", "이름, 태그, 짧은 라벨 입력에 사용합니다."],
+      ["`long`", "350px~500px", "이메일, 주소, 긴 텍스트 입력에 사용합니다."],
+      ["`full-width`", "container width", "폼 레이아웃이 전폭 필드를 요구할 때만 사용합니다."]
+    ],
+    "tokenTableRows": [
+      ["`field.background`", "token", "기본 입력 표면입니다."],
+      ["`field.border.default`", "token", "기본 field 경계입니다."],
+      ["`field.border.focused`", "token", "focus 상태에서 분명히 읽히는 blue treatment입니다."],
+      ["`field.border.invalid`", "token", "error 또는 invalid 상태의 경계입니다."],
+      ["`field.text.default`", "token", "입력값 본문 텍스트에 사용합니다."],
+      ["`field.text.placeholder`", "token", "placeholder에 사용하며 본문보다 한 단계 낮게 읽혀야 합니다."],
+      ["`field.text.helper`", "token", "helper text에 사용합니다."],
+      ["`field.text.error`", "token", "error message와 invalid helper에 사용합니다."],
+      ["`field.text.disabled`", "token", "disabled field 텍스트에 사용합니다."],
+      ["`field.surface.disabled`", "token", "disabled field 배경에 사용합니다."],
+      ["`field.icon.clear`", "token", "clear affordance icon에 사용합니다."]
+    ],
+    "stateMapping": [
+      ["default", "기본 텍스트 입력 상태이며 label, field, helper의 관계가 가장 자연스럽게 보여야 합니다."],
+      ["focus", "사용자가 현재 입력 중인 필드로 읽혀야 하며 blue focus treatment가 분명해야 합니다."],
+      ["disabled", "사용 불가 상태로 읽혀야 하며 정보는 남겨두되 interaction affordance는 제거해야 합니다."],
+      ["readOnly", "값은 보여주되 수정 중인 필드처럼 보이지 않아야 합니다."],
+      ["clearable", "`clearable=true`일 때 clear affordance가 실제 편집 가능 상태와 함께 읽혀야 합니다."],
+      ["placeholder", "`value`와 `defaultValue`가 없을 때만 placeholder가 보여야 합니다."]
+    ],
+    "renderExpectations": [
+      "label은 왼쪽 정렬, field는 그 아래 배치되는 폼 구조를 기본으로 봅니다.",
+      "field width는 입력될 내용 길이를 반영해야 하며, 동일한 화면 안에서 과도하게 넓거나 좁지 않아야 합니다.",
+      "focus 상태에서는 blue focus treatment가 분명히 보여야 합니다.",
+      "error는 field 아래 메시지와 함께 읽혀야 하며, unfocused field에서도 오류 상태가 드러나야 합니다.",
+      "`readOnly=true`는 값을 유지한 채 편집 affordance만 제거해야 합니다.",
+      "`disabled=true`는 사용할 수 없는 필드로 읽혀야 합니다."
+    ],
+    "failureCases": [
+      "field 길이가 입력 내용과 무관하게 전부 같은 폭으로만 보임.",
+      "label, helper, error가 field와 분리되지 않고 한 덩어리처럼 보임.",
+      "focus와 error가 같은 색 처리로 섞임.",
+      "disabled와 readOnly가 하나의 시각 상태로 합쳐짐.",
+      "`type=number|password`가 mapping 과정에서 사라짐."
+    ],
+    "verificationChecklist": [
+      "`placeholder`, `value`, `defaultValue`가 서로 다른 render path를 유지하는지 확인합니다.",
+      "`disabled`, `readOnly`, `clearable`, `onlyShowClearWhenFocus`가 payload와 render에서 모두 유지되는지 확인합니다.",
+      "`type`, `min`, `max`, `step`이 mapping 과정에서 사라지지 않는지 확인합니다.",
+      "field 길이, 배치, focus treatment가 계약과 일치하는지 확인합니다.",
+      "token path가 documented contract를 따르는지 확인합니다."
+    ],
+    "unsupportedNotes": [
+      "`allowClear`는 현재 공개 Input 계약 밖의 항목이며, frozen contract는 `clearable`을 사용합니다.",
+      "`size`, `status`, `prefix`, `suffix`는 현재 공개 Input 계약 밖의 항목입니다.",
+      "`className`, `style`, `tabIndex`, `aria-*`, `data-*`는 `NativeProps`를 통해 지원됩니다."
+    ],
+    "formComposition": {
+      "labelAndField": [
+        "label은 왼쪽 정렬하고 field는 그 아래에 두는 구성을 기본으로 봅니다.",
+        "placeholder도 sentence case와 왼쪽 정렬을 기본으로 봅니다.",
+        "required field는 label에 `*`를 붙여 드러냅니다."
+      ],
+      "fieldLengths": [
+        "field 길이는 예상 입력 길이를 반영해야 합니다.",
+        "기본 길이 단계는 `75px`, `150px`, `250px`, `350px`, `500px`입니다.",
+        "모든 field를 한 가지 폭으로만 늘어놓지 않고, 입력 의도에 맞는 길이를 선택합니다."
+      ],
+      "helpAndValidation": [
+        "helper text와 error text는 field 아래에서 읽혀야 합니다.",
+        "unfocused field도 error 상태를 명확히 드러낼 수 있어야 합니다.",
+        "focus 중에는 error와 구분되는 blue focus treatment가 보여야 합니다."
+      ]
+    },
+    "inspection": {
+      "title": "Input Inspection",
+      "sections": ["header", "form", "list"],
+      "components": [
+        { "component": "text", "intent": "title", "label": "Input Inspection" },
+        { "component": "text", "section": "form", "intent": "subtitle", "label": "Input Only" },
+        { "component": "input", "section": "form", "label": "Placeholder", "placeholder": "Type here" },
+        { "component": "input", "section": "form", "label": "Value", "value": "Current value" },
+        { "component": "input", "section": "form", "label": "Default Value", "defaultValue": "Seed value" },
+        { "component": "text", "section": "form", "intent": "subtitle", "label": "Interaction Props" },
+        { "component": "input", "section": "form", "label": "Disabled", "placeholder": "Disabled placeholder", "disabled": true },
+        { "component": "input", "section": "form", "label": "Read Only", "value": "Read only", "readOnly": true },
+        { "component": "input", "section": "form", "label": "Clearable", "value": "Clear me", "clearable": true },
+        { "component": "input", "section": "form", "label": "Clear On Focus", "value": "Focus clear", "clearable": true, "onlyShowClearWhenFocus": true },
+        { "component": "input", "section": "form", "label": "Password", "value": "secret123", "type": "password" },
+        { "component": "input", "section": "form", "label": "Number", "value": "12", "type": "number", "min": 0, "max": 20, "step": 1 },
+        { "component": "text", "section": "list", "intent": "subtitle", "label": "Input + Cell" },
+        { "component": "cell", "section": "list", "title": "Email", "description": "Cell container metrics", "children": "input:email@example.com", "extra": "Required" },
+        { "component": "cell", "section": "list", "title": "Search", "prefix": "S", "children": "input:Search query", "clickable": true, "arrowIcon": true },
+        { "component": "text", "section": "list", "intent": "subtitle", "label": "Input + List" },
+        { "component": "list", "section": "list", "label": "Default List Shell", "header": "Profile", "mode": "default", "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678" },
+        { "component": "list", "section": "list", "label": "Card List Shell", "header": "Billing", "mode": "card", "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul" }
+      ]
+    }
+  }
+}

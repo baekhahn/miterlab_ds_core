@@ -2,7 +2,15 @@ import { fetchPayload, fetchPayloadFromPrompt, loadExtractionArtifact, saveExtra
 import { renderPayload } from "./write/renderPayload";
 import type { DesignPrompt, PluginUiMessage } from "./types";
 import { loadDefaultFont } from "./write/createTextNode";
+import buttonInspectionPayload from "../../../artifacts/figma/button-inspection/mcp-payload.json";
+import inputInspectionPayload from "../../../artifacts/figma/input-inspection/mcp-payload.json";
+import tabsInspectionPayload from "../../../artifacts/figma/tabs-inspection/mcp-payload.json";
+import listCellInspectionPayload from "../../../artifacts/figma/list-cell-inspection/mcp-payload.json";
+import overlayInspectionPayload from "../../../artifacts/figma/overlay-inspection/mcp-payload.json";
+import navigationInspectionPayload from "../../../artifacts/figma/navigation-inspection/mcp-payload.json";
+import formInspectionPayload from "../../../artifacts/figma/form-inspection/mcp-payload.json";
 import coreFamiliesPayload from "../../../artifacts/figma/core-families/mcp-payload.json";
+import type { FigmaWritePayload } from "../../../shared/contracts/figmaWritePayload";
 
 type PromptScreen = "login" | "settings" | "dashboard" | "list";
 type ExtractionAction = "created" | "merged" | "updated" | "unchanged";
@@ -67,8 +75,29 @@ const EXTRACTION_INDEX_KEY = "miterlab.extraction.index.v1";
 const INPUT_BLUEPRINT_KEY = "miterlab.blueprint.input.v1";
 const EXTRACTION_RESET_MARKER_KEY = "miterlab.extraction.reset-once.v1";
 
+const inspectionFamilyPayloads: Record<string, FigmaWritePayload> = {
+  "core-families": coreFamiliesPayload as unknown as FigmaWritePayload,
+  "button-inspection": buttonInspectionPayload as unknown as FigmaWritePayload,
+  "input-inspection": inputInspectionPayload as unknown as FigmaWritePayload,
+  "tabs-inspection": tabsInspectionPayload as unknown as FigmaWritePayload,
+  "list-cell-inspection": listCellInspectionPayload as unknown as FigmaWritePayload,
+  "overlay-inspection": overlayInspectionPayload as unknown as FigmaWritePayload,
+  "navigation-inspection": navigationInspectionPayload as unknown as FigmaWritePayload,
+  "form-inspection": formInspectionPayload as unknown as FigmaWritePayload
+};
+
 const renderCoreFamilies = async () => {
-  const result = await renderPayload(coreFamiliesPayload);
+  const result = await renderPayload(coreFamiliesPayload as unknown as FigmaWritePayload);
+  figma.notify(`Rendered ${result.createdFrameName} (${result.createdNodeCount} nodes)`);
+  return result;
+};
+
+const renderInspectionFamily = async (family: string) => {
+  const payload = inspectionFamilyPayloads[family];
+  if (!payload) {
+    throw new Error(`Unknown inspection family: ${family}`);
+  }
+  const result = await renderPayload(payload);
   figma.notify(`Rendered ${result.createdFrameName} (${result.createdNodeCount} nodes)`);
   return result;
 };
@@ -1440,7 +1469,7 @@ const uiHtml = `
     <div class="app">
       <div class="tabs">
         <button id="tabGenerate" class="tab active">생성</button>
-        <button id="tabRaw" class="tab">raw JSON</button>
+        <button id="tabRaw" class="tab">Families</button>
         <button id="tabExtract" class="tab">추출</button>
       </div>
 
@@ -1488,21 +1517,24 @@ const uiHtml = `
 
       <div id="viewRaw" class="view">
         <div class="panel">
-          <div class="selection-title">추출된 Component Sets</div>
+          <div class="selection-title">Inspection Family</div>
           <div class="row">
-            <select id="extractComponentSelect">
-              <option value="">추출된 component set 없음</option>
+            <label>Family</label>
+            <select id="inspectionFamily">
+              <option value="core-families">core-families</option>
+              <option value="button-inspection">button-inspection</option>
+              <option value="input-inspection">input-inspection</option>
+              <option value="tabs-inspection">tabs-inspection</option>
+              <option value="list-cell-inspection">list-cell-inspection</option>
+              <option value="overlay-inspection">overlay-inspection</option>
+              <option value="navigation-inspection">navigation-inspection</option>
+              <option value="form-inspection">form-inspection</option>
             </select>
           </div>
+          <div class="hint">확인할 family inspection payload를 고른 뒤 현재 Figma 페이지에 바로 렌더합니다.</div>
           <div class="actions">
-            <button id="inspectExtracted">raw JSON 보기</button>
-            <button id="renderExtracted">재현 확인</button>
+            <button id="renderInspectionFamily">Render Selected Family</button>
           </div>
-          <div class="hint">현재는 재해석 없이 raw JSON만 확인합니다.</div>
-        </div>
-        <div class="panel">
-          <div class="selection-title">추출된 raw JSON</div>
-          <textarea id="extractOutput" class="extract-output" placeholder="선택한 component set의 raw JSON이 여기에 표시됩니다." readonly></textarea>
         </div>
       </div>
 
@@ -1535,11 +1567,9 @@ const uiHtml = `
       const selectionSummary = document.getElementById("selectionSummary");
       const extractSelectionSummary = document.getElementById("extractSelectionSummary");
       const selectionPromptWrap = document.getElementById("selectionPromptWrap");
-      const extractOutput = document.getElementById("extractOutput");
+      const inspectionFamily = document.getElementById("inspectionFamily");
+      const renderInspectionFamilyBtn = document.getElementById("renderInspectionFamily");
       const extractLogs = document.getElementById("extractLogs");
-      const extractComponentSelect = document.getElementById("extractComponentSelect");
-      const inspectExtracted = document.getElementById("inspectExtracted");
-      const renderExtracted = document.getElementById("renderExtracted");
       const extractBusy = document.getElementById("extractBusy");
       const tabGenerate = document.getElementById("tabGenerate");
       const tabRaw = document.getElementById("tabRaw");
@@ -1582,21 +1612,6 @@ const uiHtml = `
         }).join('');
       };
 
-      const renderComponents = (components) => {
-        if (!components || components.length === 0) {
-          extractComponentSelect.innerHTML = '<option value="">추출된 component set 없음</option>';
-          inspectExtracted.disabled = true;
-          renderExtracted.disabled = true;
-          return;
-        }
-        extractComponentSelect.innerHTML = components.map((item, index) => {
-          const time = new Date(item.updatedAt).toLocaleString();
-          return \`<option value="\${item.key}" \${index===0?'selected':''}>\${item.name} · parts \${item.partCount} · \${time}</option>\`;
-        }).join('');
-        inspectExtracted.disabled = false;
-        renderExtracted.disabled = false;
-      };
-
       tabGenerate.onclick = () => setTab("generate");
       tabRaw.onclick = () => setTab("raw");
       tabExtract.onclick = () => setTab("extract");
@@ -1606,6 +1621,7 @@ const uiHtml = `
         refreshBtn.disabled = busy;
         extractBusy.className = busy ? "busy" : "busy hidden-inline";
       };
+
       btn.onclick = () => {
         const promptText = document.getElementById("promptText").value.trim();
         const selectionPromptText = document.getElementById("selectionPromptText")?.value?.trim?.() ?? "";
@@ -1623,6 +1639,17 @@ const uiHtml = `
           "*"
         );
       };
+      renderInspectionFamilyBtn.onclick = () => {
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: "renderInspectionFamily",
+              family: inspectionFamily.value
+            }
+          },
+          "*"
+        );
+      };
       extractBtn.onclick = () => {
         setExtractBusy(true);
         parent.postMessage(
@@ -1633,24 +1660,6 @@ const uiHtml = `
       refreshBtn.onclick = () => {
         if (extractionInFlight) return;
         parent.postMessage({ pluginMessage: { type: "refreshExtractionState" } }, "*");
-      };
-      inspectExtracted.onclick = () => {
-        const extractionKey = extractComponentSelect.value;
-        if (!extractionKey) return;
-        setExtractBusy(true);
-        parent.postMessage(
-          { pluginMessage: { type: "loadExtraction", bridgeUrl: document.getElementById("bridgeUrl").value, extractionKey, render: false } },
-          "*"
-        );
-      };
-      renderExtracted.onclick = () => {
-        const extractionKey = extractComponentSelect.value;
-        if (!extractionKey) return;
-        setExtractBusy(true);
-        parent.postMessage(
-          { pluginMessage: { type: "loadExtraction", bridgeUrl: document.getElementById("bridgeUrl").value, extractionKey, render: true } },
-          "*"
-        );
       };
       window.onmessage = (event) => {
         const msg = event.data.pluginMessage;
@@ -1663,20 +1672,16 @@ const uiHtml = `
         }
         if (msg.type === "selectionExtracted") {
           setExtractBusy(false);
-          extractOutput.value = msg.rawPayload || msg.payload;
           if (msg.logs) renderLogs(msg.logs);
-          if (msg.components) renderComponents(msg.components);
           return;
         }
         if (msg.type === "extractionLoaded") {
           setExtractBusy(false);
-          extractOutput.value = msg.payload;
           return;
         }
         if (msg.type === "extractionState") {
           setExtractBusy(false);
           renderLogs(msg.logs);
-          renderComponents(msg.components);
           return;
         }
         if (msg.type === "pluginError") {
@@ -1775,6 +1780,11 @@ if (figma.command === "render-core-families") {
           // eslint-disable-next-line no-console
           console.error("[miterlab][extract]", saveWarning);
         }
+        return;
+      }
+
+      if (message.type === "renderInspectionFamily") {
+        await renderInspectionFamily(message.family);
         return;
       }
 

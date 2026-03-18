@@ -1,6 +1,6 @@
 component: Input
 status: draft
-purpose: freeze Ant Design Mobile InputProps as the source schema for core input
+purpose: freeze the core input contract to the reference InputProps surface
 props:
   maxLength: number
   minLength: number
@@ -89,8 +89,9 @@ semanticMapping:
       value.color: semantic.text.secondary
       placeholder.color: semantic.text.muted
 notes:
-  - official NativeProps adds className, style, tabIndex, and aria/data attributes
-  - official InputProps does not define allowClear; Ant Design Mobile uses clearable
-  - official InputProps does not define size, status, prefix, or suffix props
-  - official clearIcon default is <CloseCircleFill />
-  - source schema is Ant Design Mobile InputProps
+  - NativeProps adds className, style, tabIndex, and aria/data attributes
+  - Input is layout-independent and only owns the basic text-entry field
+  - borders, titles, and action buttons belong to container families such as List or Form
+  - InputProps uses clearable instead of allowClear
+  - InputProps does not define size, status, prefix, or suffix props
+  - clearIcon default is <CloseCircleFill />

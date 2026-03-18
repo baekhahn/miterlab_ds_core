@@ -5,14 +5,9 @@ slug: /
 
 # Miterlab AI Design System
 
-This documentation site records the current frozen core runtime state: family contracts, schema, generation flow, runtime expectations, and freeze review status.
+이 문서 사이트는 AI가 바로 구현에 사용할 Button과 Input contract만 남깁니다.
 
-## Current Coverage
+## Current Families
 
 - Button
 - Input
-- Tabs
-- List / Cell
-- Dialog / Popup / Toast
-- NavBar / TabBar
-- Form

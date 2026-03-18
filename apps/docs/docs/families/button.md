@@ -6,75 +6,17 @@ title: Button
 
 ## Purpose
 
-Core action control baseline for Ant Design Mobile Button behavior.
+주요 액션과 보조 액션의 우선순위를 드러내는 core action family입니다.
 
-## Source Baseline
+## Implementation Priority
 
-- Ant Design Mobile ButtonProps
-- Spec files: `packages/ui-core/specs/button.spec.yaml`
-- Parity mismatch count: `0`
-- Spec notes: `official NativeProps adds className, style, tabIndex, and aria/data attributes`, `official ButtonProps does not define href, target, or icon props`, `official ButtonProps does not define htmlType; native button type is exposed as type`, `official loadingIcon default is <DotLoading color='currentColor' />`, `source schema is Ant Design Mobile ButtonProps`
+- 이 페이지는 설명 문서가 아니라 구현 계약 문서입니다.
+- 구현은 spec보다 앞설 수 없고, generator와 plugin은 아래 계약을 그대로 따라야 합니다.
+- reference baseline은 배경 정보입니다. 실제 구현 입력은 이 페이지의 계약 표와 규칙만 사용하면 됩니다.
 
-## Inspection Screen
+## Public Props Contract
 
-- Screen name: `button-inspection`
-- Summary artifact: `artifacts/figma/button-inspection/summary.json`
-- Payload artifact: `artifacts/figma/button-inspection/mcp-payload.json`
-- Layout artifact: `artifacts/figma/button-inspection/layout.json`
-
-## Freeze Status
-
-| Check | Status |
-| --- | --- |
-| Spec parity | verified |
-| Generator parity | pending |
-| Plugin parity | pending |
-| Figma write verification | pending |
-| Screenshot attached | pending |
-| Review approved | pending |
-
-## Inspection Result
-
-- Generation score: `100`
-- Passed: `true`
-- Node count: `25`
-- Component count: `13`
-- Warnings: none
-
-## Metrics
-
-- Official defaults come from `src/components/button/button.tsx` and `button.less`.
-- The public API does not define `href`, `target`, or `icon` props.
-- default: paddingY=7px, paddingX=12px, borderRadius=4px, fontSize=17px, lineHeight=1.4, height=auto
-- mini: paddingY=3px, paddingX=12px, fontSize=13px
-- small: paddingY=3px, paddingX=12px, fontSize=15px
-- middle: paddingY=7px, paddingX=12px, fontSize=17px
-- large: paddingY=11px, paddingX=12px, fontSize=18px
-- rounded: borderRadius=1000px
-- rectangular: borderRadius=0
-
-## Token References
-
-- Button styling is driven by component CSS variables and Ant Mobile color variables.
-- Primary, success, warning, and danger map through `--color` to `--adm-color-*` values.
-- cssVar: `--text-color` -> default `#333333` via `var(--adm-color-text)`
-- cssVar: `--background-color` -> default `#ffffff` via `var(--adm-color-background)`
-- cssVar: `--border-radius` -> default `4px` in official button.less
-- cssVar: `--border-width` -> default `1px` in official button.less
-- cssVar: `--border-style` -> default `solid` in official button.less
-- cssVar: `--border-color` -> default `#eeeeee` via `var(--adm-color-border)`
-- antToken: `colorPrimary` -> `#1677ff` via `--adm-color-primary`
-- antToken: `colorText` -> `#333333` via `--adm-color-text`
-- antToken: `colorBorder` -> `#eeeeee` via `--adm-color-border`
-- antToken: `colorBgContainer` -> `#ffffff` via `--adm-color-background`
-- antToken: `colorFill` -> Ant Design Mobile 5.x does not expose `colorFill` by name; nearest exposed fill token is `--adm-color-fill-content` -> `#f5f5f5`
-- antToken: `colorFillSecondary` -> Ant Design Mobile 5.x does not expose `colorFillSecondary` by name in theme-default.less
-- antToken: `colorTextDisabled` -> Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled button uses `opacity: 0.4` over current text/background colors
-- antToken: `controlHeight` -> no explicit component token; effective height is content-driven
-
-## Button
-
-### Props / Axes
+### Button
 
 | Axis / prop | Type | Allowed values | Notes |
 | --- | --- | --- | --- |
@@ -106,297 +48,104 @@ Core action control baseline for Ant Design Mobile Button behavior.
 | `--border-style` | `string` | TODO | Official CSS variable contract. |
 | `--border-color` | `string` | TODO | Official CSS variable contract. |
 
-### States
+## State Contract
+
+### Button
 
 | State | Expectation |
 | --- | --- |
-| `default` | Uses the merged official defaults for `color`, `fill`, `size`, `shape`, and `type`. |
-| `active` | Maps to the `:active::before` overlay in the official Less source. |
-| `focus` | The native button removes browser outline and preserves the component border radius. |
-| `disabled` | Runtime disabled state is `props.disabled || loading` in the official source. |
-| `loading` | Loading uses `loadingIcon`, `loadingText`, and can be controlled by `loading='auto'`. |
+| `default` | 기본 액션 상태이며 현재 화면에서의 우선순위를 가장 잘 보여주는 외형을 사용합니다. |
+| `active` | pressed 순간의 피드백이 즉시 보여야 하며 action intent는 유지되어야 합니다. |
+| `focus` | 키보드 이동 시 focus ring 또는 focus border가 또렷하게 보여야 합니다. |
+| `disabled` | 비활성 액션으로 읽혀야 하며 interaction affordance가 제거되어야 합니다. |
+| `loading` | 현재 액션 진행 중임을 보여야 하며 버튼 레이아웃은 유지되어야 합니다. |
 
-### Metrics
+## Size Contract
 
-- default: paddingY=7px, paddingX=12px, borderRadius=4px, fontSize=17px, lineHeight=1.4, height=auto
-- mini: paddingY=3px, paddingX=12px, fontSize=13px
-- small: paddingY=3px, paddingX=12px, fontSize=15px
-- middle: paddingY=7px, paddingX=12px, fontSize=17px
-- large: paddingY=11px, paddingX=12px, fontSize=18px
-- rounded: borderRadius=1000px
-- rectangular: borderRadius=0
+### Button
 
-### Tokens
-
-| Token | Kind | Notes |
+| Size | Density | Usage |
 | --- | --- | --- |
-| `--text-color` | cssVar | default `#333333` via `var(--adm-color-text)` |
-| `--background-color` | cssVar | default `#ffffff` via `var(--adm-color-background)` |
-| `--border-radius` | cssVar | default `4px` in official button.less |
-| `--border-width` | cssVar | default `1px` in official button.less |
-| `--border-style` | cssVar | default `solid` in official button.less |
-| `--border-color` | cssVar | default `#eeeeee` via `var(--adm-color-border)` |
-| `colorPrimary` | antToken | `#1677ff` via `--adm-color-primary` |
-| `colorText` | antToken | `#333333` via `--adm-color-text` |
-| `colorBorder` | antToken | `#eeeeee` via `--adm-color-border` |
-| `colorBgContainer` | antToken | `#ffffff` via `--adm-color-background` |
-| `colorFill` | antToken | Ant Design Mobile 5.x does not expose `colorFill` by name; nearest exposed fill token is `--adm-color-fill-content` -> `#f5f5f5` |
-| `colorFillSecondary` | antToken | Ant Design Mobile 5.x does not expose `colorFillSecondary` by name in theme-default.less |
-| `colorTextDisabled` | antToken | Ant Design Mobile 5.x does not expose `colorTextDisabled` by name; disabled button uses `opacity: 0.4` over current text/background colors |
-| `controlHeight` | antToken | no explicit component token; effective height is content-driven |
+| `mini` | compact | 짧은 라벨, 보조 액션, 밀도 높은 컨텍스트에 사용합니다. |
+| `small` | compact | compact group 안의 일반 액션에 사용합니다. |
+| `middle` | default | 기본 화면 밀도의 표준 액션입니다. |
+| `large` | roomy | 강한 CTA 또는 넓은 터치 영역이 필요한 경우에 사용합니다. |
 
-## Variant Axes Table
+## Token Contract
 
 ### Button
 
-| Axis / prop | Type | Allowed values | Notes |
-| --- | --- | --- | --- |
-| `color` | `string` | `default`, `primary`, `success`, `warning`, `danger` | General prop contract. |
-| `fill` | `string` | `solid`, `outline`, `none` | General prop contract. |
-| `size` | `string` | `mini`, `small`, `middle`, `large` | General prop contract. |
-| `shape` | `string` | `default`, `rounded`, `rectangular` | General prop contract. |
-| `block` | `boolean` | `false`, `true` | General prop contract. |
-| `loading` | `boolean`, `string` | `false`, `true`, `auto` | Supports boolean and `auto`. |
-| `loadingText` | `string` | TODO | General prop contract. |
-| `loadingIcon` | `reactNode` | TODO | General prop contract. |
-| `disabled` | `boolean` | `false`, `true` | General prop contract. |
-| `onClick` | `function` | TODO | General prop contract. |
-| `type` | `string` | `button`, `submit`, `reset` | General prop contract. |
-| `children` | `reactNode` | TODO | General prop contract. |
-| `onMouseDown` | `function` | TODO | General prop contract. |
-| `onMouseUp` | `function` | TODO | General prop contract. |
-| `onTouchStart` | `function` | TODO | General prop contract. |
-| `onTouchEnd` | `function` | TODO | General prop contract. |
-| `id` | `string` | TODO | General prop contract. |
-| `form` | `string` | TODO | General prop contract. |
-| `className` | `string` | TODO | General prop contract. |
-| `style` | `object` | TODO | General prop contract. |
-| `tabIndex` | `number` | TODO | General prop contract. |
-| `--text-color` | `string` | TODO | Official CSS variable contract. |
-| `--background-color` | `string` | TODO | Official CSS variable contract. |
-| `--border-radius` | `string` | TODO | Official CSS variable contract. |
-| `--border-width` | `string` | TODO | Official CSS variable contract. |
-| `--border-style` | `string` | TODO | Official CSS variable contract. |
-| `--border-color` | `string` | TODO | Official CSS variable contract. |
+| Token | Kind | Usage |
+| --- | --- | --- |
+| `action.primary.background` | token | 가장 강한 액션 계층의 배경입니다. |
+| `action.primary.text` | token | primary action label에 사용합니다. |
+| `action.secondary.border` | token | secondary action의 outline 경계에 사용합니다. |
+| `action.secondary.text` | token | outline 및 low-emphasis action label에 사용합니다. |
+| `action.subtle.background` | token | none 또는 subtle action hover/pressed treatment에 사용합니다. |
+| `action.disabled.text` | token | disabled action label에 사용합니다. |
+| `action.disabled.surface` | token | disabled action surface에 사용합니다. |
+| `action.focus.ring` | token | 키보드 focus가 분명히 읽히는 ring 또는 outline에 사용합니다. |
+| `action.loading.foreground` | token | loading label과 indicator가 같은 상태로 읽히도록 사용합니다. |
 
-## Size Metrics Table
+## Appearance Mapping
 
-### Button
+### Action hierarchy
 
-| Size | Height | Padding X | Padding Y | Radius | Rectangular Radius | Icon Gap |
-| --- | --- | --- | --- | --- | --- | --- |
-| `mini` | `auto` | `12px` | `3px` | `4px` | `0` | `0px` official prop gap not defined |
-| `small` | `auto` | `12px` | `3px` | `4px` | `0` | `0px` official prop gap not defined |
-| `middle` | `auto` | `12px` | `7px` | `4px` | `0` | `0px` official prop gap not defined |
-| `large` | `auto` | `12px` | `11px` | `4px` | `0` | `0px` official prop gap not defined |
-
-## Inspection Mapping
-
-- Inspection row `Sizes` verifies `size=mini|small|middle|large`.
-- Inspection row `Color and Fill` verifies `color` and `fill` combinations.
-- Inspection row `Shape and States` verifies `shape`, `loading`, `disabled`, and `block`.
-
-## State Mapping
-
-### Button
-
-| State | Expectation |
+| Current runtime | Interpretation |
 | --- | --- |
-| `default` | Uses the merged official defaults for `color`, `fill`, `size`, `shape`, and `type`. |
-| `active` | Maps to the `:active::before` overlay in the official Less source. |
-| `focus` | The native button removes browser outline and preserves the component border radius. |
-| `disabled` | Runtime disabled state is `props.disabled || loading` in the official source. |
-| `loading` | Loading uses `loadingIcon`, `loadingText`, and can be controlled by `loading='auto'`. |
+| `fill=solid` + emphasized color | 주요 액션. 화면에서 가장 먼저 읽혀야 합니다. |
+| `fill=outline` | 보조 액션. primary보다 한 단계 낮은 강조를 가집니다. |
+| `fill=none` | 링크성 또는 취소성 액션. 가장 낮은 강조를 가집니다. |
 
-## Fill Mapping
+### Width behavior
 
-| Fill | Expected render behavior |
+| Current runtime | Interpretation |
 | --- | --- |
-| `solid` | Uses the selected color as both background and border in the official button Less rules. |
-| `outline` | Background becomes transparent while text and border keep the selected color. |
-| `none` | Background is transparent and border width becomes `0px` in the official button Less rules. |
+| `block=false` | 콘텐츠 폭에 맞는 일반 버튼입니다. |
+| `block=true` | 전폭 액션으로 해석합니다. |
 
-## Color Mapping
+### Density
 
-| Color | Expected token family |
+| Current runtime | Interpretation |
 | --- | --- |
-| `default` | `--adm-color-text`, `--adm-color-background`, `--adm-color-border` |
-| `primary` | `--adm-color-primary` |
-| `success` | `--adm-color-success` |
-| `warning` | `--adm-color-warning` |
-| `danger` | `--adm-color-danger` |
+| `mini`, `small` | compact action density로 해석합니다. |
+| `middle`, `large` | default 또는 roomy action density로 해석합니다. |
 
-## Shape Mapping
+## Form Placement Rules
 
-| Shape | Expected radius behavior |
-| --- | --- |
-| `default` | Uses the official default border radius `4px`. |
-| `rounded` | Uses the official rounded border radius `1000px`. |
-| `rectangular` | Uses the official rectangular border radius `0`. |
+- 단일 페이지 form에서는 primary action을 field 왼쪽 정렬선에 맞춰 두는 것이 자연스럽습니다.
+- modal이나 dialog 계열에서는 primary action이 가장 마지막 위치에서 읽히도록 배치할 수 있습니다.
+- 한 그룹 안에서 primary emphasis는 하나만 두는 것을 기본으로 봅니다.
+- cancel 성격의 액션은 `fill=none` 또는 가장 낮은 강조로 두는 편이 자연스럽습니다.
 
-## Block Behavior
+## Render Rules
 
-- `block=false`: width follows label content with the family minimum width.
-- `block=true`: width expands to the inspection row width while preserving size height metrics.
+- 한 화면 안에서는 primary emphasis가 가장 먼저 읽혀야 하며, 보조 액션은 그보다 낮은 시각 우선순위를 가져야 합니다.
+- `fill=solid`, `fill=outline`, `fill=none`은 서로 다른 action hierarchy로 읽혀야 합니다.
+- `block=true`는 shouldFitContainer와 같은 전폭 액션으로 동작해야 합니다.
+- `loading=true`는 레이블 점프 없이 현재 액션 진행 상태를 보여야 합니다.
+- `disabled=true`는 클릭 가능해 보이지 않아야 하며, hover/pressed affordance도 제거되어야 합니다.
 
-## Loading Behavior
+## Forbidden Changes
 
-- `loading=true`: runtime must show the loading state and preserve control height.
-- `loading=auto`: official contract value remains valid even if runtime handling is environment-specific.
-- `loadingText`: when present, replaces or supplements the visible label during loading.
+- primary와 secondary가 같은 강조도로 보여 액션 우선순위가 사라짐.
+- fill 축이 하나의 시각 preset으로 납작해짐.
+- block button이 전폭 액션처럼 보이지 않음.
+- loading state가 레이블 이동이나 높이 점프로 보임.
+- disabled state가 여전히 클릭 가능해 보임.
 
-## Disabled Behavior
+## Verification Checklist
 
-- Disabled state must override interactive color tokens.
-- Disabled state must keep layout metrics stable and remove active emphasis.
+- `size` 네 축이 payload와 render 결과에서 모두 구분되는지 확인합니다.
+- `fill`과 `color`가 함께 유지되고 flatten되지 않았는지 확인합니다.
+- `shape`, `block`, `loading`, `disabled`가 payload와 render 양쪽에서 유지되는지 확인합니다.
+- padding, radius, text scale이 size 계약과 일치하는지 확인합니다.
+- token path가 documented contract를 따르는지 확인합니다.
 
-## Official Non-Props
+## Reference Notes
 
-- `icon` is not an official Button prop in Ant Design Mobile 5.x.
-- `href`, `target`, and `htmlType` are not official Button props. The official prop is `type` for the native button element.
-- `className`, `style`, `tabIndex`, and `aria-*` / `data-*` support come from `NativeProps`.
-
-## Render Expectations
-
-- All four sizes must be visibly different in padding and type scale, while official height remains content-driven.
-- `fill=solid`, `fill=outline`, and `fill=none` must preserve distinct background and border behavior.
-- `shape=default`, `shape=rounded`, and `shape=rectangular` must produce visibly different corner treatment.
-- `block=true` must expand the control to the full inspection row width.
-- `loading=true` must keep button height stable and display the loading label or indicator state.
-- `disabled=true` must suppress the interactive color set and render disabled tokens.
-
-## Current Runtime Gaps
-
-- Current inspection payload now matches the official mini Button radius and padding, but still uses fixed frame heights and semantic token paths instead of the documented Ant token contract.
-- Phase A freeze remains pending until generator and plugin output match the official Button metrics and token mapping on the payload/write path.
-
-## Failure Cases
-
-- Size axis dropped or normalized to a single height.
-- Fill axis flattened into one visual preset.
-- Shape axis ignored and always rendered with the same radius.
-- Block button rendered at content width instead of row width.
-- Loading state rendered as plain text with no state token change.
-- Disabled state still uses primary action colors.
-
-## Inspection Payload Example
-
-```json
-{
-  "document": {
-    "name": "button-inspection screen",
-    "screen": "button-inspection",
-    "theme": "core"
-  },
-  "node": {
-    "id": "layout_7",
-    "type": "INSTANCE",
-    "name": "Mini",
-    "x": 48,
-    "y": 116,
-    "width": 92,
-    "height": 28,
-    "component": "Button",
-    "style": {
-      "fill": "#2E6CFF",
-      "stroke": "#2E6CFF",
-      "text": "#FFFFFF",
-      "radius": 4,
-      "paddingX": 12,
-      "paddingY": 3,
-      "gap": 0,
-      "fontSize": 13,
-      "lineHeight": 18,
-      "fontWeight": "medium"
-    },
-    "variant": {
-      "color": "primary",
-      "fill": "solid",
-      "size": "mini"
-    },
-    "variables": {
-      "container.background": "Semantic/action/primary",
-      "container.border": "Semantic/action/primary",
-      "label.color": "Semantic/action/onPrimary"
-    },
-    "text": "Mini"
-  }
-}
-```
-
-## Inspection Layout Example
-
-```json
-[
-  {
-    "type": "stack",
-    "name": "header-section",
-    "x": 48,
-    "y": 40,
-    "width": 1320,
-    "direction": "vertical",
-    "gap": 12,
-    "children": [
-      {
-        "type": "text",
-        "name": "Text 1",
-        "content": "Button Inspection",
-        "width": 358,
-        "height": 32,
-        "textStyle": "text/heading/xl",
-        "colorToken": "semantic.text.primary"
-      }
-    ]
-  },
-  {
-    "type": "stack",
-    "name": "content-section",
-    "x": 48,
-    "y": 116,
-    "width": 1320,
-    "direction": "vertical",
-    "gap": 16,
-    "children": [
-      {
-        "type": "text",
-        "name": "Text 2",
-        "content": "Sizes",
-        "width": 358,
-        "height": 24,
-        "textStyle": "text/body/lg",
-        "colorToken": "semantic.text.secondary"
-      },
-      {
-        "type": "stack",
-        "name": "content-row-1",
-        "direction": "horizontal",
-        "gap": 16,
-        "width": 1320,
-        "children": [
-          {
-            "type": "component",
-            "name": "Mini",
-            "component": "button",
-            "props": {
-              "color": "primary",
-              "fill": "solid",
-              "size": "mini"
-            },
-            "width": 92,
-            "height": 28,
-            "label": "Mini"
-          },
-          {
-            "type": "component",
-            "name": "Small",
-            "component": "button",
-            "props": {
-              "color": "primary",
-              "fill": "solid",
-              "size": "small"
-            },
-            "width": 108,
-            "height": 32,
-          
-...
-```
+- Reference baseline: Atlassian Design System `Button`
+- Spec files: `packages/ui-core/specs/button.spec.yaml`
+- `icon`은 현재 공개 Button 계약에 포함되지 않습니다.
+- `href`, `target`, `htmlType`는 현재 공개 Button 계약 밖의 항목입니다. 네이티브 버튼 필드는 `type`을 유지합니다.
+- `className`, `style`, `tabIndex`, `aria-*`, `data-*`는 `NativeProps`를 통해 지원됩니다.

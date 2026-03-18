@@ -64,7 +64,7 @@
               "y": 192,
               "width": 358,
               "height": 24,
-              "text": "Text Values",
+              "text": "Input Only",
               "variables": {
                 "text.color": "semantic.text.secondary"
               },
@@ -430,6 +430,172 @@
           "width": 1320,
           "height": 100,
           "children": []
+        },
+        {
+          "id": "layout_21",
+          "type": "FRAME",
+          "name": "list-section",
+          "x": 48,
+          "y": 532,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_22",
+              "type": "TEXT",
+              "name": "Text 13",
+              "x": 48,
+              "y": 532,
+              "width": 358,
+              "height": 24,
+              "text": "Input + Cell",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/lg",
+                "fill": "#5F6A7B"
+              }
+            },
+            {
+              "id": "layout_23",
+              "type": "FRAME",
+              "name": "list-row-1",
+              "x": 48,
+              "y": 532,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_24",
+                  "type": "INSTANCE",
+                  "name": "Email",
+                  "x": 48,
+                  "y": 532,
+                  "width": 358,
+                  "height": 72,
+                  "component": "Cell",
+                  "style": {
+                    "paddingY": 9,
+                    "gap": 0,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "regular"
+                  },
+                  "variant": {
+                    "title": "Email",
+                    "children": "input:email@example.com",
+                    "description": "Cell container metrics",
+                    "extra": "Required"
+                  },
+                  "variables": {},
+                  "text": "Email"
+                },
+                {
+                  "id": "layout_25",
+                  "type": "INSTANCE",
+                  "name": "Search",
+                  "x": 48,
+                  "y": 532,
+                  "width": 358,
+                  "height": 56,
+                  "component": "Cell",
+                  "style": {
+                    "paddingY": 9,
+                    "gap": 0,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "regular"
+                  },
+                  "variant": {
+                    "title": "Search",
+                    "children": "input:Search query",
+                    "prefix": "S",
+                    "clickable": true,
+                    "arrowIcon": true
+                  },
+                  "variables": {},
+                  "text": "Search"
+                }
+              ]
+            },
+            {
+              "id": "layout_26",
+              "type": "TEXT",
+              "name": "Text 16",
+              "x": 48,
+              "y": 532,
+              "width": 358,
+              "height": 24,
+              "text": "Input + List",
+              "variables": {
+                "text.color": "semantic.text.secondary"
+              },
+              "style": {
+                "text": "text/body/lg",
+                "fill": "#5F6A7B"
+              }
+            },
+            {
+              "id": "layout_27",
+              "type": "FRAME",
+              "name": "list-row-2",
+              "x": 48,
+              "y": 532,
+              "width": 1320,
+              "height": 100,
+              "children": [
+                {
+                  "id": "layout_28",
+                  "type": "INSTANCE",
+                  "name": "Default List Shell",
+                  "x": 48,
+                  "y": 532,
+                  "width": 358,
+                  "height": 160,
+                  "component": "List",
+                  "style": {
+                    "paddingY": 9,
+                    "gap": 0,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "regular"
+                  },
+                  "variant": {
+                    "header": "Profile",
+                    "mode": "default",
+                    "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+                  },
+                  "variables": {},
+                  "text": "Profile"
+                },
+                {
+                  "id": "layout_29",
+                  "type": "INSTANCE",
+                  "name": "Card List Shell",
+                  "x": 48,
+                  "y": 532,
+                  "width": 358,
+                  "height": 184,
+                  "component": "List",
+                  "style": {
+                    "paddingY": 9,
+                    "gap": 0,
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "fontWeight": "regular"
+                  },
+                  "variant": {
+                    "header": "Billing",
+                    "mode": "card",
+                    "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
+                  },
+                  "variables": {},
+                  "text": "Billing"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -505,7 +671,7 @@
           "y": 192,
           "width": 358,
           "height": 24,
-          "text": "Text Values",
+          "text": "Input Only",
           "variables": {
             "text.color": "semantic.text.secondary"
           },
@@ -870,7 +1036,7 @@
       "y": 192,
       "width": 358,
       "height": 24,
-      "text": "Text Values",
+      "text": "Input Only",
       "variables": {
         "text.color": "semantic.text.secondary"
       },
@@ -1530,6 +1696,426 @@
       "width": 1320,
       "height": 100,
       "children": []
+    },
+    {
+      "id": "layout_21",
+      "type": "FRAME",
+      "name": "list-section",
+      "x": 48,
+      "y": 532,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_22",
+          "type": "TEXT",
+          "name": "Text 13",
+          "x": 48,
+          "y": 532,
+          "width": 358,
+          "height": 24,
+          "text": "Input + Cell",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/lg",
+            "fill": "#5F6A7B"
+          }
+        },
+        {
+          "id": "layout_23",
+          "type": "FRAME",
+          "name": "list-row-1",
+          "x": 48,
+          "y": 532,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_24",
+              "type": "INSTANCE",
+              "name": "Email",
+              "x": 48,
+              "y": 532,
+              "width": 358,
+              "height": 72,
+              "component": "Cell",
+              "style": {
+                "paddingY": 9,
+                "gap": 0,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "title": "Email",
+                "children": "input:email@example.com",
+                "description": "Cell container metrics",
+                "extra": "Required"
+              },
+              "variables": {},
+              "text": "Email"
+            },
+            {
+              "id": "layout_25",
+              "type": "INSTANCE",
+              "name": "Search",
+              "x": 48,
+              "y": 532,
+              "width": 358,
+              "height": 56,
+              "component": "Cell",
+              "style": {
+                "paddingY": 9,
+                "gap": 0,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "title": "Search",
+                "children": "input:Search query",
+                "prefix": "S",
+                "clickable": true,
+                "arrowIcon": true
+              },
+              "variables": {},
+              "text": "Search"
+            }
+          ]
+        },
+        {
+          "id": "layout_26",
+          "type": "TEXT",
+          "name": "Text 16",
+          "x": 48,
+          "y": 532,
+          "width": 358,
+          "height": 24,
+          "text": "Input + List",
+          "variables": {
+            "text.color": "semantic.text.secondary"
+          },
+          "style": {
+            "text": "text/body/lg",
+            "fill": "#5F6A7B"
+          }
+        },
+        {
+          "id": "layout_27",
+          "type": "FRAME",
+          "name": "list-row-2",
+          "x": 48,
+          "y": 532,
+          "width": 1320,
+          "height": 100,
+          "children": [
+            {
+              "id": "layout_28",
+              "type": "INSTANCE",
+              "name": "Default List Shell",
+              "x": 48,
+              "y": 532,
+              "width": 358,
+              "height": 160,
+              "component": "List",
+              "style": {
+                "paddingY": 9,
+                "gap": 0,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "header": "Profile",
+                "mode": "default",
+                "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+              },
+              "variables": {},
+              "text": "Profile"
+            },
+            {
+              "id": "layout_29",
+              "type": "INSTANCE",
+              "name": "Card List Shell",
+              "x": 48,
+              "y": 532,
+              "width": 358,
+              "height": 184,
+              "component": "List",
+              "style": {
+                "paddingY": 9,
+                "gap": 0,
+                "fontSize": 15,
+                "lineHeight": 22,
+                "fontWeight": "regular"
+              },
+              "variant": {
+                "header": "Billing",
+                "mode": "card",
+                "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
+              },
+              "variables": {},
+              "text": "Billing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout_22",
+      "type": "TEXT",
+      "name": "Text 13",
+      "x": 48,
+      "y": 532,
+      "width": 358,
+      "height": 24,
+      "text": "Input + Cell",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/lg",
+        "fill": "#5F6A7B"
+      }
+    },
+    {
+      "id": "layout_23",
+      "type": "FRAME",
+      "name": "list-row-1",
+      "x": 48,
+      "y": 532,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_24",
+          "type": "INSTANCE",
+          "name": "Email",
+          "x": 48,
+          "y": 532,
+          "width": 358,
+          "height": 72,
+          "component": "Cell",
+          "style": {
+            "paddingY": 9,
+            "gap": 0,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "title": "Email",
+            "children": "input:email@example.com",
+            "description": "Cell container metrics",
+            "extra": "Required"
+          },
+          "variables": {},
+          "text": "Email"
+        },
+        {
+          "id": "layout_25",
+          "type": "INSTANCE",
+          "name": "Search",
+          "x": 48,
+          "y": 532,
+          "width": 358,
+          "height": 56,
+          "component": "Cell",
+          "style": {
+            "paddingY": 9,
+            "gap": 0,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "title": "Search",
+            "children": "input:Search query",
+            "prefix": "S",
+            "clickable": true,
+            "arrowIcon": true
+          },
+          "variables": {},
+          "text": "Search"
+        }
+      ]
+    },
+    {
+      "id": "layout_24",
+      "type": "INSTANCE",
+      "name": "Email",
+      "x": 48,
+      "y": 532,
+      "width": 358,
+      "height": 72,
+      "component": "Cell",
+      "style": {
+        "paddingY": 9,
+        "gap": 0,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "title": "Email",
+        "children": "input:email@example.com",
+        "description": "Cell container metrics",
+        "extra": "Required"
+      },
+      "variables": {},
+      "text": "Email"
+    },
+    {
+      "id": "layout_25",
+      "type": "INSTANCE",
+      "name": "Search",
+      "x": 48,
+      "y": 532,
+      "width": 358,
+      "height": 56,
+      "component": "Cell",
+      "style": {
+        "paddingY": 9,
+        "gap": 0,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "title": "Search",
+        "children": "input:Search query",
+        "prefix": "S",
+        "clickable": true,
+        "arrowIcon": true
+      },
+      "variables": {},
+      "text": "Search"
+    },
+    {
+      "id": "layout_26",
+      "type": "TEXT",
+      "name": "Text 16",
+      "x": 48,
+      "y": 532,
+      "width": 358,
+      "height": 24,
+      "text": "Input + List",
+      "variables": {
+        "text.color": "semantic.text.secondary"
+      },
+      "style": {
+        "text": "text/body/lg",
+        "fill": "#5F6A7B"
+      }
+    },
+    {
+      "id": "layout_27",
+      "type": "FRAME",
+      "name": "list-row-2",
+      "x": 48,
+      "y": 532,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_28",
+          "type": "INSTANCE",
+          "name": "Default List Shell",
+          "x": 48,
+          "y": 532,
+          "width": 358,
+          "height": 160,
+          "component": "List",
+          "style": {
+            "paddingY": 9,
+            "gap": 0,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "header": "Profile",
+            "mode": "default",
+            "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+          },
+          "variables": {},
+          "text": "Profile"
+        },
+        {
+          "id": "layout_29",
+          "type": "INSTANCE",
+          "name": "Card List Shell",
+          "x": 48,
+          "y": 532,
+          "width": 358,
+          "height": 184,
+          "component": "List",
+          "style": {
+            "paddingY": 9,
+            "gap": 0,
+            "fontSize": 15,
+            "lineHeight": 22,
+            "fontWeight": "regular"
+          },
+          "variant": {
+            "header": "Billing",
+            "mode": "card",
+            "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
+          },
+          "variables": {},
+          "text": "Billing"
+        }
+      ]
+    },
+    {
+      "id": "layout_28",
+      "type": "INSTANCE",
+      "name": "Default List Shell",
+      "x": 48,
+      "y": 532,
+      "width": 358,
+      "height": 160,
+      "component": "List",
+      "style": {
+        "paddingY": 9,
+        "gap": 0,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "header": "Profile",
+        "mode": "default",
+        "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+      },
+      "variables": {},
+      "text": "Profile"
+    },
+    {
+      "id": "layout_29",
+      "type": "INSTANCE",
+      "name": "Card List Shell",
+      "x": 48,
+      "y": 532,
+      "width": 358,
+      "height": 184,
+      "component": "List",
+      "style": {
+        "paddingY": 9,
+        "gap": 0,
+        "fontSize": 15,
+        "lineHeight": 22,
+        "fontWeight": "regular"
+      },
+      "variant": {
+        "header": "Billing",
+        "mode": "card",
+        "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
+      },
+      "variables": {},
+      "text": "Billing"
     }
   ],
   "styles": {
@@ -1646,7 +2232,59 @@
     "layout_19.fontSize": "17",
     "layout_19.lineHeight": "26",
     "layout_19.fontWeight": "regular",
-    "layout_19.minWidth": "undefined"
+    "layout_19.minWidth": "undefined",
+    "layout_22.text": "text/body/lg",
+    "layout_22.fill": "#5F6A7B",
+    "layout_24.fill": "undefined",
+    "layout_24.stroke": "undefined",
+    "layout_24.text": "undefined",
+    "layout_24.effect": "undefined",
+    "layout_24.radius": "undefined",
+    "layout_24.paddingX": "undefined",
+    "layout_24.paddingY": "9",
+    "layout_24.gap": "0",
+    "layout_24.fontSize": "15",
+    "layout_24.lineHeight": "22",
+    "layout_24.fontWeight": "regular",
+    "layout_24.minWidth": "undefined",
+    "layout_25.fill": "undefined",
+    "layout_25.stroke": "undefined",
+    "layout_25.text": "undefined",
+    "layout_25.effect": "undefined",
+    "layout_25.radius": "undefined",
+    "layout_25.paddingX": "undefined",
+    "layout_25.paddingY": "9",
+    "layout_25.gap": "0",
+    "layout_25.fontSize": "15",
+    "layout_25.lineHeight": "22",
+    "layout_25.fontWeight": "regular",
+    "layout_25.minWidth": "undefined",
+    "layout_26.text": "text/body/lg",
+    "layout_26.fill": "#5F6A7B",
+    "layout_28.fill": "undefined",
+    "layout_28.stroke": "undefined",
+    "layout_28.text": "undefined",
+    "layout_28.effect": "undefined",
+    "layout_28.radius": "undefined",
+    "layout_28.paddingX": "undefined",
+    "layout_28.paddingY": "9",
+    "layout_28.gap": "0",
+    "layout_28.fontSize": "15",
+    "layout_28.lineHeight": "22",
+    "layout_28.fontWeight": "regular",
+    "layout_28.minWidth": "undefined",
+    "layout_29.fill": "undefined",
+    "layout_29.stroke": "undefined",
+    "layout_29.text": "undefined",
+    "layout_29.effect": "undefined",
+    "layout_29.radius": "undefined",
+    "layout_29.paddingX": "undefined",
+    "layout_29.paddingY": "9",
+    "layout_29.gap": "0",
+    "layout_29.fontSize": "15",
+    "layout_29.lineHeight": "22",
+    "layout_29.fontWeight": "regular",
+    "layout_29.minWidth": "undefined"
   },
   "variables": {
     "layout_3.text.color": "semantic.text.primary",
@@ -1687,7 +2325,9 @@
     "layout_19.field.background": "Semantic/surface/default",
     "layout_19.field.border": "Semantic/border/default",
     "layout_19.value.color": "Semantic/text/primary",
-    "layout_19.placeholder.color": "Semantic/text/muted"
+    "layout_19.placeholder.color": "Semantic/text/muted",
+    "layout_22.text.color": "semantic.text.secondary",
+    "layout_26.text.color": "semantic.text.secondary"
   },
   "components": {
     "layout_8": {
@@ -1743,6 +2383,37 @@
         "min": 0,
         "max": 20,
         "type": "number"
+      }
+    },
+    "layout_24": {
+      "variants": {
+        "title": "Email",
+        "children": "input:email@example.com",
+        "description": "Cell container metrics",
+        "extra": "Required"
+      }
+    },
+    "layout_25": {
+      "variants": {
+        "title": "Search",
+        "children": "input:Search query",
+        "prefix": "S",
+        "clickable": true,
+        "arrowIcon": true
+      }
+    },
+    "layout_28": {
+      "variants": {
+        "header": "Profile",
+        "mode": "default",
+        "children": "Name::input:Hong Gil Dong|Email::input:hong@example.com|Phone::input:010-1234-5678"
+      }
+    },
+    "layout_29": {
+      "variants": {
+        "header": "Billing",
+        "mode": "card",
+        "children": "Card::input:4111 1111 1111 1111|Address::input:Seoul"
       }
     }
   }
