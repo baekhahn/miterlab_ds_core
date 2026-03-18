@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Button",
+  "type": "object",
+  "properties": {
+    "color": {"type":"string","enum":["default","primary","success","warning","danger"]},
+    "fill": {"type":"string","enum":["solid","outline","none"]},
+    "size": {"type":"string","enum":["mini","small","middle","large"]},
+    "shape": {"type":"string","enum":["default","rounded","rectangular"]},
+    "block": {"type":"boolean"},
+    "loading": {"oneOf":[{"type":"boolean"},{"type":"string","enum":["auto"]}]},
+    "loadingText": {"type":"string"},
+    "disabled": {"type":"boolean"},
+    "type": {"type":"string","enum":["button","submit","reset"]},
+    "children": {"type":["string","object"],"description":"Label or node"},
+    "id": {"type":"string"},
+    "className": {"type":"string"},
+    "style": {"type":"object"},
+    "tabIndex": {"type":"integer"},
+    "ariaLabel": {"type":"string"}
+  },
+  "required": ["children"],
+  "additionalProperties": false
+}
