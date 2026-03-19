@@ -31,7 +31,7 @@
   --ifm-background-color: #111111;
   --ifm-navbar-background-color: #111111;
   --ifm-background-surface-color: #111111;
-  --ifm-heading-color: #f7f7f8;
+  --ifm-heading-color: #edeef0;
   --ifm-font-color-base: #e1e2e4;
   --ifm-font-color-secondary: #aeb0b6;
   --ifm-color-content: #e1e2e4;
@@ -160,6 +160,19 @@ main article table td {
   color: var(--ifm-font-color-base);
 }
 
+.theme-doc-markdown > header > h1,
+.theme-doc-markdown > h1,
+.markdown > h1 {
+  font-size: 36px !important;
+  line-height: 1.25;
+}
+
+.theme-doc-markdown > h2,
+.markdown > h2 {
+  font-size: 24px !important;
+  line-height: 1.3333;
+}
+
 .theme-doc-markdown table thead tr,
 .theme-doc-markdown table tbody tr:nth-child(2n) {
   background-color: rgba(255, 255, 255, 0.02);
@@ -189,5 +202,15 @@ main article table td {
 @media (min-width: 997px) {
   html {
     --doc-sidebar-width: 240px !important;
+  }
+
+  main[class*="docMainContainer"] > .container {
+    padding-left: 28px !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  main[class*="docMainContainer"] > .container {
+    max-width: var(--ifm-container-width) !important;
   }
 }
