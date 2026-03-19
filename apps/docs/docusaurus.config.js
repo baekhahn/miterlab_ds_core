@@ -39,7 +39,8 @@ const config = {
     navbar: {
       title: "MADS (Miterlab AI Design System)",
       items: [
-        { to: "/", label: "Docs", position: "left" }
+        { to: "/", label: "Docs", position: "left" },
+        { to: "/extracted", label: "Extracted", position: "left" }
       ]
     }
   }

@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "docusaurus start --host 0.0.0.0",
+    "dev": "docusaurus start --host 127.0.0.1 --port 3010",
     "build": "docusaurus build",
     "serve": "docusaurus serve build",
-    "previews": "node ./scripts/generate-previews.mjs",
+    "previews": "node ./scripts/generate-previews.mjs && node ./scripts/generate-extracted.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

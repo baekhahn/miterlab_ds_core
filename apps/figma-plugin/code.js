@@ -595,6 +595,22 @@
     };
   };
 
+  // src/shared/inspectionPreviewLayout.ts
+  var createInspectionPreviewModel2 = createInspectionPreviewModel;
+
+  // src/shared/foundationModel.ts
+  var foundationColors2 = foundationColors;
+  var getButtonMetrics2 = getButtonMetrics;
+  var getButtonPaletteByAxes2 = getButtonPaletteByAxes;
+  var getButtonPalette2 = getButtonPalette;
+  var getButtonWidth2 = getButtonWidth;
+  var getInputFocusRing2 = getInputFocusRing;
+  var getInputHelperColor2 = getInputHelperColor;
+  var getInputMetrics2 = getInputMetrics;
+  var getInputMultilineHeight2 = getInputMultilineHeight;
+  var getInputPalette2 = getInputPalette;
+  var getInputWidth2 = getInputWidth;
+
   // src/write/createContainerNode.ts
   var createContainerNode = (node) => {
     const rect = figma.createRectangle();
@@ -1167,14 +1183,14 @@
     const emphasis = getButtonEmphasis(node);
     const appearance = getButtonAppearance(node);
     const hierarchy = getButtonHierarchy(node);
-    const metrics = getButtonMetrics(sizeKey);
-    const palette = ((_a = node.variant) == null ? void 0 : _a.appearance) || ((_b = node.variant) == null ? void 0 : _b.hierarchy) ? getButtonPaletteByAxes(appearance, hierarchy, state) : getButtonPalette(emphasis, state);
+    const metrics = getButtonMetrics2(sizeKey);
+    const palette = ((_a = node.variant) == null ? void 0 : _a.appearance) || ((_b = node.variant) == null ? void 0 : _b.hierarchy) ? getButtonPaletteByAxes2(appearance, hierarchy, state) : getButtonPalette2(emphasis, state);
     const fill = palette.fill;
     const stroke = palette.stroke;
     const iconOnly = ((_c = node.variant) == null ? void 0 : _c.iconOnly) === true;
     const iconLeading = ((_d = node.variant) == null ? void 0 : _d.iconLeading) === true;
     const iconTrailing = ((_e = node.variant) == null ? void 0 : _e.iconTrailing) === true;
-    const width = iconOnly ? metrics.height : ((_f = node.variant) == null ? void 0 : _f.width) === "full" ? getButtonWidth("full") : getButtonWidth("hug");
+    const width = iconOnly ? metrics.height : ((_f = node.variant) == null ? void 0 : _f.width) === "full" ? getButtonWidth2("full") : getButtonWidth2("hug");
     const frame = figma.createFrame();
     frame.name = node.name;
     frame.resize(Math.max(width, styleMinWidth(node, metrics.minWidth), node.width), Math.max(metrics.height, node.height));
@@ -1212,16 +1228,16 @@
     const sizeKey = getInputSize(node);
     const state = getInputState(node);
     const intent = getInputIntent(node);
-    const metrics = getInputMetrics(sizeKey);
-    const palette = getInputPalette(intent, state);
-    const width = ((_a = node.variant) == null ? void 0 : _a.width) === "hug" ? getInputWidth("hug") : getInputWidth("full");
-    const focusRing = getInputFocusRing();
+    const metrics = getInputMetrics2(sizeKey);
+    const palette = getInputPalette2(intent, state);
+    const width = ((_a = node.variant) == null ? void 0 : _a.width) === "hug" ? getInputWidth2("hug") : getInputWidth2("full");
+    const focusRing = getInputFocusRing2();
     const stroke = state === "focused" ? focusRing.stroke : palette.stroke;
     const strokeWeight = state === "focused" ? focusRing.strokeWeight : 1;
     const helperText = typeof ((_b = node.variant) == null ? void 0 : _b.helperText) === "string" ? node.variant.helperText : void 0;
     const multiline = ((_c = node.variant) == null ? void 0 : _c.multiline) === true;
     const rowsCount = typeof ((_d = node.variant) == null ? void 0 : _d.rowsCount) === "number" && Number.isFinite(node.variant.rowsCount) ? Math.max(2, node.variant.rowsCount) : 3;
-    const fieldHeight = multiline ? getInputMultilineHeight(sizeKey, rowsCount) : Math.max(metrics.height, node.height);
+    const fieldHeight = multiline ? getInputMultilineHeight2(sizeKey, rowsCount) : Math.max(metrics.height, node.height);
     const wrapper = figma.createFrame();
     wrapper.name = node.name;
     wrapper.x = node.x;
@@ -1256,15 +1272,15 @@
     }
     frame.appendChild(label);
     if (state === "loading") {
-      frame.appendChild(createLoadingGlyph(foundationColors.text.assistive, Math.max(16, metrics.fontSize + 2)));
+      frame.appendChild(createLoadingGlyph(foundationColors2.text.assistive, Math.max(16, metrics.fontSize + 2)));
     } else if (((_j = node.variant) == null ? void 0 : _j.clearable) === true && typeof ((_k = node.variant) == null ? void 0 : _k.value) === "string") {
-      frame.appendChild(createClearGlyph(foundationColors.text.assistive, Math.max(16, metrics.fontSize + 3)));
+      frame.appendChild(createClearGlyph(foundationColors2.text.assistive, Math.max(16, metrics.fontSize + 3)));
     }
     wrapper.appendChild(frame);
     if (helperText) {
       const helper = await createText(
         helperText,
-        getInputHelperColor(intent),
+        getInputHelperColor2(intent),
         12,
         18,
         "regular"
@@ -1287,9 +1303,9 @@
     frame.paddingLeft = 12;
     frame.paddingRight = 12;
     frame.cornerRadius = 10;
-    frame.fills = [{ type: "SOLID", color: rgb2(foundationColors.surface.panel) }];
-    frame.strokes = [{ type: "SOLID", color: rgb2(foundationColors.border.default) }];
-    const text = await createText((_a = node.component) != null ? _a : node.name, foundationColors.text.secondary, 13, 18, "medium");
+    frame.fills = [{ type: "SOLID", color: rgb2(foundationColors2.surface.panel) }];
+    frame.strokes = [{ type: "SOLID", color: rgb2(foundationColors2.border.default) }];
+    const text = await createText((_a = node.component) != null ? _a : node.name, foundationColors2.text.secondary, 13, 18, "medium");
     frame.appendChild(text);
     return frame;
   };
@@ -1312,7 +1328,7 @@
       return createFrameNode(node, theme);
     }
     if (node.type === "INSTANCE" || node.type === "COMPONENT") {
-      return await createInstanceNode(node, theme);
+      return await createInstanceNode(node);
     }
     return createContainerNode(node);
   };
@@ -1352,13 +1368,13 @@
     pill.x = x;
     pill.y = y;
     pill.cornerRadius = 12;
-    pill.fills = [{ type: "SOLID", color: rgb3(foundationColors.preview.axisPillFill) }];
+    pill.fills = [{ type: "SOLID", color: rgb3(foundationColors2.preview.axisPillFill) }];
     pill.strokes = [];
     const text = figma.createText();
     text.fontName = await loadFont("semibold");
     text.characters = label;
     text.fontSize = 11;
-    text.fills = [{ type: "SOLID", color: rgb3(foundationColors.preview.axisPillText) }];
+    text.fills = [{ type: "SOLID", color: rgb3(foundationColors2.preview.axisPillText) }];
     text.textAlignHorizontal = "CENTER";
     text.textAutoResize = "WIDTH_AND_HEIGHT";
     text.x = Math.round((72 - text.width) / 2);
@@ -1367,7 +1383,7 @@
     return pill;
   };
   var createInspectionPreviewFrame = async (payload, frameName) => {
-    const preview = createInspectionPreviewModel(payload.document.screen);
+    const preview = createInspectionPreviewModel2(payload.document.screen);
     const frame = figma.createFrame();
     frame.name = frameName;
     frame.layoutMode = "NONE";
@@ -1395,8 +1411,7 @@
             component: item.component.component === "button" ? "Button" : "Input",
             variant: __spreadValues({}, item.component),
             text: item.component.label
-          },
-          theme
+          }
         );
         next.x = item.x;
         next.y = item.y;
@@ -6076,6 +6091,37 @@
     }
   };
 
+  // src/extract/serializeSelection.ts
+  var buildNodeUrl = (fileKey, nodeId) => `https://www.figma.com/design/${fileKey}/${encodeURIComponent(figma.root.name)}?node-id=${nodeId.replace(":", "-")}`;
+  var summarizeSelection = (selection) => {
+    var _a;
+    const fileKey = (_a = figma.fileKey) != null ? _a : "";
+    if (selection.length === 0) {
+      return {
+        selectionCount: 0,
+        primaryName: "\uC120\uD0DD \uC5C6\uC74C",
+        primaryType: "-",
+        dimensions: "-",
+        pageName: figma.currentPage.name,
+        fileKey,
+        nodeIds: [],
+        nodeUrl: null
+      };
+    }
+    const primary = selection[0];
+    const dimensions = "width" in primary && "height" in primary ? `${Math.round(primary.width)} \xD7 ${Math.round(primary.height)}` : "-";
+    return {
+      selectionCount: selection.length,
+      primaryName: primary.name,
+      primaryType: primary.type,
+      dimensions,
+      pageName: figma.currentPage.name,
+      fileKey,
+      nodeIds: selection.map((node) => node.id),
+      nodeUrl: fileKey ? buildNodeUrl(fileKey, primary.id) : null
+    };
+  };
+
   // src/code.ts
   var inspectionFamilyPayloads = {
     "button-inspection": mcp_payload_default,
@@ -6094,156 +6140,662 @@
     module: contractPreviewOptions.filter((item) => item.level === "module"),
     pattern: contractPreviewOptions.filter((item) => item.level === "pattern")
   };
-  var uiHtml = `
+  var BRIDGE_URL = "http://localhost:8787";
+  var BUILD_STAMP = (/* @__PURE__ */ new Date()).toISOString();
+  var PREVIEW_OPTIONS_JSON = JSON.stringify(previewOptionsByLevel);
+  var BRIDGE_URL_JSON = JSON.stringify(BRIDGE_URL);
+  var BUILD_STAMP_JSON = JSON.stringify(BUILD_STAMP);
+  var parseFileKeyFromNodeUrl = (value) => {
+    var _a, _b, _c, _d;
+    if (!value) return null;
+    const raw = value.trim();
+    if (!raw) return null;
+    try {
+      const normalized = /^https?:\/\//.test(raw) ? raw : `https://${raw.replace(/^\/+/, "")}`;
+      const url = new URL(normalized);
+      const match = (_b = (_a = url.pathname.match(/^\/design\/([^/]+)/)) != null ? _a : url.pathname.match(/^\/proto\/([^/]+)/)) != null ? _b : url.pathname.match(/^\/board\/([^/]+)/);
+      return (_c = match == null ? void 0 : match[1]) != null ? _c : null;
+    } catch (e) {
+      const match = raw.match(/figma\.com\/(?:design|proto|board)\/([^/?#]+)/i);
+      return (_d = match == null ? void 0 : match[1]) != null ? _d : null;
+    }
+  };
+  var buildMinimalExtractionReference = (selection, fallbackNodeUrl) => {
+    var _a;
+    const runtimeFileKey = (_a = figma.fileKey) != null ? _a : "";
+    const parsedFileKey = parseFileKeyFromNodeUrl(fallbackNodeUrl);
+    const fileKey = runtimeFileKey || parsedFileKey;
+    if (!fileKey) {
+      throw new Error("\uC774 \uD30C\uC77C\uC5D0\uC11C\uB294 fileKey\uB97C \uC9C1\uC811 \uC77D\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. Current File URL\uC744 \uBA3C\uC800 \uC800\uC7A5\uD574 \uC8FC\uC138\uC694.");
+    }
+    return {
+      fileKey,
+      pageName: figma.currentPage.name,
+      selectionCount: selection.length,
+      nodes: selection.map((node) => ({
+        id: node.id,
+        name: node.name,
+        type: node.type,
+        url: `https://www.figma.com/design/${fileKey}/${encodeURIComponent(figma.root.name)}?node-id=${node.id.replace(":", "-")}`,
+        isFigmaComponent: node.type === "INSTANCE" || node.type === "COMPONENT" || node.type === "COMPONENT_SET",
+        componentRole: node.type === "INSTANCE" ? "instance" : node.type === "COMPONENT" ? "component" : node.type === "COMPONENT_SET" ? "component-set" : "node",
+        mainComponentName: null,
+        componentKey: void 0,
+        variantProperties: void 0
+      }))
+    };
+  };
+  var sendSelectionInfo = () => {
+    figma.ui.postMessage({
+      type: "selectionInfo",
+      summary: summarizeSelection(figma.currentPage.selection),
+      hasRuntimeFileKey: Boolean(figma.fileKey)
+    });
+  };
+  var sendSelectionSvg = async () => {
+    const selection = figma.currentPage.selection;
+    if (selection.length === 0) {
+      figma.ui.postMessage({ type: "selectionSvg", svg: null });
+      return;
+    }
+    const primary = selection[0];
+    try {
+      const bytes = await primary.exportAsync({
+        format: "SVG",
+        svgOutlineText: false,
+        svgIdAttribute: false
+      });
+      const svg = new TextDecoder("utf-8").decode(bytes);
+      figma.ui.postMessage({ type: "selectionSvg", svg });
+    } catch (e) {
+      figma.ui.postMessage({ type: "selectionSvg", svg: null });
+    }
+  };
+  var flushUi = () => new Promise((resolve) => setTimeout(resolve, 0));
+  var rawUiHtml = `
 <!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <style>
       :root {
-        color-scheme: light;
-        --bg: #ffffff;
-        --panel: #f7f7f8;
-        --line: #e1e2e4;
-        --text: #171719;
-        --muted: #989ba2;
-        --accent: #0064ff;
+        color-scheme: dark;
+        --bg: #09090b;
+        --panel: #111111;
+        --panel-2: #18181b;
+        --line: #27272a;
+        --text: #fafafa;
+        --muted: #a1a1aa;
+        --accent: #0066ff;
+        --danger: #ff6363;
+        --warn: #f59e0b;
       }
       * { box-sizing: border-box; }
       body {
         margin: 0;
-        padding: 16px;
+        padding: 14px;
         background: var(--bg);
         color: var(--text);
         font: 12px/1.45 Pretendard, "Pretendard Variable", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        width: 100%;
+        overflow-x: hidden;
       }
-      .wrap {
-        display: flex;
-        flex-direction: column;
+      .app {
+        display: grid;
         gap: 12px;
+        width: 100%;
+        min-width: 0;
       }
-      .panel {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        padding: 14px;
+      .tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+        padding: 4px;
         border: 1px solid var(--line);
-        border-radius: 14px;
+        border-radius: 12px;
         background: var(--panel);
       }
-      h1 {
-        margin: 0;
-        font-size: 16px;
-        line-height: 1.3;
-      }
-      p {
-        margin: 0;
-        color: var(--muted);
-      }
-      label {
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--muted);
-      }
-      select, button {
-        width: 100%;
-        border-radius: 12px;
-        border: 1px solid var(--line);
-        background: #fff;
-        color: var(--text);
-        padding: 10px 12px;
+      .tab, button, select, input {
         font: inherit;
       }
-      button {
-        border-color: var(--accent);
-        background: var(--accent);
-        color: white;
-        font-weight: 600;
-        cursor: pointer;
-      }
-      button:disabled {
-        opacity: 0.5;
-        cursor: default;
-      }
-      .hint {
-        font-size: 11px;
+      .tab {
+        border: 1px solid transparent;
+        background: transparent;
         color: var(--muted);
+        border-radius: 8px;
+        padding: 8px 10px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .tab.active {
+        background: var(--panel-2);
+        border-color: var(--line);
+        color: var(--text);
+      }
+      .panel {
+        display: none;
+        gap: 10px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--panel);
+        width: 100%;
+        min-width: 0;
+      }
+      .panel.active { display: grid; }
+      .label {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+      }
+      .control, .btn {
+        width: 100%;
+        min-width: 0;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: var(--panel-2);
+        color: var(--text);
+      }
+      .btn {
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn.primary {
+        border-color: transparent;
+        background: var(--accent);
+        color: #fff;
+      }
+      .btn:disabled { opacity: 0.5; cursor: default; }
+      .row2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--panel-2);
+      }
+      .meta-item { display: grid; gap: 2px; }
+      .meta-key { color: var(--muted); font-size: 11px; font-weight: 600; }
+      .meta-value { color: var(--text); min-width: 0; word-break: break-word; }
+      .status {
+        min-height: 18px;
+        color: var(--muted);
+        font-size: 11px;
+        width: 100%;
+        min-width: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+      .status.error { color: var(--danger); }
+      .status.warning { color: var(--warn); }
+      .code {
+        max-height: 210px;
+        overflow: auto;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #0c0c0f;
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        color: #e4e4e7;
+        width: 100%;
+        min-width: 0;
+      }
+      .hint { color: var(--muted); font-size: 11px; }
+      .spinner {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: 6px;
+        border-radius: 999px;
+        border: 1.5px solid rgba(255,255,255,0.28);
+        border-top-color: rgba(255,255,255,0.92);
+        animation: spin 0.8s linear infinite;
+        vertical-align: -2px;
+      }
+      .hidden { display: none !important; }
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
       }
     </style>
   </head>
   <body>
-    <div class="wrap">
-      <div class="panel">
-        <h1>Inspection Explorer</h1>
-        <p>Component, Module, Pattern\uC744 \uC120\uD0DD\uD574 Figma\uC5D0\uC11C \uBC14\uB85C \uD655\uC778\uD569\uB2C8\uB2E4.</p>
-        <label for="previewLevel">Level</label>
-        <select id="previewLevel">
+    <div class="app">
+      <div class="tabs">
+        <button type="button" class="tab active" id="tabInspection">Inspection</button>
+        <button type="button" class="tab" id="tabExtraction">Extraction</button>
+      </div>
+
+      <div class="panel active" id="panelInspection">
+        <div class="label">Level</div>
+        <select class="control" id="previewLevel">
           <option value="component">Component</option>
           <option value="module">Module</option>
           <option value="pattern">Pattern</option>
         </select>
-        <label for="previewItem">Contract</label>
-        <select id="previewItem"></select>
-        <button id="renderContractPreview">Render Selected Contract</button>
-        <div class="hint">Button/Input\uC740 inspection \uAE30\uC900\uC73C\uB85C, \uB098\uBA38\uC9C0\uB294 contract preview \uAE30\uC900\uC73C\uB85C \uB80C\uB354\uD569\uB2C8\uB2E4.</div>
+        <div class="label">Contract</div>
+        <select class="control" id="previewItem"></select>
+        <button type="button" class="btn primary" id="renderContractPreview">Render Selected Contract</button>
+        <div class="hint">Button/Input\uC740 inspection payload \uAE30\uC900\uC73C\uB85C \uB80C\uB354\uD569\uB2C8\uB2E4.</div>
+      </div>
+
+      <div class="panel" id="panelExtraction">
+        <div class="label">Current File URL</div>
+        <input class="control" id="fileUrlInput" placeholder="https://www.figma.com/design/..." />
+
+        <div class="row2">
+          <button type="button" class="btn" id="refreshSelection">Refresh</button>
+          <button type="button" class="btn" id="bridgeTest">Bridge Test</button>
+        </div>
+        <div class="row2">
+          <button type="button" class="btn primary" id="extractSelection"><span id="extractSpinner" class="spinner hidden"></span><span id="extractLabel">Extract</span></button>
+          <button type="button" class="btn" id="cancelExtraction" disabled>Cancel</button>
+        </div>
+        <button type="button" class="btn" id="retryExtraction" disabled>Retry</button>
+
+        <div class="status" id="extractionStatus"></div>
+        <div class="hint" id="buildStamp"></div>
+
+        <div class="meta">
+          <div class="meta-item"><div class="meta-key">Selection</div><div class="meta-value" id="selectionName">\uC120\uD0DD \uC5C6\uC74C</div></div>
+          <div class="meta-item"><div class="meta-key">Type</div><div class="meta-value" id="selectionType">-</div></div>
+          <div class="meta-item"><div class="meta-key">Dimensions</div><div class="meta-value" id="selectionDimensions">-</div></div>
+          <div class="meta-item"><div class="meta-key">Page</div><div class="meta-value" id="selectionPage">-</div></div>
+          <div class="meta-item"><div class="meta-key">File Key</div><div class="meta-value" id="selectionFileKey">-</div></div>
+          <div class="meta-item"><div class="meta-key">Node URL</div><div class="meta-value" id="selectionUrl">-</div></div>
+        </div>
+
+        <div class="code" id="selectionJson">\uC120\uD0DD \uB178\uB4DC\uB97C \uC0C8\uB85C\uACE0\uCE68\uD558\uBA74 MCP extraction \uAE30\uC900 \uC815\uBCF4\uAC00 \uD45C\uC2DC\uB429\uB2C8\uB2E4.</div>
       </div>
     </div>
+
     <script>
-      const optionsByLevel = ${JSON.stringify(previewOptionsByLevel)};
-      const level = document.getElementById("previewLevel");
-      const item = document.getElementById("previewItem");
-      const button = document.getElementById("renderContractPreview");
+      (() => {
+        const optionsByLevel = __PREVIEW_OPTIONS_JSON__;
+        const BRIDGE_URL = __BRIDGE_URL_JSON__;
+        const BUILD_STAMP = __BUILD_STAMP_JSON__;
 
-      const syncItems = () => {
-        const next = optionsByLevel[level.value] || [];
-        item.innerHTML = "";
-        next.forEach((option) => {
-          const el = document.createElement("option");
-          el.value = option.id;
-          el.textContent = option.label;
-          item.appendChild(el);
-        });
-      };
+        const $ = (id) => document.getElementById(id);
+        const el = {
+          tabInspection: $("tabInspection"),
+          tabExtraction: $("tabExtraction"),
+          panelInspection: $("panelInspection"),
+          panelExtraction: $("panelExtraction"),
+          previewLevel: $("previewLevel"),
+          previewItem: $("previewItem"),
+          render: $("renderContractPreview"),
+          refresh: $("refreshSelection"),
+          bridgeTest: $("bridgeTest"),
+          extract: $("extractSelection"),
+          cancel: $("cancelExtraction"),
+          retry: $("retryExtraction"),
+          spinner: $("extractSpinner"),
+          extractLabel: $("extractLabel"),
+          status: $("extractionStatus"),
+          fileUrlInput: $("fileUrlInput"),
+          selectionName: $("selectionName"),
+          selectionType: $("selectionType"),
+          selectionDimensions: $("selectionDimensions"),
+          selectionPage: $("selectionPage"),
+          selectionFileKey: $("selectionFileKey"),
+          selectionUrl: $("selectionUrl"),
+          selectionJson: $("selectionJson"),
+          buildStamp: $("buildStamp")
+        };
 
-      syncItems();
-      level.onchange = syncItems;
+        el.buildStamp.textContent = "Build " + BUILD_STAMP;
 
-      button.onclick = () => {
-        button.disabled = true;
-        parent.postMessage(
-          {
-            pluginMessage: {
-              type: "renderContractPreview",
-              previewId: item.value
+        let memoryFileUrl = "";
+        let latestSelectionSummary = null;
+        let lastExtractionName = "";
+        let lastNodeUrl = "";
+        let latestSelectionSvg = null;
+        let selectionSvgResolver = null;
+        let abortController = null;
+        let timer = null;
+        let poller = null;
+        let startedAt = 0;
+        let statusText = "";
+        let statusTone = "";
+
+        const getStoredFileUrl = () => {
+          try {
+            return localStorage.getItem("mads-current-file-url") || memoryFileUrl || "";
+          } catch {
+            return memoryFileUrl || "";
+          }
+        };
+
+        const setStoredFileUrl = (value) => {
+          memoryFileUrl = value || "";
+          try {
+            if (value) localStorage.setItem("mads-current-file-url", value);
+            else localStorage.removeItem("mads-current-file-url");
+          } catch {}
+        };
+
+        const parseFileKeyFromUrl = (value) => {
+          if (!value) return "";
+          const raw = String(value).trim();
+          if (!raw) return "";
+          try {
+            const normalized = /^https?:\\/\\//.test(raw) ? raw : "https://" + raw.replace(/^\\/+/, "");
+            const url = new URL(normalized);
+            const match = url.pathname.match(/^\\/(design|proto|board)\\/([^/]+)/);
+            return match ? match[2] : "";
+          } catch {
+            const match = raw.match(/figma\\.com\\/(?:design|proto|board)\\/([^/?#]+)/i);
+            return match ? match[1] : "";
+          }
+        };
+
+        const setStatus = (text, tone) => {
+          statusText = text || "";
+          statusTone = tone || "";
+          el.status.textContent = statusText;
+          el.status.className = "status" + (statusTone ? " " + statusTone : "");
+        };
+
+        const stopTimer = () => {
+          if (timer) clearInterval(timer);
+          timer = null;
+        };
+
+        const startTimer = () => {
+          stopTimer();
+          startedAt = Date.now();
+          timer = setInterval(() => {
+            const seconds = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
+            el.status.textContent = statusText ? statusText + " " + seconds + "s" : seconds + "s";
+          }, 1000);
+        };
+
+        const stopPoll = () => {
+          if (poller) clearInterval(poller);
+          poller = null;
+        };
+
+        const setLoading = (loading) => {
+          el.extract.disabled = loading;
+          el.cancel.disabled = !loading;
+          el.retry.disabled = loading || !lastNodeUrl;
+          el.spinner.classList.toggle("hidden", !loading);
+          el.extractLabel.textContent = loading ? "Extracting" : "Extract";
+          if (!loading) stopTimer();
+        };
+
+        const switchTab = (next) => {
+          const inspection = next === "inspection";
+          el.tabInspection.classList.toggle("active", inspection);
+          el.tabExtraction.classList.toggle("active", !inspection);
+          el.panelInspection.classList.toggle("active", inspection);
+          el.panelExtraction.classList.toggle("active", !inspection);
+        };
+
+        const syncPreviewItems = () => {
+          const list = optionsByLevel[el.previewLevel.value] || [];
+          el.previewItem.innerHTML = "";
+          list.forEach((option) => {
+            const opt = document.createElement("option");
+            opt.value = option.id;
+            opt.textContent = option.label;
+            el.previewItem.appendChild(opt);
+          });
+        };
+
+        const renderSelectionSummary = (summary, hasRuntimeFileKey) => {
+          latestSelectionSummary = summary;
+          latestSelectionSvg = null;
+          el.selectionName.textContent = summary.selectionCount > 1 ? summary.primaryName + " \uC678 " + (summary.selectionCount - 1) + "\uAC1C" : summary.primaryName;
+          el.selectionType.textContent = summary.primaryType;
+          el.selectionDimensions.textContent = summary.dimensions;
+          el.selectionPage.textContent = summary.pageName;
+          el.selectionFileKey.textContent = summary.fileKey || "-";
+          el.selectionUrl.textContent = summary.nodeUrl || "-";
+          el.selectionJson.textContent = JSON.stringify(summary, null, 2);
+
+          const hasStored = Boolean(getStoredFileUrl().trim());
+          if (!hasRuntimeFileKey && !hasStored) {
+            setStatus("\uC774 \uD30C\uC77C\uC740 runtime fileKey\uAC00 \uBE44\uC5B4 \uC788\uC2B5\uB2C8\uB2E4. Current File URL\uC774 \uD544\uC694\uD569\uB2C8\uB2E4.", "warning");
+          } else if (!hasRuntimeFileKey && hasStored) {
+            setStatus("\uC800\uC7A5\uB41C Current File URL\uC744 \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
+          } else {
+            setStatus("");
+          }
+        };
+
+        const checkBridge = async () => {
+          setStatus("Bridge\uB97C \uD655\uC778 \uC911\uC785\uB2C8\uB2E4.");
+          try {
+            const response = await fetch(BRIDGE_URL + "/health");
+            if (!response.ok) throw new Error("health check failed");
+            setStatus("Bridge connected.");
+          } catch (error) {
+            setStatus(error && error.message ? error.message : "Bridge not running.", "error");
+          }
+        };
+
+        const pollStatus = (extractionName) => {
+          stopPoll();
+          if (!extractionName) return;
+          const run = async () => {
+            try {
+              const response = await fetch(BRIDGE_URL + "/extraction-status", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({ extractionName })
+              });
+              const result = await response.json();
+              el.selectionJson.textContent = JSON.stringify(result, null, 2);
+              if (!response.ok) throw new Error(result && result.error ? result.error : "Status request failed.");
+              if (result.status === "completed") {
+                stopPoll();
+                setLoading(false);
+                setStatus("Extraction complete. Saved to " + (result.outputDir || "artifacts/figma-extractions"));
+                return;
+              }
+              if (result.status === "failed") {
+                stopPoll();
+                setLoading(false);
+                setStatus(result.error || "Extraction failed.", "error");
+                return;
+              }
+              setStatus("MCP artifact\uB97C \uC218\uC9D1 \uC911\uC785\uB2C8\uB2E4.");
+            } catch (error) {
+              stopPoll();
+              setLoading(false);
+              setStatus(error && error.message ? error.message : "\uC0C1\uD0DC \uD655\uC778 \uC911 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.", "error");
             }
-          },
-          "*"
-        );
-      };
+          };
+          run();
+          poller = setInterval(run, 3000);
+        };
 
-      window.onmessage = (event) => {
-        const msg = event.data.pluginMessage;
-        if (!msg) return;
-        if (msg.type === "renderDone" || msg.type === "pluginError") {
-          button.disabled = false;
-        }
-      };
+        const requestSelectionSvg = () => new Promise((resolve) => {
+          selectionSvgResolver = resolve;
+          parent.postMessage({ pluginMessage: { type: "requestSelectionSvg" } }, "*");
+          setTimeout(() => {
+            if (selectionSvgResolver === resolve) {
+              selectionSvgResolver = null;
+              resolve(null);
+            }
+          }, 3000);
+        });
 
-      parent.postMessage({ pluginMessage: { type: "pluginReady" } }, "*");
+        const runExtraction = async () => {
+          setStoredFileUrl(el.fileUrlInput.value.trim());
+          lastNodeUrl = el.fileUrlInput.value.trim() || getStoredFileUrl();
+
+          if (!latestSelectionSummary || !latestSelectionSummary.selectionCount) {
+            setStatus("\uC120\uD0DD\uB41C \uB178\uB4DC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.", "error");
+            return;
+          }
+
+          const fileKey = latestSelectionSummary.fileKey || parseFileKeyFromUrl(lastNodeUrl);
+          if (!fileKey) {
+            setStatus("Current File URL\uC5D0\uC11C fileKey\uB97C \uC77D\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.", "error");
+            return;
+          }
+
+          if (!latestSelectionSvg) {
+            setStatus("\uC120\uD0DD SVG\uB97C \uC900\uBE44 \uC911\uC785\uB2C8\uB2E4.");
+            startTimer();
+            latestSelectionSvg = await requestSelectionSvg();
+          }
+
+          const payload = {
+            extractionName: latestSelectionSummary.primaryName || "figma-selection",
+            reference: {
+              fileKey,
+              pageName: latestSelectionSummary.pageName || "",
+              selectionCount: latestSelectionSummary.selectionCount || 0,
+              nodes: (latestSelectionSummary.nodeIds || []).map((nodeId, index) => ({
+                id: nodeId,
+                name: index === 0 ? latestSelectionSummary.primaryName : "Selected node " + (index + 1),
+                type: index === 0 ? latestSelectionSummary.primaryType : "NODE",
+                url: index === 0 && latestSelectionSummary.nodeUrl
+                  ? latestSelectionSummary.nodeUrl
+                  : "https://www.figma.com/design/" + fileKey + "/selection?node-id=" + String(nodeId).replace(":", "-"),
+                isFigmaComponent: false,
+                componentRole: "node",
+                mainComponentName: null,
+                componentKey: undefined,
+                variantProperties: undefined
+              }))
+            },
+            selectionSvg: latestSelectionSvg || undefined
+          };
+
+          stopPoll();
+          setLoading(true);
+          setStatus("Bridge\uB85C extraction \uC694\uCCAD\uC744 \uC804\uC1A1\uD588\uC2B5\uB2C8\uB2E4.");
+          startTimer();
+
+          try {
+            abortController = new AbortController();
+            const response = await fetch(BRIDGE_URL + "/extract-via-mcp", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify(payload),
+              signal: abortController.signal
+            });
+            const result = await response.json();
+            el.selectionJson.textContent = JSON.stringify(result, null, 2);
+            if (!response.ok) throw new Error(result && result.error ? result.error : "Bridge request failed.");
+            lastExtractionName = result.extractionName || payload.extractionName;
+            if (result.status === "processing") {
+              setStatus("MCP artifact\uB97C \uC218\uC9D1 \uC911\uC785\uB2C8\uB2E4.");
+              pollStatus(lastExtractionName);
+            } else {
+              setLoading(false);
+              setStatus("Extraction complete. Saved to " + (result.outputDir || "artifacts/figma-extractions"));
+            }
+          } catch (error) {
+            if (error && error.name === "AbortError") {
+              setStatus("Extraction cancelled.", "warning");
+            } else {
+              setStatus(error && error.message ? error.message : "\uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.", "error");
+            }
+            setLoading(false);
+          } finally {
+            abortController = null;
+          }
+        };
+
+        window.onmessage = (event) => {
+          const msg = event.data && event.data.pluginMessage;
+          if (!msg) return;
+          if (msg.type === "renderDone" || msg.type === "pluginError") {
+            el.render.disabled = false;
+          }
+          if (msg.type === "selectionInfo") {
+            renderSelectionSummary(msg.summary, msg.hasRuntimeFileKey);
+          }
+          if (msg.type === "selectionSvg") {
+            latestSelectionSvg = typeof msg.svg === "string" ? msg.svg : null;
+            if (selectionSvgResolver) {
+              const resolve = selectionSvgResolver;
+              selectionSvgResolver = null;
+              resolve(latestSelectionSvg);
+            }
+          }
+          if (msg.type === "pluginError") {
+            setStatus(msg.message || "\uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.", "error");
+            setLoading(false);
+          }
+        };
+
+        el.tabInspection.addEventListener("click", () => switchTab("inspection"));
+        el.tabExtraction.addEventListener("click", () => switchTab("extraction"));
+        el.previewLevel.addEventListener("change", syncPreviewItems);
+        el.render.addEventListener("click", () => {
+          el.render.disabled = true;
+          parent.postMessage({ pluginMessage: { type: "renderContractPreview", previewId: el.previewItem.value } }, "*");
+        });
+        el.refresh.addEventListener("click", () => {
+          parent.postMessage({ pluginMessage: { type: "requestSelectionInfo" } }, "*");
+          parent.postMessage({ pluginMessage: { type: "requestSelectionSvg" } }, "*");
+          checkBridge();
+        });
+        el.bridgeTest.addEventListener("click", checkBridge);
+        el.extract.addEventListener("click", runExtraction);
+        el.retry.addEventListener("click", runExtraction);
+        el.cancel.addEventListener("click", () => {
+          if (abortController) abortController.abort();
+          stopPoll();
+          setLoading(false);
+          setStatus("Extraction cancelled.", "warning");
+        });
+        el.fileUrlInput.addEventListener("change", () => setStoredFileUrl(el.fileUrlInput.value.trim()));
+        el.fileUrlInput.addEventListener("blur", () => setStoredFileUrl(el.fileUrlInput.value.trim()));
+
+        el.fileUrlInput.value = getStoredFileUrl();
+        lastNodeUrl = getStoredFileUrl();
+        syncPreviewItems();
+        setLoading(false);
+        parent.postMessage({ pluginMessage: { type: "pluginReady" } }, "*");
+        parent.postMessage({ pluginMessage: { type: "requestSelectionSvg" } }, "*");
+        checkBridge();
+      })();
     <\/script>
   </body>
 </html>
 `;
+  var uiHtml = rawUiHtml.replace("__PREVIEW_OPTIONS_JSON__", PREVIEW_OPTIONS_JSON).replace("__BRIDGE_URL_JSON__", BRIDGE_URL_JSON).replace("__BUILD_STAMP_JSON__", BUILD_STAMP_JSON);
   figma.showUI(uiHtml, {
-    width: 320,
-    height: 240,
-    title: "Miterlab Figma Writer"
+    width: 360,
+    height: 520
   });
   figma.ui.onmessage = async (message) => {
+    var _a, _b, _c;
     try {
       if (message.type === "pluginReady") {
+        sendSelectionInfo();
         return;
       }
+      if (message.type === "requestSelectionInfo") {
+        sendSelectionInfo();
+        return;
+      }
+      if (message.type === "requestSelectionSvg") {
+        await sendSelectionSvg();
+        return;
+      }
+      if (message.type === "saveFileUrl") {
+        return;
+      }
+      if (message.type === "cancelExtraction") return;
       if (message.type === "renderContractPreview") {
         if (message.previewId === "button") {
           await renderInspectionFamily("button-inspection");
@@ -6254,10 +6806,41 @@
           figma.notify(`Rendered ${result.createdFrameName} (${result.createdNodeCount} nodes)`);
         }
         figma.ui.postMessage({ type: "renderDone" });
+        return;
+      }
+      if (message.type === "extractSelection") {
+        figma.ui.postMessage({ type: "extractionProgress", message: "\uC120\uD0DD \uB178\uB4DC\uB97C \uD655\uC778\uD558\uB294 \uC911\uC785\uB2C8\uB2E4." });
+        await flushUi();
+        const selection = figma.currentPage.selection;
+        if (selection.length === 0) {
+          throw new Error("\uC120\uD0DD\uB41C \uB178\uB4DC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.");
+        }
+        figma.ui.postMessage({ type: "extractionProgress", message: "\uC120\uD0DD \uB178\uB4DC\uB97C \uD655\uC778\uD588\uC2B5\uB2C8\uB2E4." });
+        await flushUi();
+        const fallbackNodeUrl = (_a = message.nodeUrl) == null ? void 0 : _a.trim();
+        const reference = buildMinimalExtractionReference(selection, fallbackNodeUrl);
+        figma.ui.postMessage({ type: "extractionProgress", message: "reference\uB97C \uC900\uBE44\uD588\uC2B5\uB2C8\uB2E4." });
+        await flushUi();
+        const selectionSvg = void 0;
+        figma.ui.postMessage({ type: "extractionProgress", message: "selection SVG \uC5C6\uC774 \uC9C4\uD589\uD569\uB2C8\uB2E4." });
+        await flushUi();
+        figma.ui.postMessage({
+          type: "extractionPayloadReady",
+          payload: {
+            extractionName: (_c = (_b = reference.nodes[0]) == null ? void 0 : _b.name) != null ? _c : "figma-selection",
+            reference,
+            selectionSvg
+          }
+        });
+        return;
       }
     } catch (error) {
-      figma.ui.postMessage({ type: "pluginError" });
-      figma.notify(`Render failed: ${error instanceof Error ? error.message : String(error)}`);
+      const messageText = error instanceof Error ? error.message : String(error);
+      figma.ui.postMessage({ type: "pluginError", message: messageText });
     }
   };
+  figma.on("selectionchange", () => {
+    sendSelectionInfo();
+    void sendSelectionSvg();
+  });
 })();

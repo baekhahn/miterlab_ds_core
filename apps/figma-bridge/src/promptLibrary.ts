@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { DesignPrompt } from "../../../packages/figma-generator/src/types/designPrompt";
-import { createCatalogPrompt } from "../../../packages/figma-generator/src/catalog/createCatalogPrompt";
 import { createButtonInspectionPrompt } from "../../../packages/figma-generator/src/examples/buttonFamily/createButtonInspectionPrompt";
 import { createInputInspectionPrompt } from "../../../packages/figma-generator/src/examples/inputFamily/createInputInspectionPrompt";
 
@@ -152,7 +151,10 @@ const templates: Record<string, DesignPrompt> = {
 
 export const createPromptFromScreen = (screen: string, theme: string): DesignPrompt => {
   if (screen === "catalog") {
-    return createCatalogPrompt(theme);
+    return {
+      ...catalogPrompt,
+      theme
+    };
   }
 
   if (screen === "button-inspection") {

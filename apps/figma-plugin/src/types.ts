@@ -12,6 +12,28 @@ export interface PluginRenderContractPreviewMessage {
   previewId: string;
 }
 
+export interface PluginRequestSelectionInfoMessage {
+  type: "requestSelectionInfo";
+}
+
+export interface PluginRequestSelectionSvgMessage {
+  type: "requestSelectionSvg";
+}
+
+export interface PluginSaveFileUrlMessage {
+  type: "saveFileUrl";
+  fileUrl: string;
+}
+
+export interface PluginExtractSelectionMessage {
+  type: "extractSelection";
+  nodeUrl?: string;
+}
+
+export interface PluginCancelExtractionMessage {
+  type: "cancelExtraction";
+}
+
 export interface PluginWriteResult {
   createdNodeCount: number;
   createdFrameName: string;
@@ -20,4 +42,9 @@ export interface PluginWriteResult {
 export type PluginUiMessage =
   | PluginReadyMessage
   | PluginRenderInspectionFamilyMessage
-  | PluginRenderContractPreviewMessage;
+  | PluginRenderContractPreviewMessage
+  | PluginRequestSelectionInfoMessage
+  | PluginRequestSelectionSvgMessage
+  | PluginSaveFileUrlMessage
+  | PluginCancelExtractionMessage
+  | PluginExtractSelectionMessage;

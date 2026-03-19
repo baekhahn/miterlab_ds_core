@@ -12,7 +12,7 @@ import {
   getInputMultilineHeight,
   getInputPalette,
   getInputWidth
-} from "../../../../packages/ui-core/contracts/foundationModel.mjs";
+} from "../shared/foundationModel";
 import { loadFont } from "./createTextNode";
 
 const rgb = (hex: string) => {

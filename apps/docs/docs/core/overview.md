@@ -24,24 +24,6 @@ slug: /
 - 톤은 실무적이고 서비스 맥락에 맞아야 합니다.
 - 과한 데모 스타일보다 실제 제품 화면에 가까워야 합니다.
 
-## Foundation Tone
-
-현재 foundation의 시각 기준은 다음을 지향합니다.
-- 과한 데모 스타일보다 서비스 화면에 가까운 안정감
-- 강한 showcase 대비보다 실사용 위계
-- 선명한 원색보다 절제된 강조색
-- 과장된 pill 형태보다 실무적인 radius와 spacing
-
-현재 대표 foundation 색은 시스템의 공통 semantic token으로 아래 값을 사용합니다.
-- primary action: `#0066FF`
-- primary text: `#171719`
-- secondary text: `#2E2F33`
-- line: `#E1E2E4`
-- disabled fill: `#F4F4F5`
-- disabled text: `#989BA2`
-- negative: `#FF4242`
-- positive: `#00BF40`
-
 ## What Is Fixed
 
 이 시스템이 고정하는 것은 다음입니다.
@@ -78,16 +60,6 @@ Core는 시각 스타일 자체보다 구조와 경계를 정의합니다.
 ### Foundation
 
 Foundation은 공통 디자인 값 계층입니다.
-
-예시:
-- color role
-- spacing scale
-- typography scale
-- radius
-- elevation
-- motion
-- touch target
-- safe area
 
 Foundation은 모든 상위 레이어를 지원하지만, 단독으로 제품 작업을 설명하지는 않습니다.
 

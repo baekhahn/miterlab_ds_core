@@ -10,9 +10,11 @@
   ],
   "scripts": {
     "docs:dev": "npm run dev -w @miterlab/docs",
+    "docs:dev:with-bridge": "sh -c 'if curl -sf http://127.0.0.1:8787/health >/dev/null 2>&1; then npm run dev -w @miterlab/docs; else npm run dev -w @miterlab/figma-bridge & BRIDGE_PID=$!; cleanup(){ kill $BRIDGE_PID 2>/dev/null || true; }; trap cleanup EXIT INT TERM; npm run dev -w @miterlab/docs; fi'",
     "docs:build": "npm run build -w @miterlab/docs",
     "docs:serve": "npm run serve -w @miterlab/docs",
     "docs:previews": "npm run previews -w @miterlab/docs",
+    "bridge:dev": "npm run dev -w @miterlab/figma-bridge",
     "plugin:build": "npm run build -w @miterlab/figma-plugin",
     "plugin:typecheck": "npm run typecheck -w @miterlab/figma-plugin",
     "sync:mobile-core": "npm run generate:button-inspection && npm run generate:input-inspection && npm run plugin:build && npm run docs:previews",

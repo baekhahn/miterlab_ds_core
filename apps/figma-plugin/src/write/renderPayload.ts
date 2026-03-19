@@ -1,6 +1,6 @@
 import type { FigmaWriteNode, FigmaWritePayload } from "../../../../shared/contracts/figmaWritePayload";
-import { createInspectionPreviewModel } from "../../../../packages/ui-core/contracts/inspectionPreviewLayout.mjs";
-import { foundationColors } from "../../../../packages/ui-core/contracts/foundationModel.mjs";
+import { createInspectionPreviewModel } from "../shared/inspectionPreviewLayout";
+import { foundationColors } from "../shared/foundationModel";
 import { createContainerNode } from "./createContainerNode";
 import { createFrameNode } from "./createFrameNode";
 import { createInstanceNode } from "./createInstanceNode";
@@ -18,7 +18,7 @@ const toSceneNode = async (node: FigmaWriteNode, theme: string): Promise<SceneNo
   }
 
   if (node.type === "INSTANCE" || node.type === "COMPONENT") {
-    return await createInstanceNode(node, theme);
+    return await createInstanceNode(node);
   }
 
   return createContainerNode(node);
@@ -116,8 +116,7 @@ const createInspectionPreviewFrame = async (payload: FigmaWritePayload, frameNam
           component: item.component.component === "button" ? "Button" : "Input",
           variant: { ...item.component },
           text: item.component.label
-        },
-        theme
+        }
       );
       next.x = item.x;
       next.y = item.y;

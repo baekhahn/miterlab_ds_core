@@ -1,0 +1,89 @@
+import { resolvePattern } from "../grammar/screenPatterns";
+const getSectionName = (name) => {
+    return name.endsWith("-section") ? name.replace(/-section$/, "") : name;
+};
+const collectComponentNodes = (node) => {
+    if (!("children" in node) || !node.children) {
+        return node.type === "component" ? [node] : [];
+    }
+    return node.children.flatMap(collectComponentNodes);
+};
+export const evaluateLayout = (screen, layout) => {
+    const warnings = [];
+    const errors = [];
+    if (!layout) {
+        errors.push({ level: "error", code: "layout_missing", message: "Layout is missing" });
+        return { warnings, errors };
+    }
+    if (layout.type !== "frame") {
+        errors.push({ level: "error", code: "root_not_frame", message: "Root layout node must be frame" });
+        return { warnings, errors };
+    }
+    const pattern = resolvePattern(screen);
+    const sections = (layout.children ?? []).filter((n) => n.type === "stack");
+    const sectionNames = sections.map((s) => getSectionName(s.name));
+    for (const required of pattern.requiredSections) {
+        if (!sectionNames.includes(required)) {
+            errors.push({
+                level: "error",
+                code: "missing_required_section",
+                message: `Missing required section: ${required}`,
+                affectedNodes: [required]
+            });
+        }
+    }
+    const dupes = sectionNames.filter((name, idx) => sectionNames.indexOf(name) !== idx);
+    for (const duplicated of [...new Set(dupes)]) {
+        errors.push({
+            level: "error",
+            code: "duplicated_section",
+            message: `Duplicated section found: ${duplicated}`,
+            affectedNodes: [duplicated]
+        });
+    }
+    const actionSection = sections.find((s) => getSectionName(s.name) === "action");
+    const hasPrimaryAction = collectComponentNodes(layout).some((n) => {
+        if (n.type !== "component")
+            return false;
+        const variant = String(n.props?.variant ?? "");
+        const color = String(n.props?.color ?? "");
+        const fill = String(n.props?.fill ?? "");
+        return n.component === "button" && (variant === "primary" || (color === "primary" && fill === "solid"));
+    });
+    if (hasPrimaryAction && !actionSection && screen !== "button-inspection" && screen !== "input-inspection") {
+        warnings.push({
+            level: "warning",
+            code: "missing_action_section",
+            message: "Primary action exists but action section is missing"
+        });
+    }
+    if (!hasPrimaryAction && screen !== "button-inspection" && screen !== "input-inspection") {
+        warnings.push({
+            level: "warning",
+            code: "missing_primary_action",
+            message: "No primary action button found"
+        });
+    }
+    for (const section of sections) {
+        if (!("children" in section) || !section.children)
+            continue;
+        for (const child of section.children) {
+            if (child.type === "frame") {
+                errors.push({
+                    level: "error",
+                    code: "invalid_nesting",
+                    message: `Invalid nesting: frame inside section ${section.name}`,
+                    affectedNodes: [section.name, child.name]
+                });
+            }
+        }
+    }
+    if (!(screen in { "button-inspection": 1, "input-inspection": 1 })) {
+        warnings.push({
+            level: "warning",
+            code: "unsupported_pattern",
+            message: `Screen pattern '${screen}' is not explicitly supported, fallback pattern may be used`
+        });
+    }
+    return { warnings, errors };
+};

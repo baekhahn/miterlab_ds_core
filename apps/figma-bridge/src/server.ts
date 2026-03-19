@@ -4,18 +4,20 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createPromptFromScreen } from "./promptLibrary";
 import { generateFromPrompt } from "./generate";
+import { extractViaMcp, refreshExtractedDocs } from "./extractViaMcp";
 import type { GenerateFromPromptRequest, GenerateScreenRequest } from "./contracts/generateScreenRequest";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "../../..");
 const port = Number(process.env.PORT ?? 8787);
-const host = process.env.HOST ?? "0.0.0.0";
+const host = process.env.HOST ?? "127.0.0.1";
 const defaultTheme = process.env.BRIDGE_DEFAULT_THEME ?? "core";
 const artifactsDir = path.resolve(repoRoot, "artifacts/bridge");
 const figmaSelectionsDir = path.resolve(repoRoot, "artifacts/figma-selections");
 const componentBlueprintsDir = path.resolve(repoRoot, "artifacts/component-blueprints");
 const figmaRawDir = path.resolve(repoRoot, "artifacts/figma-raw");
+const figmaMcpExtractionsDir = path.resolve(repoRoot, "artifacts/figma-extractions");
 
 const json = (status: number, payload: unknown) => {
   return {
@@ -51,6 +53,13 @@ const writeArtifact = (name: string, data: unknown) => {
   fs.mkdirSync(artifactsDir, { recursive: true });
   fs.writeFileSync(path.resolve(artifactsDir, name), `${JSON.stringify(data, null, 2)}\n`, "utf-8");
 };
+
+const sanitizeSlug = (value: string) =>
+  value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9가-힣]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "figma-extraction";
 
 const sanitizeFileSegment = (value: string) =>
   value
@@ -337,6 +346,132 @@ const server = http.createServer(async (req, res) => {
       }
       const raw = JSON.parse(fs.readFileSync(rawPath, "utf-8"));
       write(res, json(200, { ok: true, key: body.extractionKey, raw }));
+      return;
+    } catch (error) {
+      write(
+        res,
+        json(400, {
+          error: error instanceof Error ? error.message : String(error)
+        })
+      );
+      return;
+    }
+  }
+
+  if (method === "POST" && url === "/extract-via-mcp") {
+    try {
+      const body = await readJsonBody<{
+        extractionName?: string;
+        selectionSvg?: string;
+        reference?: {
+          fileKey?: string;
+          pageName?: string;
+          selectionCount?: number;
+          nodes?: Array<{
+            id?: string;
+            name?: string;
+            type?: string;
+            url?: string;
+            isFigmaComponent?: boolean;
+            componentRole?: "instance" | "component" | "component-set" | "node";
+            mainComponentName?: string | null;
+            componentKey?: string;
+            variantProperties?: Record<string, string | boolean>;
+          }>;
+        };
+      }>(req);
+
+      if (!body.reference?.fileKey || !Array.isArray(body.reference.nodes) || body.reference.nodes.length === 0) {
+        write(res, json(400, { error: "reference.fileKey and reference.nodes are required" }));
+        return;
+      }
+
+      const result = await extractViaMcp({
+        extractionName: body.extractionName ?? body.reference.nodes[0]?.name ?? "figma-selection",
+        outputDir: figmaMcpExtractionsDir,
+        selectionSvg: typeof body.selectionSvg === "string" ? body.selectionSvg : undefined,
+        reference: {
+          fileKey: body.reference.fileKey,
+          pageName: body.reference.pageName ?? "",
+          selectionCount: body.reference.selectionCount ?? body.reference.nodes.length,
+          nodes: body.reference.nodes.map((node) => ({
+            id: node.id ?? "",
+            name: node.name ?? "node",
+            type: node.type ?? "UNKNOWN",
+            url: node.url ?? "",
+            isFigmaComponent: Boolean(node.isFigmaComponent),
+            componentRole: node.componentRole ?? "node",
+            mainComponentName: node.mainComponentName ?? null,
+            componentKey: node.componentKey,
+            variantProperties: node.variantProperties ?? undefined
+          }))
+        }
+      });
+
+      write(res, json(200, result));
+      return;
+    } catch (error) {
+      write(
+        res,
+        json(400, {
+          error: error instanceof Error ? error.message : String(error)
+        })
+      );
+      return;
+    }
+  }
+
+  if (method === "POST" && url === "/extraction-status") {
+    try {
+      const body = await readJsonBody<{ extractionName?: string }>(req);
+      if (!body.extractionName) {
+        write(res, json(400, { error: "extractionName is required" }));
+        return;
+      }
+
+      const summaryPath = path.resolve(
+        figmaMcpExtractionsDir,
+        sanitizeSlug(body.extractionName),
+        "summary.json"
+      );
+
+      if (!fs.existsSync(summaryPath)) {
+        write(res, json(404, { error: "summary not found" }));
+        return;
+      }
+
+      const summary = JSON.parse(fs.readFileSync(summaryPath, "utf-8"));
+      write(res, json(200, summary));
+      return;
+    } catch (error) {
+      write(
+        res,
+        json(400, {
+          error: error instanceof Error ? error.message : String(error)
+        })
+      );
+      return;
+    }
+  }
+
+  if (method === "POST" && url === "/delete-extraction") {
+    try {
+      const body = await readJsonBody<{ slug?: string }>(req);
+      const slug = sanitizeSlug(body.slug ?? "");
+      if (!slug) {
+        write(res, json(400, { error: "slug is required" }));
+        return;
+      }
+
+      const targetDir = path.resolve(figmaMcpExtractionsDir, slug);
+      if (!fs.existsSync(targetDir)) {
+        write(res, json(404, { error: "extraction not found" }));
+        return;
+      }
+
+      fs.rmSync(targetDir, { recursive: true, force: true });
+      await refreshExtractedDocs();
+      write(res, json(200, { ok: true, slug }));
       return;
     } catch (error) {
       write(

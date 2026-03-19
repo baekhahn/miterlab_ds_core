@@ -1,0 +1,17 @@
+[
+  {
+    "slug": "main-action",
+    "title": "┗ Main Action",
+    "nodeName": "┗ Main Action",
+    "nodeType": "INSTANCE",
+    "isFigmaComponent": false,
+    "componentRole": "node",
+    "mainComponentName": null,
+    "variantProperties": {},
+    "fileKey": "dkTDZO4Gdh64vtvVd11YyJ",
+    "nodeId": "I16246:4152514;16215:35685;16215:35710",
+    "extractedAt": "2026-03-19T23:20:31.775Z",
+    "dir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/main-action/main-action-I16246-4152514;16215-35685;16215-35710",
+    "svgPath": "/extracted/main-action-main-action-I16246-4152514;16215-35685;16215-35710.svg"
+  }
+]
