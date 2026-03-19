@@ -25,24 +25,24 @@
     colors: {
       button: {
         emphasis: {
-          primary: { fill: "#1F6BFF", stroke: "#1F6BFF", text: "#FFFFFF", pressedFill: "#1859D6", pressedStroke: "#1859D6" },
-          secondary: { fill: "#FFFFFF", stroke: "#C7D2E5", text: "#172033", pressedFill: "#F4F7FB", pressedStroke: "#B7C5DD" },
-          tertiary: { fill: "transparent", stroke: "transparent", text: "#172033", pressedFill: "transparent", pressedStroke: "transparent" },
-          destructive: { fill: "#DC3F45", stroke: "#DC3F45", text: "#FFFFFF", pressedFill: "#B73238", pressedStroke: "#B73238" },
-          disabled: { fill: "#F1F5F9", stroke: "#E2E8F0", text: "#94A3B8" }
+          primary: { fill: "#0064FF", stroke: "#0064FF", text: "#FFFFFF", pressedFill: "#0056DB", pressedStroke: "#0056DB" },
+          secondary: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#171719", pressedFill: "#F7F7F8", pressedStroke: "#D3D5D9" },
+          tertiary: { fill: "transparent", stroke: "transparent", text: "#2E2F33", pressedFill: "transparent", pressedStroke: "transparent" },
+          destructive: { fill: "#FF4242", stroke: "#FF4242", text: "#FFFFFF", pressedFill: "#E03838", pressedStroke: "#E03838" },
+          disabled: { fill: "#F4F4F5", stroke: "#E1E2E4", text: "#989BA2" }
         }
       },
       input: {
         intent: {
-          default: { fill: "#FFFFFF", stroke: "#CBD5E1", text: "#111827", subtle: "#94A3B8" },
-          error: { fill: "#FFFFFF", stroke: "#DC2626", text: "#111827", subtle: "#94A3B8" },
-          success: { fill: "#FFFFFF", stroke: "#0E9F6E", text: "#111827", subtle: "#94A3B8" },
-          disabled: { fill: "#F1F5F9", stroke: "#E2E8F0", text: "#94A3B8", subtle: "#94A3B8" },
-          readonly: { fill: "#F8FAFC", stroke: "#CBD5E1", text: "#475569", subtle: "#94A3B8" },
-          loading: { fill: "#FFFFFF", stroke: "#CBD5E1", text: "#64748B", subtle: "#94A3B8" }
+          default: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#171719", subtle: "#989BA2" },
+          error: { fill: "#FFFFFF", stroke: "#FF4242", text: "#171719", subtle: "#989BA2" },
+          success: { fill: "#FFFFFF", stroke: "#00BF40", text: "#171719", subtle: "#989BA2" },
+          disabled: { fill: "#F4F4F5", stroke: "#E1E2E4", text: "#989BA2", subtle: "#989BA2" },
+          readonly: { fill: "#F7F7F8", stroke: "#E1E2E4", text: "#2E2F33", subtle: "#989BA2" },
+          loading: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#989BA2", subtle: "#989BA2" }
         },
         focusRing: {
-          stroke: "#2D6CFF",
+          stroke: "#0064FF",
           strokeWeight: 2
         }
       }
@@ -50,13 +50,13 @@
     button: {
       render: {
         sizes: {
-          sm: { height: 44, paddingX: 14, paddingY: 10, radius: 14, fontSize: 15, lineHeight: 20, gap: 8, minWidth: 120 },
-          md: { height: 50, paddingX: 18, paddingY: 13, radius: 14, fontSize: 16, lineHeight: 22, gap: 8, minWidth: 128 },
-          lg: { height: 56, paddingX: 20, paddingY: 16, radius: 16, fontSize: 17, lineHeight: 24, gap: 8, minWidth: 176 }
+          sm: { height: 44, paddingX: 14, paddingY: 10, radius: 12, fontSize: 14, lineHeight: 20, gap: 8, minWidth: 112 },
+          md: { height: 48, paddingX: 16, paddingY: 12, radius: 12, fontSize: 15, lineHeight: 22, gap: 8, minWidth: 124 },
+          lg: { height: 52, paddingX: 18, paddingY: 14, radius: 14, fontSize: 16, lineHeight: 22, gap: 8, minWidth: 168 }
         },
         widths: {
           hug: 128,
-          full: 358
+          full: 360
         }
       },
       inspection: {
@@ -98,13 +98,13 @@
     input: {
       render: {
         sizes: {
-          sm: { height: 44, paddingX: 14, paddingY: 12, radius: 14, fontSize: 15, lineHeight: 20, minWidth: 220 },
-          md: { height: 48, paddingX: 14, paddingY: 14, radius: 14, fontSize: 16, lineHeight: 22, minWidth: 220 },
-          lg: { height: 56, paddingX: 16, paddingY: 16, radius: 16, fontSize: 17, lineHeight: 24, minWidth: 220 }
+          sm: { height: 44, paddingX: 14, paddingY: 12, radius: 12, fontSize: 14, lineHeight: 20, minWidth: 220 },
+          md: { height: 48, paddingX: 14, paddingY: 14, radius: 12, fontSize: 15, lineHeight: 22, minWidth: 220 },
+          lg: { height: 52, paddingX: 16, paddingY: 15, radius: 14, fontSize: 16, lineHeight: 22, minWidth: 220 }
         },
         widths: {
           hug: 220,
-          full: 358
+          full: 360
         }
       },
       inspection: {
@@ -152,10 +152,10 @@
   var PREVIEW_MIN_HEIGHT = 380;
   var PREVIEW_PADDING_LEFT = 32;
   var PREVIEW_PADDING_RIGHT = 40;
-  var CONTENT_START_X = 120;
-  var ROW_GAP = 22;
-  var ITEM_GAP = 20;
-  var WRAP_GAP = 16;
+  var CONTENT_START_X = 116;
+  var ROW_GAP = 18;
+  var ITEM_GAP = 14;
+  var WRAP_GAP = 12;
   var axisTitle = (axis) => {
     if (axis === "emphasis") return "Emphasis";
     if (axis === "intent") return "Intent";
@@ -291,24 +291,24 @@
     colors: {
       button: {
         emphasis: {
-          primary: { fill: "#1F6BFF", stroke: "#1F6BFF", text: "#FFFFFF", pressedFill: "#1859D6", pressedStroke: "#1859D6" },
-          secondary: { fill: "#FFFFFF", stroke: "#C7D2E5", text: "#172033", pressedFill: "#F4F7FB", pressedStroke: "#B7C5DD" },
-          tertiary: { fill: "transparent", stroke: "transparent", text: "#172033", pressedFill: "transparent", pressedStroke: "transparent" },
-          destructive: { fill: "#DC3F45", stroke: "#DC3F45", text: "#FFFFFF", pressedFill: "#B73238", pressedStroke: "#B73238" },
-          disabled: { fill: "#F1F5F9", stroke: "#E2E8F0", text: "#94A3B8" }
+          primary: { fill: "#0064FF", stroke: "#0064FF", text: "#FFFFFF", pressedFill: "#0056DB", pressedStroke: "#0056DB" },
+          secondary: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#171719", pressedFill: "#F7F7F8", pressedStroke: "#D3D5D9" },
+          tertiary: { fill: "transparent", stroke: "transparent", text: "#2E2F33", pressedFill: "transparent", pressedStroke: "transparent" },
+          destructive: { fill: "#FF4242", stroke: "#FF4242", text: "#FFFFFF", pressedFill: "#E03838", pressedStroke: "#E03838" },
+          disabled: { fill: "#F4F4F5", stroke: "#E1E2E4", text: "#989BA2" }
         }
       },
       input: {
         intent: {
-          default: { fill: "#FFFFFF", stroke: "#CBD5E1", text: "#111827", subtle: "#94A3B8" },
-          error: { fill: "#FFFFFF", stroke: "#DC2626", text: "#111827", subtle: "#94A3B8" },
-          success: { fill: "#FFFFFF", stroke: "#0E9F6E", text: "#111827", subtle: "#94A3B8" },
-          disabled: { fill: "#F1F5F9", stroke: "#E2E8F0", text: "#94A3B8", subtle: "#94A3B8" },
-          readonly: { fill: "#F8FAFC", stroke: "#CBD5E1", text: "#475569", subtle: "#94A3B8" },
-          loading: { fill: "#FFFFFF", stroke: "#CBD5E1", text: "#64748B", subtle: "#94A3B8" }
+          default: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#171719", subtle: "#989BA2" },
+          error: { fill: "#FFFFFF", stroke: "#FF4242", text: "#171719", subtle: "#989BA2" },
+          success: { fill: "#FFFFFF", stroke: "#00BF40", text: "#171719", subtle: "#989BA2" },
+          disabled: { fill: "#F4F4F5", stroke: "#E1E2E4", text: "#989BA2", subtle: "#989BA2" },
+          readonly: { fill: "#F7F7F8", stroke: "#E1E2E4", text: "#2E2F33", subtle: "#989BA2" },
+          loading: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#989BA2", subtle: "#989BA2" }
         },
         focusRing: {
-          stroke: "#2D6CFF",
+          stroke: "#0064FF",
           strokeWeight: 2
         }
       }
@@ -316,13 +316,13 @@
     button: {
       render: {
         sizes: {
-          sm: { height: 44, paddingX: 14, paddingY: 10, radius: 14, fontSize: 15, lineHeight: 20, gap: 8, minWidth: 120 },
-          md: { height: 50, paddingX: 18, paddingY: 13, radius: 14, fontSize: 16, lineHeight: 22, gap: 8, minWidth: 128 },
-          lg: { height: 56, paddingX: 20, paddingY: 16, radius: 16, fontSize: 17, lineHeight: 24, gap: 8, minWidth: 176 }
+          sm: { height: 44, paddingX: 14, paddingY: 10, radius: 12, fontSize: 14, lineHeight: 20, gap: 8, minWidth: 112 },
+          md: { height: 48, paddingX: 16, paddingY: 12, radius: 12, fontSize: 15, lineHeight: 22, gap: 8, minWidth: 124 },
+          lg: { height: 52, paddingX: 18, paddingY: 14, radius: 14, fontSize: 16, lineHeight: 22, gap: 8, minWidth: 168 }
         },
         widths: {
           hug: 128,
-          full: 358
+          full: 360
         }
       },
       inspection: {
@@ -364,13 +364,13 @@
     input: {
       render: {
         sizes: {
-          sm: { height: 44, paddingX: 14, paddingY: 12, radius: 14, fontSize: 15, lineHeight: 20, minWidth: 220 },
-          md: { height: 48, paddingX: 14, paddingY: 14, radius: 14, fontSize: 16, lineHeight: 22, minWidth: 220 },
-          lg: { height: 56, paddingX: 16, paddingY: 16, radius: 16, fontSize: 17, lineHeight: 24, minWidth: 220 }
+          sm: { height: 44, paddingX: 14, paddingY: 12, radius: 12, fontSize: 14, lineHeight: 20, minWidth: 220 },
+          md: { height: 48, paddingX: 14, paddingY: 14, radius: 12, fontSize: 15, lineHeight: 22, minWidth: 220 },
+          lg: { height: 52, paddingX: 16, paddingY: 15, radius: 14, fontSize: 16, lineHeight: 22, minWidth: 220 }
         },
         widths: {
           hug: 220,
-          full: 358
+          full: 360
         }
       },
       inspection: {
@@ -833,13 +833,13 @@
     pill.x = x;
     pill.y = y;
     pill.cornerRadius = 12;
-    pill.fills = [{ type: "SOLID", color: rgb3("#E8EEF8") }];
+    pill.fills = [{ type: "SOLID", color: rgb3("#F2F4F7") }];
     pill.strokes = [];
     const text = figma.createText();
     text.fontName = await loadFont("semibold");
     text.characters = label;
     text.fontSize = 11;
-    text.fills = [{ type: "SOLID", color: rgb3("#4A5872") }];
+    text.fills = [{ type: "SOLID", color: rgb3("#667085") }];
     text.textAlignHorizontal = "CENTER";
     text.textAutoResize = "WIDTH_AND_HEIGHT";
     text.x = Math.round((72 - text.width) / 2);
@@ -854,7 +854,7 @@
     frame.layoutMode = "NONE";
     frame.resize(preview.width, preview.height);
     frame.cornerRadius = 24;
-    frame.fills = [{ type: "SOLID", color: rgb3("#F8FAFC") }];
+    frame.fills = [{ type: "SOLID", color: rgb3("#FFFFFF") }];
     frame.strokes = [];
     frame.clipsContent = false;
     const theme = payload.document.theme || "core";
@@ -924,6 +924,334 @@
     };
   };
 
+  // src/write/renderContractPreview.ts
+  var COLORS = {
+    bg: "#FFFFFF",
+    panel: "#F7F7F8",
+    line: "#E1E2E4",
+    text: "#171719",
+    textSecondary: "#2E2F33",
+    textMuted: "#989BA2",
+    primary: "#0064FF",
+    success: "#00BF40",
+    danger: "#FF4242"
+  };
+  var contractPreviewOptions = [
+    { id: "button", label: "Button", level: "component" },
+    { id: "input", label: "Input", level: "component" },
+    { id: "checkbox", label: "Checkbox", level: "component" },
+    { id: "text", label: "Text", level: "component" },
+    { id: "icon", label: "Icon", level: "component" },
+    { id: "form-field", label: "FormField", level: "module" },
+    { id: "search-bar", label: "SearchBar", level: "module" },
+    { id: "list-row", label: "ListRow", level: "module" },
+    { id: "bottom-action-group", label: "BottomActionGroup", level: "module" },
+    { id: "filter-chip-group", label: "FilterChipGroup", level: "module" },
+    { id: "empty-state-block", label: "EmptyStateBlock", level: "module" },
+    { id: "login-form", label: "Login Form", level: "pattern" },
+    { id: "search-result-screen", label: "Search Result Screen", level: "pattern" },
+    { id: "settings-screen", label: "Settings Screen", level: "pattern" },
+    { id: "product-detail-sticky-cta", label: "Product Detail with Sticky CTA", level: "pattern" }
+  ];
+  var rgb4 = (hex) => {
+    const normalized = hex.replace("#", "");
+    const bigint = Number.parseInt(normalized, 16);
+    return {
+      r: (bigint >> 16 & 255) / 255,
+      g: (bigint >> 8 & 255) / 255,
+      b: (bigint & 255) / 255
+    };
+  };
+  var setSolidFill = (node, hex) => {
+    node.fills = [{ type: "SOLID", color: rgb4(hex) }];
+  };
+  var setStroke = (node, hex, weight = 1) => {
+    node.strokes = [{ type: "SOLID", color: rgb4(hex) }];
+    node.strokeWeight = weight;
+  };
+  var createText2 = async (value, x, y, size, color, weight = "regular", align = "LEFT") => {
+    const node = figma.createText();
+    node.fontName = await loadFont(weight);
+    node.characters = value;
+    node.fontSize = size;
+    node.lineHeight = { unit: "PIXELS", value: Math.round(size * 1.45) };
+    node.fills = [{ type: "SOLID", color: rgb4(color) }];
+    node.textAutoResize = "WIDTH_AND_HEIGHT";
+    node.textAlignHorizontal = align;
+    node.x = x;
+    node.y = y;
+    return node;
+  };
+  var createRect = (x, y, width, height, radius, fill, stroke, strokeWeight = 1) => {
+    const node = figma.createRectangle();
+    node.x = x;
+    node.y = y;
+    node.resize(width, height);
+    node.cornerRadius = radius;
+    setSolidFill(node, fill);
+    if (stroke) {
+      setStroke(node, stroke, strokeWeight);
+    } else {
+      node.strokes = [];
+    }
+    return node;
+  };
+  var createCanvas = (name, width, height) => {
+    const frame = figma.createFrame();
+    frame.name = name;
+    frame.resize(width, height);
+    frame.layoutMode = "NONE";
+    frame.cornerRadius = 24;
+    frame.fills = [{ type: "SOLID", color: rgb4(COLORS.bg) }];
+    frame.strokes = [];
+    frame.clipsContent = false;
+    return frame;
+  };
+  var createPanel = (title, x, y, width, height) => {
+    const panel = createRect(x, y, width, height, 20, COLORS.panel, COLORS.line);
+    panel.name = `${title} panel`;
+    return panel;
+  };
+  var createButton = async (label, x, y, width, height, tone = "primary") => {
+    const fill = tone === "primary" ? COLORS.primary : tone === "destructive" ? COLORS.danger : "#FFFFFF";
+    const stroke = tone === "secondary" ? COLORS.line : fill;
+    const textColor = tone === "secondary" ? COLORS.text : "#FFFFFF";
+    const button = createRect(x, y, width, height, 14, fill, stroke);
+    const text = await createText2(label, x + width / 2, y + 15, 15, textColor, "semibold", "CENTER");
+    text.x = x + (width - text.width) / 2;
+    return [button, text];
+  };
+  var createField = async (value, x, y, width, height, tone = "default", helperText) => {
+    const stroke = tone === "error" ? COLORS.danger : tone === "success" ? COLORS.success : COLORS.line;
+    const field = createRect(x, y, width, height, 12, "#FFFFFF", stroke);
+    const text = await createText2(value, x + 16, y + 14, 15, value.startsWith("name@") || value.startsWith("\uAC80\uC0C9") ? COLORS.textMuted : COLORS.text);
+    const nodes = [field, text];
+    if (helperText) {
+      nodes.push(await createText2(helperText, x, y + height + 10, 12, tone === "error" ? COLORS.danger : COLORS.textMuted));
+    }
+    return nodes;
+  };
+  var createChip = async (label, x, y, selected = false) => {
+    const fill = selected ? "#EAF2FF" : "#FFFFFF";
+    const stroke = selected ? COLORS.primary : COLORS.line;
+    const chip = createRect(x, y, 88, 32, 16, fill, stroke);
+    const labelNode = await createText2(label, x + 44, y + 9, 12, selected ? COLORS.primary : COLORS.textSecondary, "semibold", "CENTER");
+    labelNode.x = x + (88 - labelNode.width) / 2;
+    return [chip, labelNode];
+  };
+  var createListRow = async (title, subtitle, x, y, width) => {
+    const row = createRect(x, y, width, 64, 16, "#FFFFFF", COLORS.line);
+    const titleNode = await createText2(title, x + 24, y + 16, 15, COLORS.text, "semibold");
+    const nodes = [row, titleNode];
+    if (subtitle) {
+      nodes.push(await createText2(subtitle, x + 24, y + 38, 13, COLORS.textMuted));
+    }
+    const chevron = await createText2(">", x + width - 28, y + 22, 16, COLORS.textMuted, "semibold");
+    nodes.push(chevron);
+    return nodes;
+  };
+  var renderCheckboxPreview = async () => {
+    const frame = createCanvas("Checkbox Contract Preview", 920, 280);
+    frame.appendChild(createPanel("Checkbox", 32, 32, 856, 216));
+    frame.appendChild(await createText2("Checkbox", 50, 50, 13, COLORS.textSecondary, "semibold"));
+    const rows = [
+      [86, "\uC774\uBA54\uC77C \uC54C\uB9BC \uBC1B\uAE30", false, false],
+      [132, "\uC8FC\uAC04 \uB9AC\uD3EC\uD2B8 \uAD6C\uB3C5", true, false],
+      [178, "\uCC44\uC6A9 \uC18C\uC2DD \uBC1B\uAE30", false, true]
+    ];
+    for (const [y, label, checked, disabled] of rows) {
+      const box = createRect(72, y, 22, 22, 6, checked ? COLORS.primary : "#FFFFFF", disabled ? COLORS.line : checked ? COLORS.primary : COLORS.line, 1.5);
+      frame.appendChild(box);
+      if (checked) {
+        const mark = await createText2("\u2713", 78, y + 2, 13, "#FFFFFF", "semibold");
+        frame.appendChild(mark);
+      }
+      frame.appendChild(await createText2(label, 108, y + 3, 14, disabled ? COLORS.textMuted : COLORS.text, "medium"));
+    }
+    return frame;
+  };
+  var renderTextPreview = async () => {
+    const frame = createCanvas("Text Contract Preview", 920, 300);
+    frame.appendChild(createPanel("Text", 32, 32, 856, 236));
+    frame.appendChild(await createText2("Text", 50, 50, 13, COLORS.textSecondary, "semibold"));
+    frame.appendChild(await createText2("\uD504\uB85C\uC81D\uD2B8 \uC81C\uBAA9", 72, 86, 24, COLORS.text, "semibold"));
+    frame.appendChild(await createText2("\uC139\uC158 \uC81C\uBAA9", 72, 122, 18, COLORS.textSecondary, "semibold"));
+    frame.appendChild(await createText2("\uBCF8\uBB38 \uD14D\uC2A4\uD2B8\uB294 \uC77D\uAE30 \uD750\uB984\uACFC \uC815\uBCF4 \uBC00\uB3C4\uB97C \uC720\uC9C0\uD574\uC57C \uD569\uB2C8\uB2E4.", 72, 160, 15, COLORS.textSecondary));
+    frame.appendChild(await createText2("Helper text", 72, 192, 12, COLORS.textMuted));
+    frame.appendChild(await createText2("Error message", 72, 220, 12, COLORS.danger, "medium"));
+    return frame;
+  };
+  var renderIconPreview = async () => {
+    const frame = createCanvas("Icon Contract Preview", 920, 280);
+    frame.appendChild(createPanel("Icon", 32, 32, 856, 216));
+    frame.appendChild(await createText2("Icon", 50, 50, 13, COLORS.textSecondary, "semibold"));
+    const glyphs = [
+      ["+", COLORS.primary],
+      ["\u2192", COLORS.textSecondary],
+      ["\u2713", COLORS.success],
+      ["!", COLORS.danger]
+    ];
+    for (const [index, [glyph, color]] of glyphs.entries()) {
+      const x = 72 + index * 120;
+      frame.appendChild(createRect(x, 96, 72, 72, 18, "#FFFFFF", COLORS.line));
+      const label = await createText2(glyph, x + 36, 117, 28, color, "semibold", "CENTER");
+      label.x = x + (72 - label.width) / 2;
+      frame.appendChild(label);
+    }
+    return frame;
+  };
+  var renderFormFieldPreview = async () => {
+    const frame = createCanvas("FormField Contract Preview", 920, 320);
+    frame.appendChild(createPanel("FormField", 32, 32, 856, 256));
+    frame.appendChild(await createText2("FormField", 50, 50, 13, COLORS.textSecondary, "semibold"));
+    frame.appendChild(await createText2("\uC774\uBA54\uC77C", 72, 88, 13, COLORS.textSecondary, "semibold"));
+    for (const node of await createField("name@example.com", 72, 102, 320, 48)) frame.appendChild(node);
+    frame.appendChild(await createText2("\uB85C\uADF8\uC778\uC5D0 \uC0AC\uC6A9\uD560 \uC774\uBA54\uC77C\uC785\uB2C8\uB2E4.", 72, 172, 12, COLORS.textMuted));
+    frame.appendChild(await createText2("\uBE44\uBC00\uBC88\uD638", 472, 88, 13, COLORS.textSecondary, "semibold"));
+    for (const node of await createField("\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022", 472, 102, 320, 48, "error", "\uBE44\uBC00\uBC88\uD638\uB97C \uB2E4\uC2DC \uD655\uC778\uD574 \uC8FC\uC138\uC694.")) frame.appendChild(node);
+    return frame;
+  };
+  var renderSearchBarPreview = async () => {
+    const frame = createCanvas("SearchBar Contract Preview", 920, 280);
+    frame.appendChild(createPanel("SearchBar", 32, 32, 856, 216));
+    frame.appendChild(await createText2("SearchBar", 50, 50, 13, COLORS.textSecondary, "semibold"));
+    for (const node of await createField("\uAC80\uC0C9\uC5B4\uB97C \uC785\uB825\uD558\uC138\uC694", 72, 86, 500, 48)) frame.appendChild(node);
+    frame.appendChild(await createText2("\xD7", 546, 100, 16, COLORS.textMuted, "semibold"));
+    for (const node of await createChip("\uC804\uCCB4", 72, 160, true)) frame.appendChild(node);
+    for (const node of await createChip("\uCC44\uC6A9", 170, 160, false)) frame.appendChild(node);
+    for (const node of await createChip("\uAE30\uC5C5", 268, 160, false)) frame.appendChild(node);
+    return frame;
+  };
+  var renderListRowPreview = async () => {
+    const frame = createCanvas("ListRow Contract Preview", 920, 300);
+    frame.appendChild(createPanel("ListRow", 32, 32, 856, 236));
+    frame.appendChild(await createText2("ListRow", 50, 50, 13, COLORS.textSecondary, "semibold"));
+    for (const node of await createListRow("\uC54C\uB9BC \uC124\uC815", "\uD478\uC2DC \uC54C\uB9BC, \uC774\uBA54\uC77C \uC218\uC2E0 \uC5EC\uBD80", 72, 82, 760)) frame.appendChild(node);
+    const second = createRect(72, 158, 760, 64, 16, "#FFFFFF", COLORS.line);
+    frame.appendChild(second);
+    frame.appendChild(await createText2("\uACC4\uC815 \uBCF4\uC548", 96, 180, 15, COLORS.text, "semibold"));
+    const value = await createText2("2\uB2E8\uACC4 \uC778\uC99D", 744, 180, 13, COLORS.textSecondary, "medium", "RIGHT");
+    value.x = 704;
+    frame.appendChild(value);
+    return frame;
+  };
+  var renderBottomActionGroupPreview = async () => {
+    const frame = createCanvas("BottomActionGroup Contract Preview", 920, 260);
+    const dock = createRect(0, 180, 920, 80, 0, "#FFFFFF", COLORS.line);
+    frame.appendChild(dock);
+    for (const node of await createButton("\uCDE8\uC18C", 32, 196, 168, 44, "secondary")) frame.appendChild(node);
+    for (const node of await createButton("\uC800\uC7A5\uD558\uAE30", 216, 192, 672, 52, "primary")) frame.appendChild(node);
+    return frame;
+  };
+  var renderFilterChipGroupPreview = async () => {
+    const frame = createCanvas("FilterChipGroup Contract Preview", 920, 240);
+    frame.appendChild(createPanel("FilterChipGroup", 32, 32, 856, 176));
+    frame.appendChild(await createText2("FilterChipGroup", 50, 50, 13, COLORS.textSecondary, "semibold"));
+    const chips = [
+      ["\uC804\uCCB4", 72, true],
+      ["\uC6D0\uACA9\uADFC\uBB34", 170, false],
+      ["\uD504\uB860\uD2B8\uC5D4\uB4DC", 268, false],
+      ["\uC2E0\uC785", 366, false],
+      ["\uB9C8\uAC10\uC784\uBC15", 464, true]
+    ];
+    for (const [label, x, selected] of chips) {
+      for (const node of await createChip(label, x, 92, selected)) frame.appendChild(node);
+    }
+    return frame;
+  };
+  var renderEmptyStateBlockPreview = async () => {
+    const frame = createCanvas("EmptyStateBlock Contract Preview", 920, 360);
+    frame.appendChild(createPanel("EmptyStateBlock", 32, 32, 856, 296));
+    frame.appendChild(await createText2("EmptyStateBlock", 50, 50, 13, COLORS.textSecondary, "semibold"));
+    frame.appendChild(createRect(408, 88, 104, 104, 28, COLORS.panel, COLORS.line));
+    const glyph = await createText2("\u25A1", 454, 119, 34, COLORS.textMuted, "semibold", "CENTER");
+    glyph.x = 408 + (104 - glyph.width) / 2;
+    frame.appendChild(glyph);
+    const title = await createText2("\uC870\uAC74\uC5D0 \uB9DE\uB294 \uACB0\uACFC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4", 0, 226, 18, COLORS.text, "semibold", "CENTER");
+    title.x = 460 - title.width / 2;
+    frame.appendChild(title);
+    const desc = await createText2("\uD544\uD130\uB97C \uB2E4\uC2DC \uC870\uC815\uD558\uAC70\uB098 \uAC80\uC0C9\uC5B4\uB97C \uBCC0\uACBD\uD574 \uBCF4\uC138\uC694.", 0, 252, 13, COLORS.textMuted, "regular", "CENTER");
+    desc.x = 460 - desc.width / 2;
+    frame.appendChild(desc);
+    for (const node of await createButton("\uD544\uD130 \uCD08\uAE30\uD654", 360, 272, 200, 44, "primary")) frame.appendChild(node);
+    return frame;
+  };
+  var renderLoginFormPattern = async () => {
+    const frame = createCanvas("Login Form Pattern Preview", 920, 640);
+    frame.appendChild(createRect(270, 24, 380, 592, 28, "#FFFFFF", COLORS.line));
+    frame.appendChild(await createText2("\uB85C\uADF8\uC778", 310, 82, 24, COLORS.text, "semibold"));
+    frame.appendChild(await createText2("\uC774\uBA54\uC77C\uB85C \uACC4\uC18D \uC9C4\uD589\uD558\uC138\uC694", 310, 116, 14, COLORS.textMuted));
+    frame.appendChild(await createText2("\uC774\uBA54\uC77C", 310, 166, 13, COLORS.textSecondary, "semibold"));
+    for (const node of await createField("name@example.com", 310, 180, 300, 48)) frame.appendChild(node);
+    frame.appendChild(await createText2("\uBE44\uBC00\uBC88\uD638", 310, 266, 13, COLORS.textSecondary, "semibold"));
+    for (const node of await createField("\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022", 310, 280, 300, 48)) frame.appendChild(node);
+    for (const node of await createButton("\uB85C\uADF8\uC778", 310, 500, 300, 52, "primary")) frame.appendChild(node);
+    return frame;
+  };
+  var renderSearchResultPattern = async () => {
+    const frame = createCanvas("Search Result Screen Pattern Preview", 920, 620);
+    frame.appendChild(createRect(210, 24, 500, 572, 28, "#FFFFFF", COLORS.line));
+    for (const node of await createField("\uD504\uB860\uD2B8\uC5D4\uB4DC", 242, 54, 436, 48)) frame.appendChild(node);
+    for (const node of await createChip("\uC804\uCCB4", 242, 118, true)) frame.appendChild(node);
+    for (const node of await createChip("\uACBD\uB825", 340, 118, false)) frame.appendChild(node);
+    for (const node of await createChip("\uC6D0\uACA9", 438, 118, false)) frame.appendChild(node);
+    for (const node of await createListRow("Miterlab", "\uD504\uB860\uD2B8\uC5D4\uB4DC \uC5D4\uC9C0\uB2C8\uC5B4", 242, 172, 436)) frame.appendChild(node);
+    for (const node of await createListRow("Wanted", "\uBAA8\uBC14\uC77C \uC81C\uD488 \uB514\uC790\uC774\uB108", 242, 256, 436)) frame.appendChild(node);
+    return frame;
+  };
+  var renderSettingsPattern = async () => {
+    const frame = createCanvas("Settings Screen Pattern Preview", 920, 620);
+    frame.appendChild(createRect(220, 24, 480, 572, 28, "#FFFFFF", COLORS.line));
+    frame.appendChild(await createText2("\uC124\uC815", 256, 78, 22, COLORS.text, "semibold"));
+    for (const node of await createListRow("\uC54C\uB9BC \uC124\uC815", null, 256, 116, 408)) frame.appendChild(node);
+    for (const node of await createListRow("\uACC4\uC815 \uBCF4\uC548", null, 256, 192, 408)) frame.appendChild(node);
+    for (const node of await createListRow("\uAC1C\uC778\uC815\uBCF4 \uAD00\uB9AC", null, 256, 268, 408)) frame.appendChild(node);
+    return frame;
+  };
+  var renderProductDetailPattern = async () => {
+    const frame = createCanvas("Product Detail with Sticky CTA Pattern Preview", 920, 660);
+    frame.appendChild(createRect(210, 24, 500, 612, 28, "#FFFFFF", COLORS.line));
+    frame.appendChild(createRect(242, 54, 436, 220, 20, COLORS.panel, COLORS.line));
+    frame.appendChild(await createText2("\uC81C\uD488\uBA85", 242, 314, 22, COLORS.text, "semibold"));
+    frame.appendChild(await createText2("\uD575\uC2EC \uC124\uBA85\uACFC \uAC00\uACA9 \uC815\uBCF4", 242, 344, 14, COLORS.textSecondary));
+    frame.appendChild(createRect(230, 556, 460, 64, 20, "#FFFFFF", COLORS.line));
+    for (const node of await createButton("\uBC14\uB85C \uC9C0\uC6D0\uD558\uAE30", 246, 562, 428, 52, "primary")) frame.appendChild(node);
+    return frame;
+  };
+  var renderers = {
+    checkbox: renderCheckboxPreview,
+    text: renderTextPreview,
+    icon: renderIconPreview,
+    "form-field": renderFormFieldPreview,
+    "search-bar": renderSearchBarPreview,
+    "list-row": renderListRowPreview,
+    "bottom-action-group": renderBottomActionGroupPreview,
+    "filter-chip-group": renderFilterChipGroupPreview,
+    "empty-state-block": renderEmptyStateBlockPreview,
+    "login-form": renderLoginFormPattern,
+    "search-result-screen": renderSearchResultPattern,
+    "settings-screen": renderSettingsPattern,
+    "product-detail-sticky-cta": renderProductDetailPattern
+  };
+  var renderContractPreview = async (id) => {
+    const render = renderers[id];
+    if (!render) {
+      throw new Error(`Unknown contract preview: ${id}`);
+    }
+    const frame = await render();
+    const existing = figma.currentPage.children.find((node) => node.type === "FRAME" && node.name === frame.name);
+    if (existing && existing.type === "FRAME") {
+      existing.remove();
+    }
+    figma.currentPage.appendChild(frame);
+    figma.currentPage.selection = [frame];
+    figma.viewport.scrollAndZoomIntoView([frame]);
+    return {
+      createdNodeCount: frame.findAll().length + 1,
+      createdFrameName: frame.name
+    };
+  };
+
   // ../../artifacts/figma/button-inspection/mcp-payload.json
   var mcp_payload_default = {
     document: {
@@ -965,18 +1293,18 @@
                     name: "Primary",
                     x: 48,
                     y: 40,
-                    width: 128,
-                    height: 50,
+                    width: 124,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 12,
+                      paddingX: 16,
+                      paddingY: 12,
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 128
+                      minWidth: 124
                     },
                     variant: {
                       emphasis: "primary",
@@ -993,18 +1321,18 @@
                     name: "Secondary",
                     x: 48,
                     y: 40,
-                    width: 128,
-                    height: 50,
+                    width: 124,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 12,
+                      paddingX: 16,
+                      paddingY: 12,
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 128
+                      minWidth: 124
                     },
                     variant: {
                       emphasis: "secondary",
@@ -1021,18 +1349,18 @@
                     name: "Tertiary",
                     x: 48,
                     y: 40,
-                    width: 128,
-                    height: 50,
+                    width: 124,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 12,
+                      paddingX: 16,
+                      paddingY: 12,
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 128
+                      minWidth: 124
                     },
                     variant: {
                       emphasis: "tertiary",
@@ -1049,18 +1377,18 @@
                     name: "Destructive",
                     x: 48,
                     y: 40,
-                    width: 128,
-                    height: 50,
+                    width: 124,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 12,
+                      paddingX: 16,
+                      paddingY: 12,
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 128
+                      minWidth: 124
                     },
                     variant: {
                       emphasis: "destructive",
@@ -1077,18 +1405,18 @@
                     name: "Small",
                     x: 48,
                     y: 40,
-                    width: 120,
+                    width: 112,
                     height: 44,
                     component: "Button",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
+                      fontSize: 14,
                       lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 120
+                      minWidth: 112
                     },
                     variant: {
                       emphasis: "primary",
@@ -1105,18 +1433,18 @@
                     name: "Medium",
                     x: 48,
                     y: 40,
-                    width: 128,
-                    height: 50,
+                    width: 124,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 12,
+                      paddingX: 16,
+                      paddingY: 12,
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 128
+                      minWidth: 124
                     },
                     variant: {
                       emphasis: "primary",
@@ -1133,18 +1461,18 @@
                     name: "Large",
                     x: 48,
                     y: 40,
-                    width: 176,
-                    height: 56,
+                    width: 168,
+                    height: 52,
                     component: "Button",
                     style: {
-                      radius: 16,
-                      paddingX: 20,
-                      paddingY: 16,
+                      radius: 14,
+                      paddingX: 18,
+                      paddingY: 14,
                       gap: 8,
-                      fontSize: 17,
-                      lineHeight: 24,
+                      fontSize: 16,
+                      lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 176
+                      minWidth: 168
                     },
                     variant: {
                       emphasis: "primary",
@@ -1161,18 +1489,18 @@
                     name: "Pressed",
                     x: 48,
                     y: 40,
-                    width: 128,
-                    height: 50,
+                    width: 124,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 12,
+                      paddingX: 16,
+                      paddingY: 12,
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 128
+                      minWidth: 124
                     },
                     variant: {
                       emphasis: "primary",
@@ -1189,18 +1517,18 @@
                     name: "Disabled",
                     x: 48,
                     y: 40,
-                    width: 128,
-                    height: 50,
+                    width: 124,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 12,
+                      paddingX: 16,
+                      paddingY: 12,
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 128
+                      minWidth: 124
                     },
                     variant: {
                       emphasis: "primary",
@@ -1229,18 +1557,18 @@
                     name: "Loading",
                     x: 48,
                     y: 40,
-                    width: 128,
-                    height: 50,
+                    width: 124,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 12,
+                      paddingX: 16,
+                      paddingY: 12,
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 128
+                      minWidth: 124
                     },
                     variant: {
                       emphasis: "primary",
@@ -1258,18 +1586,18 @@
                     name: "Hug Width",
                     x: 48,
                     y: 40,
-                    width: 128,
-                    height: 50,
+                    width: 124,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 12,
+                      paddingX: 16,
+                      paddingY: 12,
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 128
+                      minWidth: 124
                     },
                     variant: {
                       emphasis: "secondary",
@@ -1286,18 +1614,18 @@
                     name: "Full Width",
                     x: 48,
                     y: 40,
-                    width: 358,
-                    height: 56,
+                    width: 360,
+                    height: 52,
                     component: "Button",
                     style: {
-                      radius: 16,
-                      paddingX: 20,
-                      paddingY: 16,
+                      radius: 14,
+                      paddingX: 18,
+                      paddingY: 14,
                       gap: 8,
-                      fontSize: 17,
-                      lineHeight: 24,
+                      fontSize: 16,
+                      lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 176
+                      minWidth: 168
                     },
                     variant: {
                       emphasis: "primary",
@@ -1314,18 +1642,18 @@
                     name: "Leading Icon",
                     x: 48,
                     y: 40,
-                    width: 128,
-                    height: 50,
+                    width: 124,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 12,
+                      paddingX: 16,
+                      paddingY: 12,
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 128
+                      minWidth: 124
                     },
                     variant: {
                       emphasis: "secondary",
@@ -1342,18 +1670,18 @@
                     name: "Icon Only",
                     x: 48,
                     y: 40,
-                    width: 50,
-                    height: 50,
+                    width: 48,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 12,
+                      paddingX: 16,
+                      paddingY: 12,
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 128
+                      minWidth: 124
                     },
                     variant: {
                       emphasis: "tertiary",
@@ -1370,18 +1698,18 @@
                     name: "Bottom CTA",
                     x: 48,
                     y: 40,
-                    width: 358,
-                    height: 56,
+                    width: 360,
+                    height: 52,
                     component: "Button",
                     style: {
-                      radius: 16,
-                      paddingX: 20,
-                      paddingY: 16,
+                      radius: 14,
+                      paddingX: 18,
+                      paddingY: 14,
                       gap: 8,
-                      fontSize: 17,
-                      lineHeight: 24,
+                      fontSize: 16,
+                      lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 176
+                      minWidth: 168
                     },
                     variant: {
                       emphasis: "primary",
@@ -1409,18 +1737,18 @@
                     name: "Danger CTA",
                     x: 48,
                     y: 40,
-                    width: 358,
-                    height: 56,
+                    width: 360,
+                    height: 52,
                     component: "Button",
                     style: {
-                      radius: 16,
-                      paddingX: 20,
-                      paddingY: 16,
+                      radius: 14,
+                      paddingX: 18,
+                      paddingY: 14,
                       gap: 8,
-                      fontSize: 17,
-                      lineHeight: 24,
+                      fontSize: 16,
+                      lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 176
+                      minWidth: 168
                     },
                     variant: {
                       emphasis: "destructive",
@@ -1461,18 +1789,18 @@
                 name: "Primary",
                 x: 48,
                 y: 40,
-                width: 128,
-                height: 50,
+                width: 124,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 12,
+                  paddingX: 16,
+                  paddingY: 12,
                   gap: 8,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 128
+                  minWidth: 124
                 },
                 variant: {
                   emphasis: "primary",
@@ -1489,18 +1817,18 @@
                 name: "Secondary",
                 x: 48,
                 y: 40,
-                width: 128,
-                height: 50,
+                width: 124,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 12,
+                  paddingX: 16,
+                  paddingY: 12,
                   gap: 8,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 128
+                  minWidth: 124
                 },
                 variant: {
                   emphasis: "secondary",
@@ -1517,18 +1845,18 @@
                 name: "Tertiary",
                 x: 48,
                 y: 40,
-                width: 128,
-                height: 50,
+                width: 124,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 12,
+                  paddingX: 16,
+                  paddingY: 12,
                   gap: 8,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 128
+                  minWidth: 124
                 },
                 variant: {
                   emphasis: "tertiary",
@@ -1545,18 +1873,18 @@
                 name: "Destructive",
                 x: 48,
                 y: 40,
-                width: 128,
-                height: 50,
+                width: 124,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 12,
+                  paddingX: 16,
+                  paddingY: 12,
                   gap: 8,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 128
+                  minWidth: 124
                 },
                 variant: {
                   emphasis: "destructive",
@@ -1573,18 +1901,18 @@
                 name: "Small",
                 x: 48,
                 y: 40,
-                width: 120,
+                width: 112,
                 height: 44,
                 component: "Button",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
+                  fontSize: 14,
                   lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 120
+                  minWidth: 112
                 },
                 variant: {
                   emphasis: "primary",
@@ -1601,18 +1929,18 @@
                 name: "Medium",
                 x: 48,
                 y: 40,
-                width: 128,
-                height: 50,
+                width: 124,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 12,
+                  paddingX: 16,
+                  paddingY: 12,
                   gap: 8,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 128
+                  minWidth: 124
                 },
                 variant: {
                   emphasis: "primary",
@@ -1629,18 +1957,18 @@
                 name: "Large",
                 x: 48,
                 y: 40,
-                width: 176,
-                height: 56,
+                width: 168,
+                height: 52,
                 component: "Button",
                 style: {
-                  radius: 16,
-                  paddingX: 20,
-                  paddingY: 16,
+                  radius: 14,
+                  paddingX: 18,
+                  paddingY: 14,
                   gap: 8,
-                  fontSize: 17,
-                  lineHeight: 24,
+                  fontSize: 16,
+                  lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 176
+                  minWidth: 168
                 },
                 variant: {
                   emphasis: "primary",
@@ -1657,18 +1985,18 @@
                 name: "Pressed",
                 x: 48,
                 y: 40,
-                width: 128,
-                height: 50,
+                width: 124,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 12,
+                  paddingX: 16,
+                  paddingY: 12,
                   gap: 8,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 128
+                  minWidth: 124
                 },
                 variant: {
                   emphasis: "primary",
@@ -1685,18 +2013,18 @@
                 name: "Disabled",
                 x: 48,
                 y: 40,
-                width: 128,
-                height: 50,
+                width: 124,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 12,
+                  paddingX: 16,
+                  paddingY: 12,
                   gap: 8,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 128
+                  minWidth: 124
                 },
                 variant: {
                   emphasis: "primary",
@@ -1725,18 +2053,18 @@
                 name: "Loading",
                 x: 48,
                 y: 40,
-                width: 128,
-                height: 50,
+                width: 124,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 12,
+                  paddingX: 16,
+                  paddingY: 12,
                   gap: 8,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 128
+                  minWidth: 124
                 },
                 variant: {
                   emphasis: "primary",
@@ -1754,18 +2082,18 @@
                 name: "Hug Width",
                 x: 48,
                 y: 40,
-                width: 128,
-                height: 50,
+                width: 124,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 12,
+                  paddingX: 16,
+                  paddingY: 12,
                   gap: 8,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 128
+                  minWidth: 124
                 },
                 variant: {
                   emphasis: "secondary",
@@ -1782,18 +2110,18 @@
                 name: "Full Width",
                 x: 48,
                 y: 40,
-                width: 358,
-                height: 56,
+                width: 360,
+                height: 52,
                 component: "Button",
                 style: {
-                  radius: 16,
-                  paddingX: 20,
-                  paddingY: 16,
+                  radius: 14,
+                  paddingX: 18,
+                  paddingY: 14,
                   gap: 8,
-                  fontSize: 17,
-                  lineHeight: 24,
+                  fontSize: 16,
+                  lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 176
+                  minWidth: 168
                 },
                 variant: {
                   emphasis: "primary",
@@ -1810,18 +2138,18 @@
                 name: "Leading Icon",
                 x: 48,
                 y: 40,
-                width: 128,
-                height: 50,
+                width: 124,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 12,
+                  paddingX: 16,
+                  paddingY: 12,
                   gap: 8,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 128
+                  minWidth: 124
                 },
                 variant: {
                   emphasis: "secondary",
@@ -1838,18 +2166,18 @@
                 name: "Icon Only",
                 x: 48,
                 y: 40,
-                width: 50,
-                height: 50,
+                width: 48,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 12,
+                  paddingX: 16,
+                  paddingY: 12,
                   gap: 8,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 128
+                  minWidth: 124
                 },
                 variant: {
                   emphasis: "tertiary",
@@ -1866,18 +2194,18 @@
                 name: "Bottom CTA",
                 x: 48,
                 y: 40,
-                width: 358,
-                height: 56,
+                width: 360,
+                height: 52,
                 component: "Button",
                 style: {
-                  radius: 16,
-                  paddingX: 20,
-                  paddingY: 16,
+                  radius: 14,
+                  paddingX: 18,
+                  paddingY: 14,
                   gap: 8,
-                  fontSize: 17,
-                  lineHeight: 24,
+                  fontSize: 16,
+                  lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 176
+                  minWidth: 168
                 },
                 variant: {
                   emphasis: "primary",
@@ -1905,18 +2233,18 @@
                 name: "Danger CTA",
                 x: 48,
                 y: 40,
-                width: 358,
-                height: 56,
+                width: 360,
+                height: 52,
                 component: "Button",
                 style: {
-                  radius: 16,
-                  paddingX: 20,
-                  paddingY: 16,
+                  radius: 14,
+                  paddingX: 18,
+                  paddingY: 14,
                   gap: 8,
-                  fontSize: 17,
-                  lineHeight: 24,
+                  fontSize: 16,
+                  lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 176
+                  minWidth: 168
                 },
                 variant: {
                   emphasis: "destructive",
@@ -1946,18 +2274,18 @@
             name: "Primary",
             x: 48,
             y: 40,
-            width: 128,
-            height: 50,
+            width: 124,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
-              paddingX: 18,
-              paddingY: 13,
+              radius: 12,
+              paddingX: 16,
+              paddingY: 12,
               gap: 8,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 128
+              minWidth: 124
             },
             variant: {
               emphasis: "primary",
@@ -1974,18 +2302,18 @@
             name: "Secondary",
             x: 48,
             y: 40,
-            width: 128,
-            height: 50,
+            width: 124,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
-              paddingX: 18,
-              paddingY: 13,
+              radius: 12,
+              paddingX: 16,
+              paddingY: 12,
               gap: 8,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 128
+              minWidth: 124
             },
             variant: {
               emphasis: "secondary",
@@ -2002,18 +2330,18 @@
             name: "Tertiary",
             x: 48,
             y: 40,
-            width: 128,
-            height: 50,
+            width: 124,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
-              paddingX: 18,
-              paddingY: 13,
+              radius: 12,
+              paddingX: 16,
+              paddingY: 12,
               gap: 8,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 128
+              minWidth: 124
             },
             variant: {
               emphasis: "tertiary",
@@ -2030,18 +2358,18 @@
             name: "Destructive",
             x: 48,
             y: 40,
-            width: 128,
-            height: 50,
+            width: 124,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
-              paddingX: 18,
-              paddingY: 13,
+              radius: 12,
+              paddingX: 16,
+              paddingY: 12,
               gap: 8,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 128
+              minWidth: 124
             },
             variant: {
               emphasis: "destructive",
@@ -2058,18 +2386,18 @@
             name: "Small",
             x: 48,
             y: 40,
-            width: 120,
+            width: 112,
             height: 44,
             component: "Button",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 10,
               gap: 8,
-              fontSize: 15,
+              fontSize: 14,
               lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 120
+              minWidth: 112
             },
             variant: {
               emphasis: "primary",
@@ -2086,18 +2414,18 @@
             name: "Medium",
             x: 48,
             y: 40,
-            width: 128,
-            height: 50,
+            width: 124,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
-              paddingX: 18,
-              paddingY: 13,
+              radius: 12,
+              paddingX: 16,
+              paddingY: 12,
               gap: 8,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 128
+              minWidth: 124
             },
             variant: {
               emphasis: "primary",
@@ -2114,18 +2442,18 @@
             name: "Large",
             x: 48,
             y: 40,
-            width: 176,
-            height: 56,
+            width: 168,
+            height: 52,
             component: "Button",
             style: {
-              radius: 16,
-              paddingX: 20,
-              paddingY: 16,
+              radius: 14,
+              paddingX: 18,
+              paddingY: 14,
               gap: 8,
-              fontSize: 17,
-              lineHeight: 24,
+              fontSize: 16,
+              lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 176
+              minWidth: 168
             },
             variant: {
               emphasis: "primary",
@@ -2142,18 +2470,18 @@
             name: "Pressed",
             x: 48,
             y: 40,
-            width: 128,
-            height: 50,
+            width: 124,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
-              paddingX: 18,
-              paddingY: 13,
+              radius: 12,
+              paddingX: 16,
+              paddingY: 12,
               gap: 8,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 128
+              minWidth: 124
             },
             variant: {
               emphasis: "primary",
@@ -2170,18 +2498,18 @@
             name: "Disabled",
             x: 48,
             y: 40,
-            width: 128,
-            height: 50,
+            width: 124,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
-              paddingX: 18,
-              paddingY: 13,
+              radius: 12,
+              paddingX: 16,
+              paddingY: 12,
               gap: 8,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 128
+              minWidth: 124
             },
             variant: {
               emphasis: "primary",
@@ -2201,18 +2529,18 @@
         name: "Primary",
         x: 48,
         y: 40,
-        width: 128,
-        height: 50,
+        width: 124,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
-          paddingX: 18,
-          paddingY: 13,
+          radius: 12,
+          paddingX: 16,
+          paddingY: 12,
           gap: 8,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 128
+          minWidth: 124
         },
         variant: {
           emphasis: "primary",
@@ -2229,18 +2557,18 @@
         name: "Secondary",
         x: 48,
         y: 40,
-        width: 128,
-        height: 50,
+        width: 124,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
-          paddingX: 18,
-          paddingY: 13,
+          radius: 12,
+          paddingX: 16,
+          paddingY: 12,
           gap: 8,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 128
+          minWidth: 124
         },
         variant: {
           emphasis: "secondary",
@@ -2257,18 +2585,18 @@
         name: "Tertiary",
         x: 48,
         y: 40,
-        width: 128,
-        height: 50,
+        width: 124,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
-          paddingX: 18,
-          paddingY: 13,
+          radius: 12,
+          paddingX: 16,
+          paddingY: 12,
           gap: 8,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 128
+          minWidth: 124
         },
         variant: {
           emphasis: "tertiary",
@@ -2285,18 +2613,18 @@
         name: "Destructive",
         x: 48,
         y: 40,
-        width: 128,
-        height: 50,
+        width: 124,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
-          paddingX: 18,
-          paddingY: 13,
+          radius: 12,
+          paddingX: 16,
+          paddingY: 12,
           gap: 8,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 128
+          minWidth: 124
         },
         variant: {
           emphasis: "destructive",
@@ -2313,18 +2641,18 @@
         name: "Small",
         x: 48,
         y: 40,
-        width: 120,
+        width: 112,
         height: 44,
         component: "Button",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 10,
           gap: 8,
-          fontSize: 15,
+          fontSize: 14,
           lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 120
+          minWidth: 112
         },
         variant: {
           emphasis: "primary",
@@ -2341,18 +2669,18 @@
         name: "Medium",
         x: 48,
         y: 40,
-        width: 128,
-        height: 50,
+        width: 124,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
-          paddingX: 18,
-          paddingY: 13,
+          radius: 12,
+          paddingX: 16,
+          paddingY: 12,
           gap: 8,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 128
+          minWidth: 124
         },
         variant: {
           emphasis: "primary",
@@ -2369,18 +2697,18 @@
         name: "Large",
         x: 48,
         y: 40,
-        width: 176,
-        height: 56,
+        width: 168,
+        height: 52,
         component: "Button",
         style: {
-          radius: 16,
-          paddingX: 20,
-          paddingY: 16,
+          radius: 14,
+          paddingX: 18,
+          paddingY: 14,
           gap: 8,
-          fontSize: 17,
-          lineHeight: 24,
+          fontSize: 16,
+          lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 176
+          minWidth: 168
         },
         variant: {
           emphasis: "primary",
@@ -2397,18 +2725,18 @@
         name: "Pressed",
         x: 48,
         y: 40,
-        width: 128,
-        height: 50,
+        width: 124,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
-          paddingX: 18,
-          paddingY: 13,
+          radius: 12,
+          paddingX: 16,
+          paddingY: 12,
           gap: 8,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 128
+          minWidth: 124
         },
         variant: {
           emphasis: "primary",
@@ -2425,18 +2753,18 @@
         name: "Disabled",
         x: 48,
         y: 40,
-        width: 128,
-        height: 50,
+        width: 124,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
-          paddingX: 18,
-          paddingY: 13,
+          radius: 12,
+          paddingX: 16,
+          paddingY: 12,
           gap: 8,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 128
+          minWidth: 124
         },
         variant: {
           emphasis: "primary",
@@ -2463,18 +2791,18 @@
             name: "Loading",
             x: 48,
             y: 40,
-            width: 128,
-            height: 50,
+            width: 124,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
-              paddingX: 18,
-              paddingY: 13,
+              radius: 12,
+              paddingX: 16,
+              paddingY: 12,
               gap: 8,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 128
+              minWidth: 124
             },
             variant: {
               emphasis: "primary",
@@ -2492,18 +2820,18 @@
             name: "Hug Width",
             x: 48,
             y: 40,
-            width: 128,
-            height: 50,
+            width: 124,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
-              paddingX: 18,
-              paddingY: 13,
+              radius: 12,
+              paddingX: 16,
+              paddingY: 12,
               gap: 8,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 128
+              minWidth: 124
             },
             variant: {
               emphasis: "secondary",
@@ -2520,18 +2848,18 @@
             name: "Full Width",
             x: 48,
             y: 40,
-            width: 358,
-            height: 56,
+            width: 360,
+            height: 52,
             component: "Button",
             style: {
-              radius: 16,
-              paddingX: 20,
-              paddingY: 16,
+              radius: 14,
+              paddingX: 18,
+              paddingY: 14,
               gap: 8,
-              fontSize: 17,
-              lineHeight: 24,
+              fontSize: 16,
+              lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 176
+              minWidth: 168
             },
             variant: {
               emphasis: "primary",
@@ -2548,18 +2876,18 @@
             name: "Leading Icon",
             x: 48,
             y: 40,
-            width: 128,
-            height: 50,
+            width: 124,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
-              paddingX: 18,
-              paddingY: 13,
+              radius: 12,
+              paddingX: 16,
+              paddingY: 12,
               gap: 8,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 128
+              minWidth: 124
             },
             variant: {
               emphasis: "secondary",
@@ -2576,18 +2904,18 @@
             name: "Icon Only",
             x: 48,
             y: 40,
-            width: 50,
-            height: 50,
+            width: 48,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
-              paddingX: 18,
-              paddingY: 13,
+              radius: 12,
+              paddingX: 16,
+              paddingY: 12,
               gap: 8,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 128
+              minWidth: 124
             },
             variant: {
               emphasis: "tertiary",
@@ -2604,18 +2932,18 @@
             name: "Bottom CTA",
             x: 48,
             y: 40,
-            width: 358,
-            height: 56,
+            width: 360,
+            height: 52,
             component: "Button",
             style: {
-              radius: 16,
-              paddingX: 20,
-              paddingY: 16,
+              radius: 14,
+              paddingX: 18,
+              paddingY: 14,
               gap: 8,
-              fontSize: 17,
-              lineHeight: 24,
+              fontSize: 16,
+              lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 176
+              minWidth: 168
             },
             variant: {
               emphasis: "primary",
@@ -2634,18 +2962,18 @@
         name: "Loading",
         x: 48,
         y: 40,
-        width: 128,
-        height: 50,
+        width: 124,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
-          paddingX: 18,
-          paddingY: 13,
+          radius: 12,
+          paddingX: 16,
+          paddingY: 12,
           gap: 8,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 128
+          minWidth: 124
         },
         variant: {
           emphasis: "primary",
@@ -2663,18 +2991,18 @@
         name: "Hug Width",
         x: 48,
         y: 40,
-        width: 128,
-        height: 50,
+        width: 124,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
-          paddingX: 18,
-          paddingY: 13,
+          radius: 12,
+          paddingX: 16,
+          paddingY: 12,
           gap: 8,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 128
+          minWidth: 124
         },
         variant: {
           emphasis: "secondary",
@@ -2691,18 +3019,18 @@
         name: "Full Width",
         x: 48,
         y: 40,
-        width: 358,
-        height: 56,
+        width: 360,
+        height: 52,
         component: "Button",
         style: {
-          radius: 16,
-          paddingX: 20,
-          paddingY: 16,
+          radius: 14,
+          paddingX: 18,
+          paddingY: 14,
           gap: 8,
-          fontSize: 17,
-          lineHeight: 24,
+          fontSize: 16,
+          lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 176
+          minWidth: 168
         },
         variant: {
           emphasis: "primary",
@@ -2719,18 +3047,18 @@
         name: "Leading Icon",
         x: 48,
         y: 40,
-        width: 128,
-        height: 50,
+        width: 124,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
-          paddingX: 18,
-          paddingY: 13,
+          radius: 12,
+          paddingX: 16,
+          paddingY: 12,
           gap: 8,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 128
+          minWidth: 124
         },
         variant: {
           emphasis: "secondary",
@@ -2747,18 +3075,18 @@
         name: "Icon Only",
         x: 48,
         y: 40,
-        width: 50,
-        height: 50,
+        width: 48,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
-          paddingX: 18,
-          paddingY: 13,
+          radius: 12,
+          paddingX: 16,
+          paddingY: 12,
           gap: 8,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 128
+          minWidth: 124
         },
         variant: {
           emphasis: "tertiary",
@@ -2775,18 +3103,18 @@
         name: "Bottom CTA",
         x: 48,
         y: 40,
-        width: 358,
-        height: 56,
+        width: 360,
+        height: 52,
         component: "Button",
         style: {
-          radius: 16,
-          paddingX: 20,
-          paddingY: 16,
+          radius: 14,
+          paddingX: 18,
+          paddingY: 14,
           gap: 8,
-          fontSize: 17,
-          lineHeight: 24,
+          fontSize: 16,
+          lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 176
+          minWidth: 168
         },
         variant: {
           emphasis: "primary",
@@ -2812,18 +3140,18 @@
             name: "Danger CTA",
             x: 48,
             y: 40,
-            width: 358,
-            height: 56,
+            width: 360,
+            height: 52,
             component: "Button",
             style: {
-              radius: 16,
-              paddingX: 20,
-              paddingY: 16,
+              radius: 14,
+              paddingX: 18,
+              paddingY: 14,
               gap: 8,
-              fontSize: 17,
-              lineHeight: 24,
+              fontSize: 16,
+              lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 176
+              minWidth: 168
             },
             variant: {
               emphasis: "destructive",
@@ -2842,18 +3170,18 @@
         name: "Danger CTA",
         x: 48,
         y: 40,
-        width: 358,
-        height: 56,
+        width: 360,
+        height: 52,
         component: "Button",
         style: {
-          radius: 16,
-          paddingX: 20,
-          paddingY: 16,
+          radius: 14,
+          paddingX: 18,
+          paddingY: 14,
           gap: 8,
-          fontSize: 17,
-          lineHeight: 24,
+          fontSize: 16,
+          lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 176
+          minWidth: 168
         },
         variant: {
           emphasis: "destructive",
@@ -3069,134 +3397,134 @@
     ],
     variables: {},
     styles: {
-      "layout_4.radius": "14",
-      "layout_4.paddingX": "18",
-      "layout_4.paddingY": "13",
+      "layout_4.radius": "12",
+      "layout_4.paddingX": "16",
+      "layout_4.paddingY": "12",
       "layout_4.gap": "8",
-      "layout_4.fontSize": "16",
+      "layout_4.fontSize": "15",
       "layout_4.lineHeight": "22",
       "layout_4.fontWeight": "semibold",
-      "layout_4.minWidth": "128",
-      "layout_5.radius": "14",
-      "layout_5.paddingX": "18",
-      "layout_5.paddingY": "13",
+      "layout_4.minWidth": "124",
+      "layout_5.radius": "12",
+      "layout_5.paddingX": "16",
+      "layout_5.paddingY": "12",
       "layout_5.gap": "8",
-      "layout_5.fontSize": "16",
+      "layout_5.fontSize": "15",
       "layout_5.lineHeight": "22",
       "layout_5.fontWeight": "semibold",
-      "layout_5.minWidth": "128",
-      "layout_6.radius": "14",
-      "layout_6.paddingX": "18",
-      "layout_6.paddingY": "13",
+      "layout_5.minWidth": "124",
+      "layout_6.radius": "12",
+      "layout_6.paddingX": "16",
+      "layout_6.paddingY": "12",
       "layout_6.gap": "8",
-      "layout_6.fontSize": "16",
+      "layout_6.fontSize": "15",
       "layout_6.lineHeight": "22",
       "layout_6.fontWeight": "semibold",
-      "layout_6.minWidth": "128",
-      "layout_7.radius": "14",
-      "layout_7.paddingX": "18",
-      "layout_7.paddingY": "13",
+      "layout_6.minWidth": "124",
+      "layout_7.radius": "12",
+      "layout_7.paddingX": "16",
+      "layout_7.paddingY": "12",
       "layout_7.gap": "8",
-      "layout_7.fontSize": "16",
+      "layout_7.fontSize": "15",
       "layout_7.lineHeight": "22",
       "layout_7.fontWeight": "semibold",
-      "layout_7.minWidth": "128",
-      "layout_8.radius": "14",
+      "layout_7.minWidth": "124",
+      "layout_8.radius": "12",
       "layout_8.paddingX": "14",
       "layout_8.paddingY": "10",
       "layout_8.gap": "8",
-      "layout_8.fontSize": "15",
+      "layout_8.fontSize": "14",
       "layout_8.lineHeight": "20",
       "layout_8.fontWeight": "semibold",
-      "layout_8.minWidth": "120",
-      "layout_9.radius": "14",
-      "layout_9.paddingX": "18",
-      "layout_9.paddingY": "13",
+      "layout_8.minWidth": "112",
+      "layout_9.radius": "12",
+      "layout_9.paddingX": "16",
+      "layout_9.paddingY": "12",
       "layout_9.gap": "8",
-      "layout_9.fontSize": "16",
+      "layout_9.fontSize": "15",
       "layout_9.lineHeight": "22",
       "layout_9.fontWeight": "semibold",
-      "layout_9.minWidth": "128",
-      "layout_10.radius": "16",
-      "layout_10.paddingX": "20",
-      "layout_10.paddingY": "16",
+      "layout_9.minWidth": "124",
+      "layout_10.radius": "14",
+      "layout_10.paddingX": "18",
+      "layout_10.paddingY": "14",
       "layout_10.gap": "8",
-      "layout_10.fontSize": "17",
-      "layout_10.lineHeight": "24",
+      "layout_10.fontSize": "16",
+      "layout_10.lineHeight": "22",
       "layout_10.fontWeight": "semibold",
-      "layout_10.minWidth": "176",
-      "layout_11.radius": "14",
-      "layout_11.paddingX": "18",
-      "layout_11.paddingY": "13",
+      "layout_10.minWidth": "168",
+      "layout_11.radius": "12",
+      "layout_11.paddingX": "16",
+      "layout_11.paddingY": "12",
       "layout_11.gap": "8",
-      "layout_11.fontSize": "16",
+      "layout_11.fontSize": "15",
       "layout_11.lineHeight": "22",
       "layout_11.fontWeight": "semibold",
-      "layout_11.minWidth": "128",
-      "layout_12.radius": "14",
-      "layout_12.paddingX": "18",
-      "layout_12.paddingY": "13",
+      "layout_11.minWidth": "124",
+      "layout_12.radius": "12",
+      "layout_12.paddingX": "16",
+      "layout_12.paddingY": "12",
       "layout_12.gap": "8",
-      "layout_12.fontSize": "16",
+      "layout_12.fontSize": "15",
       "layout_12.lineHeight": "22",
       "layout_12.fontWeight": "semibold",
-      "layout_12.minWidth": "128",
-      "layout_14.radius": "14",
-      "layout_14.paddingX": "18",
-      "layout_14.paddingY": "13",
+      "layout_12.minWidth": "124",
+      "layout_14.radius": "12",
+      "layout_14.paddingX": "16",
+      "layout_14.paddingY": "12",
       "layout_14.gap": "8",
-      "layout_14.fontSize": "16",
+      "layout_14.fontSize": "15",
       "layout_14.lineHeight": "22",
       "layout_14.fontWeight": "semibold",
-      "layout_14.minWidth": "128",
-      "layout_15.radius": "14",
-      "layout_15.paddingX": "18",
-      "layout_15.paddingY": "13",
+      "layout_14.minWidth": "124",
+      "layout_15.radius": "12",
+      "layout_15.paddingX": "16",
+      "layout_15.paddingY": "12",
       "layout_15.gap": "8",
-      "layout_15.fontSize": "16",
+      "layout_15.fontSize": "15",
       "layout_15.lineHeight": "22",
       "layout_15.fontWeight": "semibold",
-      "layout_15.minWidth": "128",
-      "layout_16.radius": "16",
-      "layout_16.paddingX": "20",
-      "layout_16.paddingY": "16",
+      "layout_15.minWidth": "124",
+      "layout_16.radius": "14",
+      "layout_16.paddingX": "18",
+      "layout_16.paddingY": "14",
       "layout_16.gap": "8",
-      "layout_16.fontSize": "17",
-      "layout_16.lineHeight": "24",
+      "layout_16.fontSize": "16",
+      "layout_16.lineHeight": "22",
       "layout_16.fontWeight": "semibold",
-      "layout_16.minWidth": "176",
-      "layout_17.radius": "14",
-      "layout_17.paddingX": "18",
-      "layout_17.paddingY": "13",
+      "layout_16.minWidth": "168",
+      "layout_17.radius": "12",
+      "layout_17.paddingX": "16",
+      "layout_17.paddingY": "12",
       "layout_17.gap": "8",
-      "layout_17.fontSize": "16",
+      "layout_17.fontSize": "15",
       "layout_17.lineHeight": "22",
       "layout_17.fontWeight": "semibold",
-      "layout_17.minWidth": "128",
-      "layout_18.radius": "14",
-      "layout_18.paddingX": "18",
-      "layout_18.paddingY": "13",
+      "layout_17.minWidth": "124",
+      "layout_18.radius": "12",
+      "layout_18.paddingX": "16",
+      "layout_18.paddingY": "12",
       "layout_18.gap": "8",
-      "layout_18.fontSize": "16",
+      "layout_18.fontSize": "15",
       "layout_18.lineHeight": "22",
       "layout_18.fontWeight": "semibold",
-      "layout_18.minWidth": "128",
-      "layout_19.radius": "16",
-      "layout_19.paddingX": "20",
-      "layout_19.paddingY": "16",
+      "layout_18.minWidth": "124",
+      "layout_19.radius": "14",
+      "layout_19.paddingX": "18",
+      "layout_19.paddingY": "14",
       "layout_19.gap": "8",
-      "layout_19.fontSize": "17",
-      "layout_19.lineHeight": "24",
+      "layout_19.fontSize": "16",
+      "layout_19.lineHeight": "22",
       "layout_19.fontWeight": "semibold",
-      "layout_19.minWidth": "176",
-      "layout_21.radius": "16",
-      "layout_21.paddingX": "20",
-      "layout_21.paddingY": "16",
+      "layout_19.minWidth": "168",
+      "layout_21.radius": "14",
+      "layout_21.paddingX": "18",
+      "layout_21.paddingY": "14",
       "layout_21.gap": "8",
-      "layout_21.fontSize": "17",
-      "layout_21.lineHeight": "24",
+      "layout_21.fontSize": "16",
+      "layout_21.lineHeight": "22",
       "layout_21.fontWeight": "semibold",
-      "layout_21.minWidth": "176"
+      "layout_21.minWidth": "168"
     },
     modes: {
       brand: "core",
@@ -3205,7 +3533,7 @@
     metadata: {
       source: "miterlab-figma-generator",
       version: "0.1.0",
-      generatedAt: "2026-03-18T16:56:26.020Z"
+      generatedAt: "2026-03-19T00:54:30.935Z"
     }
   };
 
@@ -3250,15 +3578,15 @@
                     name: "Default",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3278,15 +3606,15 @@
                     name: "Error",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3307,15 +3635,15 @@
                     name: "Success",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3347,15 +3675,15 @@
                     name: "Small",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 44,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 12,
                       gap: 0,
-                      fontSize: 15,
+                      fontSize: 14,
                       lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3375,15 +3703,15 @@
                     name: "Medium",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3403,16 +3731,16 @@
                     name: "Large",
                     x: 48,
                     y: 40,
-                    width: 358,
-                    height: 56,
+                    width: 360,
+                    height: 52,
                     component: "Input",
                     style: {
-                      radius: 16,
+                      radius: 14,
                       paddingX: 16,
-                      paddingY: 16,
+                      paddingY: 15,
                       gap: 0,
-                      fontSize: 17,
-                      lineHeight: 24,
+                      fontSize: 16,
+                      lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3442,15 +3770,15 @@
                     name: "Focused",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3471,15 +3799,15 @@
                     name: "Disabled",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3501,15 +3829,15 @@
                     name: "Read Only",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3542,15 +3870,15 @@
                     name: "Loading",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3575,11 +3903,11 @@
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3599,15 +3927,15 @@
                     name: "Full Width",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3638,15 +3966,15 @@
                     name: "With Helper",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3666,15 +3994,15 @@
                     name: "With Error Text",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3695,16 +4023,16 @@
                     name: "Multiline",
                     x: 48,
                     y: 40,
-                    width: 358,
-                    height: 56,
+                    width: 360,
+                    height: 52,
                     component: "Input",
                     style: {
-                      radius: 16,
+                      radius: 14,
                       paddingX: 16,
-                      paddingY: 16,
+                      paddingY: 15,
                       gap: 0,
-                      fontSize: 17,
-                      lineHeight: 24,
+                      fontSize: 16,
+                      lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3734,15 +4062,15 @@
                     name: "Readonly Field",
                     x: 48,
                     y: 40,
-                    width: 358,
+                    width: 360,
                     height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 14,
                       paddingY: 14,
                       gap: 0,
-                      fontSize: 16,
+                      fontSize: 15,
                       lineHeight: 22,
                       fontWeight: "regular",
                       minWidth: 220
@@ -3788,15 +4116,15 @@
                 name: "Default",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -3816,15 +4144,15 @@
                 name: "Error",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -3845,15 +4173,15 @@
                 name: "Success",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -3885,15 +4213,15 @@
                 name: "Small",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 44,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 12,
                   gap: 0,
-                  fontSize: 15,
+                  fontSize: 14,
                   lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
@@ -3913,15 +4241,15 @@
                 name: "Medium",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -3941,16 +4269,16 @@
                 name: "Large",
                 x: 48,
                 y: 40,
-                width: 358,
-                height: 56,
+                width: 360,
+                height: 52,
                 component: "Input",
                 style: {
-                  radius: 16,
+                  radius: 14,
                   paddingX: 16,
-                  paddingY: 16,
+                  paddingY: 15,
                   gap: 0,
-                  fontSize: 17,
-                  lineHeight: 24,
+                  fontSize: 16,
+                  lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -3980,15 +4308,15 @@
                 name: "Focused",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -4009,15 +4337,15 @@
                 name: "Disabled",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -4039,15 +4367,15 @@
                 name: "Read Only",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -4080,15 +4408,15 @@
                 name: "Loading",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -4113,11 +4441,11 @@
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -4137,15 +4465,15 @@
                 name: "Full Width",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -4176,15 +4504,15 @@
                 name: "With Helper",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -4204,15 +4532,15 @@
                 name: "With Error Text",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -4233,16 +4561,16 @@
                 name: "Multiline",
                 x: 48,
                 y: 40,
-                width: 358,
-                height: 56,
+                width: 360,
+                height: 52,
                 component: "Input",
                 style: {
-                  radius: 16,
+                  radius: 14,
                   paddingX: 16,
-                  paddingY: 16,
+                  paddingY: 15,
                   gap: 0,
-                  fontSize: 17,
-                  lineHeight: 24,
+                  fontSize: 16,
+                  lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4272,15 +4600,15 @@
                 name: "Readonly Field",
                 x: 48,
                 y: 40,
-                width: 358,
+                width: 360,
                 height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 14,
                   paddingY: 14,
                   gap: 0,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: 22,
                   fontWeight: "regular",
                   minWidth: 220
@@ -4315,15 +4643,15 @@
             name: "Default",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -4343,15 +4671,15 @@
             name: "Error",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -4372,15 +4700,15 @@
             name: "Success",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -4403,15 +4731,15 @@
         name: "Default",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -4431,15 +4759,15 @@
         name: "Error",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -4460,15 +4788,15 @@
         name: "Success",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -4498,15 +4826,15 @@
             name: "Small",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 44,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 12,
               gap: 0,
-              fontSize: 15,
+              fontSize: 14,
               lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
@@ -4526,15 +4854,15 @@
             name: "Medium",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -4554,16 +4882,16 @@
             name: "Large",
             x: 48,
             y: 40,
-            width: 358,
-            height: 56,
+            width: 360,
+            height: 52,
             component: "Input",
             style: {
-              radius: 16,
+              radius: 14,
               paddingX: 16,
-              paddingY: 16,
+              paddingY: 15,
               gap: 0,
-              fontSize: 17,
-              lineHeight: 24,
+              fontSize: 16,
+              lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -4584,15 +4912,15 @@
         name: "Small",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 44,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 12,
           gap: 0,
-          fontSize: 15,
+          fontSize: 14,
           lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
@@ -4612,15 +4940,15 @@
         name: "Medium",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -4640,16 +4968,16 @@
         name: "Large",
         x: 48,
         y: 40,
-        width: 358,
-        height: 56,
+        width: 360,
+        height: 52,
         component: "Input",
         style: {
-          radius: 16,
+          radius: 14,
           paddingX: 16,
-          paddingY: 16,
+          paddingY: 15,
           gap: 0,
-          fontSize: 17,
-          lineHeight: 24,
+          fontSize: 16,
+          lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -4677,15 +5005,15 @@
             name: "Focused",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -4706,15 +5034,15 @@
             name: "Disabled",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -4736,15 +5064,15 @@
             name: "Read Only",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -4768,15 +5096,15 @@
         name: "Focused",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -4797,15 +5125,15 @@
         name: "Disabled",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -4827,15 +5155,15 @@
         name: "Read Only",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -4866,15 +5194,15 @@
             name: "Loading",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -4899,11 +5227,11 @@
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -4923,15 +5251,15 @@
             name: "Full Width",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -4953,15 +5281,15 @@
         name: "Loading",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -4986,11 +5314,11 @@
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -5010,15 +5338,15 @@
         name: "Full Width",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -5047,15 +5375,15 @@
             name: "With Helper",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -5075,15 +5403,15 @@
             name: "With Error Text",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -5104,16 +5432,16 @@
             name: "Multiline",
             x: 48,
             y: 40,
-            width: 358,
-            height: 56,
+            width: 360,
+            height: 52,
             component: "Input",
             style: {
-              radius: 16,
+              radius: 14,
               paddingX: 16,
-              paddingY: 16,
+              paddingY: 15,
               gap: 0,
-              fontSize: 17,
-              lineHeight: 24,
+              fontSize: 16,
+              lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -5134,15 +5462,15 @@
         name: "With Helper",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -5162,15 +5490,15 @@
         name: "With Error Text",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -5191,16 +5519,16 @@
         name: "Multiline",
         x: 48,
         y: 40,
-        width: 358,
-        height: 56,
+        width: 360,
+        height: 52,
         component: "Input",
         style: {
-          radius: 16,
+          radius: 14,
           paddingX: 16,
-          paddingY: 16,
+          paddingY: 15,
           gap: 0,
-          fontSize: 17,
-          lineHeight: 24,
+          fontSize: 16,
+          lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -5228,15 +5556,15 @@
             name: "Readonly Field",
             x: 48,
             y: 40,
-            width: 358,
+            width: 360,
             height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 14,
               paddingY: 14,
               gap: 0,
-              fontSize: 16,
+              fontSize: 15,
               lineHeight: 22,
               fontWeight: "regular",
               minWidth: 220
@@ -5260,15 +5588,15 @@
         name: "Readonly Field",
         x: 48,
         y: 40,
-        width: 358,
+        width: 360,
         height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 14,
           paddingY: 14,
           gap: 0,
-          fontSize: 16,
+          fontSize: 15,
           lineHeight: 22,
           fontWeight: "regular",
           minWidth: 220
@@ -5518,131 +5846,131 @@
     ],
     variables: {},
     styles: {
-      "layout_4.radius": "14",
+      "layout_4.radius": "12",
       "layout_4.paddingX": "14",
       "layout_4.paddingY": "14",
       "layout_4.gap": "0",
-      "layout_4.fontSize": "16",
+      "layout_4.fontSize": "15",
       "layout_4.lineHeight": "22",
       "layout_4.fontWeight": "regular",
       "layout_4.minWidth": "220",
-      "layout_5.radius": "14",
+      "layout_5.radius": "12",
       "layout_5.paddingX": "14",
       "layout_5.paddingY": "14",
       "layout_5.gap": "0",
-      "layout_5.fontSize": "16",
+      "layout_5.fontSize": "15",
       "layout_5.lineHeight": "22",
       "layout_5.fontWeight": "regular",
       "layout_5.minWidth": "220",
-      "layout_6.radius": "14",
+      "layout_6.radius": "12",
       "layout_6.paddingX": "14",
       "layout_6.paddingY": "14",
       "layout_6.gap": "0",
-      "layout_6.fontSize": "16",
+      "layout_6.fontSize": "15",
       "layout_6.lineHeight": "22",
       "layout_6.fontWeight": "regular",
       "layout_6.minWidth": "220",
-      "layout_8.radius": "14",
+      "layout_8.radius": "12",
       "layout_8.paddingX": "14",
       "layout_8.paddingY": "12",
       "layout_8.gap": "0",
-      "layout_8.fontSize": "15",
+      "layout_8.fontSize": "14",
       "layout_8.lineHeight": "20",
       "layout_8.fontWeight": "regular",
       "layout_8.minWidth": "220",
-      "layout_9.radius": "14",
+      "layout_9.radius": "12",
       "layout_9.paddingX": "14",
       "layout_9.paddingY": "14",
       "layout_9.gap": "0",
-      "layout_9.fontSize": "16",
+      "layout_9.fontSize": "15",
       "layout_9.lineHeight": "22",
       "layout_9.fontWeight": "regular",
       "layout_9.minWidth": "220",
-      "layout_10.radius": "16",
+      "layout_10.radius": "14",
       "layout_10.paddingX": "16",
-      "layout_10.paddingY": "16",
+      "layout_10.paddingY": "15",
       "layout_10.gap": "0",
-      "layout_10.fontSize": "17",
-      "layout_10.lineHeight": "24",
+      "layout_10.fontSize": "16",
+      "layout_10.lineHeight": "22",
       "layout_10.fontWeight": "regular",
       "layout_10.minWidth": "220",
-      "layout_12.radius": "14",
+      "layout_12.radius": "12",
       "layout_12.paddingX": "14",
       "layout_12.paddingY": "14",
       "layout_12.gap": "0",
-      "layout_12.fontSize": "16",
+      "layout_12.fontSize": "15",
       "layout_12.lineHeight": "22",
       "layout_12.fontWeight": "regular",
       "layout_12.minWidth": "220",
-      "layout_13.radius": "14",
+      "layout_13.radius": "12",
       "layout_13.paddingX": "14",
       "layout_13.paddingY": "14",
       "layout_13.gap": "0",
-      "layout_13.fontSize": "16",
+      "layout_13.fontSize": "15",
       "layout_13.lineHeight": "22",
       "layout_13.fontWeight": "regular",
       "layout_13.minWidth": "220",
-      "layout_14.radius": "14",
+      "layout_14.radius": "12",
       "layout_14.paddingX": "14",
       "layout_14.paddingY": "14",
       "layout_14.gap": "0",
-      "layout_14.fontSize": "16",
+      "layout_14.fontSize": "15",
       "layout_14.lineHeight": "22",
       "layout_14.fontWeight": "regular",
       "layout_14.minWidth": "220",
-      "layout_16.radius": "14",
+      "layout_16.radius": "12",
       "layout_16.paddingX": "14",
       "layout_16.paddingY": "14",
       "layout_16.gap": "0",
-      "layout_16.fontSize": "16",
+      "layout_16.fontSize": "15",
       "layout_16.lineHeight": "22",
       "layout_16.fontWeight": "regular",
       "layout_16.minWidth": "220",
-      "layout_17.radius": "14",
+      "layout_17.radius": "12",
       "layout_17.paddingX": "14",
       "layout_17.paddingY": "14",
       "layout_17.gap": "0",
-      "layout_17.fontSize": "16",
+      "layout_17.fontSize": "15",
       "layout_17.lineHeight": "22",
       "layout_17.fontWeight": "regular",
       "layout_17.minWidth": "220",
-      "layout_18.radius": "14",
+      "layout_18.radius": "12",
       "layout_18.paddingX": "14",
       "layout_18.paddingY": "14",
       "layout_18.gap": "0",
-      "layout_18.fontSize": "16",
+      "layout_18.fontSize": "15",
       "layout_18.lineHeight": "22",
       "layout_18.fontWeight": "regular",
       "layout_18.minWidth": "220",
-      "layout_20.radius": "14",
+      "layout_20.radius": "12",
       "layout_20.paddingX": "14",
       "layout_20.paddingY": "14",
       "layout_20.gap": "0",
-      "layout_20.fontSize": "16",
+      "layout_20.fontSize": "15",
       "layout_20.lineHeight": "22",
       "layout_20.fontWeight": "regular",
       "layout_20.minWidth": "220",
-      "layout_21.radius": "14",
+      "layout_21.radius": "12",
       "layout_21.paddingX": "14",
       "layout_21.paddingY": "14",
       "layout_21.gap": "0",
-      "layout_21.fontSize": "16",
+      "layout_21.fontSize": "15",
       "layout_21.lineHeight": "22",
       "layout_21.fontWeight": "regular",
       "layout_21.minWidth": "220",
-      "layout_22.radius": "16",
+      "layout_22.radius": "14",
       "layout_22.paddingX": "16",
-      "layout_22.paddingY": "16",
+      "layout_22.paddingY": "15",
       "layout_22.gap": "0",
-      "layout_22.fontSize": "17",
-      "layout_22.lineHeight": "24",
+      "layout_22.fontSize": "16",
+      "layout_22.lineHeight": "22",
       "layout_22.fontWeight": "regular",
       "layout_22.minWidth": "220",
-      "layout_24.radius": "14",
+      "layout_24.radius": "12",
       "layout_24.paddingX": "14",
       "layout_24.paddingY": "14",
       "layout_24.gap": "0",
-      "layout_24.fontSize": "16",
+      "layout_24.fontSize": "15",
       "layout_24.lineHeight": "22",
       "layout_24.fontWeight": "regular",
       "layout_24.minWidth": "220"
@@ -5654,7 +5982,7 @@
     metadata: {
       source: "miterlab-figma-generator",
       version: "0.1.0",
-      generatedAt: "2026-03-18T16:56:26.317Z"
+      generatedAt: "2026-03-19T00:54:31.253Z"
     }
   };
 
@@ -5671,6 +5999,11 @@
     const result = await renderPayload(payload);
     figma.notify(`Rendered ${result.createdFrameName} (${result.createdNodeCount} nodes)`);
   };
+  var previewOptionsByLevel = {
+    component: contractPreviewOptions.filter((item) => item.level === "component"),
+    module: contractPreviewOptions.filter((item) => item.level === "module"),
+    pattern: contractPreviewOptions.filter((item) => item.level === "pattern")
+  };
   var uiHtml = `
 <!doctype html>
 <html lang="ko">
@@ -5678,13 +6011,13 @@
     <meta charset="UTF-8" />
     <style>
       :root {
-        color-scheme: dark;
-        --bg: #0f1115;
-        --panel: #171a21;
-        --line: #2a3140;
-        --text: #eef2f7;
-        --muted: #98a2b3;
-        --accent: #2d6cff;
+        color-scheme: light;
+        --bg: #ffffff;
+        --panel: #f7f7f8;
+        --line: #e1e2e4;
+        --text: #171719;
+        --muted: #989ba2;
+        --accent: #0064ff;
       }
       * { box-sizing: border-box; }
       body {
@@ -5692,7 +6025,7 @@
         padding: 16px;
         background: var(--bg);
         color: var(--text);
-        font: 12px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font: 12px/1.45 Pretendard, "Pretendard Variable", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
       .wrap {
         display: flex;
@@ -5724,9 +6057,9 @@
       }
       select, button {
         width: 100%;
-        border-radius: 10px;
+        border-radius: 12px;
         border: 1px solid var(--line);
-        background: #11151c;
+        background: #fff;
         color: var(--text);
         padding: 10px 12px;
         font: inherit;
@@ -5751,28 +6084,47 @@
   <body>
     <div class="wrap">
       <div class="panel">
-        <h1>Families</h1>
-        <p>Button/Input inspection\uB9CC \uB80C\uB354\uD569\uB2C8\uB2E4.</p>
-        <label for="inspectionFamily">Family</label>
-        <select id="inspectionFamily">
-          <option value="button-inspection">button-inspection</option>
-          <option value="input-inspection">input-inspection</option>
+        <h1>Inspection Explorer</h1>
+        <p>Component, Module, Pattern\uC744 \uC120\uD0DD\uD574 Figma\uC5D0\uC11C \uBC14\uB85C \uD655\uC778\uD569\uB2C8\uB2E4.</p>
+        <label for="previewLevel">Level</label>
+        <select id="previewLevel">
+          <option value="component">Component</option>
+          <option value="module">Module</option>
+          <option value="pattern">Pattern</option>
         </select>
-        <button id="renderInspectionFamily">Render Selected Family</button>
-        <div class="hint">\uAE30\uC874 \uD504\uB808\uC784\uC774 \uC788\uC73C\uBA74 \uC9C0\uC6B0\uACE0 \uB2E4\uC2DC \uB80C\uB354\uD574 \uC8FC\uC138\uC694.</div>
+        <label for="previewItem">Contract</label>
+        <select id="previewItem"></select>
+        <button id="renderContractPreview">Render Selected Contract</button>
+        <div class="hint">Button/Input\uC740 inspection \uAE30\uC900\uC73C\uB85C, \uB098\uBA38\uC9C0\uB294 contract preview \uAE30\uC900\uC73C\uB85C \uB80C\uB354\uD569\uB2C8\uB2E4.</div>
       </div>
     </div>
     <script>
-      const family = document.getElementById("inspectionFamily");
-      const button = document.getElementById("renderInspectionFamily");
+      const optionsByLevel = ${JSON.stringify(previewOptionsByLevel)};
+      const level = document.getElementById("previewLevel");
+      const item = document.getElementById("previewItem");
+      const button = document.getElementById("renderContractPreview");
+
+      const syncItems = () => {
+        const next = optionsByLevel[level.value] || [];
+        item.innerHTML = "";
+        next.forEach((option) => {
+          const el = document.createElement("option");
+          el.value = option.id;
+          el.textContent = option.label;
+          item.appendChild(el);
+        });
+      };
+
+      syncItems();
+      level.onchange = syncItems;
 
       button.onclick = () => {
         button.disabled = true;
         parent.postMessage(
           {
             pluginMessage: {
-              type: "renderInspectionFamily",
-              family: family.value
+              type: "renderContractPreview",
+              previewId: item.value
             }
           },
           "*"
@@ -5802,8 +6154,15 @@
       if (message.type === "pluginReady") {
         return;
       }
-      if (message.type === "renderInspectionFamily") {
-        await renderInspectionFamily(message.family);
+      if (message.type === "renderContractPreview") {
+        if (message.previewId === "button") {
+          await renderInspectionFamily("button-inspection");
+        } else if (message.previewId === "input") {
+          await renderInspectionFamily("input-inspection");
+        } else {
+          const result = await renderContractPreview(message.previewId);
+          figma.notify(`Rendered ${result.createdFrameName} (${result.createdNodeCount} nodes)`);
+        }
         figma.ui.postMessage({ type: "renderDone" });
       }
     } catch (error) {

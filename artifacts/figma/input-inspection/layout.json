@@ -31,7 +31,7 @@
                 "state": "enabled",
                 "placeholder": "Type here"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "Default"
             },
@@ -46,7 +46,7 @@
                 "state": "focused",
                 "value": "Wrong value"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "Error"
             },
@@ -61,7 +61,7 @@
                 "state": "enabled",
                 "value": "Correct value"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "Success"
             }
@@ -85,7 +85,7 @@
                 "state": "enabled",
                 "placeholder": "Small input"
               },
-              "width": 358,
+              "width": 360,
               "height": 44,
               "label": "Small"
             },
@@ -100,7 +100,7 @@
                 "state": "enabled",
                 "placeholder": "Medium input"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "Medium"
             },
@@ -115,8 +115,8 @@
                 "state": "enabled",
                 "placeholder": "Large input"
               },
-              "width": 358,
-              "height": 56,
+              "width": 360,
+              "height": 52,
               "label": "Large"
             }
           ]
@@ -139,7 +139,7 @@
                 "state": "focused",
                 "value": "Focused value"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "Focused"
             },
@@ -155,7 +155,7 @@
                 "disabled": true,
                 "value": "Disabled value"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "Disabled"
             },
@@ -171,7 +171,7 @@
                 "readOnly": true,
                 "value": "Read only value"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "Read Only"
             }
@@ -195,7 +195,7 @@
                 "state": "loading",
                 "value": "Loading value"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "Loading"
             },
@@ -225,7 +225,7 @@
                 "state": "enabled",
                 "placeholder": "Full width field"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "Full Width"
             }
@@ -249,7 +249,7 @@
                 "state": "enabled",
                 "placeholder": "Email address"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "With Helper"
             },
@@ -264,7 +264,7 @@
                 "state": "focused",
                 "value": "wrong@email"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "With Error Text"
             },
@@ -279,8 +279,8 @@
                 "state": "enabled",
                 "placeholder": "Type a longer message"
               },
-              "width": 358,
-              "height": 56,
+              "width": 360,
+              "height": 52,
               "label": "Multiline"
             }
           ]
@@ -304,7 +304,7 @@
                 "readOnly": true,
                 "value": "Generated project slug"
               },
-              "width": 358,
+              "width": 360,
               "height": 48,
               "label": "Readonly Field"
             }

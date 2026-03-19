@@ -4,9 +4,24 @@ title: Button Contract
 
 # Button Contract
 
+## Layer
+
+`Button`은 `Component`입니다.
+
+Button은 독립적으로 렌더 가능한 단일 액션 단위입니다.
+Button 자체는 `Module`이 아니며, 화면 구조를 설명하는 `Pattern`도 아닙니다.
+
 ## Purpose
 
-단일하고 명확한 액션을 실행하는 모바일용 core button contract입니다.
+Button의 목적은 사용자가 의도적으로 실행하는 액션을 명확하게 트리거하는 것입니다.
+
+Button은 다음 상황에 사용합니다.
+- 다음 단계 진행
+- 확인 또는 제출
+- 취소 또는 닫기
+- 위험 액션 실행
+
+Button은 정보 표시용 요소가 아니라, 행동을 유도하는 요소입니다.
 
 ## Preview
 
@@ -14,160 +29,158 @@ title: Button Contract
 
 ![Button preview](/previews/button-contract.svg)
 
-## Current Source Signals
+현재 preview는 Bento식 축 비교 구조를 유지하되, foundation tone은 `Wanted`에 더 가깝게 조정합니다.
+지금 기준은 과한 데모 톤보다 서비스형 CTA 위계와 절제된 강조를 우선합니다.
 
-- `Primary / Secondary / Tertiary / Destructive`가 동시에 보여야 합니다.
-- `Small / Medium / Large`가 한 화면에서 비교되어야 합니다.
-- `Pressed / Disabled / Loading`이 구조적으로 분리되어 보여야 합니다.
-- `Hug Width / Full Width`가 CTA 사용 차이를 드러내야 합니다.
-- `Leading Icon / Icon Only / Bottom CTA / Danger CTA`가 bundle 예시로 보여야 합니다.
+## Semantics
 
-## What Changed
+Button은 시각 장식보다 액션 의미를 먼저 전달해야 합니다.
 
-- source 기준이 단순 API 문서가 아니라 Bento button bundle로 바뀌었습니다.
-- 그래서 이 preview는 “버튼 하나의 prop 예시”보다 “action hierarchy 묶음”을 보여주는 방향으로 읽어야 합니다.
-- 현재 preview는 bundle 전체를 모두 재현하는 것이 아니라, 그 안의 공통 button unit만 보여줍니다.
+주요 의미 계층:
+- `primary`: 현재 문맥에서 가장 중요한 액션
+- `secondary`: 보조 액션
+- `tertiary`: 낮은 강조의 보조 액션
+- `destructive`: 데이터 손실 또는 되돌리기 어려운 액션
 
-## Reference
-
-- Reference source: [Tamagui Bento Buttons](https://tamagui.dev/bento/elements/buttons)
-- Core direction: platform-agnostic mobile contract
-- 현재 문서는 Bento button patterns를 참고해, 우리 core에 남긴 범위만 고정한 문서입니다.
-
-## Bento Source Scope
-
-| Source Bundle | Meaning |
-| --- | --- |
-| `Buttons` | Bento의 button bundle 전체를 source로 봅니다. |
-| `5 components` | Bento inventory 기준으로 button bundle은 여러 button pattern 조합을 포함합니다. |
-| `pattern bundle` | 이 문서는 prop API 복제가 아니라, bundle 안의 공통 구조를 추출한 core contract입니다. |
-
-## Component Identity
-
-- component: button
-- version: 1.0.0
-- platform: agnostic
-
-## What Is Included
-
-- `emphasis`, `size`, `width`, `state`
-- mobile touch target 기준
-- inspection에서 확인할 수 있는 sample set
-- core renderer가 바로 그릴 수 있는 최소 palette
-- Bento buttons bundle에서 반복되는 공통 action hierarchy
-
-## What Is Not Included
-
-- Bento 예시에 포함된 모든 스타일 세부값
-- framework 전용 API
-- web 전용 form prop 전체
-- icon, trailing affordance, button group의 전체 조합
-- product-specific content patterns
-
-## Bento Pattern Coverage
-
-| Bundle Layer | Current Status | Notes |
-| --- | --- | --- |
-| base button shape | included | 현재 core button의 기본 unit입니다. |
-| emphasis hierarchy | included | primary / secondary / tertiary / destructive로 추렸습니다. |
-| width behavior | included | hug / full만 남겼습니다. |
-| pressed / disabled / loading | included | 공통 interaction 상태만 남겼습니다. |
-| icon variants | partial | 아직 contract 축으로 올리지 않았습니다. |
-| grouped button patterns | excluded | bundle 수준 조합은 아직 미포함입니다. |
-| share / follow / product CTA patterns | excluded | product-specific pattern은 아직 core 밖입니다. |
+Button은 다음을 분명히 보여야 합니다.
+- 이 액션이 얼마나 중요한지
+- 지금 실행 가능한지
+- 이미 진행 중인지
+- 위험한 결과를 가질 수 있는지
 
 ## Variants
 
-| Axis | Values | Notes |
-| --- | --- | --- |
-| `emphasis` | `primary`, `secondary`, `tertiary`, `destructive` | 액션 우선순위를 나타냅니다. |
-| `size` | `sm`, `md`, `lg` | 모바일 밀도와 터치 영역을 구분합니다. |
-| `width` | `hug`, `full` | 콘텐츠 폭 또는 전폭 액션을 구분합니다. |
+### Emphasis
 
-## Metrics
+- `primary`
+- `secondary`
+- `tertiary`
+- `destructive`
 
-| Size | Height | PaddingX | PaddingY | Radius | Font Size | Line Height | Min Width |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `sm` | `44` | `14` | `10` | `14` | `15` | `20` | `120` |
-| `md` | `50` | `18` | `13` | `14` | `16` | `22` | `128` |
-| `lg` | `56` | `20` | `16` | `16` | `17` | `24` | `176` |
+### Size
 
-## Widths
+- `sm`
+- `md`
+- `lg`
 
-| Width | Value |
-| --- | --- |
-| `hug` | `128` |
-| `full` | `358` |
+### Width
 
-## Palette
+- `hug`
+- `full`
 
-공통 color source는 `mobile-core.colors.button.emphasis`입니다.
+### Content Form
 
-| Emphasis | Fill | Stroke | Text | Pressed Fill | Pressed Stroke |
-| --- | --- | --- | --- | --- | --- |
-| `primary` | `#1F6BFF` | `#1F6BFF` | `#FFFFFF` | `#1859D6` | `#1859D6` |
-| `secondary` | `#FFFFFF` | `#C7D2E5` | `#172033` | `#F4F7FB` | `#B7C5DD` |
-| `tertiary` | `transparent` | `transparent` | `#172033` | `transparent` | `transparent` |
-| `destructive` | `#DC3F45` | `#DC3F45` | `#FFFFFF` | `#B73238` | `#B73238` |
-| `disabled` | `#F1F5F9` | `#E2E8F0` | `#94A3B8` | - | - |
+- text only
+- leading icon + text
+- trailing icon + text
+- icon only
+
+현재 핵심 contract 축은 `emphasis`, `size`, `width`입니다.
+content form은 허용 범위로 다루고, 별도 시각 계층을 만들지 않습니다.
 
 ## States
 
-| State | Meaning |
-| --- | --- |
-| `enabled` | 기본 사용 가능 상태입니다. |
-| `pressed` | 터치 또는 클릭 중 피드백 상태입니다. |
-| `disabled` | 실행할 수 없는 상태입니다. |
-| `loading` | 진행 중이며 반복 탭을 막는 상태입니다. |
+- `enabled`
+- `pressed`
+- `disabled`
+- `loading`
+
+필요할 때만 보조적으로 다루는 상태:
+- `focused`
+
+`pressed`는 터치 피드백입니다.
+`selected`나 `active navigation` 상태와 혼용하면 안 됩니다.
 
 ## Rules
 
-| Rule | Value | Meaning |
-| --- | --- | --- |
-| `min_touch_target` | `44` | 최소 터치 영역 기준입니다. |
-| `single_primary_per_section` | `true` | 한 섹션에는 primary 액션을 하나만 둡니다. |
-| `loading_blocks_repeat_tap` | `true` | loading 중에는 반복 탭을 막습니다. |
-| `destructive_requires_confirmation` | `conditional` | 파괴적 액션은 상황에 따라 확인 단계를 둡니다. |
-| `full_width_recommended_for_bottom_cta` | `true` | 하단 CTA는 full width를 권장합니다. |
+### Action Hierarchy
 
-## Content
+- 한 섹션에는 primary 액션을 하나만 둡니다.
+- secondary는 primary와 경쟁하면 안 됩니다.
+- destructive는 일반 액션과 섞이지 않게 분리합니다.
 
-| Rule | Value | Meaning |
-| --- | --- | --- |
-| `max_lines` | `2` | 라벨은 최대 2줄까지 허용합니다. |
-| `allow_icon_leading` | `true` | 앞 아이콘을 허용합니다. |
-| `allow_icon_trailing` | `limited` | 뒤 아이콘은 제한적으로 허용합니다. |
-| `icon_only_requires_accessible_name` | `true` | 아이콘 전용 버튼은 접근 가능한 이름이 필요합니다. |
+### Width Usage
 
-## Render Rules
+- `hug`는 콘텐츠 흐름 안의 로컬 액션에 사용합니다.
+- `full`은 하단 CTA나 섹션 수준의 강한 실행 액션에 사용합니다.
+- 모든 버튼을 기본적으로 `full`로 두면 안 됩니다.
 
-- primary는 같은 영역 안에서 가장 먼저 읽혀야 합니다.
-- secondary는 구조적으로 분명한 보조 액션이어야 합니다.
-- tertiary는 배경 없이 가장 낮은 강조를 가져야 합니다.
-- destructive는 일반 액션과 섞이지 않고 위험도가 분명해야 합니다.
-- pressed는 즉시 반응해야 하지만 레이아웃을 흔들면 안 됩니다.
-- loading은 현재 액션 진행 상태를 보여주고 반복 탭을 막아야 합니다.
+### Loading Behavior
 
-## Inspection Rows
+- loading은 액션이 수락되었고 현재 처리 중임을 뜻합니다.
+- loading 중에는 반복 탭을 막아야 합니다.
+- loading 때문에 버튼 의미가 사라지면 안 됩니다.
 
-| Row | Samples |
-| --- | --- |
-| `emphasis` | `Primary`, `Secondary`, `Tertiary`, `Destructive` |
-| `size` | `Small`, `Medium`, `Large` |
-| `state` | `Pressed`, `Disabled`, `Loading` |
-| `width` | `Hug Width`, `Full Width` |
-| `bundle` | `Leading Icon`, `Icon Only`, `Bottom CTA`, `Danger CTA` |
+### Disabled Behavior
 
-## Current Gaps
+- disabled는 지금 실행할 수 없음을 뜻합니다.
+- 중요한 다음 단계 조건을 disabled만으로 숨기면 안 됩니다.
+- 이유가 중요하면 주변 문맥에서 설명해야 합니다.
 
-- Bento buttons에서 보이는 icon 계열과 composition 범위는 아직 core contract에 들어오지 않았습니다.
-- 현재 contract는 Button family의 최소 모바일 기준만 남겨둔 상태입니다.
-- 필요하면 다음 단계에서 icon, trailing affordance, 더 세밀한 상태를 별도 축으로 확장할 수 있습니다.
-- Bento bundle 전체를 모두 반영한 것은 아니며, 현재는 공통 base button contract만 고정한 상태입니다.
+### Labeling
 
-## Accessibility Minimum
+- 라벨은 UI 이름이 아니라 행동을 설명해야 합니다.
+- 짧고 명확한 동사 중심 문구를 우선합니다.
+- `OK`, `확인`처럼 맥락이 약한 라벨은 최소화합니다.
 
-- 버튼은 명확한 accessible name이 있어야 합니다.
-- icon only button은 텍스트 대체 이름이 반드시 있어야 합니다.
-- disabled와 loading은 시각적으로 구분되어야 합니다.
-- 터치 타깃은 최소 44를 유지해야 합니다.
+## Accessibility Constraints
+
+- 터치 타깃은 모바일 최소 기준 이상이어야 합니다.
+- icon only 버튼은 접근 가능한 이름이 반드시 있어야 합니다.
+- 색만으로 액션 의미를 전달하면 안 됩니다.
+- disabled와 loading은 시각적으로 구분 가능해야 합니다.
+- destructive 의미는 색이 없어도 이해 가능해야 합니다.
+
+## Anti-Patterns
+
+- Button을 정보 카드나 컨테이너처럼 사용하는 것
+- 실제로는 `ListRow`나 `BottomActionGroup`이어야 하는 구조를 Button 하나로 대체하는 것
+- 한 액션 그룹에 primary 버튼을 여러 개 두는 것
+- 의미가 불명확한 icon only 버튼을 남발하는 것
+- disabled 상태로만 사용자 안내를 대체하는 것
+- 지속 상태 선택을 Button으로 표현하는 것
+
+## Composition Notes
+
+Button은 Module 안에서 자주 사용되지만, Module 자체가 되지는 않습니다.
+
+예:
+- `BottomActionGroup` 안의 primary / secondary action
+- `EmptyStateBlock` 안의 recovery action
+- `FormField` 아래의 submit action
+
+판별 기준:
+- Button 하나면 Component입니다.
+- Button 묶음에 정렬, 간격, 우선순위 규칙이 붙으면 Module입니다.
+- 여러 Module이 화면 시나리오를 이루면 Pattern입니다.
+
+## Current Contract Scope
+
+현재 문서는 다음 범위에 집중합니다.
+- mobile action hierarchy
+- touch interaction meaning
+- reusable button semantics
+- Component와 Module의 경계
+
+현재 문서가 아직 다루지 않는 범위:
+- product-specific CTA wording system
+- complex button group pattern 전체
+- brand-specific visual language
+
+## Current Visual Direction
+
+- 강조색은 과한 원색보다 서비스형 우선순위 전달에 집중합니다.
+- secondary와 tertiary는 샘플용 대비보다 실제 제품 화면에서의 안정감을 우선합니다.
+- radius와 spacing은 과장된 showcase보다 실사용 밀도에 맞춥니다.
+
+## Palette
+
+현재 foundation은 Wanted 서비스의 semantic 색을 직접 참고합니다.
+
+| Emphasis | Fill | Stroke | Text | Pressed Fill | Pressed Stroke |
+| --- | --- | --- | --- | --- | --- |
+| `primary` | `#0064FF` | `#0064FF` | `#FFFFFF` | `#0056DB` | `#0056DB` |
+| `secondary` | `#FFFFFF` | `#E1E2E4` | `#171719` | `#F7F7F8` | `#D3D5D9` |
+| `tertiary` | `transparent` | `transparent` | `#2E2F33` | `transparent` | `transparent` |
+| `destructive` | `#FF4242` | `#FF4242` | `#FFFFFF` | `#E03838` | `#E03838` |
+| `disabled` | `#F4F4F5` | `#E1E2E4` | `#989BA2` | - | - |

@@ -7,9 +7,17 @@ export interface PluginRenderInspectionFamilyMessage {
   family: string;
 }
 
+export interface PluginRenderContractPreviewMessage {
+  type: "renderContractPreview";
+  previewId: string;
+}
+
 export interface PluginWriteResult {
   createdNodeCount: number;
   createdFrameName: string;
 }
 
-export type PluginUiMessage = PluginReadyMessage | PluginRenderInspectionFamilyMessage;
+export type PluginUiMessage =
+  | PluginReadyMessage
+  | PluginRenderInspectionFamilyMessage
+  | PluginRenderContractPreviewMessage;

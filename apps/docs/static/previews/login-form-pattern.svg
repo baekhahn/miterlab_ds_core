@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="920" height="640" viewBox="0 0 920 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="920" height="640" rx="24" fill="#FFFFFF"/>
+  <rect x="270" y="24" width="380" height="592" rx="28" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
+<text x="310" y="82" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="24" font-weight="700" fill="#171719">로그인</text>
+<text x="310" y="116" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="14" font-weight="400" fill="#989BA2">이메일로 계속 진행하세요</text>
+<text x="310" y="166" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#2E2F33">이메일</text>
+<rect x="310" y="180" width="300" height="48" rx="12" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
+<text x="326" y="210" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="15" font-weight="400" fill="#989BA2">name@example.com</text>
+<text x="310" y="266" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#2E2F33">비밀번호</text>
+<rect x="310" y="280" width="300" height="48" rx="12" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
+<text x="326" y="310" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="15" font-weight="400" fill="#171719">••••••••</text>
+<rect x="310" y="500" width="300" height="52" rx="14" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
+<text x="460" y="531" text-anchor="middle" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">로그인</text>
+</svg>

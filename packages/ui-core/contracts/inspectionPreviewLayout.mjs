@@ -6,10 +6,10 @@ const PREVIEW_WIDTH = 920;
 const PREVIEW_MIN_HEIGHT = 380;
 const PREVIEW_PADDING_LEFT = 32;
 const PREVIEW_PADDING_RIGHT = 40;
-const CONTENT_START_X = 120;
-const ROW_GAP = 22;
-const ITEM_GAP = 20;
-const WRAP_GAP = 16;
+const CONTENT_START_X = 116;
+const ROW_GAP = 18;
+const ITEM_GAP = 14;
+const WRAP_GAP = 12;
 
 const axisTitle = (axis) => {
   if (axis === "emphasis") return "Emphasis";

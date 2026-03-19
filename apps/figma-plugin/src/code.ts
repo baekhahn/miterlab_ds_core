@@ -1,5 +1,6 @@
 import { renderPayload } from "./write/renderPayload";
 import type { PluginUiMessage } from "./types";
+import { contractPreviewOptions, renderContractPreview } from "./write/renderContractPreview";
 import buttonInspectionPayload from "../../../artifacts/figma/button-inspection/mcp-payload.json";
 import inputInspectionPayload from "../../../artifacts/figma/input-inspection/mcp-payload.json";
 import type { FigmaWritePayload } from "../../../shared/contracts/figmaWritePayload";
@@ -19,6 +20,12 @@ const renderInspectionFamily = async (family: string) => {
   figma.notify(`Rendered ${result.createdFrameName} (${result.createdNodeCount} nodes)`);
 };
 
+const previewOptionsByLevel = {
+  component: contractPreviewOptions.filter((item) => item.level === "component"),
+  module: contractPreviewOptions.filter((item) => item.level === "module"),
+  pattern: contractPreviewOptions.filter((item) => item.level === "pattern")
+};
+
 const uiHtml = `
 <!doctype html>
 <html lang="ko">
@@ -26,13 +33,13 @@ const uiHtml = `
     <meta charset="UTF-8" />
     <style>
       :root {
-        color-scheme: dark;
-        --bg: #0f1115;
-        --panel: #171a21;
-        --line: #2a3140;
-        --text: #eef2f7;
-        --muted: #98a2b3;
-        --accent: #2d6cff;
+        color-scheme: light;
+        --bg: #ffffff;
+        --panel: #f7f7f8;
+        --line: #e1e2e4;
+        --text: #171719;
+        --muted: #989ba2;
+        --accent: #0064ff;
       }
       * { box-sizing: border-box; }
       body {
@@ -40,7 +47,7 @@ const uiHtml = `
         padding: 16px;
         background: var(--bg);
         color: var(--text);
-        font: 12px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font: 12px/1.45 Pretendard, "Pretendard Variable", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
       .wrap {
         display: flex;
@@ -72,9 +79,9 @@ const uiHtml = `
       }
       select, button {
         width: 100%;
-        border-radius: 10px;
+        border-radius: 12px;
         border: 1px solid var(--line);
-        background: #11151c;
+        background: #fff;
         color: var(--text);
         padding: 10px 12px;
         font: inherit;
@@ -99,28 +106,47 @@ const uiHtml = `
   <body>
     <div class="wrap">
       <div class="panel">
-        <h1>Families</h1>
-        <p>Button/Input inspection만 렌더합니다.</p>
-        <label for="inspectionFamily">Family</label>
-        <select id="inspectionFamily">
-          <option value="button-inspection">button-inspection</option>
-          <option value="input-inspection">input-inspection</option>
+        <h1>Inspection Explorer</h1>
+        <p>Component, Module, Pattern을 선택해 Figma에서 바로 확인합니다.</p>
+        <label for="previewLevel">Level</label>
+        <select id="previewLevel">
+          <option value="component">Component</option>
+          <option value="module">Module</option>
+          <option value="pattern">Pattern</option>
         </select>
-        <button id="renderInspectionFamily">Render Selected Family</button>
-        <div class="hint">기존 프레임이 있으면 지우고 다시 렌더해 주세요.</div>
+        <label for="previewItem">Contract</label>
+        <select id="previewItem"></select>
+        <button id="renderContractPreview">Render Selected Contract</button>
+        <div class="hint">Button/Input은 inspection 기준으로, 나머지는 contract preview 기준으로 렌더합니다.</div>
       </div>
     </div>
     <script>
-      const family = document.getElementById("inspectionFamily");
-      const button = document.getElementById("renderInspectionFamily");
+      const optionsByLevel = ${JSON.stringify(previewOptionsByLevel)};
+      const level = document.getElementById("previewLevel");
+      const item = document.getElementById("previewItem");
+      const button = document.getElementById("renderContractPreview");
+
+      const syncItems = () => {
+        const next = optionsByLevel[level.value] || [];
+        item.innerHTML = "";
+        next.forEach((option) => {
+          const el = document.createElement("option");
+          el.value = option.id;
+          el.textContent = option.label;
+          item.appendChild(el);
+        });
+      };
+
+      syncItems();
+      level.onchange = syncItems;
 
       button.onclick = () => {
         button.disabled = true;
         parent.postMessage(
           {
             pluginMessage: {
-              type: "renderInspectionFamily",
-              family: family.value
+              type: "renderContractPreview",
+              previewId: item.value
             }
           },
           "*"
@@ -153,8 +179,15 @@ figma.ui.onmessage = async (message: PluginUiMessage) => {
       return;
     }
 
-    if (message.type === "renderInspectionFamily") {
-      await renderInspectionFamily(message.family);
+    if (message.type === "renderContractPreview") {
+      if (message.previewId === "button") {
+        await renderInspectionFamily("button-inspection");
+      } else if (message.previewId === "input") {
+        await renderInspectionFamily("input-inspection");
+      } else {
+        const result = await renderContractPreview(message.previewId);
+        figma.notify(`Rendered ${result.createdFrameName} (${result.createdNodeCount} nodes)`);
+      }
       figma.ui.postMessage({ type: "renderDone" });
     }
   } catch (error) {

@@ -4,6 +4,13 @@ title: Input Contract
 
 # Input Contract
 
+## Layer
+
+`Input`은 `Component`입니다.
+
+Input은 독립적으로 렌더 가능한 단일 입력 단위입니다.
+Input 자체는 `Module`이 아니며, 화면 구조를 설명하는 `Pattern`도 아닙니다.
+
 ## Purpose
 
 모바일 환경에서 텍스트 입력과 값 편집을 담당하는 core input contract입니다.
@@ -13,6 +20,9 @@ title: Input Contract
 현재 렌더 결과를 문서에서 바로 확인할 수 있는 snapshot입니다.
 
 ![Input preview](/previews/input-contract.svg)
+
+현재 preview는 Bento식 축 비교 구조를 유지하되, foundation tone은 `Wanted`에 더 가깝게 조정합니다.
+지금 기준은 입력 데모보다 실제 서비스 폼에서 보이는 절제된 field shell을 우선합니다.
 
 ## Current Source Signals
 
@@ -91,16 +101,16 @@ title: Input Contract
 
 | Size | Height | PaddingX | PaddingY | Radius | Font Size | Line Height | Min Width |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `sm` | `44` | `14` | `12` | `14` | `15` | `20` | `220` |
-| `md` | `48` | `14` | `14` | `14` | `16` | `22` | `220` |
-| `lg` | `56` | `16` | `16` | `16` | `17` | `24` | `220` |
+| `sm` | `44` | `14` | `12` | `12` | `14` | `20` | `220` |
+| `md` | `48` | `14` | `14` | `12` | `15` | `22` | `220` |
+| `lg` | `52` | `16` | `15` | `14` | `16` | `22` | `220` |
 
 ## Widths
 
 | Width | Value |
 | --- | --- |
 | `hug` | `220` |
-| `full` | `358` |
+| `full` | `360` |
 
 ## Palette
 
@@ -108,12 +118,12 @@ title: Input Contract
 
 | Intent | Fill | Stroke | Text | Subtle |
 | --- | --- | --- | --- | --- |
-| `default` | `#FFFFFF` | `#CBD5E1` | `#111827` | `#94A3B8` |
-| `error` | `#FFFFFF` | `#DC2626` | `#111827` | `#94A3B8` |
-| `success` | `#FFFFFF` | `#0E9F6E` | `#111827` | `#94A3B8` |
-| `disabled` | `#F1F5F9` | `#E2E8F0` | `#94A3B8` | `#94A3B8` |
-| `readonly` | `#F8FAFC` | `#CBD5E1` | `#475569` | `#94A3B8` |
-| `loading` | `#FFFFFF` | `#CBD5E1` | `#64748B` | `#94A3B8` |
+| `default` | `#FFFFFF` | `#E1E2E4` | `#171719` | `#989BA2` |
+| `error` | `#FFFFFF` | `#FF4242` | `#171719` | `#989BA2` |
+| `success` | `#FFFFFF` | `#00BF40` | `#171719` | `#989BA2` |
+| `disabled` | `#F4F4F5` | `#E1E2E4` | `#989BA2` | `#989BA2` |
+| `readonly` | `#F7F7F8` | `#E1E2E4` | `#2E2F33` | `#989BA2` |
+| `loading` | `#FFFFFF` | `#E1E2E4` | `#989BA2` | `#989BA2` |
 
 ## Focus Ring
 
@@ -121,7 +131,7 @@ focus ring source는 `mobile-core.colors.input.focusRing`입니다.
 
 | Token | Value |
 | --- | --- |
-| `stroke` | `#2D6CFF` |
+| `stroke` | `#0064FF` |
 | `strokeWeight` | `2` |
 
 ## States
@@ -185,3 +195,9 @@ focus ring source는 `mobile-core.colors.input.focusRing`입니다.
 - placeholder만으로 의미를 전달하면 안 됩니다.
 - error 상태는 텍스트 또는 보조 설명으로 함께 전달되어야 합니다.
 - 터치 타깃은 최소 44를 유지해야 합니다.
+
+## Current Visual Direction
+
+- stroke와 focus ring은 튀는 강조보다 안정적인 입력 맥락을 우선합니다.
+- readonly와 disabled는 같은 회색 처리가 아니라 읽기 가능성과 비활성을 구분합니다.
+- field shell은 과장된 component showcase보다 실제 폼 사용 맥락에 맞춘 밀도를 유지합니다.

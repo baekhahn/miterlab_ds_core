@@ -2,24 +2,24 @@
   "colors": {
     "button": {
       "emphasis": {
-        "primary": { "fill": "#1F6BFF", "stroke": "#1F6BFF", "text": "#FFFFFF", "pressedFill": "#1859D6", "pressedStroke": "#1859D6" },
-        "secondary": { "fill": "#FFFFFF", "stroke": "#C7D2E5", "text": "#172033", "pressedFill": "#F4F7FB", "pressedStroke": "#B7C5DD" },
-        "tertiary": { "fill": "transparent", "stroke": "transparent", "text": "#172033", "pressedFill": "transparent", "pressedStroke": "transparent" },
-        "destructive": { "fill": "#DC3F45", "stroke": "#DC3F45", "text": "#FFFFFF", "pressedFill": "#B73238", "pressedStroke": "#B73238" },
-        "disabled": { "fill": "#F1F5F9", "stroke": "#E2E8F0", "text": "#94A3B8" }
+        "primary": { "fill": "#0064FF", "stroke": "#0064FF", "text": "#FFFFFF", "pressedFill": "#0056DB", "pressedStroke": "#0056DB" },
+        "secondary": { "fill": "#FFFFFF", "stroke": "#E1E2E4", "text": "#171719", "pressedFill": "#F7F7F8", "pressedStroke": "#D3D5D9" },
+        "tertiary": { "fill": "transparent", "stroke": "transparent", "text": "#2E2F33", "pressedFill": "transparent", "pressedStroke": "transparent" },
+        "destructive": { "fill": "#FF4242", "stroke": "#FF4242", "text": "#FFFFFF", "pressedFill": "#E03838", "pressedStroke": "#E03838" },
+        "disabled": { "fill": "#F4F4F5", "stroke": "#E1E2E4", "text": "#989BA2" }
       }
     },
     "input": {
       "intent": {
-        "default": { "fill": "#FFFFFF", "stroke": "#CBD5E1", "text": "#111827", "subtle": "#94A3B8" },
-        "error": { "fill": "#FFFFFF", "stroke": "#DC2626", "text": "#111827", "subtle": "#94A3B8" },
-        "success": { "fill": "#FFFFFF", "stroke": "#0E9F6E", "text": "#111827", "subtle": "#94A3B8" },
-        "disabled": { "fill": "#F1F5F9", "stroke": "#E2E8F0", "text": "#94A3B8", "subtle": "#94A3B8" },
-        "readonly": { "fill": "#F8FAFC", "stroke": "#CBD5E1", "text": "#475569", "subtle": "#94A3B8" },
-        "loading": { "fill": "#FFFFFF", "stroke": "#CBD5E1", "text": "#64748B", "subtle": "#94A3B8" }
+        "default": { "fill": "#FFFFFF", "stroke": "#E1E2E4", "text": "#171719", "subtle": "#989BA2" },
+        "error": { "fill": "#FFFFFF", "stroke": "#FF4242", "text": "#171719", "subtle": "#989BA2" },
+        "success": { "fill": "#FFFFFF", "stroke": "#00BF40", "text": "#171719", "subtle": "#989BA2" },
+        "disabled": { "fill": "#F4F4F5", "stroke": "#E1E2E4", "text": "#989BA2", "subtle": "#989BA2" },
+        "readonly": { "fill": "#F7F7F8", "stroke": "#E1E2E4", "text": "#2E2F33", "subtle": "#989BA2" },
+        "loading": { "fill": "#FFFFFF", "stroke": "#E1E2E4", "text": "#989BA2", "subtle": "#989BA2" }
       },
       "focusRing": {
-        "stroke": "#2D6CFF",
+        "stroke": "#0064FF",
         "strokeWeight": 2
       }
     }
@@ -27,13 +27,13 @@
   "button": {
     "render": {
       "sizes": {
-        "sm": { "height": 44, "paddingX": 14, "paddingY": 10, "radius": 14, "fontSize": 15, "lineHeight": 20, "gap": 8, "minWidth": 120 },
-        "md": { "height": 50, "paddingX": 18, "paddingY": 13, "radius": 14, "fontSize": 16, "lineHeight": 22, "gap": 8, "minWidth": 128 },
-        "lg": { "height": 56, "paddingX": 20, "paddingY": 16, "radius": 16, "fontSize": 17, "lineHeight": 24, "gap": 8, "minWidth": 176 }
+        "sm": { "height": 44, "paddingX": 14, "paddingY": 10, "radius": 12, "fontSize": 14, "lineHeight": 20, "gap": 8, "minWidth": 112 },
+        "md": { "height": 48, "paddingX": 16, "paddingY": 12, "radius": 12, "fontSize": 15, "lineHeight": 22, "gap": 8, "minWidth": 124 },
+        "lg": { "height": 52, "paddingX": 18, "paddingY": 14, "radius": 14, "fontSize": 16, "lineHeight": 22, "gap": 8, "minWidth": 168 }
       },
       "widths": {
         "hug": 128,
-        "full": 358
+        "full": 360
       }
     },
     "inspection": {
@@ -75,13 +75,13 @@
   "input": {
     "render": {
       "sizes": {
-        "sm": { "height": 44, "paddingX": 14, "paddingY": 12, "radius": 14, "fontSize": 15, "lineHeight": 20, "minWidth": 220 },
-        "md": { "height": 48, "paddingX": 14, "paddingY": 14, "radius": 14, "fontSize": 16, "lineHeight": 22, "minWidth": 220 },
-        "lg": { "height": 56, "paddingX": 16, "paddingY": 16, "radius": 16, "fontSize": 17, "lineHeight": 24, "minWidth": 220 }
+        "sm": { "height": 44, "paddingX": 14, "paddingY": 12, "radius": 12, "fontSize": 14, "lineHeight": 20, "minWidth": 220 },
+        "md": { "height": 48, "paddingX": 14, "paddingY": 14, "radius": 12, "fontSize": 15, "lineHeight": 22, "minWidth": 220 },
+        "lg": { "height": 52, "paddingX": 16, "paddingY": 15, "radius": 14, "fontSize": 16, "lineHeight": 22, "minWidth": 220 }
       },
       "widths": {
         "hug": 220,
-        "full": 358
+        "full": 360
       }
     },
     "inspection": {

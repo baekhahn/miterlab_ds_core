@@ -66,14 +66,14 @@ const createAxisPill = async (label: string, x: number, y: number) => {
   pill.x = x;
   pill.y = y;
   pill.cornerRadius = 12;
-  pill.fills = [{ type: "SOLID", color: rgb("#E8EEF8") }];
+  pill.fills = [{ type: "SOLID", color: rgb("#F2F4F7") }];
   pill.strokes = [];
 
   const text = figma.createText();
   text.fontName = await loadFont("semibold");
   text.characters = label;
   text.fontSize = 11;
-  text.fills = [{ type: "SOLID", color: rgb("#4A5872") }];
+  text.fills = [{ type: "SOLID", color: rgb("#667085") }];
   text.textAlignHorizontal = "CENTER";
   text.textAutoResize = "WIDTH_AND_HEIGHT";
   text.x = Math.round((72 - text.width) / 2);
@@ -90,7 +90,7 @@ const createInspectionPreviewFrame = async (payload: FigmaWritePayload, frameNam
   frame.layoutMode = "NONE";
   frame.resize(preview.width, preview.height);
   frame.cornerRadius = 24;
-  frame.fills = [{ type: "SOLID", color: rgb("#F8FAFC") }];
+  frame.fills = [{ type: "SOLID", color: rgb("#FFFFFF") }];
   frame.strokes = [];
   frame.clipsContent = false;
 

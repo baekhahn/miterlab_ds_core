@@ -30,8 +30,8 @@
                 "size": "md",
                 "state": "enabled"
               },
-              "width": 128,
-              "height": 50,
+              "width": 124,
+              "height": 48,
               "label": "Primary"
             },
             {
@@ -44,8 +44,8 @@
                 "size": "md",
                 "state": "enabled"
               },
-              "width": 128,
-              "height": 50,
+              "width": 124,
+              "height": 48,
               "label": "Secondary"
             },
             {
@@ -58,8 +58,8 @@
                 "size": "md",
                 "state": "enabled"
               },
-              "width": 128,
-              "height": 50,
+              "width": 124,
+              "height": 48,
               "label": "Tertiary"
             },
             {
@@ -72,8 +72,8 @@
                 "size": "md",
                 "state": "enabled"
               },
-              "width": 128,
-              "height": 50,
+              "width": 124,
+              "height": 48,
               "label": "Destructive"
             },
             {
@@ -86,7 +86,7 @@
                 "size": "sm",
                 "state": "enabled"
               },
-              "width": 120,
+              "width": 112,
               "height": 44,
               "label": "Small"
             },
@@ -100,8 +100,8 @@
                 "size": "md",
                 "state": "enabled"
               },
-              "width": 128,
-              "height": 50,
+              "width": 124,
+              "height": 48,
               "label": "Medium"
             },
             {
@@ -114,8 +114,8 @@
                 "size": "lg",
                 "state": "enabled"
               },
-              "width": 176,
-              "height": 56,
+              "width": 168,
+              "height": 52,
               "label": "Large"
             },
             {
@@ -128,8 +128,8 @@
                 "size": "md",
                 "state": "pressed"
               },
-              "width": 128,
-              "height": 50,
+              "width": 124,
+              "height": 48,
               "label": "Pressed"
             },
             {
@@ -143,8 +143,8 @@
                 "state": "disabled",
                 "disabled": true
               },
-              "width": 128,
-              "height": 50,
+              "width": 124,
+              "height": 48,
               "label": "Disabled"
             }
           ]
@@ -167,8 +167,8 @@
                 "state": "loading",
                 "loading": true
               },
-              "width": 128,
-              "height": 50,
+              "width": 124,
+              "height": 48,
               "label": "Loading"
             },
             {
@@ -181,8 +181,8 @@
                 "size": "md",
                 "state": "enabled"
               },
-              "width": 128,
-              "height": 50,
+              "width": 124,
+              "height": 48,
               "label": "Hug Width"
             },
             {
@@ -195,8 +195,8 @@
                 "size": "lg",
                 "state": "enabled"
               },
-              "width": 358,
-              "height": 56,
+              "width": 360,
+              "height": 52,
               "label": "Full Width"
             },
             {
@@ -209,8 +209,8 @@
                 "size": "md",
                 "state": "enabled"
               },
-              "width": 128,
-              "height": 50,
+              "width": 124,
+              "height": 48,
               "label": "Leading Icon"
             },
             {
@@ -224,8 +224,8 @@
                 "state": "enabled",
                 "iconOnly": true
               },
-              "width": 50,
-              "height": 50,
+              "width": 48,
+              "height": 48,
               "label": "Icon Only"
             },
             {
@@ -238,8 +238,8 @@
                 "size": "lg",
                 "state": "enabled"
               },
-              "width": 358,
-              "height": 56,
+              "width": 360,
+              "height": 52,
               "label": "Bottom CTA"
             }
           ]
@@ -261,8 +261,8 @@
                 "size": "lg",
                 "state": "enabled"
               },
-              "width": 358,
-              "height": 56,
+              "width": 360,
+              "height": 52,
               "label": "Danger CTA"
             }
           ]
