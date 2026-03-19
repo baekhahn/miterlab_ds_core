@@ -50,6 +50,16 @@ module.exports = {
           ]
         }
       ]
+    },
+    {
+      type: "category",
+      label: "Schema",
+      items: ["schema/overview"]
+    },
+    {
+      type: "category",
+      label: "Freeze",
+      items: ["freeze/overview"]
     }
   ]
 };

@@ -41,22 +41,6 @@ const config = {
       items: [
         { to: "/", label: "Docs", position: "left" }
       ]
-    },
-    footer: {
-      style: "dark",
-      links: [
-        {
-          title: "Docs",
-          items: [{ label: "Home", to: "/" }]
-        },
-        {
-          title: "Contracts",
-          items: [
-            { label: "Button", to: "/contracts/component-contracts/button" },
-            { label: "Input", to: "/contracts/component-contracts/input" }
-          ]
-        }
-      ]
     }
   }
 };

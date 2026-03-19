@@ -1,6 +1,17 @@
 import type { FigmaWriteNode } from "../../../../shared/contracts/figmaWritePayload";
 import mobileCore from "../../../../packages/ui-core/contracts/mobile-core.json";
-import { getButtonMetrics, getButtonWidth, getInputMetrics, getInputMultilineHeight, getInputWidth } from "../../../../packages/ui-core/contracts/foundationModel.mjs";
+import {
+  foundationColors,
+  getButtonMetrics,
+  getButtonPalette,
+  getButtonWidth,
+  getInputFocusRing,
+  getInputHelperColor,
+  getInputMetrics,
+  getInputMultilineHeight,
+  getInputPalette,
+  getInputWidth
+} from "../../../../packages/ui-core/contracts/foundationModel.mjs";
 import { loadFont } from "./createTextNode";
 
 const rgb = (hex: string) => {
@@ -176,13 +187,9 @@ const createButtonNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   const state = getButtonState(node);
   const emphasis = getButtonEmphasis(node);
   const metrics = getButtonMetrics(sizeKey);
-  const palette =
-    state === "disabled"
-      ? mobileCore.colors.button.emphasis.disabled
-      : mobileCore.colors.button.emphasis[emphasis];
-
-  const fill = state === "pressed" ? palette.pressedFill ?? palette.fill : palette.fill;
-  const stroke = state === "pressed" ? palette.pressedStroke ?? palette.stroke : palette.stroke;
+  const palette = getButtonPalette(emphasis, state);
+  const fill = palette.fill;
+  const stroke = palette.stroke;
   const iconOnly = node.variant?.iconOnly === true;
   const iconLeading = node.variant?.iconLeading === true;
   const width = iconOnly
@@ -223,22 +230,16 @@ const createButtonNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   return frame;
 };
 
-const inputPaletteForState = (state: ReturnType<typeof getInputState>, intent: ReturnType<typeof getInputIntent>) => {
-  if (state === "disabled") return mobileCore.colors.input.intent.disabled;
-  if (state === "readonly") return mobileCore.colors.input.intent.readonly;
-  if (state === "loading") return mobileCore.colors.input.intent.loading;
-  return mobileCore.colors.input.intent[intent];
-};
-
 const createInputNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   const sizeKey = getInputSize(node);
   const state = getInputState(node);
   const intent = getInputIntent(node);
   const metrics = getInputMetrics(sizeKey);
-  const palette = inputPaletteForState(state, intent);
+  const palette = getInputPalette(intent, state);
   const width = node.variant?.width === "hug" ? getInputWidth("hug") : getInputWidth("full");
-  const stroke = state === "focused" ? mobileCore.colors.input.focusRing.stroke : palette.stroke;
-  const strokeWeight = state === "focused" ? mobileCore.colors.input.focusRing.strokeWeight : 1;
+  const focusRing = getInputFocusRing();
+  const stroke = state === "focused" ? focusRing.stroke : palette.stroke;
+  const strokeWeight = state === "focused" ? focusRing.strokeWeight : 1;
 
   const helperText = typeof node.variant?.helperText === "string" ? node.variant.helperText : undefined;
   const multiline = node.variant?.multiline === true;
@@ -299,9 +300,9 @@ const createInputNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   frame.appendChild(label);
 
   if (state === "loading") {
-    frame.appendChild(createLoadingGlyph("#64748B", Math.max(16, metrics.fontSize + 2)));
+    frame.appendChild(createLoadingGlyph(foundationColors.text.assistive, Math.max(16, metrics.fontSize + 2)));
   } else if (node.variant?.clearable === true && typeof node.variant?.value === "string") {
-    frame.appendChild(createClearGlyph("#64748B", Math.max(16, metrics.fontSize + 3)));
+    frame.appendChild(createClearGlyph(foundationColors.text.assistive, Math.max(16, metrics.fontSize + 3)));
   }
 
   wrapper.appendChild(frame);
@@ -309,7 +310,7 @@ const createInputNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   if (helperText) {
     const helper = await createText(
       helperText,
-      intent === "error" ? mobileCore.colors.input.intent.error.stroke : "#667085",
+      getInputHelperColor(intent),
       12,
       18,
       "regular"
@@ -333,9 +334,9 @@ const createFallbackNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   frame.paddingLeft = 12;
   frame.paddingRight = 12;
   frame.cornerRadius = 10;
-  frame.fills = [{ type: "SOLID", color: rgb("#F8FAFC") }];
-  frame.strokes = [{ type: "SOLID", color: rgb("#E2E8F0") }];
-  const text = await createText(node.component ?? node.name, "#475569", 13, 18, "medium");
+  frame.fills = [{ type: "SOLID", color: rgb(foundationColors.surface.panel) }];
+  frame.strokes = [{ type: "SOLID", color: rgb(foundationColors.border.default) }];
+  const text = await createText(node.component ?? node.name, foundationColors.text.secondary, 13, 18, "medium");
   frame.appendChild(text);
   return frame;
 };

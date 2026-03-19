@@ -21,42 +21,10 @@ Input 자체는 `Module`이 아니며, 화면 구조를 설명하는 `Pattern`�
 
 ![Input preview](/previews/input-contract.svg)
 
-현재 preview는 Bento식 축 비교 구조를 유지하되, foundation tone은 `Wanted`에 더 가깝게 조정합니다.
-지금 기준은 입력 데모보다 실제 서비스 폼에서 보이는 절제된 field shell을 우선합니다.
+현재 preview는 축 비교 구조를 유지하되, 입력 데모보다 실제 서비스 폼에서 보이는 절제된 field shell을 우선합니다.
 
 현재 Input 수치는 로컬 문서가 아니라 `Foundation`에서 파생됩니다.
 즉 `md` control height가 바뀌면 Input preview, Figma inspection, 생성 수치가 함께 바뀌어야 합니다.
-
-## Current Source Signals
-
-- `Default / Error / Success`가 같은 field shell 안에서 비교되어야 합니다.
-- `Small / Medium / Large`의 높이 차이가 한 화면에서 보여야 합니다.
-- `Focused / Disabled / Read Only`가 상태 차이로 읽혀야 합니다.
-- `Hug Width / Full Width`가 필드 용도의 차이를 보여야 합니다.
-- `With Helper / With Error Text / Multiline / Readonly Field`가 bundle 예시로 보여야 합니다.
-
-## What Changed
-
-- source 기준이 단순 Input API 문서가 아니라 Bento inputs bundle로 바뀌었습니다.
-- 그래서 이 preview는 “하나의 input prop 조합”보다 “field shell 패턴 묶음”을 보여주는 방향으로 읽어야 합니다.
-- 현재 preview는 bundle 전체가 아니라 single-line input core만 보여줍니다.
-- `TextArea`는 source 범위에 포함되지만, 현재 contract 결과물에는 아직 포함되지 않습니다.
-
-## Reference
-
-- Reference source: [Tamagui Bento Inputs](https://tamagui.dev/bento/forms/inputs)
-- Core direction: platform-agnostic mobile contract
-- 현재 문서는 Bento inputs patterns를 참고해, 우리 core에 남긴 single-line field 기준만 고정한 문서입니다.
-
-## Bento Source Scope
-
-| Source Bundle | Meaning |
-| --- | --- |
-| `Inputs` | Bento의 input bundle 전체를 source로 봅니다. |
-| `10 components` | Bento inventory 기준으로 inputs bundle은 여러 field composition을 포함합니다. |
-| `TextAreas` | 같은 source 맥락에서 multiline field bundle도 함께 봐야 합니다. |
-| `4 components` | Bento inventory 기준으로 textarea bundle도 별도로 존재합니다. |
-| `pattern bundle` | 이 문서는 prop API 복제가 아니라, bundle 안의 공통 field 구조를 추출한 core contract입니다. |
 
 ## Component Identity
 
@@ -70,27 +38,13 @@ Input 자체는 `Module`이 아니며, 화면 구조를 설명하는 `Pattern`�
 - mobile field height 기준
 - focus ring과 상태별 field palette
 - inspection에서 바로 검증할 수 있는 sample set
-- Bento inputs bundle에서 반복되는 공통 field shell
+- 반복되는 공통 field shell
 
 ## What Is Not Included
 
-- Bento inputs 예시에 포함된 모든 스타일 세부값
 - multiline, textarea, select, search 조합
 - prefix/suffix/icon affordance 전체
 - framework 전용 Input API
-
-## Bento Pattern Coverage
-
-| Bundle Layer | Current Status | Notes |
-| --- | --- | --- |
-| base single-line input | included | 현재 core input의 기본 unit입니다. |
-| intent state | included | default / error / success만 남겼습니다. |
-| width behavior | included | hug / full만 남겼습니다. |
-| focused / disabled / readonly / loading | included | 공통 interaction 상태만 남겼습니다. |
-| helper / validation composition | partial | contract rule에는 있으나 별도 subcomponent는 아직 없습니다. |
-| prefix / suffix / affordance patterns | excluded | bundle 수준 조합은 아직 미포함입니다. |
-| textarea / multiline | excluded | 별도 family 또는 하위 contract로 분리할 대상입니다. |
-| search / select / grouped field patterns | excluded | 현재는 base input scope 밖입니다. |
 
 ## Variants
 
@@ -119,7 +73,7 @@ Input 자체는 `Module`이 아니며, 화면 구조를 설명하는 `Pattern`�
 
 ## Palette
 
-공통 color source는 `mobile-core.colors.input.intent`입니다.
+현재 Input palette는 raw 색이 아니라 Foundation semantic token에서 파생합니다.
 
 | Intent | Fill | Stroke | Text | Subtle |
 | --- | --- | --- | --- | --- |
@@ -132,11 +86,11 @@ Input 자체는 `Module`이 아니며, 화면 구조를 설명하는 `Pattern`�
 
 ## Focus Ring
 
-focus ring source는 `mobile-core.colors.input.focusRing`입니다.
+focus ring도 Foundation primary semantic token에서 파생합니다.
 
 | Token | Value |
 | --- | --- |
-| `stroke` | `#0064FF` |
+| `stroke` | `#0066FF` |
 | `strokeWeight` | `2` |
 
 ## States
@@ -189,10 +143,9 @@ focus ring source는 `mobile-core.colors.input.focusRing`입니다.
 
 ## Current Gaps
 
-- Bento inputs 안의 TextArea 범위는 아직 현재 contract에 포함되지 않았습니다.
 - 현재 contract는 single-line mobile input만 다룹니다.
 - helper text, prefix/suffix, input group은 다음 단계에서 분리된 family로 다루는 편이 적절합니다.
-- Bento inputs bundle 전체를 모두 반영한 것은 아니며, 현재는 공통 base input contract만 고정한 상태입니다.
+- multiline 입력은 별도 family 또는 하위 contract로 분리할 수 있습니다.
 
 ## Accessibility Minimum
 

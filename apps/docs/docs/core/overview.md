@@ -19,12 +19,10 @@ slug: /
 
 ## Design Direction
 
-- 구조 방식은 `Bento`에 가깝습니다.
-- 톤과 실무 감각은 `Wanted`에 가깝습니다.
-
-정리하면:
-- `Bento`에서는 구조적 계약, 조합 가능성, 명시적 레이어를 가져옵니다.
-- `Wanted`에서는 서비스 문맥, 실무적 위계, 과하지 않은 모바일 제품 감각을 가져옵니다.
+현재 시스템은 다음 방향을 따릅니다.
+- 구조는 명시적이고 조합 가능해야 합니다.
+- 톤은 실무적이고 서비스 맥락에 맞아야 합니다.
+- 과한 데모 스타일보다 실제 제품 화면에 가까워야 합니다.
 
 ## Foundation Tone
 
@@ -34,8 +32,8 @@ slug: /
 - 선명한 원색보다 절제된 강조색
 - 과장된 pill 형태보다 실무적인 radius와 spacing
 
-현재 대표 foundation 색은 Wanted 서비스 자산 기준으로 아래 값을 사용합니다.
-- primary action: `#0064FF`
+현재 대표 foundation 색은 시스템의 공통 semantic token으로 아래 값을 사용합니다.
+- primary action: `#0066FF`
 - primary text: `#171719`
 - secondary text: `#2E2F33`
 - line: `#E1E2E4`

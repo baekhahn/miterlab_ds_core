@@ -1,4 +1,5 @@
 import { loadFont } from "./createTextNode";
+import mobileCore from "../../../../packages/ui-core/contracts/mobile-core.json";
 
 type PreviewLevel = "component" | "module" | "pattern";
 
@@ -8,16 +9,17 @@ export interface ContractPreviewOption {
   level: PreviewLevel;
 }
 
+const FOUNDATION_COLORS = mobileCore.foundation.colors;
 const COLORS = {
-  bg: "#FFFFFF",
-  panel: "#F7F7F8",
-  line: "#E1E2E4",
-  text: "#171719",
-  textSecondary: "#2E2F33",
-  textMuted: "#989BA2",
-  primary: "#0064FF",
-  success: "#00BF40",
-  danger: "#FF4242"
+  bg: FOUNDATION_COLORS.surface.canvas,
+  panel: FOUNDATION_COLORS.surface.panel,
+  line: FOUNDATION_COLORS.border.default,
+  text: FOUNDATION_COLORS.text.primary,
+  textSecondary: FOUNDATION_COLORS.text.secondary,
+  textMuted: FOUNDATION_COLORS.text.muted,
+  primary: FOUNDATION_COLORS.accent.primary,
+  success: FOUNDATION_COLORS.status.success,
+  danger: FOUNDATION_COLORS.status.danger
 };
 
 export const contractPreviewOptions: ContractPreviewOption[] = [

@@ -29,8 +29,7 @@ Button은 정보 표시용 요소가 아니라, 행동을 유도하는 요소입
 
 ![Button preview](/previews/button-contract.svg)
 
-현재 preview는 Bento식 축 비교 구조를 유지하되, foundation tone은 `Wanted`에 더 가깝게 조정합니다.
-지금 기준은 과한 데모 톤보다 서비스형 CTA 위계와 절제된 강조를 우선합니다.
+현재 preview는 축 비교 구조를 유지하되, 과한 데모 톤보다 서비스형 CTA 위계와 절제된 강조를 우선합니다.
 
 현재 Button 수치는 로컬 문서가 아니라 `Foundation`에서 파생됩니다.
 즉 `md` control height가 바뀌면 Button preview, Figma inspection, 생성 수치가 함께 바뀌어야 합니다.
@@ -209,12 +208,12 @@ Button은 Module 안에서 자주 사용되지만, Module 자체가 되지는 �
 
 ## Palette
 
-현재 foundation은 Wanted 서비스의 semantic 색을 직접 참고합니다.
+현재 Button palette는 raw 색이 아니라 Foundation semantic token에서 파생합니다.
 
 | Emphasis | Fill | Stroke | Text | Pressed Fill | Pressed Stroke |
 | --- | --- | --- | --- | --- | --- |
-| `primary` | `#0064FF` | `#0064FF` | `#FFFFFF` | `#0056DB` | `#0056DB` |
-| `secondary` | `#FFFFFF` | `#E1E2E4` | `#171719` | `#F7F7F8` | `#D3D5D9` |
+| `primary` | `#1A75FF` | `#1A75FF` | `#FFFFFF` | `#0066FF` | `#0066FF` |
+| `secondary` | `#FFFFFF` | `#E1E2E4` | `#171719` | `#F7F7F8` | `#EAEBEC` |
 | `tertiary` | `transparent` | `transparent` | `#2E2F33` | `transparent` | `transparent` |
-| `destructive` | `#FF4242` | `#FF4242` | `#FFFFFF` | `#E03838` | `#E03838` |
+| `destructive` | `#FF4242` | `#FF4242` | `#FFFFFF` | `#E52222` | `#E52222` |
 | `disabled` | `#F4F4F5` | `#E1E2E4` | `#989BA2` | - | - |

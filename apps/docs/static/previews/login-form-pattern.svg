@@ -10,6 +10,6 @@
 <text x="310" y="266" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13" font-weight="600" fill="#2E2F33">비밀번호</text>
 <rect x="310" y="280" width="300" height="48" rx="12" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
 <text x="326" y="310" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="15" font-weight="400" fill="#171719">••••••••</text>
-<rect x="310" y="500" width="300" height="52" rx="14" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
+<rect x="310" y="500" width="300" height="52" rx="14" fill="#0066FF" stroke="#0066FF" stroke-width="1" />
 <text x="460" y="531" text-anchor="middle" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">로그인</text>
 </svg>

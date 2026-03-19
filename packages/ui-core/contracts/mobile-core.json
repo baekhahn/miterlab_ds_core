@@ -1,6 +1,92 @@
 {
   "foundation": {
     "colors": {
+      "semantic": {
+        "light": {
+          "primary": {
+            "normal": "#3385FF",
+            "strong": "#1A75FF",
+            "heavy": "#0066FF"
+          },
+          "label": {
+            "normal": "#171719",
+            "neutral": "#2E2F33",
+            "alternative": "#37383C",
+            "assistive": "#70737C",
+            "disable": "#989BA2"
+          },
+          "background": {
+            "normal": "#FFFFFF",
+            "alternative": "#F7F7F8",
+            "elevated": "#FFFFFF"
+          },
+          "interaction": {
+            "inactive": "#989BA2",
+            "disable": "#F4F4F5"
+          },
+          "line": {
+            "solidNormal": "#E1E2E4",
+            "solidNeutral": "#EAEBEC",
+            "solidAlternative": "#F4F4F5"
+          },
+          "status": {
+            "positive": "#00BF40",
+            "cautionary": "#FF9200",
+            "negative": "#FF4242"
+          },
+          "fill": {
+            "normal": "#F7F7F8",
+            "strong": "#F4F4F5",
+            "alternative": "#FFFFFF"
+          },
+          "inverse": {
+            "background": "#1B1C1E",
+            "label": "#F7F7F8"
+          }
+        },
+        "dark": {
+          "primary": {
+            "normal": "#0066FF",
+            "strong": "#005EEB",
+            "heavy": "#0054D1"
+          },
+          "label": {
+            "normal": "#F7F7F8",
+            "neutral": "#C2C4C8",
+            "alternative": "#AEB0B6",
+            "assistive": "#AEB0B6",
+            "disable": "#989BA2"
+          },
+          "background": {
+            "normal": "#1B1C1E",
+            "alternative": "#0F0F10",
+            "elevated": "#212225"
+          },
+          "interaction": {
+            "inactive": "#5A5C63",
+            "disable": "#2E2F33"
+          },
+          "line": {
+            "solidNormal": "#37383C",
+            "solidNeutral": "#333438",
+            "solidAlternative": "#2E2F33"
+          },
+          "status": {
+            "positive": "#1ED45A",
+            "cautionary": "#FFA938",
+            "negative": "#FF6363"
+          },
+          "fill": {
+            "normal": "#212225",
+            "strong": "#2E2F33",
+            "alternative": "#141415"
+          },
+          "inverse": {
+            "background": "#FFFFFF",
+            "label": "#171719"
+          }
+        }
+      },
       "surface": {
         "canvas": "#FFFFFF",
         "panel": "#F7F7F8",
@@ -14,20 +100,23 @@
         "primary": "#171719",
         "secondary": "#2E2F33",
         "muted": "#989BA2",
-        "assistive": "#667085",
+        "assistive": "#70737C",
         "inverse": "#FFFFFF"
       },
       "accent": {
-        "primary": "#0064FF",
+        "primary": "#0066FF",
+        "primaryStrong": "#1A75FF",
+        "primaryNormal": "#3385FF",
         "primaryWeak": "#EAF2FF"
       },
       "status": {
         "success": "#00BF40",
+        "cautionary": "#FF9200",
         "danger": "#FF4242"
       },
       "preview": {
-        "axisPillFill": "#F2F4F7",
-        "axisPillText": "#667085"
+        "axisPillFill": "#F7F7F8",
+        "axisPillText": "#70737C"
       }
     },
     "density": {
@@ -110,31 +199,6 @@
         "sm": 10,
         "md": 10,
         "lg": 12
-      }
-    }
-  },
-  "colors": {
-    "button": {
-      "emphasis": {
-        "primary": { "fill": "#0064FF", "stroke": "#0064FF", "text": "#FFFFFF", "pressedFill": "#0056DB", "pressedStroke": "#0056DB" },
-        "secondary": { "fill": "#FFFFFF", "stroke": "#E1E2E4", "text": "#171719", "pressedFill": "#F7F7F8", "pressedStroke": "#D3D5D9" },
-        "tertiary": { "fill": "transparent", "stroke": "transparent", "text": "#2E2F33", "pressedFill": "transparent", "pressedStroke": "transparent" },
-        "destructive": { "fill": "#FF4242", "stroke": "#FF4242", "text": "#FFFFFF", "pressedFill": "#E03838", "pressedStroke": "#E03838" },
-        "disabled": { "fill": "#F4F4F5", "stroke": "#E1E2E4", "text": "#989BA2" }
-      }
-    },
-    "input": {
-      "intent": {
-        "default": { "fill": "#FFFFFF", "stroke": "#E1E2E4", "text": "#171719", "subtle": "#989BA2" },
-        "error": { "fill": "#FFFFFF", "stroke": "#FF4242", "text": "#171719", "subtle": "#989BA2" },
-        "success": { "fill": "#FFFFFF", "stroke": "#00BF40", "text": "#171719", "subtle": "#989BA2" },
-        "disabled": { "fill": "#F4F4F5", "stroke": "#E1E2E4", "text": "#989BA2", "subtle": "#989BA2" },
-        "readonly": { "fill": "#F7F7F8", "stroke": "#E1E2E4", "text": "#2E2F33", "subtle": "#989BA2" },
-        "loading": { "fill": "#FFFFFF", "stroke": "#E1E2E4", "text": "#989BA2", "subtle": "#989BA2" }
-      },
-      "focusRing": {
-        "stroke": "#0064FF",
-        "strokeWeight": 2
       }
     }
   },

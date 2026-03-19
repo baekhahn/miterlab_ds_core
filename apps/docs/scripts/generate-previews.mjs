@@ -1,15 +1,25 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import mobileCore from "../../../packages/ui-core/contracts/mobile-core.json" with { type: "json" };
-import { getButtonMetrics, getButtonWidth, getInputMetrics, getInputMultilineHeight, getInputWidth } from "../../../packages/ui-core/contracts/foundationModel.mjs";
+import {
+  foundationColors,
+  getButtonMetrics,
+  getButtonPalette,
+  getButtonWidth,
+  getInputFocusRing,
+  getInputHelperColor,
+  getInputMetrics,
+  getInputMultilineHeight,
+  getInputPalette,
+  getInputWidth
+} from "../../../packages/ui-core/contracts/foundationModel.mjs";
 import { createInspectionPreviewModel } from "../../../packages/ui-core/contracts/inspectionPreviewLayout.mjs";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const outputDir = path.join(scriptDir, "..", "static", "previews");
 
 const FONT_STACK = "Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
-const FOUNDATION_COLORS = mobileCore.foundation.colors;
+const FOUNDATION_COLORS = foundationColors;
 const COLORS = {
   bg: FOUNDATION_COLORS.surface.canvas,
   panel: FOUNDATION_COLORS.surface.panel,
@@ -90,12 +100,7 @@ const inputRect = (x, y, width, height, radius, fill, stroke, value, valueColor,
 
 const renderButtonComponent = (component, x, y) => {
   const size = getButtonMetrics(component.size);
-  const palette =
-    component.state === "disabled"
-      ? mobileCore.colors.button.emphasis.disabled
-      : mobileCore.colors.button.emphasis[component.emphasis];
-  const fill = component.state === "pressed" ? palette.pressedFill ?? palette.fill : palette.fill;
-  const stroke = component.state === "pressed" ? palette.pressedStroke ?? palette.stroke : palette.stroke;
+  const palette = getButtonPalette(component.emphasis, component.state);
   const width = component.iconOnly
     ? size.height
     : component.width === "full"
@@ -116,8 +121,8 @@ const renderButtonComponent = (component, x, y) => {
         width,
         size.height,
         size.radius,
-        fill,
-        stroke,
+        palette.fill,
+        palette.stroke,
         component.iconOnly ? "" : component.label,
         palette.text,
         size.fontSize
@@ -127,19 +132,11 @@ const renderButtonComponent = (component, x, y) => {
 
 const renderInputComponent = (component, x, y) => {
   const size = getInputMetrics(component.size);
-  const palette =
-    component.state === "focused"
-      ? mobileCore.colors.input.intent[component.intent]
-      : component.state === "disabled"
-        ? mobileCore.colors.input.intent.disabled
-        : component.state === "readonly"
-          ? mobileCore.colors.input.intent.readonly
-          : component.state === "loading"
-            ? mobileCore.colors.input.intent.loading
-            : mobileCore.colors.input.intent[component.intent];
+  const palette = getInputPalette(component.intent, component.state);
   const width = component.width === "full" ? getInputWidth("full") : getInputWidth("hug");
-  const stroke = component.state === "focused" ? mobileCore.colors.input.focusRing.stroke : palette.stroke;
-  const strokeWidth = component.state === "focused" ? mobileCore.colors.input.focusRing.strokeWeight : 1;
+  const focusRing = getInputFocusRing();
+  const stroke = component.state === "focused" ? focusRing.stroke : palette.stroke;
+  const strokeWidth = component.state === "focused" ? focusRing.strokeWeight : 1;
   const value = component.value ?? component.placeholder ?? component.label;
   const valueColor = component.value ? palette.text : palette.subtle;
   const multiline = component.multiline === true;
@@ -148,7 +145,7 @@ const renderInputComponent = (component, x, y) => {
     ? getInputMultilineHeight(component.size, rowsCount)
     : size.height;
   const helperText = component.helperText;
-  const helperColor = component.intent === "error" ? mobileCore.colors.input.intent.error.stroke : COLORS.textAssistive;
+  const helperColor = getInputHelperColor(component.intent);
 
   return {
     width,

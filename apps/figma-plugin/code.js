@@ -23,6 +23,125 @@
   // ../../packages/ui-core/contracts/mobile-core.json with { type: 'json' }
   var mobile_core_default = {
     foundation: {
+      colors: {
+        semantic: {
+          light: {
+            primary: {
+              normal: "#3385FF",
+              strong: "#1A75FF",
+              heavy: "#0066FF"
+            },
+            label: {
+              normal: "#171719",
+              neutral: "#2E2F33",
+              alternative: "#37383C",
+              assistive: "#70737C",
+              disable: "#989BA2"
+            },
+            background: {
+              normal: "#FFFFFF",
+              alternative: "#F7F7F8",
+              elevated: "#FFFFFF"
+            },
+            interaction: {
+              inactive: "#989BA2",
+              disable: "#F4F4F5"
+            },
+            line: {
+              solidNormal: "#E1E2E4",
+              solidNeutral: "#EAEBEC",
+              solidAlternative: "#F4F4F5"
+            },
+            status: {
+              positive: "#00BF40",
+              cautionary: "#FF9200",
+              negative: "#FF4242"
+            },
+            fill: {
+              normal: "#F7F7F8",
+              strong: "#F4F4F5",
+              alternative: "#FFFFFF"
+            },
+            inverse: {
+              background: "#1B1C1E",
+              label: "#F7F7F8"
+            }
+          },
+          dark: {
+            primary: {
+              normal: "#0066FF",
+              strong: "#005EEB",
+              heavy: "#0054D1"
+            },
+            label: {
+              normal: "#F7F7F8",
+              neutral: "#C2C4C8",
+              alternative: "#AEB0B6",
+              assistive: "#AEB0B6",
+              disable: "#989BA2"
+            },
+            background: {
+              normal: "#1B1C1E",
+              alternative: "#0F0F10",
+              elevated: "#212225"
+            },
+            interaction: {
+              inactive: "#5A5C63",
+              disable: "#2E2F33"
+            },
+            line: {
+              solidNormal: "#37383C",
+              solidNeutral: "#333438",
+              solidAlternative: "#2E2F33"
+            },
+            status: {
+              positive: "#1ED45A",
+              cautionary: "#FFA938",
+              negative: "#FF6363"
+            },
+            fill: {
+              normal: "#212225",
+              strong: "#2E2F33",
+              alternative: "#141415"
+            },
+            inverse: {
+              background: "#FFFFFF",
+              label: "#171719"
+            }
+          }
+        },
+        surface: {
+          canvas: "#FFFFFF",
+          panel: "#F7F7F8",
+          field: "#FFFFFF"
+        },
+        border: {
+          default: "#E1E2E4",
+          strong: "#D3D5D9"
+        },
+        text: {
+          primary: "#171719",
+          secondary: "#2E2F33",
+          muted: "#989BA2",
+          assistive: "#70737C",
+          inverse: "#FFFFFF"
+        },
+        accent: {
+          primary: "#0066FF",
+          primaryStrong: "#1A75FF",
+          primaryNormal: "#3385FF",
+          primaryWeak: "#EAF2FF"
+        },
+        status: {
+          success: "#00BF40",
+          cautionary: "#FF9200",
+          danger: "#FF4242"
+        },
+        preview: {
+          axisPillFill: "#F7F7F8",
+          axisPillText: "#70737C"
+        }
+      },
       density: {
         base: "md",
         touchTargetMin: 44
@@ -106,31 +225,6 @@
         }
       }
     },
-    colors: {
-      button: {
-        emphasis: {
-          primary: { fill: "#0064FF", stroke: "#0064FF", text: "#FFFFFF", pressedFill: "#0056DB", pressedStroke: "#0056DB" },
-          secondary: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#171719", pressedFill: "#F7F7F8", pressedStroke: "#D3D5D9" },
-          tertiary: { fill: "transparent", stroke: "transparent", text: "#2E2F33", pressedFill: "transparent", pressedStroke: "transparent" },
-          destructive: { fill: "#FF4242", stroke: "#FF4242", text: "#FFFFFF", pressedFill: "#E03838", pressedStroke: "#E03838" },
-          disabled: { fill: "#F4F4F5", stroke: "#E1E2E4", text: "#989BA2" }
-        }
-      },
-      input: {
-        intent: {
-          default: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#171719", subtle: "#989BA2" },
-          error: { fill: "#FFFFFF", stroke: "#FF4242", text: "#171719", subtle: "#989BA2" },
-          success: { fill: "#FFFFFF", stroke: "#00BF40", text: "#171719", subtle: "#989BA2" },
-          disabled: { fill: "#F4F4F5", stroke: "#E1E2E4", text: "#989BA2", subtle: "#989BA2" },
-          readonly: { fill: "#F7F7F8", stroke: "#E1E2E4", text: "#2E2F33", subtle: "#989BA2" },
-          loading: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#989BA2", subtle: "#989BA2" }
-        },
-        focusRing: {
-          stroke: "#0064FF",
-          strokeWeight: 2
-        }
-      }
-    },
     button: {
       inspection: {
         title: "Button Inspection",
@@ -211,6 +305,8 @@
   var normalizeSize = (size) => size === "sm" || size === "lg" ? size : "md";
   var normalizeWidth = (width) => width === "hug" ? "hug" : "full";
   var foundation = mobile_core_default.foundation;
+  var semanticLight = foundation.colors.semantic.light;
+  var foundationColors = foundation.colors;
   var getButtonMetrics = (size = "md") => {
     const sizeKey = normalizeSize(size);
     return {
@@ -243,6 +339,84 @@
     const rows = Math.max(2, rowsCount);
     return Math.max(metrics.height * 2, metrics.lineHeight * rows + metrics.paddingY * 2 + 16);
   };
+  var getButtonPalette = (emphasis = "primary", state = "enabled") => {
+    if (state === "disabled") {
+      return {
+        fill: semanticLight.interaction.disable,
+        stroke: semanticLight.line.solidNormal,
+        text: semanticLight.interaction.inactive
+      };
+    }
+    if (emphasis === "secondary") {
+      return {
+        fill: state === "pressed" ? semanticLight.background.alternative : semanticLight.background.elevated,
+        stroke: state === "pressed" ? semanticLight.line.solidNeutral : semanticLight.line.solidNormal,
+        text: semanticLight.label.normal
+      };
+    }
+    if (emphasis === "tertiary") {
+      return {
+        fill: "transparent",
+        stroke: "transparent",
+        text: semanticLight.label.neutral
+      };
+    }
+    if (emphasis === "destructive") {
+      return {
+        fill: state === "pressed" ? "#E52222" : semanticLight.status.negative,
+        stroke: state === "pressed" ? "#E52222" : semanticLight.status.negative,
+        text: "#FFFFFF"
+      };
+    }
+    return {
+      fill: state === "pressed" ? semanticLight.primary.heavy : semanticLight.primary.strong,
+      stroke: state === "pressed" ? semanticLight.primary.heavy : semanticLight.primary.strong,
+      text: "#FFFFFF"
+    };
+  };
+  var getInputPalette = (intent = "default", state = "enabled") => {
+    var _a;
+    if (state === "disabled") {
+      return {
+        fill: semanticLight.interaction.disable,
+        stroke: semanticLight.line.solidNormal,
+        text: semanticLight.interaction.inactive,
+        subtle: semanticLight.interaction.inactive
+      };
+    }
+    if (state === "readonly") {
+      return {
+        fill: semanticLight.background.alternative,
+        stroke: semanticLight.line.solidNormal,
+        text: semanticLight.label.neutral,
+        subtle: semanticLight.interaction.inactive
+      };
+    }
+    if (state === "loading") {
+      return {
+        fill: semanticLight.background.elevated,
+        stroke: semanticLight.line.solidNormal,
+        text: semanticLight.interaction.inactive,
+        subtle: semanticLight.interaction.inactive
+      };
+    }
+    const strokeByIntent = {
+      error: semanticLight.status.negative,
+      success: semanticLight.status.positive,
+      default: semanticLight.line.solidNormal
+    };
+    return {
+      fill: semanticLight.background.elevated,
+      stroke: (_a = strokeByIntent[intent]) != null ? _a : strokeByIntent.default,
+      text: semanticLight.label.normal,
+      subtle: semanticLight.interaction.inactive
+    };
+  };
+  var getInputFocusRing = () => ({
+    stroke: semanticLight.primary.heavy,
+    strokeWeight: 2
+  });
+  var getInputHelperColor = (intent = "default") => intent === "error" ? semanticLight.status.negative : semanticLight.label.assistive;
 
   // ../../packages/ui-core/contracts/inspectionPreviewLayout.mjs
   var AXIS_PILL_WIDTH = 72;
@@ -388,6 +562,125 @@
   // ../../packages/ui-core/contracts/mobile-core.json
   var mobile_core_default2 = {
     foundation: {
+      colors: {
+        semantic: {
+          light: {
+            primary: {
+              normal: "#3385FF",
+              strong: "#1A75FF",
+              heavy: "#0066FF"
+            },
+            label: {
+              normal: "#171719",
+              neutral: "#2E2F33",
+              alternative: "#37383C",
+              assistive: "#70737C",
+              disable: "#989BA2"
+            },
+            background: {
+              normal: "#FFFFFF",
+              alternative: "#F7F7F8",
+              elevated: "#FFFFFF"
+            },
+            interaction: {
+              inactive: "#989BA2",
+              disable: "#F4F4F5"
+            },
+            line: {
+              solidNormal: "#E1E2E4",
+              solidNeutral: "#EAEBEC",
+              solidAlternative: "#F4F4F5"
+            },
+            status: {
+              positive: "#00BF40",
+              cautionary: "#FF9200",
+              negative: "#FF4242"
+            },
+            fill: {
+              normal: "#F7F7F8",
+              strong: "#F4F4F5",
+              alternative: "#FFFFFF"
+            },
+            inverse: {
+              background: "#1B1C1E",
+              label: "#F7F7F8"
+            }
+          },
+          dark: {
+            primary: {
+              normal: "#0066FF",
+              strong: "#005EEB",
+              heavy: "#0054D1"
+            },
+            label: {
+              normal: "#F7F7F8",
+              neutral: "#C2C4C8",
+              alternative: "#AEB0B6",
+              assistive: "#AEB0B6",
+              disable: "#989BA2"
+            },
+            background: {
+              normal: "#1B1C1E",
+              alternative: "#0F0F10",
+              elevated: "#212225"
+            },
+            interaction: {
+              inactive: "#5A5C63",
+              disable: "#2E2F33"
+            },
+            line: {
+              solidNormal: "#37383C",
+              solidNeutral: "#333438",
+              solidAlternative: "#2E2F33"
+            },
+            status: {
+              positive: "#1ED45A",
+              cautionary: "#FFA938",
+              negative: "#FF6363"
+            },
+            fill: {
+              normal: "#212225",
+              strong: "#2E2F33",
+              alternative: "#141415"
+            },
+            inverse: {
+              background: "#FFFFFF",
+              label: "#171719"
+            }
+          }
+        },
+        surface: {
+          canvas: "#FFFFFF",
+          panel: "#F7F7F8",
+          field: "#FFFFFF"
+        },
+        border: {
+          default: "#E1E2E4",
+          strong: "#D3D5D9"
+        },
+        text: {
+          primary: "#171719",
+          secondary: "#2E2F33",
+          muted: "#989BA2",
+          assistive: "#70737C",
+          inverse: "#FFFFFF"
+        },
+        accent: {
+          primary: "#0066FF",
+          primaryStrong: "#1A75FF",
+          primaryNormal: "#3385FF",
+          primaryWeak: "#EAF2FF"
+        },
+        status: {
+          success: "#00BF40",
+          cautionary: "#FF9200",
+          danger: "#FF4242"
+        },
+        preview: {
+          axisPillFill: "#F7F7F8",
+          axisPillText: "#70737C"
+        }
+      },
       density: {
         base: "md",
         touchTargetMin: 44
@@ -468,31 +761,6 @@
           sm: 10,
           md: 10,
           lg: 12
-        }
-      }
-    },
-    colors: {
-      button: {
-        emphasis: {
-          primary: { fill: "#0064FF", stroke: "#0064FF", text: "#FFFFFF", pressedFill: "#0056DB", pressedStroke: "#0056DB" },
-          secondary: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#171719", pressedFill: "#F7F7F8", pressedStroke: "#D3D5D9" },
-          tertiary: { fill: "transparent", stroke: "transparent", text: "#2E2F33", pressedFill: "transparent", pressedStroke: "transparent" },
-          destructive: { fill: "#FF4242", stroke: "#FF4242", text: "#FFFFFF", pressedFill: "#E03838", pressedStroke: "#E03838" },
-          disabled: { fill: "#F4F4F5", stroke: "#E1E2E4", text: "#989BA2" }
-        }
-      },
-      input: {
-        intent: {
-          default: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#171719", subtle: "#989BA2" },
-          error: { fill: "#FFFFFF", stroke: "#FF4242", text: "#171719", subtle: "#989BA2" },
-          success: { fill: "#FFFFFF", stroke: "#00BF40", text: "#171719", subtle: "#989BA2" },
-          disabled: { fill: "#F4F4F5", stroke: "#E1E2E4", text: "#989BA2", subtle: "#989BA2" },
-          readonly: { fill: "#F7F7F8", stroke: "#E1E2E4", text: "#2E2F33", subtle: "#989BA2" },
-          loading: { fill: "#FFFFFF", stroke: "#E1E2E4", text: "#989BA2", subtle: "#989BA2" }
-        },
-        focusRing: {
-          stroke: "#0064FF",
-          strokeWeight: 2
         }
       }
     },
@@ -804,17 +1072,17 @@
     return wrapper;
   };
   var createButtonNode = async (node) => {
-    var _a, _b, _c, _d, _e, _f;
+    var _a, _b, _c, _d;
     const sizeKey = getButtonSize(node);
     const state = getButtonState(node);
     const emphasis = getButtonEmphasis(node);
     const metrics = getButtonMetrics(sizeKey);
-    const palette = state === "disabled" ? mobile_core_default2.colors.button.emphasis.disabled : mobile_core_default2.colors.button.emphasis[emphasis];
-    const fill = state === "pressed" ? (_a = palette.pressedFill) != null ? _a : palette.fill : palette.fill;
-    const stroke = state === "pressed" ? (_b = palette.pressedStroke) != null ? _b : palette.stroke : palette.stroke;
-    const iconOnly = ((_c = node.variant) == null ? void 0 : _c.iconOnly) === true;
-    const iconLeading = ((_d = node.variant) == null ? void 0 : _d.iconLeading) === true;
-    const width = iconOnly ? metrics.height : ((_e = node.variant) == null ? void 0 : _e.width) === "full" ? getButtonWidth("full") : getButtonWidth("hug");
+    const palette = getButtonPalette(emphasis, state);
+    const fill = palette.fill;
+    const stroke = palette.stroke;
+    const iconOnly = ((_a = node.variant) == null ? void 0 : _a.iconOnly) === true;
+    const iconLeading = ((_b = node.variant) == null ? void 0 : _b.iconLeading) === true;
+    const width = iconOnly ? metrics.height : ((_c = node.variant) == null ? void 0 : _c.width) === "full" ? getButtonWidth("full") : getButtonWidth("hug");
     const frame = figma.createFrame();
     frame.name = node.name;
     frame.resize(Math.max(width, styleMinWidth(node, metrics.minWidth), node.width), Math.max(metrics.height, node.height));
@@ -838,17 +1106,11 @@
       frame.appendChild(createPlusGlyph(palette.text, Math.max(16, metrics.fontSize + 2)));
     }
     if (!iconOnly) {
-      const label = await createText((_f = node.text) != null ? _f : node.name, palette.text, styleFontSize(node, metrics.fontSize), styleLineHeight(node, metrics.lineHeight), "semibold");
+      const label = await createText((_d = node.text) != null ? _d : node.name, palette.text, styleFontSize(node, metrics.fontSize), styleLineHeight(node, metrics.lineHeight), "semibold");
       label.textAlignHorizontal = "CENTER";
       frame.appendChild(label);
     }
     return frame;
-  };
-  var inputPaletteForState = (state, intent) => {
-    if (state === "disabled") return mobile_core_default2.colors.input.intent.disabled;
-    if (state === "readonly") return mobile_core_default2.colors.input.intent.readonly;
-    if (state === "loading") return mobile_core_default2.colors.input.intent.loading;
-    return mobile_core_default2.colors.input.intent[intent];
   };
   var createInputNode = async (node) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
@@ -856,10 +1118,11 @@
     const state = getInputState(node);
     const intent = getInputIntent(node);
     const metrics = getInputMetrics(sizeKey);
-    const palette = inputPaletteForState(state, intent);
+    const palette = getInputPalette(intent, state);
     const width = ((_a = node.variant) == null ? void 0 : _a.width) === "hug" ? getInputWidth("hug") : getInputWidth("full");
-    const stroke = state === "focused" ? mobile_core_default2.colors.input.focusRing.stroke : palette.stroke;
-    const strokeWeight = state === "focused" ? mobile_core_default2.colors.input.focusRing.strokeWeight : 1;
+    const focusRing = getInputFocusRing();
+    const stroke = state === "focused" ? focusRing.stroke : palette.stroke;
+    const strokeWeight = state === "focused" ? focusRing.strokeWeight : 1;
     const helperText = typeof ((_b = node.variant) == null ? void 0 : _b.helperText) === "string" ? node.variant.helperText : void 0;
     const multiline = ((_c = node.variant) == null ? void 0 : _c.multiline) === true;
     const rowsCount = typeof ((_d = node.variant) == null ? void 0 : _d.rowsCount) === "number" && Number.isFinite(node.variant.rowsCount) ? Math.max(2, node.variant.rowsCount) : 3;
@@ -898,15 +1161,15 @@
     }
     frame.appendChild(label);
     if (state === "loading") {
-      frame.appendChild(createLoadingGlyph("#64748B", Math.max(16, metrics.fontSize + 2)));
+      frame.appendChild(createLoadingGlyph(foundationColors.text.assistive, Math.max(16, metrics.fontSize + 2)));
     } else if (((_j = node.variant) == null ? void 0 : _j.clearable) === true && typeof ((_k = node.variant) == null ? void 0 : _k.value) === "string") {
-      frame.appendChild(createClearGlyph("#64748B", Math.max(16, metrics.fontSize + 3)));
+      frame.appendChild(createClearGlyph(foundationColors.text.assistive, Math.max(16, metrics.fontSize + 3)));
     }
     wrapper.appendChild(frame);
     if (helperText) {
       const helper = await createText(
         helperText,
-        intent === "error" ? mobile_core_default2.colors.input.intent.error.stroke : "#667085",
+        getInputHelperColor(intent),
         12,
         18,
         "regular"
@@ -929,9 +1192,9 @@
     frame.paddingLeft = 12;
     frame.paddingRight = 12;
     frame.cornerRadius = 10;
-    frame.fills = [{ type: "SOLID", color: rgb2("#F8FAFC") }];
-    frame.strokes = [{ type: "SOLID", color: rgb2("#E2E8F0") }];
-    const text = await createText((_a = node.component) != null ? _a : node.name, "#475569", 13, 18, "medium");
+    frame.fills = [{ type: "SOLID", color: rgb2(foundationColors.surface.panel) }];
+    frame.strokes = [{ type: "SOLID", color: rgb2(foundationColors.border.default) }];
+    const text = await createText((_a = node.component) != null ? _a : node.name, foundationColors.text.secondary, 13, 18, "medium");
     frame.appendChild(text);
     return frame;
   };
@@ -994,13 +1257,13 @@
     pill.x = x;
     pill.y = y;
     pill.cornerRadius = 12;
-    pill.fills = [{ type: "SOLID", color: rgb3("#F2F4F7") }];
+    pill.fills = [{ type: "SOLID", color: rgb3(foundationColors.preview.axisPillFill) }];
     pill.strokes = [];
     const text = figma.createText();
     text.fontName = await loadFont("semibold");
     text.characters = label;
     text.fontSize = 11;
-    text.fills = [{ type: "SOLID", color: rgb3("#667085") }];
+    text.fills = [{ type: "SOLID", color: rgb3(foundationColors.preview.axisPillText) }];
     text.textAlignHorizontal = "CENTER";
     text.textAutoResize = "WIDTH_AND_HEIGHT";
     text.x = Math.round((72 - text.width) / 2);
@@ -1086,16 +1349,17 @@
   };
 
   // src/write/renderContractPreview.ts
+  var FOUNDATION_COLORS = mobile_core_default2.foundation.colors;
   var COLORS = {
-    bg: "#FFFFFF",
-    panel: "#F7F7F8",
-    line: "#E1E2E4",
-    text: "#171719",
-    textSecondary: "#2E2F33",
-    textMuted: "#989BA2",
-    primary: "#0064FF",
-    success: "#00BF40",
-    danger: "#FF4242"
+    bg: FOUNDATION_COLORS.surface.canvas,
+    panel: FOUNDATION_COLORS.surface.panel,
+    line: FOUNDATION_COLORS.border.default,
+    text: FOUNDATION_COLORS.text.primary,
+    textSecondary: FOUNDATION_COLORS.text.secondary,
+    textMuted: FOUNDATION_COLORS.text.muted,
+    primary: FOUNDATION_COLORS.accent.primary,
+    success: FOUNDATION_COLORS.status.success,
+    danger: FOUNDATION_COLORS.status.danger
   };
   var contractPreviewOptions = [
     { id: "button", label: "Button", level: "component" },
@@ -3694,7 +3958,7 @@
     metadata: {
       source: "miterlab-figma-generator",
       version: "0.1.0",
-      generatedAt: "2026-03-19T05:41:30.261Z"
+      generatedAt: "2026-03-19T06:32:15.096Z"
     }
   };
 
@@ -6143,7 +6407,7 @@
     metadata: {
       source: "miterlab-figma-generator",
       version: "0.1.0",
-      generatedAt: "2026-03-19T05:41:30.594Z"
+      generatedAt: "2026-03-19T06:32:15.447Z"
     }
   };
 

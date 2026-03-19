@@ -1,5 +1,6 @@
 import type { FigmaWriteNode, FigmaWritePayload } from "../../../../shared/contracts/figmaWritePayload";
 import { createInspectionPreviewModel } from "../../../../packages/ui-core/contracts/inspectionPreviewLayout.mjs";
+import { foundationColors } from "../../../../packages/ui-core/contracts/foundationModel.mjs";
 import { createContainerNode } from "./createContainerNode";
 import { createFrameNode } from "./createFrameNode";
 import { createInstanceNode } from "./createInstanceNode";
@@ -66,14 +67,14 @@ const createAxisPill = async (label: string, x: number, y: number) => {
   pill.x = x;
   pill.y = y;
   pill.cornerRadius = 12;
-  pill.fills = [{ type: "SOLID", color: rgb("#F2F4F7") }];
+  pill.fills = [{ type: "SOLID", color: rgb(foundationColors.preview.axisPillFill) }];
   pill.strokes = [];
 
   const text = figma.createText();
   text.fontName = await loadFont("semibold");
   text.characters = label;
   text.fontSize = 11;
-  text.fills = [{ type: "SOLID", color: rgb("#667085") }];
+  text.fills = [{ type: "SOLID", color: rgb(foundationColors.preview.axisPillText) }];
   text.textAlignHorizontal = "CENTER";
   text.textAutoResize = "WIDTH_AND_HEIGHT";
   text.x = Math.round((72 - text.width) / 2);

@@ -1,42 +1,139 @@
 :root {
-  --ifm-color-primary: #0f4c81;
-  --ifm-color-primary-dark: #0d4474;
-  --ifm-color-primary-darker: #0c406d;
-  --ifm-color-primary-light: #11548e;
-  --ifm-color-primary-lighter: #125895;
-  --ifm-background-color: #f7f8fa;
+  --ifm-color-primary: #0066ff;
+  --ifm-color-primary-dark: #005eea;
+  --ifm-color-primary-darker: #0058dc;
+  --ifm-color-primary-light: #1a75ff;
+  --ifm-color-primary-lighter: #3385ff;
+  --ifm-background-color: #ffffff;
   --ifm-navbar-background-color: #ffffff;
-  --ifm-heading-color: #1f2430;
-  --ifm-font-color-base: #344054;
+  --ifm-background-surface-color: #ffffff;
+  --ifm-heading-color: #171719;
+  --ifm-font-color-base: #2e2f33;
+  --ifm-font-color-secondary: #70737c;
+  --ifm-color-content: #2e2f33;
+  --ifm-color-content-secondary: #70737c;
+  --ifm-toc-border-color: #eaebec;
+  --ifm-table-border-color: #eaebec;
+  --ifm-hr-border-color: #eaebec;
+  --ifm-code-background: #f7f7f8;
+  --ifm-pre-background: #f7f7f8;
   --ifm-font-size-base: 14px;
   --ifm-code-font-size: 95%;
   --ifm-font-family-base: "Pretendard", "Pretendard Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --ifm-heading-font-family: "Pretendard", "Pretendard Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ifm-menu-color: #4a4d55;
+  --ifm-menu-color-active: #171719;
+  --ifm-menu-color-background-active: #ececef;
+  --ifm-menu-color-background-hover: #f7f7f8;
 }
 
 [data-theme="dark"] {
-  --ifm-color-primary: #7fb1ff;
-  --ifm-color-primary-dark: #6ba4ff;
-  --ifm-color-primary-darker: #5f9cff;
-  --ifm-color-primary-light: #93beff;
-  --ifm-color-primary-lighter: #a7cbff;
-  --ifm-background-color: #101317;
-  --ifm-navbar-background-color: #161b22;
-  --ifm-background-surface-color: #161b22;
-  --ifm-heading-color: #f3f4f6;
-  --ifm-font-color-base: #e5e7eb;
-  --ifm-font-color-secondary: #c7cdd6;
-  --ifm-color-content: #e5e7eb;
-  --ifm-color-content-secondary: #c7cdd6;
-  --ifm-toc-border-color: #2a313c;
-  --ifm-table-border-color: #2a313c;
-  --ifm-hr-border-color: #2a313c;
-  --ifm-code-background: #1b2230;
-  --ifm-pre-background: #111827;
-  --ifm-menu-color: #d7dce3;
+  --ifm-background-color: #111111;
+  --ifm-navbar-background-color: #111111;
+  --ifm-background-surface-color: #111111;
+  --ifm-heading-color: #f7f7f8;
+  --ifm-font-color-base: #e1e2e4;
+  --ifm-font-color-secondary: #aeb0b6;
+  --ifm-color-content: #e1e2e4;
+  --ifm-color-content-secondary: #aeb0b6;
+  --ifm-toc-border-color: #25262a;
+  --ifm-table-border-color: #25262a;
+  --ifm-hr-border-color: #25262a;
+  --ifm-code-background: #1b1c1e;
+  --ifm-pre-background: #171719;
+  --ifm-menu-color: #c2c4c8;
   --ifm-menu-color-active: #ffffff;
-  --ifm-menu-color-background-active: rgba(127, 177, 255, 0.14);
-  --ifm-menu-color-background-hover: rgba(127, 177, 255, 0.08);
+  --ifm-menu-color-background-active: rgba(255, 255, 255, 0.08);
+  --ifm-menu-color-background-hover: rgba(255, 255, 255, 0.04);
+}
+
+[data-theme="dark"] .main-wrapper,
+[data-theme="dark"] .theme-doc-sidebar-container,
+[data-theme="dark"] .theme-doc-sidebar-container .menu,
+[data-theme="dark"] article,
+[data-theme="dark"] .theme-doc-markdown,
+[data-theme="dark"] .navbar-sidebar {
+  background: #111111;
+}
+
+[data-theme="dark"] .navbar,
+[data-theme="dark"] .theme-doc-sidebar-container,
+[data-theme="dark"] .table-of-contents__left-border,
+[data-theme="dark"] .pagination-nav__link,
+[data-theme="dark"] hr,
+[data-theme="dark"] table th,
+[data-theme="dark"] table td {
+  border-color: #2f3035;
+}
+
+[data-theme="dark"] .navbar {
+  border-bottom: 1px solid #25262a !important;
+}
+
+[data-theme="dark"] .theme-doc-sidebar-container {
+  border-right: 1px solid #25262a !important;
+  box-shadow: inset -1px 0 0 #25262a;
+  position: relative;
+}
+
+[data-theme="dark"] [class*="docSidebarContainer"] {
+  border-right: 1px solid #25262a !important;
+  box-shadow: inset -1px 0 0 #25262a;
+  position: relative;
+}
+
+[data-theme="dark"] .theme-doc-sidebar-container::after,
+[data-theme="dark"] [class*="docSidebarContainer"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background: #25262a;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .table-of-contents__left-border {
+  border-left: 1px solid #25262a !important;
+}
+
+.theme-doc-breadcrumbs {
+  border-bottom: 0 !important;
+  padding-bottom: 0;
+}
+
+.main-wrapper {
+  background: var(--ifm-background-color);
+}
+
+.theme-doc-sidebar-menu {
+  font-size: 13px;
+  padding-right: 8px;
+}
+
+.theme-doc-sidebar-menu .menu__link,
+.theme-doc-sidebar-menu .categoryLinkLabel_Oe72,
+.theme-doc-sidebar-menu .linkLabel_PuAu {
+  font-weight: 600;
+}
+
+.menu__list-item-collapsible,
+.menu__link {
+  border-radius: 10px;
+}
+
+.menu__link,
+.menu__caret:before {
+  transition: all 160ms ease;
+}
+
+.menu__link--sublist-caret:after {
+  background-size: 18px 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  opacity: 0.72;
+  margin-left: 6px !important;
 }
 
 .table-of-contents {
@@ -46,24 +143,51 @@
 main article table {
   display: table;
   width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-[data-theme="dark"] .theme-doc-markdown,
-[data-theme="dark"] .theme-doc-markdown p,
-[data-theme="dark"] .theme-doc-markdown li,
-[data-theme="dark"] .theme-doc-markdown td,
-[data-theme="dark"] .theme-doc-markdown th {
+main article table th,
+main article table td {
+  vertical-align: middle;
+}
+
+.theme-doc-markdown,
+.theme-doc-markdown p,
+.theme-doc-markdown li,
+.theme-doc-markdown td,
+.theme-doc-markdown th {
   color: var(--ifm-font-color-base);
 }
 
-[data-theme="dark"] .theme-doc-markdown table thead tr,
-[data-theme="dark"] .theme-doc-markdown table tbody tr:nth-child(2n) {
+.theme-doc-markdown table thead tr,
+.theme-doc-markdown table tbody tr:nth-child(2n) {
   background-color: rgba(255, 255, 255, 0.02);
 }
 
-[data-theme="dark"] .table-of-contents__link,
-[data-theme="dark"] .breadcrumbs__link,
-[data-theme="dark"] .pagination-nav__label,
-[data-theme="dark"] .pagination-nav__sublabel {
+.table-of-contents__link,
+.breadcrumbs__link,
+.pagination-nav__label,
+.pagination-nav__sublabel {
   color: var(--ifm-font-color-base);
+}
+
+.footer {
+  display: none;
+}
+
+.foundation-chip {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 0.5px solid var(--ifm-color-emphasis-300);
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+@media (min-width: 997px) {
+  html {
+    --doc-sidebar-width: 240px !important;
+  }
 }
