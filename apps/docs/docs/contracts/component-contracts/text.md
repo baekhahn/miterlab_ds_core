@@ -1,8 +1,8 @@
 ---
-title: Text Contract
+title: Text
 ---
 
-# Text Contract
+# Text
 
 ## Layer
 

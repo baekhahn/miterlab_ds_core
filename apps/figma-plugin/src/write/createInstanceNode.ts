@@ -1,5 +1,6 @@
 import type { FigmaWriteNode } from "../../../../shared/contracts/figmaWritePayload";
 import mobileCore from "../../../../packages/ui-core/contracts/mobile-core.json";
+import { getButtonMetrics, getButtonWidth, getInputMetrics, getInputMultilineHeight, getInputWidth } from "../../../../packages/ui-core/contracts/foundationModel.mjs";
 import { loadFont } from "./createTextNode";
 
 const rgb = (hex: string) => {
@@ -174,7 +175,7 @@ const createButtonNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   const sizeKey = getButtonSize(node);
   const state = getButtonState(node);
   const emphasis = getButtonEmphasis(node);
-  const metrics = mobileCore.button.render.sizes[sizeKey];
+  const metrics = getButtonMetrics(sizeKey);
   const palette =
     state === "disabled"
       ? mobileCore.colors.button.emphasis.disabled
@@ -187,8 +188,8 @@ const createButtonNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   const width = iconOnly
     ? metrics.height
     : node.variant?.width === "full"
-      ? mobileCore.button.render.widths.full
-      : mobileCore.button.render.widths.hug;
+      ? getButtonWidth("full")
+      : getButtonWidth("hug");
 
   const frame = figma.createFrame();
   frame.name = node.name;
@@ -233,9 +234,9 @@ const createInputNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   const sizeKey = getInputSize(node);
   const state = getInputState(node);
   const intent = getInputIntent(node);
-  const metrics = mobileCore.input.render.sizes[sizeKey];
+  const metrics = getInputMetrics(sizeKey);
   const palette = inputPaletteForState(state, intent);
-  const width = node.variant?.width === "hug" ? mobileCore.input.render.widths.hug : mobileCore.input.render.widths.full;
+  const width = node.variant?.width === "hug" ? getInputWidth("hug") : getInputWidth("full");
   const stroke = state === "focused" ? mobileCore.colors.input.focusRing.stroke : palette.stroke;
   const strokeWeight = state === "focused" ? mobileCore.colors.input.focusRing.strokeWeight : 1;
 
@@ -246,7 +247,7 @@ const createInputNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
       ? Math.max(2, node.variant.rowsCount)
       : 3;
   const fieldHeight = multiline
-    ? Math.max(metrics.height * 2, metrics.lineHeight * rowsCount + metrics.paddingY * 2 + 16)
+    ? getInputMultilineHeight(sizeKey, rowsCount)
     : Math.max(metrics.height, node.height);
 
   const wrapper = figma.createFrame();
@@ -256,7 +257,7 @@ const createInputNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   wrapper.layoutMode = "VERTICAL";
   wrapper.primaryAxisAlignItems = "MIN";
   wrapper.counterAxisAlignItems = "MIN";
-  wrapper.itemSpacing = helperText ? 6 : 0;
+  wrapper.itemSpacing = helperText ? mobileCore.foundation.spacing.helperTextGap : 0;
   wrapper.fills = [];
   wrapper.strokes = [];
 

@@ -1,7 +1,7 @@
 // @ts-check
 
 const config = {
-  title: "Miterlab AI Design System",
+  title: "MADS (Miterlab AI Design System)",
   tagline: "Button and Input core contracts for AI generation",
   favicon: "img/favicon.ico",
   url: "https://mads.fly.dev",
@@ -37,12 +37,9 @@ const config = {
   ],
   themeConfig: {
     navbar: {
-      title: "Miterlab AI Design System",
+      title: "MADS (Miterlab AI Design System)",
       items: [
-        { to: "/", label: "Docs", position: "left" },
-        { to: "/contracts/button-contract", label: "Button Contract", position: "left" },
-        { to: "/contracts/input-contract", label: "Input Contract", position: "left" },
-        { to: "/freeze-review/status", label: "Freeze Review", position: "left" }
+        { to: "/", label: "Docs", position: "left" }
       ]
     },
     footer: {
@@ -55,14 +52,8 @@ const config = {
         {
           title: "Contracts",
           items: [
-            { label: "Button Contract", to: "/contracts/button-contract" },
-            { label: "Input Contract", to: "/contracts/input-contract" }
-          ]
-        },
-        {
-          title: "Freeze Review",
-          items: [
-            { label: "Freeze Review", to: "/freeze-review/status" }
+            { label: "Button", to: "/contracts/component-contracts/button" },
+            { label: "Input", to: "/contracts/component-contracts/input" }
           ]
         }
       ]

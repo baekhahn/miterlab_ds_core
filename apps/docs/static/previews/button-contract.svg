@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="920" height="442" viewBox="0 0 920 442" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="920" height="442" rx="24" fill="#FFFFFF"/>
+<svg width="920" height="410" viewBox="0 0 920 410" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="920" height="410" rx="24" fill="#FFFFFF"/>
   
   <g transform="translate(32 32)">
     <rect width="72" height="24" rx="12" fill="#F2F4F7" />
@@ -11,38 +11,38 @@
 
 
   <g transform="translate(116 20)">
-    <rect width="128" height="48" rx="12" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
-    <text x="64" y="29.5" text-anchor="middle"
+    <rect width="128" height="40" rx="10" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
+    <text x="64" y="25" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-      font-size="15" font-weight="600" fill="#FFFFFF">Primary</text>
+      font-size="14" font-weight="600" fill="#FFFFFF">Primary</text>
   </g>
 
 
   <g transform="translate(258 20)">
-    <rect width="128" height="48" rx="12" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
-    <text x="64" y="29.5" text-anchor="middle"
+    <rect width="128" height="40" rx="10" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
+    <text x="64" y="25" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-      font-size="15" font-weight="600" fill="#171719">Secondary</text>
+      font-size="14" font-weight="600" fill="#171719">Secondary</text>
   </g>
 
 
   <g transform="translate(400 20)">
-    <rect width="128" height="48" rx="12" fill="transparent" stroke="transparent" stroke-width="0" />
-    <text x="64" y="29.5" text-anchor="middle"
+    <rect width="128" height="40" rx="10" fill="transparent" stroke="transparent" stroke-width="0" />
+    <text x="64" y="25" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-      font-size="15" font-weight="600" fill="#2E2F33">Tertiary</text>
+      font-size="14" font-weight="600" fill="#2E2F33">Tertiary</text>
   </g>
 
 
   <g transform="translate(542 20)">
-    <rect width="128" height="48" rx="12" fill="#FF4242" stroke="#FF4242" stroke-width="1" />
-    <text x="64" y="29.5" text-anchor="middle"
+    <rect width="128" height="40" rx="10" fill="#FF4242" stroke="#FF4242" stroke-width="1" />
+    <text x="64" y="25" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-      font-size="15" font-weight="600" fill="#FFFFFF">Destructive</text>
+      font-size="14" font-weight="600" fill="#FFFFFF">Destructive</text>
   </g>
 
 
-  <g transform="translate(32 98)">
+  <g transform="translate(32 90)">
     <rect width="72" height="24" rx="12" fill="#F2F4F7" />
     <text x="36" y="16" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
@@ -50,31 +50,31 @@
   </g>
 
 
-  <g transform="translate(116 86)">
-    <rect width="128" height="44" rx="12" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
-    <text x="64" y="27" text-anchor="middle"
+  <g transform="translate(116 78)">
+    <rect width="128" height="32" rx="10" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
+    <text x="64" y="21" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
       font-size="14" font-weight="600" fill="#FFFFFF">Small</text>
   </g>
 
 
-  <g transform="translate(258 86)">
-    <rect width="128" height="48" rx="12" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
-    <text x="64" y="29.5" text-anchor="middle"
+  <g transform="translate(258 78)">
+    <rect width="128" height="40" rx="10" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
+    <text x="64" y="25" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-      font-size="15" font-weight="600" fill="#FFFFFF">Medium</text>
+      font-size="14" font-weight="600" fill="#FFFFFF">Medium</text>
   </g>
 
 
-  <g transform="translate(400 86)">
-    <rect width="128" height="52" rx="14" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
-    <text x="64" y="32" text-anchor="middle"
+  <g transform="translate(400 78)">
+    <rect width="128" height="48" rx="12" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
+    <text x="64" y="30" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
       font-size="16" font-weight="600" fill="#FFFFFF">Large</text>
   </g>
 
 
-  <g transform="translate(32 168)">
+  <g transform="translate(32 156)">
     <rect width="72" height="24" rx="12" fill="#F2F4F7" />
     <text x="36" y="16" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
@@ -82,31 +82,31 @@
   </g>
 
 
-  <g transform="translate(116 156)">
-    <rect width="128" height="48" rx="12" fill="#0056DB" stroke="#0056DB" stroke-width="1" />
-    <text x="64" y="29.5" text-anchor="middle"
+  <g transform="translate(116 144)">
+    <rect width="128" height="40" rx="10" fill="#0056DB" stroke="#0056DB" stroke-width="1" />
+    <text x="64" y="25" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-      font-size="15" font-weight="600" fill="#FFFFFF">Pressed</text>
+      font-size="14" font-weight="600" fill="#FFFFFF">Pressed</text>
   </g>
 
 
-  <g transform="translate(258 156)">
-    <rect width="128" height="48" rx="12" fill="#F4F4F5" stroke="#E1E2E4" stroke-width="1" />
-    <text x="64" y="29.5" text-anchor="middle"
+  <g transform="translate(258 144)">
+    <rect width="128" height="40" rx="10" fill="#F4F4F5" stroke="#E1E2E4" stroke-width="1" />
+    <text x="64" y="25" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-      font-size="15" font-weight="600" fill="#989BA2">Disabled</text>
+      font-size="14" font-weight="600" fill="#989BA2">Disabled</text>
   </g>
 
 
-  <g transform="translate(400 156)">
-    <rect width="128" height="48" rx="12" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
-    <text x="64" y="29.5" text-anchor="middle"
+  <g transform="translate(400 144)">
+    <rect width="128" height="40" rx="10" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
+    <text x="64" y="25" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-      font-size="15" font-weight="600" fill="#FFFFFF">Loading</text>
+      font-size="14" font-weight="600" fill="#FFFFFF">Loading</text>
   </g>
 
 
-  <g transform="translate(32 234)">
+  <g transform="translate(32 214)">
     <rect width="72" height="24" rx="12" fill="#F2F4F7" />
     <text x="36" y="16" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
@@ -114,23 +114,23 @@
   </g>
 
 
-  <g transform="translate(116 222)">
-    <rect width="128" height="48" rx="12" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
-    <text x="64" y="29.5" text-anchor="middle"
+  <g transform="translate(116 202)">
+    <rect width="128" height="40" rx="10" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
+    <text x="64" y="25" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-      font-size="15" font-weight="600" fill="#171719">Hug Width</text>
+      font-size="14" font-weight="600" fill="#171719">Hug Width</text>
   </g>
 
 
-  <g transform="translate(258 222)">
-    <rect width="360" height="52" rx="14" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
-    <text x="180" y="32" text-anchor="middle"
+  <g transform="translate(258 202)">
+    <rect width="360" height="48" rx="12" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
+    <text x="180" y="30" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
       font-size="16" font-weight="600" fill="#FFFFFF">Full Width</text>
   </g>
 
 
-  <g transform="translate(32 304)">
+  <g transform="translate(32 280)">
     <rect width="72" height="24" rx="12" fill="#F2F4F7" />
     <text x="36" y="16" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
@@ -138,43 +138,43 @@
   </g>
 
 
-  <g transform="translate(116 292)">
-    <rect width="128" height="48" rx="12" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
-    <text x="64" y="29.5" text-anchor="middle"
+  <g transform="translate(116 268)">
+    <rect width="128" height="40" rx="10" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
+    <text x="64" y="25" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-      font-size="15" font-weight="600" fill="#171719">Leading Icon</text>
+      font-size="14" font-weight="600" fill="#171719">Leading Icon</text>
   </g>
 
-    <g transform="translate(132 307.5)">
-      <rect x="2.5" y="7.5" width="12" height="2" rx="1" fill="#171719" />
-      <rect x="7.5" y="2.5" width="2" height="12" rx="1" fill="#171719" />
+    <g transform="translate(132 280)">
+      <rect x="2.5" y="7" width="11" height="2" rx="1" fill="#171719" />
+      <rect x="7" y="2.5" width="2" height="11" rx="1" fill="#171719" />
     </g>
   
 
-  <g transform="translate(258 292)">
-    <rect width="48" height="48" rx="12" fill="transparent" stroke="transparent" stroke-width="0" />
-    <text x="24" y="29.5" text-anchor="middle"
+  <g transform="translate(258 268)">
+    <rect width="40" height="40" rx="10" fill="transparent" stroke="transparent" stroke-width="0" />
+    <text x="20" y="25" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-      font-size="15" font-weight="600" fill="#2E2F33"></text>
+      font-size="14" font-weight="600" fill="#2E2F33"></text>
   </g>
 
-    <g transform="translate(273.5 307.5)">
-      <rect x="2.5" y="7.5" width="12" height="2" rx="1" fill="#2E2F33" />
-      <rect x="7.5" y="2.5" width="2" height="12" rx="1" fill="#2E2F33" />
+    <g transform="translate(270 280)">
+      <rect x="2.5" y="7" width="11" height="2" rx="1" fill="#2E2F33" />
+      <rect x="7" y="2.5" width="2" height="11" rx="1" fill="#2E2F33" />
     </g>
   
 
-  <g transform="translate(320 292)">
-    <rect width="360" height="52" rx="14" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
-    <text x="180" y="32" text-anchor="middle"
+  <g transform="translate(312 268)">
+    <rect width="360" height="48" rx="12" fill="#0064FF" stroke="#0064FF" stroke-width="1" />
+    <text x="180" y="30" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
       font-size="16" font-weight="600" fill="#FFFFFF">Bottom CTA</text>
   </g>
 
 
-  <g transform="translate(116 356)">
-    <rect width="360" height="52" rx="14" fill="#FF4242" stroke="#FF4242" stroke-width="1" />
-    <text x="180" y="32" text-anchor="middle"
+  <g transform="translate(116 328)">
+    <rect width="360" height="48" rx="12" fill="#FF4242" stroke="#FF4242" stroke-width="1" />
+    <text x="180" y="30" text-anchor="middle"
       font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
       font-size="16" font-weight="600" fill="#FFFFFF">Danger CTA</text>
   </g>

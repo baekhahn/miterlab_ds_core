@@ -32,7 +32,7 @@
                 "placeholder": "Type here"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "Default"
             },
             {
@@ -47,7 +47,7 @@
                 "value": "Wrong value"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "Error"
             },
             {
@@ -62,7 +62,7 @@
                 "value": "Correct value"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "Success"
             }
           ]
@@ -86,7 +86,7 @@
                 "placeholder": "Small input"
               },
               "width": 360,
-              "height": 44,
+              "height": 32,
               "label": "Small"
             },
             {
@@ -101,7 +101,7 @@
                 "placeholder": "Medium input"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "Medium"
             },
             {
@@ -116,7 +116,7 @@
                 "placeholder": "Large input"
               },
               "width": 360,
-              "height": 52,
+              "height": 48,
               "label": "Large"
             }
           ]
@@ -140,7 +140,7 @@
                 "value": "Focused value"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "Focused"
             },
             {
@@ -156,7 +156,7 @@
                 "value": "Disabled value"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "Disabled"
             },
             {
@@ -172,7 +172,7 @@
                 "value": "Read only value"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "Read Only"
             }
           ]
@@ -196,7 +196,7 @@
                 "value": "Loading value"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "Loading"
             },
             {
@@ -211,7 +211,7 @@
                 "placeholder": "Short"
               },
               "width": 220,
-              "height": 48,
+              "height": 40,
               "label": "Hug Width"
             },
             {
@@ -226,7 +226,7 @@
                 "placeholder": "Full width field"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "Full Width"
             }
           ]
@@ -250,7 +250,7 @@
                 "placeholder": "Email address"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "With Helper"
             },
             {
@@ -265,7 +265,7 @@
                 "value": "wrong@email"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "With Error Text"
             },
             {
@@ -280,7 +280,7 @@
                 "placeholder": "Type a longer message"
               },
               "width": 360,
-              "height": 52,
+              "height": 108,
               "label": "Multiline"
             }
           ]
@@ -305,7 +305,7 @@
                 "value": "Generated project slug"
               },
               "width": 360,
-              "height": 48,
+              "height": 40,
               "label": "Readonly Field"
             }
           ]

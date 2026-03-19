@@ -1,8 +1,8 @@
 ---
-title: Input Contract
+title: Input
 ---
 
-# Input Contract
+# Input
 
 ## Layer
 
@@ -23,6 +23,9 @@ Input 자체는 `Module`이 아니며, 화면 구조를 설명하는 `Pattern`�
 
 현재 preview는 Bento식 축 비교 구조를 유지하되, foundation tone은 `Wanted`에 더 가깝게 조정합니다.
 지금 기준은 입력 데모보다 실제 서비스 폼에서 보이는 절제된 field shell을 우선합니다.
+
+현재 Input 수치는 로컬 문서가 아니라 `Foundation`에서 파생됩니다.
+즉 `md` control height가 바뀌면 Input preview, Figma inspection, 생성 수치가 함께 바뀌어야 합니다.
 
 ## Current Source Signals
 
@@ -99,11 +102,13 @@ Input 자체는 `Module`이 아니며, 화면 구조를 설명하는 `Pattern`�
 
 ## Metrics
 
+아래 값은 Input 문서가 직접 소유하는 값이 아니라 `Foundation`에서 파생한 현재 결과입니다.
+
 | Size | Height | PaddingX | PaddingY | Radius | Font Size | Line Height | Min Width |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `sm` | `44` | `14` | `12` | `12` | `14` | `20` | `220` |
-| `md` | `48` | `14` | `14` | `12` | `15` | `22` | `220` |
-| `lg` | `52` | `16` | `15` | `14` | `16` | `22` | `220` |
+| `sm` | `32` | `12` | `8` | `10` | `14` | `20` | `220` |
+| `md` | `40` | `14` | `10` | `10` | `14` | `20` | `220` |
+| `lg` | `48` | `16` | `13` | `12` | `16` | `22` | `220` |
 
 ## Widths
 

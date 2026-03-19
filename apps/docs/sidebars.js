@@ -3,39 +3,52 @@ module.exports = {
     {
       type: "category",
       label: "Core",
-      items: ["intro", "foundation"]
-    },
-    {
-      type: "category",
-      label: "Components",
       items: [
-        "contracts/button-contract",
-        "contracts/input-contract",
-        "contracts/checkbox-contract",
-        "contracts/text-contract",
-        "contracts/icon-contract"
+        {
+          type: "doc",
+          id: "core/overview",
+          label: "Overview"
+        },
+        "core/foundation"
       ]
     },
     {
       type: "category",
-      label: "Modules",
+      label: "Contracts",
       items: [
-        "contracts/form-field-contract",
-        "contracts/search-bar-contract",
-        "contracts/list-row-contract",
-        "contracts/bottom-action-group-contract",
-        "contracts/filter-chip-group-contract",
-        "contracts/empty-state-block-contract"
-      ]
-    },
-    {
-      type: "category",
-      label: "Patterns",
-      items: [
-        "contracts/login-form-pattern",
-        "contracts/search-result-screen-pattern",
-        "contracts/settings-screen-pattern",
-        "contracts/product-detail-sticky-cta-pattern"
+        {
+          type: "category",
+          label: "Component Contracts",
+          items: [
+            { type: "doc", id: "contracts/component-contracts/button", label: "Button" },
+            { type: "doc", id: "contracts/component-contracts/input", label: "Input" },
+            { type: "doc", id: "contracts/component-contracts/checkbox", label: "Checkbox" },
+            { type: "doc", id: "contracts/component-contracts/text", label: "Text" },
+            { type: "doc", id: "contracts/component-contracts/icon", label: "Icon" }
+          ]
+        },
+        {
+          type: "category",
+          label: "Module Contracts",
+          items: [
+            { type: "doc", id: "contracts/module-contracts/form-field", label: "FormField" },
+            { type: "doc", id: "contracts/module-contracts/search-bar", label: "SearchBar" },
+            { type: "doc", id: "contracts/module-contracts/list-row", label: "ListRow" },
+            { type: "doc", id: "contracts/module-contracts/bottom-action-group", label: "BottomActionGroup" },
+            { type: "doc", id: "contracts/module-contracts/filter-chip-group", label: "FilterChipGroup" },
+            { type: "doc", id: "contracts/module-contracts/empty-state-block", label: "EmptyStateBlock" }
+          ]
+        },
+        {
+          type: "category",
+          label: "Pattern Contracts",
+          items: [
+            { type: "doc", id: "contracts/pattern-contracts/login-form", label: "Login Form" },
+            { type: "doc", id: "contracts/pattern-contracts/search-result-screen", label: "Search Result Screen" },
+            { type: "doc", id: "contracts/pattern-contracts/settings-screen", label: "Settings Screen" },
+            { type: "doc", id: "contracts/pattern-contracts/product-detail-with-sticky-cta", label: "Product Detail with Sticky CTA" }
+          ]
+        }
       ]
     }
   ]

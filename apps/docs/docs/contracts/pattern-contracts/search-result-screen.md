@@ -1,8 +1,8 @@
 ---
-title: Search Result Screen Pattern
+title: Search Result Screen
 ---
 
-# Search Result Screen Pattern
+# Search Result Screen
 
 ## Layer
 

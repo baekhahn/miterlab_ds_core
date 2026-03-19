@@ -1,8 +1,8 @@
 ---
-title: ListRow Contract
+title: ListRow
 ---
 
-# ListRow Contract
+# ListRow
 
 ## Layer
 

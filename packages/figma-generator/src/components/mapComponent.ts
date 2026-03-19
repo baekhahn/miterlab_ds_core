@@ -3,6 +3,7 @@ import type { FigmaNode } from "../types/figmaNode";
 import { layoutRules } from "../grammar/layoutRules";
 import { resolveToken, type TokenResolveContext } from "../tokens/resolveToken";
 import mobileCore from "../../../ui-core/contracts/mobile-core.json";
+import { getButtonMetrics, getButtonWidth, getInputMetrics, getInputWidth } from "../../../ui-core/contracts/foundationModel.mjs";
 
 interface ParsedSpec {
   component: string;
@@ -332,9 +333,9 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
   const isCoreButton = spec.component === "Button";
   const isCoreInput = spec.component === "Input";
   const buttonRenderSize =
-    resolvedSize === "sm" || resolvedSize === "md" || resolvedSize === "lg" ? mobileCore.button.render.sizes[resolvedSize] : undefined;
+    resolvedSize === "sm" || resolvedSize === "md" || resolvedSize === "lg" ? getButtonMetrics(resolvedSize) : undefined;
   const inputRenderSize =
-    resolvedSize === "sm" || resolvedSize === "md" || resolvedSize === "lg" ? mobileCore.input.render.sizes[resolvedSize] : undefined;
+    resolvedSize === "sm" || resolvedSize === "md" || resolvedSize === "lg" ? getInputMetrics(resolvedSize) : undefined;
   const specHeight = spec.sizeDefaults?.[resolvedSize]?.height ?? spec.defaults?.height;
   const specPaddingX = spec.sizeDefaults?.[resolvedSize]?.paddingX ?? spec.defaults?.paddingX;
   const specPaddingY = spec.sizeDefaults?.[resolvedSize]?.paddingY ?? spec.defaults?.paddingY;
@@ -399,11 +400,11 @@ export const mapComponent = (input: MapComponentInput): FigmaNode => {
     input.iconOnly && buttonLike
       ? input.width ?? defaultHeight
       : input.widthMode === "full" || input.block || input.fullWidth
-        ? input.width ?? (isCoreButton ? mobileCore.button.render.widths.full : isCoreInput ? mobileCore.input.render.widths.full : layoutRules.contentWidth.form)
+        ? input.width ?? (isCoreButton ? getButtonWidth("full") : isCoreInput ? getInputWidth("full") : layoutRules.contentWidth.form)
         : isCoreInput && input.widthMode === "hug"
-          ? input.width ?? mobileCore.input.render.widths.hug
+          ? input.width ?? getInputWidth("hug")
           : isCoreButton && input.widthMode === "hug"
-            ? input.width ?? mobileCore.button.render.widths.hug
+            ? input.width ?? getButtonWidth("hug")
           : input.width ?? defaultWidth;
   const textValue =
     spec.component === "Input"

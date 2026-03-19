@@ -1,4 +1,5 @@
 import mobileCore from "./mobile-core.json" with { type: "json" };
+import { getButtonMetrics, getButtonWidth, getInputMetrics, getInputMultilineHeight, getInputWidth } from "./foundationModel.mjs";
 
 const AXIS_PILL_WIDTH = 72;
 const AXIS_PILL_HEIGHT = 24;
@@ -29,19 +30,19 @@ const resolveFamily = (screenOrFamily) => {
 
 const resolveItemMetrics = (family, component) => {
   if (family === "button") {
-    const size = mobileCore.button.render.sizes[component.size];
+    const size = getButtonMetrics(component.size);
     const width = component.iconOnly
       ? size.height
       : component.width === "full"
-        ? mobileCore.button.render.widths.full
-        : mobileCore.button.render.widths.hug;
+        ? getButtonWidth("full")
+        : getButtonWidth("hug");
     return { width, height: size.height };
   }
 
-  const size = mobileCore.input.render.sizes[component.size];
-  const width = component.width === "full" ? mobileCore.input.render.widths.full : mobileCore.input.render.widths.hug;
+  const size = getInputMetrics(component.size);
+  const width = component.width === "full" ? getInputWidth("full") : getInputWidth("hug");
   const fieldHeight = component.multiline
-    ? Math.max(size.height * 2, size.lineHeight * (component.rowsCount ?? 3) + size.paddingY * 2 + 16)
+    ? getInputMultilineHeight(component.size, component.rowsCount ?? 3)
     : size.height;
   const helperHeight = component.helperText ? 24 : 0;
   return { width, height: fieldHeight + helperHeight };

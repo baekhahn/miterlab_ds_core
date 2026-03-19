@@ -22,6 +22,7 @@ Foundation이 직접 소유하는 영역은 다음입니다.
 - color tokens
 - typography tokens
 - spacing tokens
+- density tokens
 - radius tokens
 - elevation tokens
 - motion tokens
@@ -154,6 +155,29 @@ Reference:
 - `lg = 16`
 - `xl = 20`
 
+## Density
+
+Density는 화면의 기본 밀도와 컨트롤 높이 기준을 고정하는 foundation 항목입니다.
+
+현재 기준:
+- `base size = md`
+- `md control height = 40`
+- `sm control height = 32`
+- `lg control height = 48`
+- `touch target minimum = 44`
+
+운영 규칙:
+- Button, Input은 개별 문서에서 높이를 직접 소유하지 않습니다.
+- 기본 높이와 폰트 밀도는 Foundation에서 파생합니다.
+- `md` 값이 바뀌면 Button, Input, preview, inspection이 함께 바뀌어야 합니다.
+- 실질적인 시각 높이와 터치 타깃 최소값은 구분해서 관리합니다.
+
+현재 파생 대상:
+- Button height / padding / radius / label size
+- Input height / padding / radius / value size
+- preview sample density
+- Figma inspection render density
+
 ## Grid
 
 Grid는 Pattern과 Module의 레이아웃 기준을 고정하는 foundation 항목입니다.
@@ -223,6 +247,17 @@ Size token은 보통 아래를 함께 결정합니다.
 
 규칙:
 - Button size와 Input size는 다른 시각값을 가져도 같은 size 언어를 공유해야 합니다.
+- `sm / md / lg`는 Foundation의 density 기준을 먼저 보고, 개별 contract는 그 결과만 사용합니다.
+
+현재 core 파생 규칙:
+
+| Token | `sm` | `md` | `lg` |
+| --- | --- | --- | --- |
+| `controlHeight` | `32` | `40` | `48` |
+| `buttonLabel` | `14 / 20` | `14 / 20` | `16 / 22` |
+| `inputValue` | `14 / 20` | `14 / 20` | `16 / 22` |
+| `buttonRadius` | `10` | `10` | `12` |
+| `inputRadius` | `10` | `10` | `12` |
 
 ## Motion Tokens
 
@@ -302,6 +337,17 @@ Foundation은 최소 접근성 기준을 시스템 레벨에서 고정해야 합
 규칙:
 - utility는 의미 계층을 대체하면 안 됩니다.
 - utility는 layout 또는 affordance 보조에 한정합니다.
+
+## Foundation -> Contract Rule
+
+Contract는 다음만 할 수 있습니다.
+
+- Foundation token을 참조한다
+- Foundation rule을 변경할 수 없다
+- Component 내부에서 raw value를 정의하지 않는다
+- Contract는 의미만 정의한다
+
+Foundation이 바뀌면 Contract는 자동으로 따라가야 합니다.
 
 ## Operational Rules
 

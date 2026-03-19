@@ -22,6 +22,90 @@
 
   // ../../packages/ui-core/contracts/mobile-core.json with { type: 'json' }
   var mobile_core_default = {
+    foundation: {
+      density: {
+        base: "md",
+        touchTargetMin: 44
+      },
+      size: {
+        controlHeight: {
+          sm: 32,
+          md: 40,
+          lg: 48
+        },
+        controlWidth: {
+          button: {
+            hug: 128,
+            full: 360,
+            minWidth: {
+              sm: 104,
+              md: 116,
+              lg: 148
+            }
+          },
+          input: {
+            hug: 220,
+            full: 360,
+            minWidth: {
+              sm: 220,
+              md: 220,
+              lg: 220
+            }
+          }
+        }
+      },
+      typography: {
+        buttonLabel: {
+          sm: { fontSize: 14, lineHeight: 20 },
+          md: { fontSize: 14, lineHeight: 20 },
+          lg: { fontSize: 16, lineHeight: 22 }
+        },
+        inputValue: {
+          sm: { fontSize: 14, lineHeight: 20 },
+          md: { fontSize: 14, lineHeight: 20 },
+          lg: { fontSize: 16, lineHeight: 22 }
+        }
+      },
+      spacing: {
+        buttonPaddingX: {
+          sm: 14,
+          md: 16,
+          lg: 18
+        },
+        buttonPaddingY: {
+          sm: 8,
+          md: 10,
+          lg: 13
+        },
+        inputPaddingX: {
+          sm: 12,
+          md: 14,
+          lg: 16
+        },
+        inputPaddingY: {
+          sm: 8,
+          md: 10,
+          lg: 13
+        },
+        controlGap: {
+          button: 8,
+          input: 8
+        },
+        helperTextGap: 6
+      },
+      radius: {
+        button: {
+          sm: 10,
+          md: 10,
+          lg: 12
+        },
+        input: {
+          sm: 10,
+          md: 10,
+          lg: 12
+        }
+      }
+    },
     colors: {
       button: {
         emphasis: {
@@ -48,17 +132,6 @@
       }
     },
     button: {
-      render: {
-        sizes: {
-          sm: { height: 44, paddingX: 14, paddingY: 10, radius: 12, fontSize: 14, lineHeight: 20, gap: 8, minWidth: 112 },
-          md: { height: 48, paddingX: 16, paddingY: 12, radius: 12, fontSize: 15, lineHeight: 22, gap: 8, minWidth: 124 },
-          lg: { height: 52, paddingX: 18, paddingY: 14, radius: 14, fontSize: 16, lineHeight: 22, gap: 8, minWidth: 168 }
-        },
-        widths: {
-          hug: 128,
-          full: 360
-        }
-      },
       inspection: {
         title: "Button Inspection",
         axes: {
@@ -96,17 +169,6 @@
       }
     },
     input: {
-      render: {
-        sizes: {
-          sm: { height: 44, paddingX: 14, paddingY: 12, radius: 12, fontSize: 14, lineHeight: 20, minWidth: 220 },
-          md: { height: 48, paddingX: 14, paddingY: 14, radius: 12, fontSize: 15, lineHeight: 22, minWidth: 220 },
-          lg: { height: 52, paddingX: 16, paddingY: 15, radius: 14, fontSize: 16, lineHeight: 22, minWidth: 220 }
-        },
-        widths: {
-          hug: 220,
-          full: 360
-        }
-      },
       inspection: {
         title: "Input Inspection",
         axes: {
@@ -145,6 +207,43 @@
     }
   };
 
+  // ../../packages/ui-core/contracts/foundationModel.mjs
+  var normalizeSize = (size) => size === "sm" || size === "lg" ? size : "md";
+  var normalizeWidth = (width) => width === "hug" ? "hug" : "full";
+  var foundation = mobile_core_default.foundation;
+  var getButtonMetrics = (size = "md") => {
+    const sizeKey = normalizeSize(size);
+    return {
+      height: foundation.size.controlHeight[sizeKey],
+      paddingX: foundation.spacing.buttonPaddingX[sizeKey],
+      paddingY: foundation.spacing.buttonPaddingY[sizeKey],
+      radius: foundation.radius.button[sizeKey],
+      fontSize: foundation.typography.buttonLabel[sizeKey].fontSize,
+      lineHeight: foundation.typography.buttonLabel[sizeKey].lineHeight,
+      gap: foundation.spacing.controlGap.button,
+      minWidth: foundation.size.controlWidth.button.minWidth[sizeKey]
+    };
+  };
+  var getButtonWidth = (width = "hug") => foundation.size.controlWidth.button[normalizeWidth(width)];
+  var getInputMetrics = (size = "md") => {
+    const sizeKey = normalizeSize(size);
+    return {
+      height: foundation.size.controlHeight[sizeKey],
+      paddingX: foundation.spacing.inputPaddingX[sizeKey],
+      paddingY: foundation.spacing.inputPaddingY[sizeKey],
+      radius: foundation.radius.input[sizeKey],
+      fontSize: foundation.typography.inputValue[sizeKey].fontSize,
+      lineHeight: foundation.typography.inputValue[sizeKey].lineHeight,
+      minWidth: foundation.size.controlWidth.input.minWidth[sizeKey]
+    };
+  };
+  var getInputWidth = (width = "full") => foundation.size.controlWidth.input[normalizeWidth(width)];
+  var getInputMultilineHeight = (size = "md", rowsCount = 3) => {
+    const metrics = getInputMetrics(size);
+    const rows = Math.max(2, rowsCount);
+    return Math.max(metrics.height * 2, metrics.lineHeight * rows + metrics.paddingY * 2 + 16);
+  };
+
   // ../../packages/ui-core/contracts/inspectionPreviewLayout.mjs
   var AXIS_PILL_WIDTH = 72;
   var AXIS_PILL_HEIGHT = 24;
@@ -173,13 +272,13 @@
   var resolveItemMetrics = (family, component) => {
     var _a;
     if (family === "button") {
-      const size2 = mobile_core_default.button.render.sizes[component.size];
-      const width2 = component.iconOnly ? size2.height : component.width === "full" ? mobile_core_default.button.render.widths.full : mobile_core_default.button.render.widths.hug;
+      const size2 = getButtonMetrics(component.size);
+      const width2 = component.iconOnly ? size2.height : component.width === "full" ? getButtonWidth("full") : getButtonWidth("hug");
       return { width: width2, height: size2.height };
     }
-    const size = mobile_core_default.input.render.sizes[component.size];
-    const width = component.width === "full" ? mobile_core_default.input.render.widths.full : mobile_core_default.input.render.widths.hug;
-    const fieldHeight = component.multiline ? Math.max(size.height * 2, size.lineHeight * ((_a = component.rowsCount) != null ? _a : 3) + size.paddingY * 2 + 16) : size.height;
+    const size = getInputMetrics(component.size);
+    const width = component.width === "full" ? getInputWidth("full") : getInputWidth("hug");
+    const fieldHeight = component.multiline ? getInputMultilineHeight(component.size, (_a = component.rowsCount) != null ? _a : 3) : size.height;
     const helperHeight = component.helperText ? 24 : 0;
     return { width, height: fieldHeight + helperHeight };
   };
@@ -288,6 +387,90 @@
 
   // ../../packages/ui-core/contracts/mobile-core.json
   var mobile_core_default2 = {
+    foundation: {
+      density: {
+        base: "md",
+        touchTargetMin: 44
+      },
+      size: {
+        controlHeight: {
+          sm: 32,
+          md: 40,
+          lg: 48
+        },
+        controlWidth: {
+          button: {
+            hug: 128,
+            full: 360,
+            minWidth: {
+              sm: 104,
+              md: 116,
+              lg: 148
+            }
+          },
+          input: {
+            hug: 220,
+            full: 360,
+            minWidth: {
+              sm: 220,
+              md: 220,
+              lg: 220
+            }
+          }
+        }
+      },
+      typography: {
+        buttonLabel: {
+          sm: { fontSize: 14, lineHeight: 20 },
+          md: { fontSize: 14, lineHeight: 20 },
+          lg: { fontSize: 16, lineHeight: 22 }
+        },
+        inputValue: {
+          sm: { fontSize: 14, lineHeight: 20 },
+          md: { fontSize: 14, lineHeight: 20 },
+          lg: { fontSize: 16, lineHeight: 22 }
+        }
+      },
+      spacing: {
+        buttonPaddingX: {
+          sm: 14,
+          md: 16,
+          lg: 18
+        },
+        buttonPaddingY: {
+          sm: 8,
+          md: 10,
+          lg: 13
+        },
+        inputPaddingX: {
+          sm: 12,
+          md: 14,
+          lg: 16
+        },
+        inputPaddingY: {
+          sm: 8,
+          md: 10,
+          lg: 13
+        },
+        controlGap: {
+          button: 8,
+          input: 8
+        },
+        helperTextGap: 6
+      },
+      radius: {
+        button: {
+          sm: 10,
+          md: 10,
+          lg: 12
+        },
+        input: {
+          sm: 10,
+          md: 10,
+          lg: 12
+        }
+      }
+    },
     colors: {
       button: {
         emphasis: {
@@ -314,17 +497,6 @@
       }
     },
     button: {
-      render: {
-        sizes: {
-          sm: { height: 44, paddingX: 14, paddingY: 10, radius: 12, fontSize: 14, lineHeight: 20, gap: 8, minWidth: 112 },
-          md: { height: 48, paddingX: 16, paddingY: 12, radius: 12, fontSize: 15, lineHeight: 22, gap: 8, minWidth: 124 },
-          lg: { height: 52, paddingX: 18, paddingY: 14, radius: 14, fontSize: 16, lineHeight: 22, gap: 8, minWidth: 168 }
-        },
-        widths: {
-          hug: 128,
-          full: 360
-        }
-      },
       inspection: {
         title: "Button Inspection",
         axes: {
@@ -362,17 +534,6 @@
       }
     },
     input: {
-      render: {
-        sizes: {
-          sm: { height: 44, paddingX: 14, paddingY: 12, radius: 12, fontSize: 14, lineHeight: 20, minWidth: 220 },
-          md: { height: 48, paddingX: 14, paddingY: 14, radius: 12, fontSize: 15, lineHeight: 22, minWidth: 220 },
-          lg: { height: 52, paddingX: 16, paddingY: 15, radius: 14, fontSize: 16, lineHeight: 22, minWidth: 220 }
-        },
-        widths: {
-          hug: 220,
-          full: 360
-        }
-      },
       inspection: {
         title: "Input Inspection",
         axes: {
@@ -647,13 +808,13 @@
     const sizeKey = getButtonSize(node);
     const state = getButtonState(node);
     const emphasis = getButtonEmphasis(node);
-    const metrics = mobile_core_default2.button.render.sizes[sizeKey];
+    const metrics = getButtonMetrics(sizeKey);
     const palette = state === "disabled" ? mobile_core_default2.colors.button.emphasis.disabled : mobile_core_default2.colors.button.emphasis[emphasis];
     const fill = state === "pressed" ? (_a = palette.pressedFill) != null ? _a : palette.fill : palette.fill;
     const stroke = state === "pressed" ? (_b = palette.pressedStroke) != null ? _b : palette.stroke : palette.stroke;
     const iconOnly = ((_c = node.variant) == null ? void 0 : _c.iconOnly) === true;
     const iconLeading = ((_d = node.variant) == null ? void 0 : _d.iconLeading) === true;
-    const width = iconOnly ? metrics.height : ((_e = node.variant) == null ? void 0 : _e.width) === "full" ? mobile_core_default2.button.render.widths.full : mobile_core_default2.button.render.widths.hug;
+    const width = iconOnly ? metrics.height : ((_e = node.variant) == null ? void 0 : _e.width) === "full" ? getButtonWidth("full") : getButtonWidth("hug");
     const frame = figma.createFrame();
     frame.name = node.name;
     frame.resize(Math.max(width, styleMinWidth(node, metrics.minWidth), node.width), Math.max(metrics.height, node.height));
@@ -694,15 +855,15 @@
     const sizeKey = getInputSize(node);
     const state = getInputState(node);
     const intent = getInputIntent(node);
-    const metrics = mobile_core_default2.input.render.sizes[sizeKey];
+    const metrics = getInputMetrics(sizeKey);
     const palette = inputPaletteForState(state, intent);
-    const width = ((_a = node.variant) == null ? void 0 : _a.width) === "hug" ? mobile_core_default2.input.render.widths.hug : mobile_core_default2.input.render.widths.full;
+    const width = ((_a = node.variant) == null ? void 0 : _a.width) === "hug" ? getInputWidth("hug") : getInputWidth("full");
     const stroke = state === "focused" ? mobile_core_default2.colors.input.focusRing.stroke : palette.stroke;
     const strokeWeight = state === "focused" ? mobile_core_default2.colors.input.focusRing.strokeWeight : 1;
     const helperText = typeof ((_b = node.variant) == null ? void 0 : _b.helperText) === "string" ? node.variant.helperText : void 0;
     const multiline = ((_c = node.variant) == null ? void 0 : _c.multiline) === true;
     const rowsCount = typeof ((_d = node.variant) == null ? void 0 : _d.rowsCount) === "number" && Number.isFinite(node.variant.rowsCount) ? Math.max(2, node.variant.rowsCount) : 3;
-    const fieldHeight = multiline ? Math.max(metrics.height * 2, metrics.lineHeight * rowsCount + metrics.paddingY * 2 + 16) : Math.max(metrics.height, node.height);
+    const fieldHeight = multiline ? getInputMultilineHeight(sizeKey, rowsCount) : Math.max(metrics.height, node.height);
     const wrapper = figma.createFrame();
     wrapper.name = node.name;
     wrapper.x = node.x;
@@ -710,7 +871,7 @@
     wrapper.layoutMode = "VERTICAL";
     wrapper.primaryAxisAlignItems = "MIN";
     wrapper.counterAxisAlignItems = "MIN";
-    wrapper.itemSpacing = helperText ? 6 : 0;
+    wrapper.itemSpacing = helperText ? mobile_core_default2.foundation.spacing.helperTextGap : 0;
     wrapper.fills = [];
     wrapper.strokes = [];
     const frame = figma.createFrame();
@@ -1293,18 +1454,18 @@
                     name: "Primary",
                     x: 48,
                     y: 40,
-                    width: 124,
-                    height: 48,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 16,
-                      paddingY: 12,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 124
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "primary",
@@ -1321,18 +1482,18 @@
                     name: "Secondary",
                     x: 48,
                     y: 40,
-                    width: 124,
-                    height: 48,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 16,
-                      paddingY: 12,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 124
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "secondary",
@@ -1349,18 +1510,18 @@
                     name: "Tertiary",
                     x: 48,
                     y: 40,
-                    width: 124,
-                    height: 48,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 16,
-                      paddingY: 12,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 124
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "tertiary",
@@ -1377,18 +1538,18 @@
                     name: "Destructive",
                     x: 48,
                     y: 40,
-                    width: 124,
-                    height: 48,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 16,
-                      paddingY: 12,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 124
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "destructive",
@@ -1405,18 +1566,18 @@
                     name: "Small",
                     x: 48,
                     y: 40,
-                    width: 112,
-                    height: 44,
+                    width: 104,
+                    height: 32,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 10,
+                      paddingY: 8,
                       gap: 8,
                       fontSize: 14,
                       lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 112
+                      minWidth: 104
                     },
                     variant: {
                       emphasis: "primary",
@@ -1433,18 +1594,18 @@
                     name: "Medium",
                     x: 48,
                     y: 40,
-                    width: 124,
-                    height: 48,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 16,
-                      paddingY: 12,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 124
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "primary",
@@ -1461,18 +1622,18 @@
                     name: "Large",
                     x: 48,
                     y: 40,
-                    width: 168,
-                    height: 52,
+                    width: 148,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 18,
-                      paddingY: 14,
+                      paddingY: 13,
                       gap: 8,
                       fontSize: 16,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 168
+                      minWidth: 148
                     },
                     variant: {
                       emphasis: "primary",
@@ -1489,18 +1650,18 @@
                     name: "Pressed",
                     x: 48,
                     y: 40,
-                    width: 124,
-                    height: 48,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 16,
-                      paddingY: 12,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 124
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "primary",
@@ -1517,18 +1678,18 @@
                     name: "Disabled",
                     x: 48,
                     y: 40,
-                    width: 124,
-                    height: 48,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 16,
-                      paddingY: 12,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 124
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "primary",
@@ -1557,18 +1718,18 @@
                     name: "Loading",
                     x: 48,
                     y: 40,
-                    width: 124,
-                    height: 48,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 16,
-                      paddingY: 12,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 124
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "primary",
@@ -1586,18 +1747,18 @@
                     name: "Hug Width",
                     x: 48,
                     y: 40,
-                    width: 124,
-                    height: 48,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 16,
-                      paddingY: 12,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 124
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "secondary",
@@ -1615,17 +1776,17 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 52,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 18,
-                      paddingY: 14,
+                      paddingY: 13,
                       gap: 8,
                       fontSize: 16,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 168
+                      minWidth: 148
                     },
                     variant: {
                       emphasis: "primary",
@@ -1642,18 +1803,18 @@
                     name: "Leading Icon",
                     x: 48,
                     y: 40,
-                    width: 124,
-                    height: 48,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 16,
-                      paddingY: 12,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 124
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "secondary",
@@ -1670,18 +1831,18 @@
                     name: "Icon Only",
                     x: 48,
                     y: 40,
-                    width: 48,
-                    height: 48,
+                    width: 40,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 16,
-                      paddingY: 12,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 124
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "tertiary",
@@ -1699,17 +1860,17 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 52,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 18,
-                      paddingY: 14,
+                      paddingY: 13,
                       gap: 8,
                       fontSize: 16,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 168
+                      minWidth: 148
                     },
                     variant: {
                       emphasis: "primary",
@@ -1738,17 +1899,17 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 52,
+                    height: 48,
                     component: "Button",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 18,
-                      paddingY: 14,
+                      paddingY: 13,
                       gap: 8,
                       fontSize: 16,
                       lineHeight: 22,
                       fontWeight: "semibold",
-                      minWidth: 168
+                      minWidth: 148
                     },
                     variant: {
                       emphasis: "destructive",
@@ -1789,18 +1950,18 @@
                 name: "Primary",
                 x: 48,
                 y: 40,
-                width: 124,
-                height: 48,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 16,
-                  paddingY: 12,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 124
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "primary",
@@ -1817,18 +1978,18 @@
                 name: "Secondary",
                 x: 48,
                 y: 40,
-                width: 124,
-                height: 48,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 16,
-                  paddingY: 12,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 124
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "secondary",
@@ -1845,18 +2006,18 @@
                 name: "Tertiary",
                 x: 48,
                 y: 40,
-                width: 124,
-                height: 48,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 16,
-                  paddingY: 12,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 124
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "tertiary",
@@ -1873,18 +2034,18 @@
                 name: "Destructive",
                 x: 48,
                 y: 40,
-                width: 124,
-                height: 48,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 16,
-                  paddingY: 12,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 124
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "destructive",
@@ -1901,18 +2062,18 @@
                 name: "Small",
                 x: 48,
                 y: 40,
-                width: 112,
-                height: 44,
+                width: 104,
+                height: 32,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 10,
+                  paddingY: 8,
                   gap: 8,
                   fontSize: 14,
                   lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 112
+                  minWidth: 104
                 },
                 variant: {
                   emphasis: "primary",
@@ -1929,18 +2090,18 @@
                 name: "Medium",
                 x: 48,
                 y: 40,
-                width: 124,
-                height: 48,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 16,
-                  paddingY: 12,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 124
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "primary",
@@ -1957,18 +2118,18 @@
                 name: "Large",
                 x: 48,
                 y: 40,
-                width: 168,
-                height: 52,
+                width: 148,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 18,
-                  paddingY: 14,
+                  paddingY: 13,
                   gap: 8,
                   fontSize: 16,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 168
+                  minWidth: 148
                 },
                 variant: {
                   emphasis: "primary",
@@ -1985,18 +2146,18 @@
                 name: "Pressed",
                 x: 48,
                 y: 40,
-                width: 124,
-                height: 48,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 16,
-                  paddingY: 12,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 124
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "primary",
@@ -2013,18 +2174,18 @@
                 name: "Disabled",
                 x: 48,
                 y: 40,
-                width: 124,
-                height: 48,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 16,
-                  paddingY: 12,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 124
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "primary",
@@ -2053,18 +2214,18 @@
                 name: "Loading",
                 x: 48,
                 y: 40,
-                width: 124,
-                height: 48,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 16,
-                  paddingY: 12,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 124
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "primary",
@@ -2082,18 +2243,18 @@
                 name: "Hug Width",
                 x: 48,
                 y: 40,
-                width: 124,
-                height: 48,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 16,
-                  paddingY: 12,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 124
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "secondary",
@@ -2111,17 +2272,17 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 52,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 18,
-                  paddingY: 14,
+                  paddingY: 13,
                   gap: 8,
                   fontSize: 16,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 168
+                  minWidth: 148
                 },
                 variant: {
                   emphasis: "primary",
@@ -2138,18 +2299,18 @@
                 name: "Leading Icon",
                 x: 48,
                 y: 40,
-                width: 124,
-                height: 48,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 16,
-                  paddingY: 12,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 124
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "secondary",
@@ -2166,18 +2327,18 @@
                 name: "Icon Only",
                 x: 48,
                 y: 40,
-                width: 48,
-                height: 48,
+                width: 40,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 16,
-                  paddingY: 12,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 124
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "tertiary",
@@ -2195,17 +2356,17 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 52,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 18,
-                  paddingY: 14,
+                  paddingY: 13,
                   gap: 8,
                   fontSize: 16,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 168
+                  minWidth: 148
                 },
                 variant: {
                   emphasis: "primary",
@@ -2234,17 +2395,17 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 52,
+                height: 48,
                 component: "Button",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 18,
-                  paddingY: 14,
+                  paddingY: 13,
                   gap: 8,
                   fontSize: 16,
                   lineHeight: 22,
                   fontWeight: "semibold",
-                  minWidth: 168
+                  minWidth: 148
                 },
                 variant: {
                   emphasis: "destructive",
@@ -2274,18 +2435,18 @@
             name: "Primary",
             x: 48,
             y: 40,
-            width: 124,
-            height: 48,
+            width: 116,
+            height: 40,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 16,
-              paddingY: 12,
+              paddingY: 10,
               gap: 8,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 124
+              minWidth: 116
             },
             variant: {
               emphasis: "primary",
@@ -2302,18 +2463,18 @@
             name: "Secondary",
             x: 48,
             y: 40,
-            width: 124,
-            height: 48,
+            width: 116,
+            height: 40,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 16,
-              paddingY: 12,
+              paddingY: 10,
               gap: 8,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 124
+              minWidth: 116
             },
             variant: {
               emphasis: "secondary",
@@ -2330,18 +2491,18 @@
             name: "Tertiary",
             x: 48,
             y: 40,
-            width: 124,
-            height: 48,
+            width: 116,
+            height: 40,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 16,
-              paddingY: 12,
+              paddingY: 10,
               gap: 8,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 124
+              minWidth: 116
             },
             variant: {
               emphasis: "tertiary",
@@ -2358,18 +2519,18 @@
             name: "Destructive",
             x: 48,
             y: 40,
-            width: 124,
-            height: 48,
+            width: 116,
+            height: 40,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 16,
-              paddingY: 12,
+              paddingY: 10,
               gap: 8,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 124
+              minWidth: 116
             },
             variant: {
               emphasis: "destructive",
@@ -2386,18 +2547,18 @@
             name: "Small",
             x: 48,
             y: 40,
-            width: 112,
-            height: 44,
+            width: 104,
+            height: 32,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 10,
+              paddingY: 8,
               gap: 8,
               fontSize: 14,
               lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 112
+              minWidth: 104
             },
             variant: {
               emphasis: "primary",
@@ -2414,18 +2575,18 @@
             name: "Medium",
             x: 48,
             y: 40,
-            width: 124,
-            height: 48,
+            width: 116,
+            height: 40,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 16,
-              paddingY: 12,
+              paddingY: 10,
               gap: 8,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 124
+              minWidth: 116
             },
             variant: {
               emphasis: "primary",
@@ -2442,18 +2603,18 @@
             name: "Large",
             x: 48,
             y: 40,
-            width: 168,
-            height: 52,
+            width: 148,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 18,
-              paddingY: 14,
+              paddingY: 13,
               gap: 8,
               fontSize: 16,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 168
+              minWidth: 148
             },
             variant: {
               emphasis: "primary",
@@ -2470,18 +2631,18 @@
             name: "Pressed",
             x: 48,
             y: 40,
-            width: 124,
-            height: 48,
+            width: 116,
+            height: 40,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 16,
-              paddingY: 12,
+              paddingY: 10,
               gap: 8,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 124
+              minWidth: 116
             },
             variant: {
               emphasis: "primary",
@@ -2498,18 +2659,18 @@
             name: "Disabled",
             x: 48,
             y: 40,
-            width: 124,
-            height: 48,
+            width: 116,
+            height: 40,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 16,
-              paddingY: 12,
+              paddingY: 10,
               gap: 8,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 124
+              minWidth: 116
             },
             variant: {
               emphasis: "primary",
@@ -2529,18 +2690,18 @@
         name: "Primary",
         x: 48,
         y: 40,
-        width: 124,
-        height: 48,
+        width: 116,
+        height: 40,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 16,
-          paddingY: 12,
+          paddingY: 10,
           gap: 8,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 124
+          minWidth: 116
         },
         variant: {
           emphasis: "primary",
@@ -2557,18 +2718,18 @@
         name: "Secondary",
         x: 48,
         y: 40,
-        width: 124,
-        height: 48,
+        width: 116,
+        height: 40,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 16,
-          paddingY: 12,
+          paddingY: 10,
           gap: 8,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 124
+          minWidth: 116
         },
         variant: {
           emphasis: "secondary",
@@ -2585,18 +2746,18 @@
         name: "Tertiary",
         x: 48,
         y: 40,
-        width: 124,
-        height: 48,
+        width: 116,
+        height: 40,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 16,
-          paddingY: 12,
+          paddingY: 10,
           gap: 8,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 124
+          minWidth: 116
         },
         variant: {
           emphasis: "tertiary",
@@ -2613,18 +2774,18 @@
         name: "Destructive",
         x: 48,
         y: 40,
-        width: 124,
-        height: 48,
+        width: 116,
+        height: 40,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 16,
-          paddingY: 12,
+          paddingY: 10,
           gap: 8,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 124
+          minWidth: 116
         },
         variant: {
           emphasis: "destructive",
@@ -2641,18 +2802,18 @@
         name: "Small",
         x: 48,
         y: 40,
-        width: 112,
-        height: 44,
+        width: 104,
+        height: 32,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 10,
+          paddingY: 8,
           gap: 8,
           fontSize: 14,
           lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 112
+          minWidth: 104
         },
         variant: {
           emphasis: "primary",
@@ -2669,18 +2830,18 @@
         name: "Medium",
         x: 48,
         y: 40,
-        width: 124,
-        height: 48,
+        width: 116,
+        height: 40,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 16,
-          paddingY: 12,
+          paddingY: 10,
           gap: 8,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 124
+          minWidth: 116
         },
         variant: {
           emphasis: "primary",
@@ -2697,18 +2858,18 @@
         name: "Large",
         x: 48,
         y: 40,
-        width: 168,
-        height: 52,
+        width: 148,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 18,
-          paddingY: 14,
+          paddingY: 13,
           gap: 8,
           fontSize: 16,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 168
+          minWidth: 148
         },
         variant: {
           emphasis: "primary",
@@ -2725,18 +2886,18 @@
         name: "Pressed",
         x: 48,
         y: 40,
-        width: 124,
-        height: 48,
+        width: 116,
+        height: 40,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 16,
-          paddingY: 12,
+          paddingY: 10,
           gap: 8,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 124
+          minWidth: 116
         },
         variant: {
           emphasis: "primary",
@@ -2753,18 +2914,18 @@
         name: "Disabled",
         x: 48,
         y: 40,
-        width: 124,
-        height: 48,
+        width: 116,
+        height: 40,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 16,
-          paddingY: 12,
+          paddingY: 10,
           gap: 8,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 124
+          minWidth: 116
         },
         variant: {
           emphasis: "primary",
@@ -2791,18 +2952,18 @@
             name: "Loading",
             x: 48,
             y: 40,
-            width: 124,
-            height: 48,
+            width: 116,
+            height: 40,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 16,
-              paddingY: 12,
+              paddingY: 10,
               gap: 8,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 124
+              minWidth: 116
             },
             variant: {
               emphasis: "primary",
@@ -2820,18 +2981,18 @@
             name: "Hug Width",
             x: 48,
             y: 40,
-            width: 124,
-            height: 48,
+            width: 116,
+            height: 40,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 16,
-              paddingY: 12,
+              paddingY: 10,
               gap: 8,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 124
+              minWidth: 116
             },
             variant: {
               emphasis: "secondary",
@@ -2849,17 +3010,17 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 52,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 18,
-              paddingY: 14,
+              paddingY: 13,
               gap: 8,
               fontSize: 16,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 168
+              minWidth: 148
             },
             variant: {
               emphasis: "primary",
@@ -2876,18 +3037,18 @@
             name: "Leading Icon",
             x: 48,
             y: 40,
-            width: 124,
-            height: 48,
+            width: 116,
+            height: 40,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 16,
-              paddingY: 12,
+              paddingY: 10,
               gap: 8,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 124
+              minWidth: 116
             },
             variant: {
               emphasis: "secondary",
@@ -2904,18 +3065,18 @@
             name: "Icon Only",
             x: 48,
             y: 40,
-            width: 48,
-            height: 48,
+            width: 40,
+            height: 40,
             component: "Button",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 16,
-              paddingY: 12,
+              paddingY: 10,
               gap: 8,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "semibold",
-              minWidth: 124
+              minWidth: 116
             },
             variant: {
               emphasis: "tertiary",
@@ -2933,17 +3094,17 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 52,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 18,
-              paddingY: 14,
+              paddingY: 13,
               gap: 8,
               fontSize: 16,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 168
+              minWidth: 148
             },
             variant: {
               emphasis: "primary",
@@ -2962,18 +3123,18 @@
         name: "Loading",
         x: 48,
         y: 40,
-        width: 124,
-        height: 48,
+        width: 116,
+        height: 40,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 16,
-          paddingY: 12,
+          paddingY: 10,
           gap: 8,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 124
+          minWidth: 116
         },
         variant: {
           emphasis: "primary",
@@ -2991,18 +3152,18 @@
         name: "Hug Width",
         x: 48,
         y: 40,
-        width: 124,
-        height: 48,
+        width: 116,
+        height: 40,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 16,
-          paddingY: 12,
+          paddingY: 10,
           gap: 8,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 124
+          minWidth: 116
         },
         variant: {
           emphasis: "secondary",
@@ -3020,17 +3181,17 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 52,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 18,
-          paddingY: 14,
+          paddingY: 13,
           gap: 8,
           fontSize: 16,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 168
+          minWidth: 148
         },
         variant: {
           emphasis: "primary",
@@ -3047,18 +3208,18 @@
         name: "Leading Icon",
         x: 48,
         y: 40,
-        width: 124,
-        height: 48,
+        width: 116,
+        height: 40,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 16,
-          paddingY: 12,
+          paddingY: 10,
           gap: 8,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 124
+          minWidth: 116
         },
         variant: {
           emphasis: "secondary",
@@ -3075,18 +3236,18 @@
         name: "Icon Only",
         x: 48,
         y: 40,
-        width: 48,
-        height: 48,
+        width: 40,
+        height: 40,
         component: "Button",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 16,
-          paddingY: 12,
+          paddingY: 10,
           gap: 8,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "semibold",
-          minWidth: 124
+          minWidth: 116
         },
         variant: {
           emphasis: "tertiary",
@@ -3104,17 +3265,17 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 52,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 18,
-          paddingY: 14,
+          paddingY: 13,
           gap: 8,
           fontSize: 16,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 168
+          minWidth: 148
         },
         variant: {
           emphasis: "primary",
@@ -3141,17 +3302,17 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 52,
+            height: 48,
             component: "Button",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 18,
-              paddingY: 14,
+              paddingY: 13,
               gap: 8,
               fontSize: 16,
               lineHeight: 22,
               fontWeight: "semibold",
-              minWidth: 168
+              minWidth: 148
             },
             variant: {
               emphasis: "destructive",
@@ -3171,17 +3332,17 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 52,
+        height: 48,
         component: "Button",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 18,
-          paddingY: 14,
+          paddingY: 13,
           gap: 8,
           fontSize: 16,
           lineHeight: 22,
           fontWeight: "semibold",
-          minWidth: 168
+          minWidth: 148
         },
         variant: {
           emphasis: "destructive",
@@ -3397,134 +3558,134 @@
     ],
     variables: {},
     styles: {
-      "layout_4.radius": "12",
+      "layout_4.radius": "10",
       "layout_4.paddingX": "16",
-      "layout_4.paddingY": "12",
+      "layout_4.paddingY": "10",
       "layout_4.gap": "8",
-      "layout_4.fontSize": "15",
-      "layout_4.lineHeight": "22",
+      "layout_4.fontSize": "14",
+      "layout_4.lineHeight": "20",
       "layout_4.fontWeight": "semibold",
-      "layout_4.minWidth": "124",
-      "layout_5.radius": "12",
+      "layout_4.minWidth": "116",
+      "layout_5.radius": "10",
       "layout_5.paddingX": "16",
-      "layout_5.paddingY": "12",
+      "layout_5.paddingY": "10",
       "layout_5.gap": "8",
-      "layout_5.fontSize": "15",
-      "layout_5.lineHeight": "22",
+      "layout_5.fontSize": "14",
+      "layout_5.lineHeight": "20",
       "layout_5.fontWeight": "semibold",
-      "layout_5.minWidth": "124",
-      "layout_6.radius": "12",
+      "layout_5.minWidth": "116",
+      "layout_6.radius": "10",
       "layout_6.paddingX": "16",
-      "layout_6.paddingY": "12",
+      "layout_6.paddingY": "10",
       "layout_6.gap": "8",
-      "layout_6.fontSize": "15",
-      "layout_6.lineHeight": "22",
+      "layout_6.fontSize": "14",
+      "layout_6.lineHeight": "20",
       "layout_6.fontWeight": "semibold",
-      "layout_6.minWidth": "124",
-      "layout_7.radius": "12",
+      "layout_6.minWidth": "116",
+      "layout_7.radius": "10",
       "layout_7.paddingX": "16",
-      "layout_7.paddingY": "12",
+      "layout_7.paddingY": "10",
       "layout_7.gap": "8",
-      "layout_7.fontSize": "15",
-      "layout_7.lineHeight": "22",
+      "layout_7.fontSize": "14",
+      "layout_7.lineHeight": "20",
       "layout_7.fontWeight": "semibold",
-      "layout_7.minWidth": "124",
-      "layout_8.radius": "12",
+      "layout_7.minWidth": "116",
+      "layout_8.radius": "10",
       "layout_8.paddingX": "14",
-      "layout_8.paddingY": "10",
+      "layout_8.paddingY": "8",
       "layout_8.gap": "8",
       "layout_8.fontSize": "14",
       "layout_8.lineHeight": "20",
       "layout_8.fontWeight": "semibold",
-      "layout_8.minWidth": "112",
-      "layout_9.radius": "12",
+      "layout_8.minWidth": "104",
+      "layout_9.radius": "10",
       "layout_9.paddingX": "16",
-      "layout_9.paddingY": "12",
+      "layout_9.paddingY": "10",
       "layout_9.gap": "8",
-      "layout_9.fontSize": "15",
-      "layout_9.lineHeight": "22",
+      "layout_9.fontSize": "14",
+      "layout_9.lineHeight": "20",
       "layout_9.fontWeight": "semibold",
-      "layout_9.minWidth": "124",
-      "layout_10.radius": "14",
+      "layout_9.minWidth": "116",
+      "layout_10.radius": "12",
       "layout_10.paddingX": "18",
-      "layout_10.paddingY": "14",
+      "layout_10.paddingY": "13",
       "layout_10.gap": "8",
       "layout_10.fontSize": "16",
       "layout_10.lineHeight": "22",
       "layout_10.fontWeight": "semibold",
-      "layout_10.minWidth": "168",
-      "layout_11.radius": "12",
+      "layout_10.minWidth": "148",
+      "layout_11.radius": "10",
       "layout_11.paddingX": "16",
-      "layout_11.paddingY": "12",
+      "layout_11.paddingY": "10",
       "layout_11.gap": "8",
-      "layout_11.fontSize": "15",
-      "layout_11.lineHeight": "22",
+      "layout_11.fontSize": "14",
+      "layout_11.lineHeight": "20",
       "layout_11.fontWeight": "semibold",
-      "layout_11.minWidth": "124",
-      "layout_12.radius": "12",
+      "layout_11.minWidth": "116",
+      "layout_12.radius": "10",
       "layout_12.paddingX": "16",
-      "layout_12.paddingY": "12",
+      "layout_12.paddingY": "10",
       "layout_12.gap": "8",
-      "layout_12.fontSize": "15",
-      "layout_12.lineHeight": "22",
+      "layout_12.fontSize": "14",
+      "layout_12.lineHeight": "20",
       "layout_12.fontWeight": "semibold",
-      "layout_12.minWidth": "124",
-      "layout_14.radius": "12",
+      "layout_12.minWidth": "116",
+      "layout_14.radius": "10",
       "layout_14.paddingX": "16",
-      "layout_14.paddingY": "12",
+      "layout_14.paddingY": "10",
       "layout_14.gap": "8",
-      "layout_14.fontSize": "15",
-      "layout_14.lineHeight": "22",
+      "layout_14.fontSize": "14",
+      "layout_14.lineHeight": "20",
       "layout_14.fontWeight": "semibold",
-      "layout_14.minWidth": "124",
-      "layout_15.radius": "12",
+      "layout_14.minWidth": "116",
+      "layout_15.radius": "10",
       "layout_15.paddingX": "16",
-      "layout_15.paddingY": "12",
+      "layout_15.paddingY": "10",
       "layout_15.gap": "8",
-      "layout_15.fontSize": "15",
-      "layout_15.lineHeight": "22",
+      "layout_15.fontSize": "14",
+      "layout_15.lineHeight": "20",
       "layout_15.fontWeight": "semibold",
-      "layout_15.minWidth": "124",
-      "layout_16.radius": "14",
+      "layout_15.minWidth": "116",
+      "layout_16.radius": "12",
       "layout_16.paddingX": "18",
-      "layout_16.paddingY": "14",
+      "layout_16.paddingY": "13",
       "layout_16.gap": "8",
       "layout_16.fontSize": "16",
       "layout_16.lineHeight": "22",
       "layout_16.fontWeight": "semibold",
-      "layout_16.minWidth": "168",
-      "layout_17.radius": "12",
+      "layout_16.minWidth": "148",
+      "layout_17.radius": "10",
       "layout_17.paddingX": "16",
-      "layout_17.paddingY": "12",
+      "layout_17.paddingY": "10",
       "layout_17.gap": "8",
-      "layout_17.fontSize": "15",
-      "layout_17.lineHeight": "22",
+      "layout_17.fontSize": "14",
+      "layout_17.lineHeight": "20",
       "layout_17.fontWeight": "semibold",
-      "layout_17.minWidth": "124",
-      "layout_18.radius": "12",
+      "layout_17.minWidth": "116",
+      "layout_18.radius": "10",
       "layout_18.paddingX": "16",
-      "layout_18.paddingY": "12",
+      "layout_18.paddingY": "10",
       "layout_18.gap": "8",
-      "layout_18.fontSize": "15",
-      "layout_18.lineHeight": "22",
+      "layout_18.fontSize": "14",
+      "layout_18.lineHeight": "20",
       "layout_18.fontWeight": "semibold",
-      "layout_18.minWidth": "124",
-      "layout_19.radius": "14",
+      "layout_18.minWidth": "116",
+      "layout_19.radius": "12",
       "layout_19.paddingX": "18",
-      "layout_19.paddingY": "14",
+      "layout_19.paddingY": "13",
       "layout_19.gap": "8",
       "layout_19.fontSize": "16",
       "layout_19.lineHeight": "22",
       "layout_19.fontWeight": "semibold",
-      "layout_19.minWidth": "168",
-      "layout_21.radius": "14",
+      "layout_19.minWidth": "148",
+      "layout_21.radius": "12",
       "layout_21.paddingX": "18",
-      "layout_21.paddingY": "14",
+      "layout_21.paddingY": "13",
       "layout_21.gap": "8",
       "layout_21.fontSize": "16",
       "layout_21.lineHeight": "22",
       "layout_21.fontWeight": "semibold",
-      "layout_21.minWidth": "168"
+      "layout_21.minWidth": "148"
     },
     modes: {
       brand: "core",
@@ -3533,7 +3694,7 @@
     metadata: {
       source: "miterlab-figma-generator",
       version: "0.1.0",
-      generatedAt: "2026-03-19T00:54:30.935Z"
+      generatedAt: "2026-03-19T05:41:30.261Z"
     }
   };
 
@@ -3579,15 +3740,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3607,15 +3768,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3636,15 +3797,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3676,12 +3837,12 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 44,
+                    height: 32,
                     component: "Input",
                     style: {
-                      radius: 12,
-                      paddingX: 14,
-                      paddingY: 12,
+                      radius: 10,
+                      paddingX: 12,
+                      paddingY: 8,
                       gap: 0,
                       fontSize: 14,
                       lineHeight: 20,
@@ -3704,15 +3865,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3732,12 +3893,12 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 52,
+                    height: 48,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 16,
-                      paddingY: 15,
+                      paddingY: 13,
                       gap: 0,
                       fontSize: 16,
                       lineHeight: 22,
@@ -3771,15 +3932,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3800,15 +3961,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3830,15 +3991,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3871,15 +4032,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3900,15 +4061,15 @@
                     x: 48,
                     y: 40,
                     width: 220,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3928,15 +4089,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3967,15 +4128,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -3995,15 +4156,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -4024,12 +4185,12 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 52,
+                    height: 108,
                     component: "Input",
                     style: {
-                      radius: 14,
+                      radius: 12,
                       paddingX: 16,
-                      paddingY: 15,
+                      paddingY: 13,
                       gap: 0,
                       fontSize: 16,
                       lineHeight: 22,
@@ -4063,15 +4224,15 @@
                     x: 48,
                     y: 40,
                     width: 360,
-                    height: 48,
+                    height: 40,
                     component: "Input",
                     style: {
-                      radius: 12,
+                      radius: 10,
                       paddingX: 14,
-                      paddingY: 14,
+                      paddingY: 10,
                       gap: 0,
-                      fontSize: 15,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "regular",
                       minWidth: 220
                     },
@@ -4117,15 +4278,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4145,15 +4306,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4174,15 +4335,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4214,12 +4375,12 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 44,
+                height: 32,
                 component: "Input",
                 style: {
-                  radius: 12,
-                  paddingX: 14,
-                  paddingY: 12,
+                  radius: 10,
+                  paddingX: 12,
+                  paddingY: 8,
                   gap: 0,
                   fontSize: 14,
                   lineHeight: 20,
@@ -4242,15 +4403,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4270,12 +4431,12 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 52,
+                height: 48,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 16,
-                  paddingY: 15,
+                  paddingY: 13,
                   gap: 0,
                   fontSize: 16,
                   lineHeight: 22,
@@ -4309,15 +4470,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4338,15 +4499,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4368,15 +4529,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4409,15 +4570,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4438,15 +4599,15 @@
                 x: 48,
                 y: 40,
                 width: 220,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4466,15 +4627,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4505,15 +4666,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4533,15 +4694,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4562,12 +4723,12 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 52,
+                height: 108,
                 component: "Input",
                 style: {
-                  radius: 14,
+                  radius: 12,
                   paddingX: 16,
-                  paddingY: 15,
+                  paddingY: 13,
                   gap: 0,
                   fontSize: 16,
                   lineHeight: 22,
@@ -4601,15 +4762,15 @@
                 x: 48,
                 y: 40,
                 width: 360,
-                height: 48,
+                height: 40,
                 component: "Input",
                 style: {
-                  radius: 12,
+                  radius: 10,
                   paddingX: 14,
-                  paddingY: 14,
+                  paddingY: 10,
                   gap: 0,
-                  fontSize: 15,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "regular",
                   minWidth: 220
                 },
@@ -4644,15 +4805,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -4672,15 +4833,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -4701,15 +4862,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -4732,15 +4893,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -4760,15 +4921,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -4789,15 +4950,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -4827,12 +4988,12 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 44,
+            height: 32,
             component: "Input",
             style: {
-              radius: 12,
-              paddingX: 14,
-              paddingY: 12,
+              radius: 10,
+              paddingX: 12,
+              paddingY: 8,
               gap: 0,
               fontSize: 14,
               lineHeight: 20,
@@ -4855,15 +5016,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -4883,12 +5044,12 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 52,
+            height: 48,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 16,
-              paddingY: 15,
+              paddingY: 13,
               gap: 0,
               fontSize: 16,
               lineHeight: 22,
@@ -4913,12 +5074,12 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 44,
+        height: 32,
         component: "Input",
         style: {
-          radius: 12,
-          paddingX: 14,
-          paddingY: 12,
+          radius: 10,
+          paddingX: 12,
+          paddingY: 8,
           gap: 0,
           fontSize: 14,
           lineHeight: 20,
@@ -4941,15 +5102,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -4969,12 +5130,12 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 52,
+        height: 48,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 16,
-          paddingY: 15,
+          paddingY: 13,
           gap: 0,
           fontSize: 16,
           lineHeight: 22,
@@ -5006,15 +5167,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -5035,15 +5196,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -5065,15 +5226,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -5097,15 +5258,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -5126,15 +5287,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -5156,15 +5317,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -5195,15 +5356,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -5224,15 +5385,15 @@
             x: 48,
             y: 40,
             width: 220,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -5252,15 +5413,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -5282,15 +5443,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -5311,15 +5472,15 @@
         x: 48,
         y: 40,
         width: 220,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -5339,15 +5500,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -5376,15 +5537,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -5404,15 +5565,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -5433,12 +5594,12 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 52,
+            height: 108,
             component: "Input",
             style: {
-              radius: 14,
+              radius: 12,
               paddingX: 16,
-              paddingY: 15,
+              paddingY: 13,
               gap: 0,
               fontSize: 16,
               lineHeight: 22,
@@ -5463,15 +5624,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -5491,15 +5652,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -5520,12 +5681,12 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 52,
+        height: 108,
         component: "Input",
         style: {
-          radius: 14,
+          radius: 12,
           paddingX: 16,
-          paddingY: 15,
+          paddingY: 13,
           gap: 0,
           fontSize: 16,
           lineHeight: 22,
@@ -5557,15 +5718,15 @@
             x: 48,
             y: 40,
             width: 360,
-            height: 48,
+            height: 40,
             component: "Input",
             style: {
-              radius: 12,
+              radius: 10,
               paddingX: 14,
-              paddingY: 14,
+              paddingY: 10,
               gap: 0,
-              fontSize: 15,
-              lineHeight: 22,
+              fontSize: 14,
+              lineHeight: 20,
               fontWeight: "regular",
               minWidth: 220
             },
@@ -5589,15 +5750,15 @@
         x: 48,
         y: 40,
         width: 360,
-        height: 48,
+        height: 40,
         component: "Input",
         style: {
-          radius: 12,
+          radius: 10,
           paddingX: 14,
-          paddingY: 14,
+          paddingY: 10,
           gap: 0,
-          fontSize: 15,
-          lineHeight: 22,
+          fontSize: 14,
+          lineHeight: 20,
           fontWeight: "regular",
           minWidth: 220
         },
@@ -5846,132 +6007,132 @@
     ],
     variables: {},
     styles: {
-      "layout_4.radius": "12",
+      "layout_4.radius": "10",
       "layout_4.paddingX": "14",
-      "layout_4.paddingY": "14",
+      "layout_4.paddingY": "10",
       "layout_4.gap": "0",
-      "layout_4.fontSize": "15",
-      "layout_4.lineHeight": "22",
+      "layout_4.fontSize": "14",
+      "layout_4.lineHeight": "20",
       "layout_4.fontWeight": "regular",
       "layout_4.minWidth": "220",
-      "layout_5.radius": "12",
+      "layout_5.radius": "10",
       "layout_5.paddingX": "14",
-      "layout_5.paddingY": "14",
+      "layout_5.paddingY": "10",
       "layout_5.gap": "0",
-      "layout_5.fontSize": "15",
-      "layout_5.lineHeight": "22",
+      "layout_5.fontSize": "14",
+      "layout_5.lineHeight": "20",
       "layout_5.fontWeight": "regular",
       "layout_5.minWidth": "220",
-      "layout_6.radius": "12",
+      "layout_6.radius": "10",
       "layout_6.paddingX": "14",
-      "layout_6.paddingY": "14",
+      "layout_6.paddingY": "10",
       "layout_6.gap": "0",
-      "layout_6.fontSize": "15",
-      "layout_6.lineHeight": "22",
+      "layout_6.fontSize": "14",
+      "layout_6.lineHeight": "20",
       "layout_6.fontWeight": "regular",
       "layout_6.minWidth": "220",
-      "layout_8.radius": "12",
-      "layout_8.paddingX": "14",
-      "layout_8.paddingY": "12",
+      "layout_8.radius": "10",
+      "layout_8.paddingX": "12",
+      "layout_8.paddingY": "8",
       "layout_8.gap": "0",
       "layout_8.fontSize": "14",
       "layout_8.lineHeight": "20",
       "layout_8.fontWeight": "regular",
       "layout_8.minWidth": "220",
-      "layout_9.radius": "12",
+      "layout_9.radius": "10",
       "layout_9.paddingX": "14",
-      "layout_9.paddingY": "14",
+      "layout_9.paddingY": "10",
       "layout_9.gap": "0",
-      "layout_9.fontSize": "15",
-      "layout_9.lineHeight": "22",
+      "layout_9.fontSize": "14",
+      "layout_9.lineHeight": "20",
       "layout_9.fontWeight": "regular",
       "layout_9.minWidth": "220",
-      "layout_10.radius": "14",
+      "layout_10.radius": "12",
       "layout_10.paddingX": "16",
-      "layout_10.paddingY": "15",
+      "layout_10.paddingY": "13",
       "layout_10.gap": "0",
       "layout_10.fontSize": "16",
       "layout_10.lineHeight": "22",
       "layout_10.fontWeight": "regular",
       "layout_10.minWidth": "220",
-      "layout_12.radius": "12",
+      "layout_12.radius": "10",
       "layout_12.paddingX": "14",
-      "layout_12.paddingY": "14",
+      "layout_12.paddingY": "10",
       "layout_12.gap": "0",
-      "layout_12.fontSize": "15",
-      "layout_12.lineHeight": "22",
+      "layout_12.fontSize": "14",
+      "layout_12.lineHeight": "20",
       "layout_12.fontWeight": "regular",
       "layout_12.minWidth": "220",
-      "layout_13.radius": "12",
+      "layout_13.radius": "10",
       "layout_13.paddingX": "14",
-      "layout_13.paddingY": "14",
+      "layout_13.paddingY": "10",
       "layout_13.gap": "0",
-      "layout_13.fontSize": "15",
-      "layout_13.lineHeight": "22",
+      "layout_13.fontSize": "14",
+      "layout_13.lineHeight": "20",
       "layout_13.fontWeight": "regular",
       "layout_13.minWidth": "220",
-      "layout_14.radius": "12",
+      "layout_14.radius": "10",
       "layout_14.paddingX": "14",
-      "layout_14.paddingY": "14",
+      "layout_14.paddingY": "10",
       "layout_14.gap": "0",
-      "layout_14.fontSize": "15",
-      "layout_14.lineHeight": "22",
+      "layout_14.fontSize": "14",
+      "layout_14.lineHeight": "20",
       "layout_14.fontWeight": "regular",
       "layout_14.minWidth": "220",
-      "layout_16.radius": "12",
+      "layout_16.radius": "10",
       "layout_16.paddingX": "14",
-      "layout_16.paddingY": "14",
+      "layout_16.paddingY": "10",
       "layout_16.gap": "0",
-      "layout_16.fontSize": "15",
-      "layout_16.lineHeight": "22",
+      "layout_16.fontSize": "14",
+      "layout_16.lineHeight": "20",
       "layout_16.fontWeight": "regular",
       "layout_16.minWidth": "220",
-      "layout_17.radius": "12",
+      "layout_17.radius": "10",
       "layout_17.paddingX": "14",
-      "layout_17.paddingY": "14",
+      "layout_17.paddingY": "10",
       "layout_17.gap": "0",
-      "layout_17.fontSize": "15",
-      "layout_17.lineHeight": "22",
+      "layout_17.fontSize": "14",
+      "layout_17.lineHeight": "20",
       "layout_17.fontWeight": "regular",
       "layout_17.minWidth": "220",
-      "layout_18.radius": "12",
+      "layout_18.radius": "10",
       "layout_18.paddingX": "14",
-      "layout_18.paddingY": "14",
+      "layout_18.paddingY": "10",
       "layout_18.gap": "0",
-      "layout_18.fontSize": "15",
-      "layout_18.lineHeight": "22",
+      "layout_18.fontSize": "14",
+      "layout_18.lineHeight": "20",
       "layout_18.fontWeight": "regular",
       "layout_18.minWidth": "220",
-      "layout_20.radius": "12",
+      "layout_20.radius": "10",
       "layout_20.paddingX": "14",
-      "layout_20.paddingY": "14",
+      "layout_20.paddingY": "10",
       "layout_20.gap": "0",
-      "layout_20.fontSize": "15",
-      "layout_20.lineHeight": "22",
+      "layout_20.fontSize": "14",
+      "layout_20.lineHeight": "20",
       "layout_20.fontWeight": "regular",
       "layout_20.minWidth": "220",
-      "layout_21.radius": "12",
+      "layout_21.radius": "10",
       "layout_21.paddingX": "14",
-      "layout_21.paddingY": "14",
+      "layout_21.paddingY": "10",
       "layout_21.gap": "0",
-      "layout_21.fontSize": "15",
-      "layout_21.lineHeight": "22",
+      "layout_21.fontSize": "14",
+      "layout_21.lineHeight": "20",
       "layout_21.fontWeight": "regular",
       "layout_21.minWidth": "220",
-      "layout_22.radius": "14",
+      "layout_22.radius": "12",
       "layout_22.paddingX": "16",
-      "layout_22.paddingY": "15",
+      "layout_22.paddingY": "13",
       "layout_22.gap": "0",
       "layout_22.fontSize": "16",
       "layout_22.lineHeight": "22",
       "layout_22.fontWeight": "regular",
       "layout_22.minWidth": "220",
-      "layout_24.radius": "12",
+      "layout_24.radius": "10",
       "layout_24.paddingX": "14",
-      "layout_24.paddingY": "14",
+      "layout_24.paddingY": "10",
       "layout_24.gap": "0",
-      "layout_24.fontSize": "15",
-      "layout_24.lineHeight": "22",
+      "layout_24.fontSize": "14",
+      "layout_24.lineHeight": "20",
       "layout_24.fontWeight": "regular",
       "layout_24.minWidth": "220"
     },
@@ -5982,7 +6143,7 @@
     metadata: {
       source: "miterlab-figma-generator",
       version: "0.1.0",
-      generatedAt: "2026-03-19T00:54:31.253Z"
+      generatedAt: "2026-03-19T05:41:30.594Z"
     }
   };
 

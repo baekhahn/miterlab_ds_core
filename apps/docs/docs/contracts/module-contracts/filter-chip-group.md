@@ -1,8 +1,8 @@
 ---
-title: FilterChipGroup Contract
+title: FilterChipGroup
 ---
 
-# FilterChipGroup Contract
+# FilterChipGroup
 
 ## Layer
 

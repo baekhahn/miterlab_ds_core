@@ -1,8 +1,8 @@
 ---
-title: BottomActionGroup Contract
+title: BottomActionGroup
 ---
 
-# BottomActionGroup Contract
+# BottomActionGroup
 
 ## Layer
 

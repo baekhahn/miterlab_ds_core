@@ -1,8 +1,8 @@
 ---
-title: Icon Contract
+title: Icon
 ---
 
-# Icon Contract
+# Icon
 
 ## Layer
 

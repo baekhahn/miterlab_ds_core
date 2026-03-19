@@ -1,8 +1,8 @@
 ---
-title: Checkbox Contract
+title: Checkbox
 ---
 
-# Checkbox Contract
+# Checkbox
 
 ## Layer
 

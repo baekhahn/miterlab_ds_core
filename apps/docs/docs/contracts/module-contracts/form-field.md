@@ -1,8 +1,8 @@
 ---
-title: FormField Contract
+title: FormField
 ---
 
-# FormField Contract
+# FormField
 
 ## Layer
 

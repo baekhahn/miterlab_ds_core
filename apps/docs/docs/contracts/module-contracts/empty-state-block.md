@@ -1,8 +1,8 @@
 ---
-title: EmptyStateBlock Contract
+title: EmptyStateBlock
 ---
 
-# EmptyStateBlock Contract
+# EmptyStateBlock
 
 ## Layer
 

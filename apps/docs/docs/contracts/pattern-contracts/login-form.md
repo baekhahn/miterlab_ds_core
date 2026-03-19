@@ -1,8 +1,8 @@
 ---
-title: Login Form Pattern
+title: Login Form
 ---
 
-# Login Form Pattern
+# Login Form
 
 ## Layer
 

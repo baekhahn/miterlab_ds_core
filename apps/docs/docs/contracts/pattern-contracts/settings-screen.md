@@ -1,8 +1,8 @@
 ---
-title: Settings Screen Pattern
+title: Settings Screen
 ---
 
-# Settings Screen Pattern
+# Settings Screen
 
 ## Layer
 

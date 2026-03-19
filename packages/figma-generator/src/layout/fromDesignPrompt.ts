@@ -11,6 +11,7 @@ import { layoutRules } from "../grammar/layoutRules";
 import { resolvePattern } from "../grammar/screenPatterns";
 import type { LayoutFrameNode, LayoutNode } from "../types/layout";
 import mobileCore from "../../../ui-core/contracts/mobile-core.json";
+import { getButtonMetrics, getButtonWidth, getInputMetrics, getInputMultilineHeight, getInputWidth } from "../../../ui-core/contracts/foundationModel.mjs";
 
 const toTitle = (screen: string): string => {
   const clean = screen.replace(/[-_]/g, " ");
@@ -146,9 +147,9 @@ const mapComponentToLayoutNode = (index: number, component: GrammarComponent, sc
       component.size === "sm" || component.size === "md" || component.size === "lg"
         ? component.size
         : "md";
-    const sizeMetrics = mobileCore.input.render.sizes[inputSize];
+    const sizeMetrics = getInputMetrics(inputSize);
     const widthMode = component.width ?? (component.fullWidth === false ? "hug" : "full");
-    const widthValue = widthMode === "hug" ? mobileCore.input.render.widths.hug : mobileCore.input.render.widths.full;
+    const widthValue = widthMode === "hug" ? getInputWidth("hug") : getInputWidth("full");
 
     return {
       type: "component",
@@ -206,7 +207,11 @@ const mapComponentToLayoutNode = (index: number, component: GrammarComponent, sc
         role: component.role
       },
       width: component.fullWidth === false && component.width !== "full" ? widthValue : widthValue,
-      height: component.height ?? sizeMetrics.height,
+      height:
+        component.height ??
+        (component.multiline === true
+          ? getInputMultilineHeight(inputSize, typeof component.rowsCount === "number" ? component.rowsCount : 3)
+          : sizeMetrics.height),
       label: component.label
     };
   }
@@ -555,10 +560,10 @@ const mapComponentToLayoutNode = (index: number, component: GrammarComponent, sc
   }
 
   const size = resolveCoreButtonSize(component.size);
-  const buttonMetrics = mobileCore.button.render.sizes[size];
+  const buttonMetrics = getButtonMetrics(size);
   const inspectionButtonWidth =
     component.width === "full"
-      ? mobileCore.button.render.widths.full
+      ? getButtonWidth("full")
       : component.iconOnly
         ? buttonMetrics.height
         : buttonMetrics.minWidth;
@@ -590,11 +595,11 @@ const mapComponentToLayoutNode = (index: number, component: GrammarComponent, sc
     },
     width:
       component.width === "full" || component.block || component.fullWidth
-        ? mobileCore.button.render.widths.full
+        ? getButtonWidth("full")
         : isInspectionScreen
           ? inspectionButtonWidth
         : component.intent === "primary-action"
-          ? mobileCore.button.render.widths.full
+          ? getButtonWidth("full")
           : undefined,
     height: buttonMetrics.height,
     label: component.label ?? "Action"

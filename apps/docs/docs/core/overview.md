@@ -1,9 +1,9 @@
 ---
-title: Core Overview
+title: Overview
 slug: /
 ---
 
-# Core Overview
+# Overview
 
 ## Purpose
 

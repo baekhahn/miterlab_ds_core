@@ -1,8 +1,8 @@
 ---
-title: Product Detail with Sticky CTA Pattern
+title: Product Detail with Sticky CTA
 ---
 
-# Product Detail with Sticky CTA Pattern
+# Product Detail with Sticky CTA
 
 ## Layer
 

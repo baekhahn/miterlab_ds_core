@@ -1,8 +1,8 @@
 ---
-title: SearchBar Contract
+title: SearchBar
 ---
 
-# SearchBar Contract
+# SearchBar
 
 ## Layer
 

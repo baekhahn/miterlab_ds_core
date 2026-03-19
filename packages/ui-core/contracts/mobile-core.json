@@ -1,4 +1,118 @@
 {
+  "foundation": {
+    "colors": {
+      "surface": {
+        "canvas": "#FFFFFF",
+        "panel": "#F7F7F8",
+        "field": "#FFFFFF"
+      },
+      "border": {
+        "default": "#E1E2E4",
+        "strong": "#D3D5D9"
+      },
+      "text": {
+        "primary": "#171719",
+        "secondary": "#2E2F33",
+        "muted": "#989BA2",
+        "assistive": "#667085",
+        "inverse": "#FFFFFF"
+      },
+      "accent": {
+        "primary": "#0064FF",
+        "primaryWeak": "#EAF2FF"
+      },
+      "status": {
+        "success": "#00BF40",
+        "danger": "#FF4242"
+      },
+      "preview": {
+        "axisPillFill": "#F2F4F7",
+        "axisPillText": "#667085"
+      }
+    },
+    "density": {
+      "base": "md",
+      "touchTargetMin": 44
+    },
+    "size": {
+      "controlHeight": {
+        "sm": 32,
+        "md": 40,
+        "lg": 48
+      },
+      "controlWidth": {
+        "button": {
+          "hug": 128,
+          "full": 360,
+          "minWidth": {
+            "sm": 104,
+            "md": 116,
+            "lg": 148
+          }
+        },
+        "input": {
+          "hug": 220,
+          "full": 360,
+          "minWidth": {
+            "sm": 220,
+            "md": 220,
+            "lg": 220
+          }
+        }
+      }
+    },
+    "typography": {
+      "buttonLabel": {
+        "sm": { "fontSize": 14, "lineHeight": 20 },
+        "md": { "fontSize": 14, "lineHeight": 20 },
+        "lg": { "fontSize": 16, "lineHeight": 22 }
+      },
+      "inputValue": {
+        "sm": { "fontSize": 14, "lineHeight": 20 },
+        "md": { "fontSize": 14, "lineHeight": 20 },
+        "lg": { "fontSize": 16, "lineHeight": 22 }
+      }
+    },
+    "spacing": {
+      "buttonPaddingX": {
+        "sm": 14,
+        "md": 16,
+        "lg": 18
+      },
+      "buttonPaddingY": {
+        "sm": 8,
+        "md": 10,
+        "lg": 13
+      },
+      "inputPaddingX": {
+        "sm": 12,
+        "md": 14,
+        "lg": 16
+      },
+      "inputPaddingY": {
+        "sm": 8,
+        "md": 10,
+        "lg": 13
+      },
+      "controlGap": {
+        "button": 8,
+        "input": 8
+      },
+      "helperTextGap": 6
+    },
+    "radius": {
+      "button": {
+        "sm": 10,
+        "md": 10,
+        "lg": 12
+      },
+      "input": {
+        "sm": 10,
+        "md": 10,
+        "lg": 12
+      }
+    }
+  },
   "colors": {
     "button": {
       "emphasis": {
@@ -25,17 +139,6 @@
     }
   },
   "button": {
-    "render": {
-      "sizes": {
-        "sm": { "height": 44, "paddingX": 14, "paddingY": 10, "radius": 12, "fontSize": 14, "lineHeight": 20, "gap": 8, "minWidth": 112 },
-        "md": { "height": 48, "paddingX": 16, "paddingY": 12, "radius": 12, "fontSize": 15, "lineHeight": 22, "gap": 8, "minWidth": 124 },
-        "lg": { "height": 52, "paddingX": 18, "paddingY": 14, "radius": 14, "fontSize": 16, "lineHeight": 22, "gap": 8, "minWidth": 168 }
-      },
-      "widths": {
-        "hug": 128,
-        "full": 360
-      }
-    },
     "inspection": {
       "title": "Button Inspection",
       "axes": {
@@ -73,17 +176,6 @@
     }
   },
   "input": {
-    "render": {
-      "sizes": {
-        "sm": { "height": 44, "paddingX": 14, "paddingY": 12, "radius": 12, "fontSize": 14, "lineHeight": 20, "minWidth": 220 },
-        "md": { "height": 48, "paddingX": 14, "paddingY": 14, "radius": 12, "fontSize": 15, "lineHeight": 22, "minWidth": 220 },
-        "lg": { "height": 52, "paddingX": 16, "paddingY": 15, "radius": 14, "fontSize": 16, "lineHeight": 22, "minWidth": 220 }
-      },
-      "widths": {
-        "hug": 220,
-        "full": 360
-      }
-    },
     "inspection": {
       "title": "Input Inspection",
       "axes": {
