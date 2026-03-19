@@ -67,13 +67,6 @@ Foundation은 모든 상위 레이어를 지원하지만, 단독으로 제품 �
 
 Component는 독립적으로 렌더 가능한 단일 목적 UI 단위입니다.
 
-예시:
-- Button
-- Input
-- Checkbox
-- Text
-- Icon
-
 판별 기준:
 - 하나의 분명한 역할이 있는가
 - 혼자 렌더해도 의미가 성립하는가
@@ -85,14 +78,6 @@ Module은 하나 이상의 Component로 구성된 재사용 가능한 상호작�
 
 Module은 화면 안에서 반복되는 실무 UX 작업을 해결합니다.
 
-예시:
-- FormField
-- SearchBar
-- ListRow
-- FilterChipGroup
-- BottomActionGroup
-- EmptyStateBlock
-
 판별 기준:
 - 화면 안에서 자주 반복되는 작업 단위인가
 - Component보다 크지만 화면 전체는 아닌가
@@ -101,12 +86,6 @@ Module은 화면 안에서 반복되는 실무 UX 작업을 해결합니다.
 ### Pattern
 
 Pattern은 Module을 조합한 화면 수준 또는 플로우 수준 구조입니다.
-
-예시:
-- Login Form
-- Search Result Screen
-- Settings Screen
-- Product Detail with Sticky CTA
 
 Pattern은 실제 제품 시나리오를 설명하지만, 내부는 다시 Module 단위로 분해 가능해야 합니다.
 
