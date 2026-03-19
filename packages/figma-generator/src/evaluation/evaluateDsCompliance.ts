@@ -9,6 +9,8 @@ interface DsEvalResult {
 const allowedStates = new Set(["enabled", "pressed", "disabled", "loading", "focused", "readonly"]);
 const allowedSizes = new Set(["sm", "md", "lg"]);
 const allowedVariantProps = new Set([
+  "appearance",
+  "hierarchy",
   "emphasis",
   "intent",
   "size",
@@ -16,6 +18,7 @@ const allowedVariantProps = new Set([
   "state",
   "iconOnly",
   "iconLeading",
+  "iconTrailing",
   "loading",
   "disabled",
   "readOnly",

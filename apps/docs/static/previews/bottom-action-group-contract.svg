@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="920" height="260" viewBox="0 0 920 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="920" height="260" rx="24" fill="#FFFFFF"/>
+  <rect width="920" height="260" rx="24" fill="#FFFFFF" />
   <rect x="0" y="180" width="920" height="80" rx="0" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
 <rect x="32" y="196" width="168" height="44" rx="12" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
 <text x="116" y="223" text-anchor="middle" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="14" font-weight="600" fill="#2E2F33">취소</text>

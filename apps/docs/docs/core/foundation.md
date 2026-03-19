@@ -297,16 +297,37 @@ Grid spacing은 Foundation spacing token과 연결됩니다.
 
 Radius token은 컴포넌트 shell의 라운드 체계를 고정합니다.
 
-권장 구성:
-- `none`
-- `small`
-- `medium`
-- `large`
-- `round`
+현재 공통 radius token:
+- `none = 0`
+- `sm = 10`
+- `md = 10`
+- `lg = 12`
+- `round = 999`
 
 규칙:
 - radius는 데모용 과장보다 제품 밀도에 맞춰야 합니다.
 - Button, Input, Chip이 각자 다른 라운드 체계를 임의로 만들지 않습니다.
+- Component는 개별 radius 값을 직접 정의하지 않고 Foundation radius token을 참조합니다.
+
+## Current Exceptions
+
+아래 항목은 아직 Foundation token으로 완전히 올라가지 않았습니다.
+
+- contract preview 전용 정적 layout size
+  - panel width / height
+  - sample card width / height
+  - screen mock frame size
+- docs shell styling
+  - Docusaurus navbar / sidebar chrome size
+  - docs-only spacing and border styling
+- plugin UI shell styling
+  - plugin 내부 패널 간격과 radius
+  - inspection selector UI 크기
+
+운영 규칙:
+- Component, Module, Pattern의 의미에 영향을 주는 값은 Foundation으로 올립니다.
+- preview shell이나 docs chrome처럼 시스템 자체를 설명하기 위한 보조 UI는 예외로 둘 수 있습니다.
+- 예외로 남긴 값도 반복 사용되기 시작하면 Foundation token으로 승격합니다.
 
 ## Elevation Tokens
 

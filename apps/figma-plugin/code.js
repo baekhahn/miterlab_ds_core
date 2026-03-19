@@ -135,7 +135,8 @@
         status: {
           success: "#00BF40",
           cautionary: "#FF9200",
-          danger: "#FF4242"
+          danger: "#FF4242",
+          dangerPressed: "#E52222"
         },
         preview: {
           axisPillFill: "#F7F7F8",
@@ -171,7 +172,8 @@
               lg: 220
             }
           }
-        }
+        },
+        multilineExtra: 16
       },
       typography: {
         buttonLabel: {
@@ -213,52 +215,43 @@
         helperTextGap: 6
       },
       radius: {
-        button: {
-          sm: 10,
-          md: 10,
-          lg: 12
-        },
-        input: {
-          sm: 10,
-          md: 10,
-          lg: 12
-        }
+        none: 0,
+        sm: 10,
+        md: 10,
+        lg: 12,
+        round: 999
       }
     },
     button: {
       inspection: {
         title: "Button Inspection",
         axes: {
-          emphasis: ["primary", "secondary", "tertiary", "destructive"],
+          hierarchy: ["primary-level-4", "primary-level-3", "assistive-level-2", "assistive-level-1"],
+          content: ["label-only", "icon-label", "icon-only"],
           size: ["sm", "md", "lg"],
-          width: ["hug", "full"],
           state: ["enabled", "pressed", "disabled", "loading"]
         },
         rows: [
-          { axis: "emphasis", items: ["Primary", "Secondary", "Tertiary", "Destructive"] },
+          { axis: "hierarchy", items: ["Primary L4", "Primary L3", "Assistive L2", "Assistive L1"] },
+          { axis: "content", items: ["Label Only", "Icon + Label", "Icon Only"] },
           { axis: "size", items: ["Small", "Medium", "Large"] },
-          { axis: "state", items: ["Pressed", "Disabled", "Loading"] },
-          { axis: "width", items: ["Hug Width", "Full Width"] },
-          { axis: "bundle", items: ["Leading Icon", "Icon Only", "Bottom CTA", "Danger CTA"] }
+          { axis: "state", items: ["Pressed", "Disabled", "Loading"] }
         ],
         sections: ["preview"],
         components: [
-          { component: "button", section: "preview", label: "Primary", emphasis: "primary", size: "md", width: "hug", state: "enabled" },
-          { component: "button", section: "preview", label: "Secondary", emphasis: "secondary", size: "md", width: "hug", state: "enabled" },
-          { component: "button", section: "preview", label: "Tertiary", emphasis: "tertiary", size: "md", width: "hug", state: "enabled" },
-          { component: "button", section: "preview", label: "Destructive", emphasis: "destructive", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Primary L4", appearance: "solid", hierarchy: "primary-level-4", emphasis: "primary", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Primary L3", appearance: "outlined", hierarchy: "primary-level-3", emphasis: "secondary", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Assistive L2", appearance: "outlined", hierarchy: "assistive-level-2", emphasis: "secondary", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Assistive L1", appearance: "text", hierarchy: "assistive-level-1", emphasis: "tertiary", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Label Only", appearance: "solid", hierarchy: "primary-level-4", emphasis: "primary", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Icon + Label", appearance: "outlined", hierarchy: "assistive-level-2", emphasis: "secondary", size: "md", width: "hug", state: "enabled", iconLeading: true },
+          { component: "button", section: "preview", label: "Icon Only", appearance: "text", hierarchy: "assistive-level-1", emphasis: "tertiary", size: "md", width: "hug", state: "enabled", iconOnly: true },
           { component: "button", section: "preview", label: "Small", emphasis: "primary", size: "sm", width: "hug", state: "enabled" },
           { component: "button", section: "preview", label: "Medium", emphasis: "primary", size: "md", width: "hug", state: "enabled" },
           { component: "button", section: "preview", label: "Large", emphasis: "primary", size: "lg", width: "hug", state: "enabled" },
           { component: "button", section: "preview", label: "Pressed", emphasis: "primary", size: "md", width: "hug", state: "pressed" },
           { component: "button", section: "preview", label: "Disabled", emphasis: "primary", size: "md", width: "hug", state: "disabled", disabled: true },
-          { component: "button", section: "preview", label: "Loading", emphasis: "primary", size: "md", width: "hug", state: "loading", loading: true },
-          { component: "button", section: "preview", label: "Hug Width", emphasis: "secondary", size: "md", width: "hug", state: "enabled" },
-          { component: "button", section: "preview", label: "Full Width", emphasis: "primary", size: "lg", width: "full", state: "enabled" },
-          { component: "button", section: "preview", label: "Leading Icon", emphasis: "secondary", size: "md", width: "hug", state: "enabled", iconLeading: true },
-          { component: "button", section: "preview", label: "Icon Only", emphasis: "tertiary", size: "md", width: "hug", state: "enabled", iconOnly: true },
-          { component: "button", section: "preview", label: "Bottom CTA", emphasis: "primary", size: "lg", width: "full", state: "enabled" },
-          { component: "button", section: "preview", label: "Danger CTA", emphasis: "destructive", size: "lg", width: "full", state: "enabled" }
+          { component: "button", section: "preview", label: "Loading", emphasis: "primary", size: "md", width: "hug", state: "loading", loading: true }
         ]
       }
     },
@@ -313,7 +306,7 @@
       height: foundation.size.controlHeight[sizeKey],
       paddingX: foundation.spacing.buttonPaddingX[sizeKey],
       paddingY: foundation.spacing.buttonPaddingY[sizeKey],
-      radius: foundation.radius.button[sizeKey],
+      radius: foundation.radius[sizeKey],
       fontSize: foundation.typography.buttonLabel[sizeKey].fontSize,
       lineHeight: foundation.typography.buttonLabel[sizeKey].lineHeight,
       gap: foundation.spacing.controlGap.button,
@@ -327,7 +320,7 @@
       height: foundation.size.controlHeight[sizeKey],
       paddingX: foundation.spacing.inputPaddingX[sizeKey],
       paddingY: foundation.spacing.inputPaddingY[sizeKey],
-      radius: foundation.radius.input[sizeKey],
+      radius: foundation.radius[sizeKey],
       fontSize: foundation.typography.inputValue[sizeKey].fontSize,
       lineHeight: foundation.typography.inputValue[sizeKey].lineHeight,
       minWidth: foundation.size.controlWidth.input.minWidth[sizeKey]
@@ -337,7 +330,7 @@
   var getInputMultilineHeight = (size = "md", rowsCount = 3) => {
     const metrics = getInputMetrics(size);
     const rows = Math.max(2, rowsCount);
-    return Math.max(metrics.height * 2, metrics.lineHeight * rows + metrics.paddingY * 2 + 16);
+    return Math.max(metrics.height * 2, metrics.lineHeight * rows + metrics.paddingY * 2 + foundation.size.multilineExtra);
   };
   var getButtonPalette = (emphasis = "primary", state = "enabled") => {
     if (state === "disabled") {
@@ -363,15 +356,102 @@
     }
     if (emphasis === "destructive") {
       return {
-        fill: state === "pressed" ? "#E52222" : semanticLight.status.negative,
-        stroke: state === "pressed" ? "#E52222" : semanticLight.status.negative,
-        text: "#FFFFFF"
+        fill: state === "pressed" ? foundation.colors.status.dangerPressed : semanticLight.status.negative,
+        stroke: "transparent",
+        text: foundation.colors.text.inverse
       };
     }
     return {
       fill: state === "pressed" ? semanticLight.primary.heavy : semanticLight.primary.strong,
-      stroke: state === "pressed" ? semanticLight.primary.heavy : semanticLight.primary.strong,
-      text: "#FFFFFF"
+      stroke: "transparent",
+      text: foundation.colors.text.inverse
+    };
+  };
+  var getButtonPaletteByAxes = (appearance = "solid", hierarchy = "primary-level-4", state = "enabled") => {
+    if (state === "disabled") {
+      return {
+        fill: semanticLight.interaction.disable,
+        stroke: semanticLight.line.solidNormal,
+        text: semanticLight.interaction.inactive
+      };
+    }
+    const isPressed = state === "pressed";
+    const elevated = semanticLight.background.elevated;
+    const alt = semanticLight.background.alternative;
+    if (hierarchy === "destructive") {
+      if (appearance === "outlined") {
+        return {
+          fill: elevated,
+          stroke: semanticLight.status.negative,
+          text: semanticLight.status.negative
+        };
+      }
+      if (appearance === "text") {
+        return {
+          fill: "transparent",
+          stroke: "transparent",
+          text: semanticLight.status.negative
+        };
+      }
+      return {
+        fill: isPressed ? foundation.colors.status.dangerPressed : semanticLight.status.negative,
+        stroke: "transparent",
+        text: foundation.colors.text.inverse
+      };
+    }
+    if (hierarchy === "assistive-level-1") {
+      return {
+        fill: "transparent",
+        stroke: "transparent",
+        text: semanticLight.label.neutral
+      };
+    }
+    if (hierarchy === "assistive-level-2") {
+      return {
+        fill: isPressed ? alt : elevated,
+        stroke: isPressed ? semanticLight.line.solidNeutral : semanticLight.line.solidNormal,
+        text: semanticLight.label.normal
+      };
+    }
+    if (hierarchy === "primary-level-3") {
+      if (appearance === "solid") {
+        return {
+          fill: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong,
+          stroke: "transparent",
+          text: foundation.colors.text.inverse
+        };
+      }
+      if (appearance === "text") {
+        return {
+          fill: "transparent",
+          stroke: "transparent",
+          text: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong
+        };
+      }
+      return {
+        fill: elevated,
+        stroke: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong,
+        text: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong
+      };
+    }
+    if (appearance === "outlined") {
+      return {
+        fill: elevated,
+        stroke: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong,
+        text: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong
+      };
+    }
+    if (appearance === "text") {
+      return {
+        fill: "transparent",
+        stroke: "transparent",
+        text: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong
+      };
+    }
+    return {
+      fill: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong,
+      stroke: "transparent",
+      text: foundation.colors.text.inverse
     };
   };
   var getInputPalette = (intent = "default", state = "enabled") => {
@@ -430,6 +510,8 @@
   var ITEM_GAP = 14;
   var WRAP_GAP = 12;
   var axisTitle = (axis) => {
+    if (axis === "hierarchy") return "Hierarchy";
+    if (axis === "content") return "Content";
     if (axis === "emphasis") return "Emphasis";
     if (axis === "intent") return "Intent";
     if (axis === "size") return "Size";
@@ -674,7 +756,8 @@
         status: {
           success: "#00BF40",
           cautionary: "#FF9200",
-          danger: "#FF4242"
+          danger: "#FF4242",
+          dangerPressed: "#E52222"
         },
         preview: {
           axisPillFill: "#F7F7F8",
@@ -710,7 +793,8 @@
               lg: 220
             }
           }
-        }
+        },
+        multilineExtra: 16
       },
       typography: {
         buttonLabel: {
@@ -752,52 +836,43 @@
         helperTextGap: 6
       },
       radius: {
-        button: {
-          sm: 10,
-          md: 10,
-          lg: 12
-        },
-        input: {
-          sm: 10,
-          md: 10,
-          lg: 12
-        }
+        none: 0,
+        sm: 10,
+        md: 10,
+        lg: 12,
+        round: 999
       }
     },
     button: {
       inspection: {
         title: "Button Inspection",
         axes: {
-          emphasis: ["primary", "secondary", "tertiary", "destructive"],
+          hierarchy: ["primary-level-4", "primary-level-3", "assistive-level-2", "assistive-level-1"],
+          content: ["label-only", "icon-label", "icon-only"],
           size: ["sm", "md", "lg"],
-          width: ["hug", "full"],
           state: ["enabled", "pressed", "disabled", "loading"]
         },
         rows: [
-          { axis: "emphasis", items: ["Primary", "Secondary", "Tertiary", "Destructive"] },
+          { axis: "hierarchy", items: ["Primary L4", "Primary L3", "Assistive L2", "Assistive L1"] },
+          { axis: "content", items: ["Label Only", "Icon + Label", "Icon Only"] },
           { axis: "size", items: ["Small", "Medium", "Large"] },
-          { axis: "state", items: ["Pressed", "Disabled", "Loading"] },
-          { axis: "width", items: ["Hug Width", "Full Width"] },
-          { axis: "bundle", items: ["Leading Icon", "Icon Only", "Bottom CTA", "Danger CTA"] }
+          { axis: "state", items: ["Pressed", "Disabled", "Loading"] }
         ],
         sections: ["preview"],
         components: [
-          { component: "button", section: "preview", label: "Primary", emphasis: "primary", size: "md", width: "hug", state: "enabled" },
-          { component: "button", section: "preview", label: "Secondary", emphasis: "secondary", size: "md", width: "hug", state: "enabled" },
-          { component: "button", section: "preview", label: "Tertiary", emphasis: "tertiary", size: "md", width: "hug", state: "enabled" },
-          { component: "button", section: "preview", label: "Destructive", emphasis: "destructive", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Primary L4", appearance: "solid", hierarchy: "primary-level-4", emphasis: "primary", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Primary L3", appearance: "outlined", hierarchy: "primary-level-3", emphasis: "secondary", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Assistive L2", appearance: "outlined", hierarchy: "assistive-level-2", emphasis: "secondary", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Assistive L1", appearance: "text", hierarchy: "assistive-level-1", emphasis: "tertiary", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Label Only", appearance: "solid", hierarchy: "primary-level-4", emphasis: "primary", size: "md", width: "hug", state: "enabled" },
+          { component: "button", section: "preview", label: "Icon + Label", appearance: "outlined", hierarchy: "assistive-level-2", emphasis: "secondary", size: "md", width: "hug", state: "enabled", iconLeading: true },
+          { component: "button", section: "preview", label: "Icon Only", appearance: "text", hierarchy: "assistive-level-1", emphasis: "tertiary", size: "md", width: "hug", state: "enabled", iconOnly: true },
           { component: "button", section: "preview", label: "Small", emphasis: "primary", size: "sm", width: "hug", state: "enabled" },
           { component: "button", section: "preview", label: "Medium", emphasis: "primary", size: "md", width: "hug", state: "enabled" },
           { component: "button", section: "preview", label: "Large", emphasis: "primary", size: "lg", width: "hug", state: "enabled" },
           { component: "button", section: "preview", label: "Pressed", emphasis: "primary", size: "md", width: "hug", state: "pressed" },
           { component: "button", section: "preview", label: "Disabled", emphasis: "primary", size: "md", width: "hug", state: "disabled", disabled: true },
-          { component: "button", section: "preview", label: "Loading", emphasis: "primary", size: "md", width: "hug", state: "loading", loading: true },
-          { component: "button", section: "preview", label: "Hug Width", emphasis: "secondary", size: "md", width: "hug", state: "enabled" },
-          { component: "button", section: "preview", label: "Full Width", emphasis: "primary", size: "lg", width: "full", state: "enabled" },
-          { component: "button", section: "preview", label: "Leading Icon", emphasis: "secondary", size: "md", width: "hug", state: "enabled", iconLeading: true },
-          { component: "button", section: "preview", label: "Icon Only", emphasis: "tertiary", size: "md", width: "hug", state: "enabled", iconOnly: true },
-          { component: "button", section: "preview", label: "Bottom CTA", emphasis: "primary", size: "lg", width: "full", state: "enabled" },
-          { component: "button", section: "preview", label: "Danger CTA", emphasis: "destructive", size: "lg", width: "full", state: "enabled" }
+          { component: "button", section: "preview", label: "Loading", emphasis: "primary", size: "md", width: "hug", state: "loading", loading: true }
         ]
       }
     },
@@ -978,6 +1053,20 @@
     if (emphasis === "secondary" || emphasis === "tertiary" || emphasis === "destructive") return emphasis;
     return "primary";
   };
+  var getButtonAppearance = (node) => {
+    var _a;
+    const appearance = (_a = node.variant) == null ? void 0 : _a.appearance;
+    if (appearance === "outlined" || appearance === "text") return appearance;
+    return "solid";
+  };
+  var getButtonHierarchy = (node) => {
+    var _a;
+    const hierarchy = (_a = node.variant) == null ? void 0 : _a.hierarchy;
+    if (hierarchy === "primary-level-3" || hierarchy === "assistive-level-2" || hierarchy === "assistive-level-1" || hierarchy === "destructive") {
+      return hierarchy;
+    }
+    return "primary-level-4";
+  };
   var getInputSize = (node) => {
     var _a;
     const size = (_a = node.variant) == null ? void 0 : _a.size;
@@ -1072,17 +1161,20 @@
     return wrapper;
   };
   var createButtonNode = async (node) => {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e, _f, _g;
     const sizeKey = getButtonSize(node);
     const state = getButtonState(node);
     const emphasis = getButtonEmphasis(node);
+    const appearance = getButtonAppearance(node);
+    const hierarchy = getButtonHierarchy(node);
     const metrics = getButtonMetrics(sizeKey);
-    const palette = getButtonPalette(emphasis, state);
+    const palette = ((_a = node.variant) == null ? void 0 : _a.appearance) || ((_b = node.variant) == null ? void 0 : _b.hierarchy) ? getButtonPaletteByAxes(appearance, hierarchy, state) : getButtonPalette(emphasis, state);
     const fill = palette.fill;
     const stroke = palette.stroke;
-    const iconOnly = ((_a = node.variant) == null ? void 0 : _a.iconOnly) === true;
-    const iconLeading = ((_b = node.variant) == null ? void 0 : _b.iconLeading) === true;
-    const width = iconOnly ? metrics.height : ((_c = node.variant) == null ? void 0 : _c.width) === "full" ? getButtonWidth("full") : getButtonWidth("hug");
+    const iconOnly = ((_c = node.variant) == null ? void 0 : _c.iconOnly) === true;
+    const iconLeading = ((_d = node.variant) == null ? void 0 : _d.iconLeading) === true;
+    const iconTrailing = ((_e = node.variant) == null ? void 0 : _e.iconTrailing) === true;
+    const width = iconOnly ? metrics.height : ((_f = node.variant) == null ? void 0 : _f.width) === "full" ? getButtonWidth("full") : getButtonWidth("hug");
     const frame = figma.createFrame();
     frame.name = node.name;
     frame.resize(Math.max(width, styleMinWidth(node, metrics.minWidth), node.width), Math.max(metrics.height, node.height));
@@ -1106,9 +1198,12 @@
       frame.appendChild(createPlusGlyph(palette.text, Math.max(16, metrics.fontSize + 2)));
     }
     if (!iconOnly) {
-      const label = await createText((_d = node.text) != null ? _d : node.name, palette.text, styleFontSize(node, metrics.fontSize), styleLineHeight(node, metrics.lineHeight), "semibold");
+      const label = await createText((_g = node.text) != null ? _g : node.name, palette.text, styleFontSize(node, metrics.fontSize), styleLineHeight(node, metrics.lineHeight), "semibold");
       label.textAlignHorizontal = "CENTER";
       frame.appendChild(label);
+    }
+    if (!iconOnly && state !== "loading" && iconTrailing) {
+      frame.appendChild(createPlusGlyph(palette.text, Math.max(16, metrics.fontSize + 2)));
     }
     return frame;
   };
@@ -1715,7 +1810,7 @@
                   {
                     id: "layout_4",
                     type: "INSTANCE",
-                    name: "Primary",
+                    name: "Primary L4",
                     x: 48,
                     y: 40,
                     width: 116,
@@ -1738,12 +1833,12 @@
                       size: "md"
                     },
                     variables: {},
-                    text: "Primary"
+                    text: "Primary L4"
                   },
                   {
                     id: "layout_5",
                     type: "INSTANCE",
-                    name: "Secondary",
+                    name: "Primary L3",
                     x: 48,
                     y: 40,
                     width: 116,
@@ -1766,12 +1861,40 @@
                       size: "md"
                     },
                     variables: {},
-                    text: "Secondary"
+                    text: "Primary L3"
                   },
                   {
                     id: "layout_6",
                     type: "INSTANCE",
-                    name: "Tertiary",
+                    name: "Assistive L2",
+                    x: 48,
+                    y: 40,
+                    width: 116,
+                    height: 40,
+                    component: "Button",
+                    style: {
+                      radius: 10,
+                      paddingX: 16,
+                      paddingY: 10,
+                      gap: 8,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "semibold",
+                      minWidth: 116
+                    },
+                    variant: {
+                      emphasis: "secondary",
+                      width: "hug",
+                      state: "enabled",
+                      size: "md"
+                    },
+                    variables: {},
+                    text: "Assistive L2"
+                  },
+                  {
+                    id: "layout_7",
+                    type: "INSTANCE",
+                    name: "Assistive L1",
                     x: 48,
                     y: 40,
                     width: 116,
@@ -1794,68 +1917,40 @@
                       size: "md"
                     },
                     variables: {},
-                    text: "Tertiary"
-                  },
-                  {
-                    id: "layout_7",
-                    type: "INSTANCE",
-                    name: "Destructive",
-                    x: 48,
-                    y: 40,
-                    width: 116,
-                    height: 40,
-                    component: "Button",
-                    style: {
-                      radius: 10,
-                      paddingX: 16,
-                      paddingY: 10,
-                      gap: 8,
-                      fontSize: 14,
-                      lineHeight: 20,
-                      fontWeight: "semibold",
-                      minWidth: 116
-                    },
-                    variant: {
-                      emphasis: "destructive",
-                      width: "hug",
-                      state: "enabled",
-                      size: "md"
-                    },
-                    variables: {},
-                    text: "Destructive"
+                    text: "Assistive L1"
                   },
                   {
                     id: "layout_8",
                     type: "INSTANCE",
-                    name: "Small",
+                    name: "Label Only",
                     x: 48,
                     y: 40,
-                    width: 104,
-                    height: 32,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
                       radius: 10,
-                      paddingX: 14,
-                      paddingY: 8,
+                      paddingX: 16,
+                      paddingY: 10,
                       gap: 8,
                       fontSize: 14,
                       lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 104
+                      minWidth: 116
                     },
                     variant: {
                       emphasis: "primary",
                       width: "hug",
                       state: "enabled",
-                      size: "sm"
+                      size: "md"
                     },
                     variables: {},
-                    text: "Small"
+                    text: "Label Only"
                   },
                   {
                     id: "layout_9",
                     type: "INSTANCE",
-                    name: "Medium",
+                    name: "Icon + Label",
                     x: 48,
                     y: 40,
                     width: 116,
@@ -1872,225 +1967,16 @@
                       minWidth: 116
                     },
                     variant: {
-                      emphasis: "primary",
+                      emphasis: "secondary",
                       width: "hug",
                       state: "enabled",
                       size: "md"
                     },
                     variables: {},
-                    text: "Medium"
+                    text: "Icon + Label"
                   },
                   {
                     id: "layout_10",
-                    type: "INSTANCE",
-                    name: "Large",
-                    x: 48,
-                    y: 40,
-                    width: 148,
-                    height: 48,
-                    component: "Button",
-                    style: {
-                      radius: 12,
-                      paddingX: 18,
-                      paddingY: 13,
-                      gap: 8,
-                      fontSize: 16,
-                      lineHeight: 22,
-                      fontWeight: "semibold",
-                      minWidth: 148
-                    },
-                    variant: {
-                      emphasis: "primary",
-                      width: "hug",
-                      state: "enabled",
-                      size: "lg"
-                    },
-                    variables: {},
-                    text: "Large"
-                  },
-                  {
-                    id: "layout_11",
-                    type: "INSTANCE",
-                    name: "Pressed",
-                    x: 48,
-                    y: 40,
-                    width: 116,
-                    height: 40,
-                    component: "Button",
-                    style: {
-                      radius: 10,
-                      paddingX: 16,
-                      paddingY: 10,
-                      gap: 8,
-                      fontSize: 14,
-                      lineHeight: 20,
-                      fontWeight: "semibold",
-                      minWidth: 116
-                    },
-                    variant: {
-                      emphasis: "primary",
-                      width: "hug",
-                      state: "pressed",
-                      size: "md"
-                    },
-                    variables: {},
-                    text: "Pressed"
-                  },
-                  {
-                    id: "layout_12",
-                    type: "INSTANCE",
-                    name: "Disabled",
-                    x: 48,
-                    y: 40,
-                    width: 116,
-                    height: 40,
-                    component: "Button",
-                    style: {
-                      radius: 10,
-                      paddingX: 16,
-                      paddingY: 10,
-                      gap: 8,
-                      fontSize: 14,
-                      lineHeight: 20,
-                      fontWeight: "semibold",
-                      minWidth: 116
-                    },
-                    variant: {
-                      emphasis: "primary",
-                      width: "hug",
-                      state: "disabled",
-                      size: "md",
-                      disabled: true
-                    },
-                    variables: {},
-                    text: "Disabled"
-                  }
-                ]
-              },
-              {
-                id: "layout_13",
-                type: "FRAME",
-                name: "preview-row-2",
-                x: 48,
-                y: 40,
-                width: 1320,
-                height: 100,
-                children: [
-                  {
-                    id: "layout_14",
-                    type: "INSTANCE",
-                    name: "Loading",
-                    x: 48,
-                    y: 40,
-                    width: 116,
-                    height: 40,
-                    component: "Button",
-                    style: {
-                      radius: 10,
-                      paddingX: 16,
-                      paddingY: 10,
-                      gap: 8,
-                      fontSize: 14,
-                      lineHeight: 20,
-                      fontWeight: "semibold",
-                      minWidth: 116
-                    },
-                    variant: {
-                      emphasis: "primary",
-                      width: "hug",
-                      state: "loading",
-                      size: "md",
-                      loading: true
-                    },
-                    variables: {},
-                    text: "Loading"
-                  },
-                  {
-                    id: "layout_15",
-                    type: "INSTANCE",
-                    name: "Hug Width",
-                    x: 48,
-                    y: 40,
-                    width: 116,
-                    height: 40,
-                    component: "Button",
-                    style: {
-                      radius: 10,
-                      paddingX: 16,
-                      paddingY: 10,
-                      gap: 8,
-                      fontSize: 14,
-                      lineHeight: 20,
-                      fontWeight: "semibold",
-                      minWidth: 116
-                    },
-                    variant: {
-                      emphasis: "secondary",
-                      width: "hug",
-                      state: "enabled",
-                      size: "md"
-                    },
-                    variables: {},
-                    text: "Hug Width"
-                  },
-                  {
-                    id: "layout_16",
-                    type: "INSTANCE",
-                    name: "Full Width",
-                    x: 48,
-                    y: 40,
-                    width: 360,
-                    height: 48,
-                    component: "Button",
-                    style: {
-                      radius: 12,
-                      paddingX: 18,
-                      paddingY: 13,
-                      gap: 8,
-                      fontSize: 16,
-                      lineHeight: 22,
-                      fontWeight: "semibold",
-                      minWidth: 148
-                    },
-                    variant: {
-                      emphasis: "primary",
-                      width: "full",
-                      state: "enabled",
-                      size: "lg"
-                    },
-                    variables: {},
-                    text: "Full Width"
-                  },
-                  {
-                    id: "layout_17",
-                    type: "INSTANCE",
-                    name: "Leading Icon",
-                    x: 48,
-                    y: 40,
-                    width: 116,
-                    height: 40,
-                    component: "Button",
-                    style: {
-                      radius: 10,
-                      paddingX: 16,
-                      paddingY: 10,
-                      gap: 8,
-                      fontSize: 14,
-                      lineHeight: 20,
-                      fontWeight: "semibold",
-                      minWidth: 116
-                    },
-                    variant: {
-                      emphasis: "secondary",
-                      width: "hug",
-                      state: "enabled",
-                      size: "md"
-                    },
-                    variables: {},
-                    text: "Leading Icon"
-                  },
-                  {
-                    id: "layout_18",
                     type: "INSTANCE",
                     name: "Icon Only",
                     x: 48,
@@ -2118,12 +2004,68 @@
                     text: "Icon Only"
                   },
                   {
-                    id: "layout_19",
+                    id: "layout_11",
                     type: "INSTANCE",
-                    name: "Bottom CTA",
+                    name: "Small",
                     x: 48,
                     y: 40,
-                    width: 360,
+                    width: 104,
+                    height: 32,
+                    component: "Button",
+                    style: {
+                      radius: 10,
+                      paddingX: 14,
+                      paddingY: 8,
+                      gap: 8,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "semibold",
+                      minWidth: 104
+                    },
+                    variant: {
+                      emphasis: "primary",
+                      width: "hug",
+                      state: "enabled",
+                      size: "sm"
+                    },
+                    variables: {},
+                    text: "Small"
+                  },
+                  {
+                    id: "layout_12",
+                    type: "INSTANCE",
+                    name: "Medium",
+                    x: 48,
+                    y: 40,
+                    width: 116,
+                    height: 40,
+                    component: "Button",
+                    style: {
+                      radius: 10,
+                      paddingX: 16,
+                      paddingY: 10,
+                      gap: 8,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "semibold",
+                      minWidth: 116
+                    },
+                    variant: {
+                      emphasis: "primary",
+                      width: "hug",
+                      state: "enabled",
+                      size: "md"
+                    },
+                    variables: {},
+                    text: "Medium"
+                  },
+                  {
+                    id: "layout_13",
+                    type: "INSTANCE",
+                    name: "Large",
+                    x: 48,
+                    y: 40,
+                    width: 148,
                     height: 48,
                     component: "Button",
                     style: {
@@ -2138,51 +2080,109 @@
                     },
                     variant: {
                       emphasis: "primary",
-                      width: "full",
+                      width: "hug",
                       state: "enabled",
                       size: "lg"
                     },
                     variables: {},
-                    text: "Bottom CTA"
+                    text: "Large"
                   }
                 ]
               },
               {
-                id: "layout_20",
+                id: "layout_14",
                 type: "FRAME",
-                name: "preview-row-3",
+                name: "preview-row-2",
                 x: 48,
                 y: 40,
                 width: 1320,
                 height: 100,
                 children: [
                   {
-                    id: "layout_21",
+                    id: "layout_15",
                     type: "INSTANCE",
-                    name: "Danger CTA",
+                    name: "Pressed",
                     x: 48,
                     y: 40,
-                    width: 360,
-                    height: 48,
+                    width: 116,
+                    height: 40,
                     component: "Button",
                     style: {
-                      radius: 12,
-                      paddingX: 18,
-                      paddingY: 13,
+                      radius: 10,
+                      paddingX: 16,
+                      paddingY: 10,
                       gap: 8,
-                      fontSize: 16,
-                      lineHeight: 22,
+                      fontSize: 14,
+                      lineHeight: 20,
                       fontWeight: "semibold",
-                      minWidth: 148
+                      minWidth: 116
                     },
                     variant: {
-                      emphasis: "destructive",
-                      width: "full",
-                      state: "enabled",
-                      size: "lg"
+                      emphasis: "primary",
+                      width: "hug",
+                      state: "pressed",
+                      size: "md"
                     },
                     variables: {},
-                    text: "Danger CTA"
+                    text: "Pressed"
+                  },
+                  {
+                    id: "layout_16",
+                    type: "INSTANCE",
+                    name: "Disabled",
+                    x: 48,
+                    y: 40,
+                    width: 116,
+                    height: 40,
+                    component: "Button",
+                    style: {
+                      radius: 10,
+                      paddingX: 16,
+                      paddingY: 10,
+                      gap: 8,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "semibold",
+                      minWidth: 116
+                    },
+                    variant: {
+                      emphasis: "primary",
+                      width: "hug",
+                      state: "disabled",
+                      size: "md",
+                      disabled: true
+                    },
+                    variables: {},
+                    text: "Disabled"
+                  },
+                  {
+                    id: "layout_17",
+                    type: "INSTANCE",
+                    name: "Loading",
+                    x: 48,
+                    y: 40,
+                    width: 116,
+                    height: 40,
+                    component: "Button",
+                    style: {
+                      radius: 10,
+                      paddingX: 16,
+                      paddingY: 10,
+                      gap: 8,
+                      fontSize: 14,
+                      lineHeight: 20,
+                      fontWeight: "semibold",
+                      minWidth: 116
+                    },
+                    variant: {
+                      emphasis: "primary",
+                      width: "hug",
+                      state: "loading",
+                      size: "md",
+                      loading: true
+                    },
+                    variables: {},
+                    text: "Loading"
                   }
                 ]
               }
@@ -2211,7 +2211,7 @@
               {
                 id: "layout_4",
                 type: "INSTANCE",
-                name: "Primary",
+                name: "Primary L4",
                 x: 48,
                 y: 40,
                 width: 116,
@@ -2234,12 +2234,12 @@
                   size: "md"
                 },
                 variables: {},
-                text: "Primary"
+                text: "Primary L4"
               },
               {
                 id: "layout_5",
                 type: "INSTANCE",
-                name: "Secondary",
+                name: "Primary L3",
                 x: 48,
                 y: 40,
                 width: 116,
@@ -2262,12 +2262,40 @@
                   size: "md"
                 },
                 variables: {},
-                text: "Secondary"
+                text: "Primary L3"
               },
               {
                 id: "layout_6",
                 type: "INSTANCE",
-                name: "Tertiary",
+                name: "Assistive L2",
+                x: 48,
+                y: 40,
+                width: 116,
+                height: 40,
+                component: "Button",
+                style: {
+                  radius: 10,
+                  paddingX: 16,
+                  paddingY: 10,
+                  gap: 8,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "semibold",
+                  minWidth: 116
+                },
+                variant: {
+                  emphasis: "secondary",
+                  width: "hug",
+                  state: "enabled",
+                  size: "md"
+                },
+                variables: {},
+                text: "Assistive L2"
+              },
+              {
+                id: "layout_7",
+                type: "INSTANCE",
+                name: "Assistive L1",
                 x: 48,
                 y: 40,
                 width: 116,
@@ -2290,68 +2318,40 @@
                   size: "md"
                 },
                 variables: {},
-                text: "Tertiary"
-              },
-              {
-                id: "layout_7",
-                type: "INSTANCE",
-                name: "Destructive",
-                x: 48,
-                y: 40,
-                width: 116,
-                height: 40,
-                component: "Button",
-                style: {
-                  radius: 10,
-                  paddingX: 16,
-                  paddingY: 10,
-                  gap: 8,
-                  fontSize: 14,
-                  lineHeight: 20,
-                  fontWeight: "semibold",
-                  minWidth: 116
-                },
-                variant: {
-                  emphasis: "destructive",
-                  width: "hug",
-                  state: "enabled",
-                  size: "md"
-                },
-                variables: {},
-                text: "Destructive"
+                text: "Assistive L1"
               },
               {
                 id: "layout_8",
                 type: "INSTANCE",
-                name: "Small",
+                name: "Label Only",
                 x: 48,
                 y: 40,
-                width: 104,
-                height: 32,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
                   radius: 10,
-                  paddingX: 14,
-                  paddingY: 8,
+                  paddingX: 16,
+                  paddingY: 10,
                   gap: 8,
                   fontSize: 14,
                   lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 104
+                  minWidth: 116
                 },
                 variant: {
                   emphasis: "primary",
                   width: "hug",
                   state: "enabled",
-                  size: "sm"
+                  size: "md"
                 },
                 variables: {},
-                text: "Small"
+                text: "Label Only"
               },
               {
                 id: "layout_9",
                 type: "INSTANCE",
-                name: "Medium",
+                name: "Icon + Label",
                 x: 48,
                 y: 40,
                 width: 116,
@@ -2368,225 +2368,16 @@
                   minWidth: 116
                 },
                 variant: {
-                  emphasis: "primary",
+                  emphasis: "secondary",
                   width: "hug",
                   state: "enabled",
                   size: "md"
                 },
                 variables: {},
-                text: "Medium"
+                text: "Icon + Label"
               },
               {
                 id: "layout_10",
-                type: "INSTANCE",
-                name: "Large",
-                x: 48,
-                y: 40,
-                width: 148,
-                height: 48,
-                component: "Button",
-                style: {
-                  radius: 12,
-                  paddingX: 18,
-                  paddingY: 13,
-                  gap: 8,
-                  fontSize: 16,
-                  lineHeight: 22,
-                  fontWeight: "semibold",
-                  minWidth: 148
-                },
-                variant: {
-                  emphasis: "primary",
-                  width: "hug",
-                  state: "enabled",
-                  size: "lg"
-                },
-                variables: {},
-                text: "Large"
-              },
-              {
-                id: "layout_11",
-                type: "INSTANCE",
-                name: "Pressed",
-                x: 48,
-                y: 40,
-                width: 116,
-                height: 40,
-                component: "Button",
-                style: {
-                  radius: 10,
-                  paddingX: 16,
-                  paddingY: 10,
-                  gap: 8,
-                  fontSize: 14,
-                  lineHeight: 20,
-                  fontWeight: "semibold",
-                  minWidth: 116
-                },
-                variant: {
-                  emphasis: "primary",
-                  width: "hug",
-                  state: "pressed",
-                  size: "md"
-                },
-                variables: {},
-                text: "Pressed"
-              },
-              {
-                id: "layout_12",
-                type: "INSTANCE",
-                name: "Disabled",
-                x: 48,
-                y: 40,
-                width: 116,
-                height: 40,
-                component: "Button",
-                style: {
-                  radius: 10,
-                  paddingX: 16,
-                  paddingY: 10,
-                  gap: 8,
-                  fontSize: 14,
-                  lineHeight: 20,
-                  fontWeight: "semibold",
-                  minWidth: 116
-                },
-                variant: {
-                  emphasis: "primary",
-                  width: "hug",
-                  state: "disabled",
-                  size: "md",
-                  disabled: true
-                },
-                variables: {},
-                text: "Disabled"
-              }
-            ]
-          },
-          {
-            id: "layout_13",
-            type: "FRAME",
-            name: "preview-row-2",
-            x: 48,
-            y: 40,
-            width: 1320,
-            height: 100,
-            children: [
-              {
-                id: "layout_14",
-                type: "INSTANCE",
-                name: "Loading",
-                x: 48,
-                y: 40,
-                width: 116,
-                height: 40,
-                component: "Button",
-                style: {
-                  radius: 10,
-                  paddingX: 16,
-                  paddingY: 10,
-                  gap: 8,
-                  fontSize: 14,
-                  lineHeight: 20,
-                  fontWeight: "semibold",
-                  minWidth: 116
-                },
-                variant: {
-                  emphasis: "primary",
-                  width: "hug",
-                  state: "loading",
-                  size: "md",
-                  loading: true
-                },
-                variables: {},
-                text: "Loading"
-              },
-              {
-                id: "layout_15",
-                type: "INSTANCE",
-                name: "Hug Width",
-                x: 48,
-                y: 40,
-                width: 116,
-                height: 40,
-                component: "Button",
-                style: {
-                  radius: 10,
-                  paddingX: 16,
-                  paddingY: 10,
-                  gap: 8,
-                  fontSize: 14,
-                  lineHeight: 20,
-                  fontWeight: "semibold",
-                  minWidth: 116
-                },
-                variant: {
-                  emphasis: "secondary",
-                  width: "hug",
-                  state: "enabled",
-                  size: "md"
-                },
-                variables: {},
-                text: "Hug Width"
-              },
-              {
-                id: "layout_16",
-                type: "INSTANCE",
-                name: "Full Width",
-                x: 48,
-                y: 40,
-                width: 360,
-                height: 48,
-                component: "Button",
-                style: {
-                  radius: 12,
-                  paddingX: 18,
-                  paddingY: 13,
-                  gap: 8,
-                  fontSize: 16,
-                  lineHeight: 22,
-                  fontWeight: "semibold",
-                  minWidth: 148
-                },
-                variant: {
-                  emphasis: "primary",
-                  width: "full",
-                  state: "enabled",
-                  size: "lg"
-                },
-                variables: {},
-                text: "Full Width"
-              },
-              {
-                id: "layout_17",
-                type: "INSTANCE",
-                name: "Leading Icon",
-                x: 48,
-                y: 40,
-                width: 116,
-                height: 40,
-                component: "Button",
-                style: {
-                  radius: 10,
-                  paddingX: 16,
-                  paddingY: 10,
-                  gap: 8,
-                  fontSize: 14,
-                  lineHeight: 20,
-                  fontWeight: "semibold",
-                  minWidth: 116
-                },
-                variant: {
-                  emphasis: "secondary",
-                  width: "hug",
-                  state: "enabled",
-                  size: "md"
-                },
-                variables: {},
-                text: "Leading Icon"
-              },
-              {
-                id: "layout_18",
                 type: "INSTANCE",
                 name: "Icon Only",
                 x: 48,
@@ -2614,12 +2405,68 @@
                 text: "Icon Only"
               },
               {
-                id: "layout_19",
+                id: "layout_11",
                 type: "INSTANCE",
-                name: "Bottom CTA",
+                name: "Small",
                 x: 48,
                 y: 40,
-                width: 360,
+                width: 104,
+                height: 32,
+                component: "Button",
+                style: {
+                  radius: 10,
+                  paddingX: 14,
+                  paddingY: 8,
+                  gap: 8,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "semibold",
+                  minWidth: 104
+                },
+                variant: {
+                  emphasis: "primary",
+                  width: "hug",
+                  state: "enabled",
+                  size: "sm"
+                },
+                variables: {},
+                text: "Small"
+              },
+              {
+                id: "layout_12",
+                type: "INSTANCE",
+                name: "Medium",
+                x: 48,
+                y: 40,
+                width: 116,
+                height: 40,
+                component: "Button",
+                style: {
+                  radius: 10,
+                  paddingX: 16,
+                  paddingY: 10,
+                  gap: 8,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "semibold",
+                  minWidth: 116
+                },
+                variant: {
+                  emphasis: "primary",
+                  width: "hug",
+                  state: "enabled",
+                  size: "md"
+                },
+                variables: {},
+                text: "Medium"
+              },
+              {
+                id: "layout_13",
+                type: "INSTANCE",
+                name: "Large",
+                x: 48,
+                y: 40,
+                width: 148,
                 height: 48,
                 component: "Button",
                 style: {
@@ -2634,51 +2481,109 @@
                 },
                 variant: {
                   emphasis: "primary",
-                  width: "full",
+                  width: "hug",
                   state: "enabled",
                   size: "lg"
                 },
                 variables: {},
-                text: "Bottom CTA"
+                text: "Large"
               }
             ]
           },
           {
-            id: "layout_20",
+            id: "layout_14",
             type: "FRAME",
-            name: "preview-row-3",
+            name: "preview-row-2",
             x: 48,
             y: 40,
             width: 1320,
             height: 100,
             children: [
               {
-                id: "layout_21",
+                id: "layout_15",
                 type: "INSTANCE",
-                name: "Danger CTA",
+                name: "Pressed",
                 x: 48,
                 y: 40,
-                width: 360,
-                height: 48,
+                width: 116,
+                height: 40,
                 component: "Button",
                 style: {
-                  radius: 12,
-                  paddingX: 18,
-                  paddingY: 13,
+                  radius: 10,
+                  paddingX: 16,
+                  paddingY: 10,
                   gap: 8,
-                  fontSize: 16,
-                  lineHeight: 22,
+                  fontSize: 14,
+                  lineHeight: 20,
                   fontWeight: "semibold",
-                  minWidth: 148
+                  minWidth: 116
                 },
                 variant: {
-                  emphasis: "destructive",
-                  width: "full",
-                  state: "enabled",
-                  size: "lg"
+                  emphasis: "primary",
+                  width: "hug",
+                  state: "pressed",
+                  size: "md"
                 },
                 variables: {},
-                text: "Danger CTA"
+                text: "Pressed"
+              },
+              {
+                id: "layout_16",
+                type: "INSTANCE",
+                name: "Disabled",
+                x: 48,
+                y: 40,
+                width: 116,
+                height: 40,
+                component: "Button",
+                style: {
+                  radius: 10,
+                  paddingX: 16,
+                  paddingY: 10,
+                  gap: 8,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "semibold",
+                  minWidth: 116
+                },
+                variant: {
+                  emphasis: "primary",
+                  width: "hug",
+                  state: "disabled",
+                  size: "md",
+                  disabled: true
+                },
+                variables: {},
+                text: "Disabled"
+              },
+              {
+                id: "layout_17",
+                type: "INSTANCE",
+                name: "Loading",
+                x: 48,
+                y: 40,
+                width: 116,
+                height: 40,
+                component: "Button",
+                style: {
+                  radius: 10,
+                  paddingX: 16,
+                  paddingY: 10,
+                  gap: 8,
+                  fontSize: 14,
+                  lineHeight: 20,
+                  fontWeight: "semibold",
+                  minWidth: 116
+                },
+                variant: {
+                  emphasis: "primary",
+                  width: "hug",
+                  state: "loading",
+                  size: "md",
+                  loading: true
+                },
+                variables: {},
+                text: "Loading"
               }
             ]
           }
@@ -2696,7 +2601,7 @@
           {
             id: "layout_4",
             type: "INSTANCE",
-            name: "Primary",
+            name: "Primary L4",
             x: 48,
             y: 40,
             width: 116,
@@ -2719,12 +2624,12 @@
               size: "md"
             },
             variables: {},
-            text: "Primary"
+            text: "Primary L4"
           },
           {
             id: "layout_5",
             type: "INSTANCE",
-            name: "Secondary",
+            name: "Primary L3",
             x: 48,
             y: 40,
             width: 116,
@@ -2747,12 +2652,40 @@
               size: "md"
             },
             variables: {},
-            text: "Secondary"
+            text: "Primary L3"
           },
           {
             id: "layout_6",
             type: "INSTANCE",
-            name: "Tertiary",
+            name: "Assistive L2",
+            x: 48,
+            y: 40,
+            width: 116,
+            height: 40,
+            component: "Button",
+            style: {
+              radius: 10,
+              paddingX: 16,
+              paddingY: 10,
+              gap: 8,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "semibold",
+              minWidth: 116
+            },
+            variant: {
+              emphasis: "secondary",
+              width: "hug",
+              state: "enabled",
+              size: "md"
+            },
+            variables: {},
+            text: "Assistive L2"
+          },
+          {
+            id: "layout_7",
+            type: "INSTANCE",
+            name: "Assistive L1",
             x: 48,
             y: 40,
             width: 116,
@@ -2775,12 +2708,12 @@
               size: "md"
             },
             variables: {},
-            text: "Tertiary"
+            text: "Assistive L1"
           },
           {
-            id: "layout_7",
+            id: "layout_8",
             type: "INSTANCE",
-            name: "Destructive",
+            name: "Label Only",
             x: 48,
             y: 40,
             width: 116,
@@ -2797,16 +2730,72 @@
               minWidth: 116
             },
             variant: {
-              emphasis: "destructive",
+              emphasis: "primary",
               width: "hug",
               state: "enabled",
               size: "md"
             },
             variables: {},
-            text: "Destructive"
+            text: "Label Only"
           },
           {
-            id: "layout_8",
+            id: "layout_9",
+            type: "INSTANCE",
+            name: "Icon + Label",
+            x: 48,
+            y: 40,
+            width: 116,
+            height: 40,
+            component: "Button",
+            style: {
+              radius: 10,
+              paddingX: 16,
+              paddingY: 10,
+              gap: 8,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "semibold",
+              minWidth: 116
+            },
+            variant: {
+              emphasis: "secondary",
+              width: "hug",
+              state: "enabled",
+              size: "md"
+            },
+            variables: {},
+            text: "Icon + Label"
+          },
+          {
+            id: "layout_10",
+            type: "INSTANCE",
+            name: "Icon Only",
+            x: 48,
+            y: 40,
+            width: 40,
+            height: 40,
+            component: "Button",
+            style: {
+              radius: 10,
+              paddingX: 16,
+              paddingY: 10,
+              gap: 8,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "semibold",
+              minWidth: 116
+            },
+            variant: {
+              emphasis: "tertiary",
+              width: "hug",
+              state: "enabled",
+              size: "md"
+            },
+            variables: {},
+            text: "Icon Only"
+          },
+          {
+            id: "layout_11",
             type: "INSTANCE",
             name: "Small",
             x: 48,
@@ -2834,7 +2823,7 @@
             text: "Small"
           },
           {
-            id: "layout_9",
+            id: "layout_12",
             type: "INSTANCE",
             name: "Medium",
             x: 48,
@@ -2862,7 +2851,7 @@
             text: "Medium"
           },
           {
-            id: "layout_10",
+            id: "layout_13",
             type: "INSTANCE",
             name: "Large",
             x: 48,
@@ -2888,70 +2877,13 @@
             },
             variables: {},
             text: "Large"
-          },
-          {
-            id: "layout_11",
-            type: "INSTANCE",
-            name: "Pressed",
-            x: 48,
-            y: 40,
-            width: 116,
-            height: 40,
-            component: "Button",
-            style: {
-              radius: 10,
-              paddingX: 16,
-              paddingY: 10,
-              gap: 8,
-              fontSize: 14,
-              lineHeight: 20,
-              fontWeight: "semibold",
-              minWidth: 116
-            },
-            variant: {
-              emphasis: "primary",
-              width: "hug",
-              state: "pressed",
-              size: "md"
-            },
-            variables: {},
-            text: "Pressed"
-          },
-          {
-            id: "layout_12",
-            type: "INSTANCE",
-            name: "Disabled",
-            x: 48,
-            y: 40,
-            width: 116,
-            height: 40,
-            component: "Button",
-            style: {
-              radius: 10,
-              paddingX: 16,
-              paddingY: 10,
-              gap: 8,
-              fontSize: 14,
-              lineHeight: 20,
-              fontWeight: "semibold",
-              minWidth: 116
-            },
-            variant: {
-              emphasis: "primary",
-              width: "hug",
-              state: "disabled",
-              size: "md",
-              disabled: true
-            },
-            variables: {},
-            text: "Disabled"
           }
         ]
       },
       {
         id: "layout_4",
         type: "INSTANCE",
-        name: "Primary",
+        name: "Primary L4",
         x: 48,
         y: 40,
         width: 116,
@@ -2974,12 +2906,12 @@
           size: "md"
         },
         variables: {},
-        text: "Primary"
+        text: "Primary L4"
       },
       {
         id: "layout_5",
         type: "INSTANCE",
-        name: "Secondary",
+        name: "Primary L3",
         x: 48,
         y: 40,
         width: 116,
@@ -3002,12 +2934,40 @@
           size: "md"
         },
         variables: {},
-        text: "Secondary"
+        text: "Primary L3"
       },
       {
         id: "layout_6",
         type: "INSTANCE",
-        name: "Tertiary",
+        name: "Assistive L2",
+        x: 48,
+        y: 40,
+        width: 116,
+        height: 40,
+        component: "Button",
+        style: {
+          radius: 10,
+          paddingX: 16,
+          paddingY: 10,
+          gap: 8,
+          fontSize: 14,
+          lineHeight: 20,
+          fontWeight: "semibold",
+          minWidth: 116
+        },
+        variant: {
+          emphasis: "secondary",
+          width: "hug",
+          state: "enabled",
+          size: "md"
+        },
+        variables: {},
+        text: "Assistive L2"
+      },
+      {
+        id: "layout_7",
+        type: "INSTANCE",
+        name: "Assistive L1",
         x: 48,
         y: 40,
         width: 116,
@@ -3030,12 +2990,12 @@
           size: "md"
         },
         variables: {},
-        text: "Tertiary"
+        text: "Assistive L1"
       },
       {
-        id: "layout_7",
+        id: "layout_8",
         type: "INSTANCE",
-        name: "Destructive",
+        name: "Label Only",
         x: 48,
         y: 40,
         width: 116,
@@ -3052,16 +3012,72 @@
           minWidth: 116
         },
         variant: {
-          emphasis: "destructive",
+          emphasis: "primary",
           width: "hug",
           state: "enabled",
           size: "md"
         },
         variables: {},
-        text: "Destructive"
+        text: "Label Only"
       },
       {
-        id: "layout_8",
+        id: "layout_9",
+        type: "INSTANCE",
+        name: "Icon + Label",
+        x: 48,
+        y: 40,
+        width: 116,
+        height: 40,
+        component: "Button",
+        style: {
+          radius: 10,
+          paddingX: 16,
+          paddingY: 10,
+          gap: 8,
+          fontSize: 14,
+          lineHeight: 20,
+          fontWeight: "semibold",
+          minWidth: 116
+        },
+        variant: {
+          emphasis: "secondary",
+          width: "hug",
+          state: "enabled",
+          size: "md"
+        },
+        variables: {},
+        text: "Icon + Label"
+      },
+      {
+        id: "layout_10",
+        type: "INSTANCE",
+        name: "Icon Only",
+        x: 48,
+        y: 40,
+        width: 40,
+        height: 40,
+        component: "Button",
+        style: {
+          radius: 10,
+          paddingX: 16,
+          paddingY: 10,
+          gap: 8,
+          fontSize: 14,
+          lineHeight: 20,
+          fontWeight: "semibold",
+          minWidth: 116
+        },
+        variant: {
+          emphasis: "tertiary",
+          width: "hug",
+          state: "enabled",
+          size: "md"
+        },
+        variables: {},
+        text: "Icon Only"
+      },
+      {
+        id: "layout_11",
         type: "INSTANCE",
         name: "Small",
         x: 48,
@@ -3089,7 +3105,7 @@
         text: "Small"
       },
       {
-        id: "layout_9",
+        id: "layout_12",
         type: "INSTANCE",
         name: "Medium",
         x: 48,
@@ -3117,7 +3133,7 @@
         text: "Medium"
       },
       {
-        id: "layout_10",
+        id: "layout_13",
         type: "INSTANCE",
         name: "Large",
         x: 48,
@@ -3145,7 +3161,104 @@
         text: "Large"
       },
       {
-        id: "layout_11",
+        id: "layout_14",
+        type: "FRAME",
+        name: "preview-row-2",
+        x: 48,
+        y: 40,
+        width: 1320,
+        height: 100,
+        children: [
+          {
+            id: "layout_15",
+            type: "INSTANCE",
+            name: "Pressed",
+            x: 48,
+            y: 40,
+            width: 116,
+            height: 40,
+            component: "Button",
+            style: {
+              radius: 10,
+              paddingX: 16,
+              paddingY: 10,
+              gap: 8,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "semibold",
+              minWidth: 116
+            },
+            variant: {
+              emphasis: "primary",
+              width: "hug",
+              state: "pressed",
+              size: "md"
+            },
+            variables: {},
+            text: "Pressed"
+          },
+          {
+            id: "layout_16",
+            type: "INSTANCE",
+            name: "Disabled",
+            x: 48,
+            y: 40,
+            width: 116,
+            height: 40,
+            component: "Button",
+            style: {
+              radius: 10,
+              paddingX: 16,
+              paddingY: 10,
+              gap: 8,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "semibold",
+              minWidth: 116
+            },
+            variant: {
+              emphasis: "primary",
+              width: "hug",
+              state: "disabled",
+              size: "md",
+              disabled: true
+            },
+            variables: {},
+            text: "Disabled"
+          },
+          {
+            id: "layout_17",
+            type: "INSTANCE",
+            name: "Loading",
+            x: 48,
+            y: 40,
+            width: 116,
+            height: 40,
+            component: "Button",
+            style: {
+              radius: 10,
+              paddingX: 16,
+              paddingY: 10,
+              gap: 8,
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: "semibold",
+              minWidth: 116
+            },
+            variant: {
+              emphasis: "primary",
+              width: "hug",
+              state: "loading",
+              size: "md",
+              loading: true
+            },
+            variables: {},
+            text: "Loading"
+          }
+        ]
+      },
+      {
+        id: "layout_15",
         type: "INSTANCE",
         name: "Pressed",
         x: 48,
@@ -3173,7 +3286,7 @@
         text: "Pressed"
       },
       {
-        id: "layout_12",
+        id: "layout_16",
         type: "INSTANCE",
         name: "Disabled",
         x: 48,
@@ -3202,187 +3315,7 @@
         text: "Disabled"
       },
       {
-        id: "layout_13",
-        type: "FRAME",
-        name: "preview-row-2",
-        x: 48,
-        y: 40,
-        width: 1320,
-        height: 100,
-        children: [
-          {
-            id: "layout_14",
-            type: "INSTANCE",
-            name: "Loading",
-            x: 48,
-            y: 40,
-            width: 116,
-            height: 40,
-            component: "Button",
-            style: {
-              radius: 10,
-              paddingX: 16,
-              paddingY: 10,
-              gap: 8,
-              fontSize: 14,
-              lineHeight: 20,
-              fontWeight: "semibold",
-              minWidth: 116
-            },
-            variant: {
-              emphasis: "primary",
-              width: "hug",
-              state: "loading",
-              size: "md",
-              loading: true
-            },
-            variables: {},
-            text: "Loading"
-          },
-          {
-            id: "layout_15",
-            type: "INSTANCE",
-            name: "Hug Width",
-            x: 48,
-            y: 40,
-            width: 116,
-            height: 40,
-            component: "Button",
-            style: {
-              radius: 10,
-              paddingX: 16,
-              paddingY: 10,
-              gap: 8,
-              fontSize: 14,
-              lineHeight: 20,
-              fontWeight: "semibold",
-              minWidth: 116
-            },
-            variant: {
-              emphasis: "secondary",
-              width: "hug",
-              state: "enabled",
-              size: "md"
-            },
-            variables: {},
-            text: "Hug Width"
-          },
-          {
-            id: "layout_16",
-            type: "INSTANCE",
-            name: "Full Width",
-            x: 48,
-            y: 40,
-            width: 360,
-            height: 48,
-            component: "Button",
-            style: {
-              radius: 12,
-              paddingX: 18,
-              paddingY: 13,
-              gap: 8,
-              fontSize: 16,
-              lineHeight: 22,
-              fontWeight: "semibold",
-              minWidth: 148
-            },
-            variant: {
-              emphasis: "primary",
-              width: "full",
-              state: "enabled",
-              size: "lg"
-            },
-            variables: {},
-            text: "Full Width"
-          },
-          {
-            id: "layout_17",
-            type: "INSTANCE",
-            name: "Leading Icon",
-            x: 48,
-            y: 40,
-            width: 116,
-            height: 40,
-            component: "Button",
-            style: {
-              radius: 10,
-              paddingX: 16,
-              paddingY: 10,
-              gap: 8,
-              fontSize: 14,
-              lineHeight: 20,
-              fontWeight: "semibold",
-              minWidth: 116
-            },
-            variant: {
-              emphasis: "secondary",
-              width: "hug",
-              state: "enabled",
-              size: "md"
-            },
-            variables: {},
-            text: "Leading Icon"
-          },
-          {
-            id: "layout_18",
-            type: "INSTANCE",
-            name: "Icon Only",
-            x: 48,
-            y: 40,
-            width: 40,
-            height: 40,
-            component: "Button",
-            style: {
-              radius: 10,
-              paddingX: 16,
-              paddingY: 10,
-              gap: 8,
-              fontSize: 14,
-              lineHeight: 20,
-              fontWeight: "semibold",
-              minWidth: 116
-            },
-            variant: {
-              emphasis: "tertiary",
-              width: "hug",
-              state: "enabled",
-              size: "md"
-            },
-            variables: {},
-            text: "Icon Only"
-          },
-          {
-            id: "layout_19",
-            type: "INSTANCE",
-            name: "Bottom CTA",
-            x: 48,
-            y: 40,
-            width: 360,
-            height: 48,
-            component: "Button",
-            style: {
-              radius: 12,
-              paddingX: 18,
-              paddingY: 13,
-              gap: 8,
-              fontSize: 16,
-              lineHeight: 22,
-              fontWeight: "semibold",
-              minWidth: 148
-            },
-            variant: {
-              emphasis: "primary",
-              width: "full",
-              state: "enabled",
-              size: "lg"
-            },
-            variables: {},
-            text: "Bottom CTA"
-          }
-        ]
-      },
-      {
-        id: "layout_14",
+        id: "layout_17",
         type: "INSTANCE",
         name: "Loading",
         x: 48,
@@ -3409,213 +3342,6 @@
         },
         variables: {},
         text: "Loading"
-      },
-      {
-        id: "layout_15",
-        type: "INSTANCE",
-        name: "Hug Width",
-        x: 48,
-        y: 40,
-        width: 116,
-        height: 40,
-        component: "Button",
-        style: {
-          radius: 10,
-          paddingX: 16,
-          paddingY: 10,
-          gap: 8,
-          fontSize: 14,
-          lineHeight: 20,
-          fontWeight: "semibold",
-          minWidth: 116
-        },
-        variant: {
-          emphasis: "secondary",
-          width: "hug",
-          state: "enabled",
-          size: "md"
-        },
-        variables: {},
-        text: "Hug Width"
-      },
-      {
-        id: "layout_16",
-        type: "INSTANCE",
-        name: "Full Width",
-        x: 48,
-        y: 40,
-        width: 360,
-        height: 48,
-        component: "Button",
-        style: {
-          radius: 12,
-          paddingX: 18,
-          paddingY: 13,
-          gap: 8,
-          fontSize: 16,
-          lineHeight: 22,
-          fontWeight: "semibold",
-          minWidth: 148
-        },
-        variant: {
-          emphasis: "primary",
-          width: "full",
-          state: "enabled",
-          size: "lg"
-        },
-        variables: {},
-        text: "Full Width"
-      },
-      {
-        id: "layout_17",
-        type: "INSTANCE",
-        name: "Leading Icon",
-        x: 48,
-        y: 40,
-        width: 116,
-        height: 40,
-        component: "Button",
-        style: {
-          radius: 10,
-          paddingX: 16,
-          paddingY: 10,
-          gap: 8,
-          fontSize: 14,
-          lineHeight: 20,
-          fontWeight: "semibold",
-          minWidth: 116
-        },
-        variant: {
-          emphasis: "secondary",
-          width: "hug",
-          state: "enabled",
-          size: "md"
-        },
-        variables: {},
-        text: "Leading Icon"
-      },
-      {
-        id: "layout_18",
-        type: "INSTANCE",
-        name: "Icon Only",
-        x: 48,
-        y: 40,
-        width: 40,
-        height: 40,
-        component: "Button",
-        style: {
-          radius: 10,
-          paddingX: 16,
-          paddingY: 10,
-          gap: 8,
-          fontSize: 14,
-          lineHeight: 20,
-          fontWeight: "semibold",
-          minWidth: 116
-        },
-        variant: {
-          emphasis: "tertiary",
-          width: "hug",
-          state: "enabled",
-          size: "md"
-        },
-        variables: {},
-        text: "Icon Only"
-      },
-      {
-        id: "layout_19",
-        type: "INSTANCE",
-        name: "Bottom CTA",
-        x: 48,
-        y: 40,
-        width: 360,
-        height: 48,
-        component: "Button",
-        style: {
-          radius: 12,
-          paddingX: 18,
-          paddingY: 13,
-          gap: 8,
-          fontSize: 16,
-          lineHeight: 22,
-          fontWeight: "semibold",
-          minWidth: 148
-        },
-        variant: {
-          emphasis: "primary",
-          width: "full",
-          state: "enabled",
-          size: "lg"
-        },
-        variables: {},
-        text: "Bottom CTA"
-      },
-      {
-        id: "layout_20",
-        type: "FRAME",
-        name: "preview-row-3",
-        x: 48,
-        y: 40,
-        width: 1320,
-        height: 100,
-        children: [
-          {
-            id: "layout_21",
-            type: "INSTANCE",
-            name: "Danger CTA",
-            x: 48,
-            y: 40,
-            width: 360,
-            height: 48,
-            component: "Button",
-            style: {
-              radius: 12,
-              paddingX: 18,
-              paddingY: 13,
-              gap: 8,
-              fontSize: 16,
-              lineHeight: 22,
-              fontWeight: "semibold",
-              minWidth: 148
-            },
-            variant: {
-              emphasis: "destructive",
-              width: "full",
-              state: "enabled",
-              size: "lg"
-            },
-            variables: {},
-            text: "Danger CTA"
-          }
-        ]
-      },
-      {
-        id: "layout_21",
-        type: "INSTANCE",
-        name: "Danger CTA",
-        x: 48,
-        y: 40,
-        width: 360,
-        height: 48,
-        component: "Button",
-        style: {
-          radius: 12,
-          paddingX: 18,
-          paddingY: 13,
-          gap: 8,
-          fontSize: 16,
-          lineHeight: 22,
-          fontWeight: "semibold",
-          minWidth: 148
-        },
-        variant: {
-          emphasis: "destructive",
-          width: "full",
-          state: "enabled",
-          size: "lg"
-        },
-        variables: {},
-        text: "Danger CTA"
       }
     ],
     frames: [
@@ -3632,18 +3358,14 @@
         name: "preview-row-1"
       },
       {
-        id: "layout_13",
+        id: "layout_14",
         name: "preview-row-2"
-      },
-      {
-        id: "layout_20",
-        name: "preview-row-3"
       }
     ],
     components: [
       {
         id: "layout_4",
-        name: "Primary",
+        name: "Primary L4",
         component: "Button",
         variant: {
           emphasis: "primary",
@@ -3654,7 +3376,7 @@
       },
       {
         id: "layout_5",
-        name: "Secondary",
+        name: "Primary L3",
         component: "Button",
         variant: {
           emphasis: "secondary",
@@ -3665,7 +3387,18 @@
       },
       {
         id: "layout_6",
-        name: "Tertiary",
+        name: "Assistive L2",
+        component: "Button",
+        variant: {
+          emphasis: "secondary",
+          width: "hug",
+          state: "enabled",
+          size: "md"
+        }
+      },
+      {
+        id: "layout_7",
+        name: "Assistive L1",
         component: "Button",
         variant: {
           emphasis: "tertiary",
@@ -3675,18 +3408,40 @@
         }
       },
       {
-        id: "layout_7",
-        name: "Destructive",
+        id: "layout_8",
+        name: "Label Only",
         component: "Button",
         variant: {
-          emphasis: "destructive",
+          emphasis: "primary",
           width: "hug",
           state: "enabled",
           size: "md"
         }
       },
       {
-        id: "layout_8",
+        id: "layout_9",
+        name: "Icon + Label",
+        component: "Button",
+        variant: {
+          emphasis: "secondary",
+          width: "hug",
+          state: "enabled",
+          size: "md"
+        }
+      },
+      {
+        id: "layout_10",
+        name: "Icon Only",
+        component: "Button",
+        variant: {
+          emphasis: "tertiary",
+          width: "hug",
+          state: "enabled",
+          size: "md"
+        }
+      },
+      {
+        id: "layout_11",
         name: "Small",
         component: "Button",
         variant: {
@@ -3697,7 +3452,7 @@
         }
       },
       {
-        id: "layout_9",
+        id: "layout_12",
         name: "Medium",
         component: "Button",
         variant: {
@@ -3708,7 +3463,7 @@
         }
       },
       {
-        id: "layout_10",
+        id: "layout_13",
         name: "Large",
         component: "Button",
         variant: {
@@ -3719,7 +3474,7 @@
         }
       },
       {
-        id: "layout_11",
+        id: "layout_15",
         name: "Pressed",
         component: "Button",
         variant: {
@@ -3730,7 +3485,7 @@
         }
       },
       {
-        id: "layout_12",
+        id: "layout_16",
         name: "Disabled",
         component: "Button",
         variant: {
@@ -3742,7 +3497,7 @@
         }
       },
       {
-        id: "layout_14",
+        id: "layout_17",
         name: "Loading",
         component: "Button",
         variant: {
@@ -3751,72 +3506,6 @@
           state: "loading",
           size: "md",
           loading: true
-        }
-      },
-      {
-        id: "layout_15",
-        name: "Hug Width",
-        component: "Button",
-        variant: {
-          emphasis: "secondary",
-          width: "hug",
-          state: "enabled",
-          size: "md"
-        }
-      },
-      {
-        id: "layout_16",
-        name: "Full Width",
-        component: "Button",
-        variant: {
-          emphasis: "primary",
-          width: "full",
-          state: "enabled",
-          size: "lg"
-        }
-      },
-      {
-        id: "layout_17",
-        name: "Leading Icon",
-        component: "Button",
-        variant: {
-          emphasis: "secondary",
-          width: "hug",
-          state: "enabled",
-          size: "md"
-        }
-      },
-      {
-        id: "layout_18",
-        name: "Icon Only",
-        component: "Button",
-        variant: {
-          emphasis: "tertiary",
-          width: "hug",
-          state: "enabled",
-          size: "md"
-        }
-      },
-      {
-        id: "layout_19",
-        name: "Bottom CTA",
-        component: "Button",
-        variant: {
-          emphasis: "primary",
-          width: "full",
-          state: "enabled",
-          size: "lg"
-        }
-      },
-      {
-        id: "layout_21",
-        name: "Danger CTA",
-        component: "Button",
-        variant: {
-          emphasis: "destructive",
-          width: "full",
-          state: "enabled",
-          size: "lg"
         }
       }
     ],
@@ -3855,13 +3544,13 @@
       "layout_7.fontWeight": "semibold",
       "layout_7.minWidth": "116",
       "layout_8.radius": "10",
-      "layout_8.paddingX": "14",
-      "layout_8.paddingY": "8",
+      "layout_8.paddingX": "16",
+      "layout_8.paddingY": "10",
       "layout_8.gap": "8",
       "layout_8.fontSize": "14",
       "layout_8.lineHeight": "20",
       "layout_8.fontWeight": "semibold",
-      "layout_8.minWidth": "104",
+      "layout_8.minWidth": "116",
       "layout_9.radius": "10",
       "layout_9.paddingX": "16",
       "layout_9.paddingY": "10",
@@ -3870,22 +3559,22 @@
       "layout_9.lineHeight": "20",
       "layout_9.fontWeight": "semibold",
       "layout_9.minWidth": "116",
-      "layout_10.radius": "12",
-      "layout_10.paddingX": "18",
-      "layout_10.paddingY": "13",
+      "layout_10.radius": "10",
+      "layout_10.paddingX": "16",
+      "layout_10.paddingY": "10",
       "layout_10.gap": "8",
-      "layout_10.fontSize": "16",
-      "layout_10.lineHeight": "22",
+      "layout_10.fontSize": "14",
+      "layout_10.lineHeight": "20",
       "layout_10.fontWeight": "semibold",
-      "layout_10.minWidth": "148",
+      "layout_10.minWidth": "116",
       "layout_11.radius": "10",
-      "layout_11.paddingX": "16",
-      "layout_11.paddingY": "10",
+      "layout_11.paddingX": "14",
+      "layout_11.paddingY": "8",
       "layout_11.gap": "8",
       "layout_11.fontSize": "14",
       "layout_11.lineHeight": "20",
       "layout_11.fontWeight": "semibold",
-      "layout_11.minWidth": "116",
+      "layout_11.minWidth": "104",
       "layout_12.radius": "10",
       "layout_12.paddingX": "16",
       "layout_12.paddingY": "10",
@@ -3894,14 +3583,14 @@
       "layout_12.lineHeight": "20",
       "layout_12.fontWeight": "semibold",
       "layout_12.minWidth": "116",
-      "layout_14.radius": "10",
-      "layout_14.paddingX": "16",
-      "layout_14.paddingY": "10",
-      "layout_14.gap": "8",
-      "layout_14.fontSize": "14",
-      "layout_14.lineHeight": "20",
-      "layout_14.fontWeight": "semibold",
-      "layout_14.minWidth": "116",
+      "layout_13.radius": "12",
+      "layout_13.paddingX": "18",
+      "layout_13.paddingY": "13",
+      "layout_13.gap": "8",
+      "layout_13.fontSize": "16",
+      "layout_13.lineHeight": "22",
+      "layout_13.fontWeight": "semibold",
+      "layout_13.minWidth": "148",
       "layout_15.radius": "10",
       "layout_15.paddingX": "16",
       "layout_15.paddingY": "10",
@@ -3910,14 +3599,14 @@
       "layout_15.lineHeight": "20",
       "layout_15.fontWeight": "semibold",
       "layout_15.minWidth": "116",
-      "layout_16.radius": "12",
-      "layout_16.paddingX": "18",
-      "layout_16.paddingY": "13",
+      "layout_16.radius": "10",
+      "layout_16.paddingX": "16",
+      "layout_16.paddingY": "10",
       "layout_16.gap": "8",
-      "layout_16.fontSize": "16",
-      "layout_16.lineHeight": "22",
+      "layout_16.fontSize": "14",
+      "layout_16.lineHeight": "20",
       "layout_16.fontWeight": "semibold",
-      "layout_16.minWidth": "148",
+      "layout_16.minWidth": "116",
       "layout_17.radius": "10",
       "layout_17.paddingX": "16",
       "layout_17.paddingY": "10",
@@ -3925,31 +3614,7 @@
       "layout_17.fontSize": "14",
       "layout_17.lineHeight": "20",
       "layout_17.fontWeight": "semibold",
-      "layout_17.minWidth": "116",
-      "layout_18.radius": "10",
-      "layout_18.paddingX": "16",
-      "layout_18.paddingY": "10",
-      "layout_18.gap": "8",
-      "layout_18.fontSize": "14",
-      "layout_18.lineHeight": "20",
-      "layout_18.fontWeight": "semibold",
-      "layout_18.minWidth": "116",
-      "layout_19.radius": "12",
-      "layout_19.paddingX": "18",
-      "layout_19.paddingY": "13",
-      "layout_19.gap": "8",
-      "layout_19.fontSize": "16",
-      "layout_19.lineHeight": "22",
-      "layout_19.fontWeight": "semibold",
-      "layout_19.minWidth": "148",
-      "layout_21.radius": "12",
-      "layout_21.paddingX": "18",
-      "layout_21.paddingY": "13",
-      "layout_21.gap": "8",
-      "layout_21.fontSize": "16",
-      "layout_21.lineHeight": "22",
-      "layout_21.fontWeight": "semibold",
-      "layout_21.minWidth": "148"
+      "layout_17.minWidth": "116"
     },
     modes: {
       brand: "core",
@@ -3958,7 +3623,7 @@
     metadata: {
       source: "miterlab-figma-generator",
       version: "0.1.0",
-      generatedAt: "2026-03-19T06:32:15.096Z"
+      generatedAt: "2026-03-19T09:01:18.992Z"
     }
   };
 
@@ -6407,7 +6072,7 @@
     metadata: {
       source: "miterlab-figma-generator",
       version: "0.1.0",
-      generatedAt: "2026-03-19T06:32:15.447Z"
+      generatedAt: "2026-03-19T09:01:19.304Z"
     }
   };
 

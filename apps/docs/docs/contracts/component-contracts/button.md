@@ -23,6 +23,46 @@ Button은 다음 상황에 사용합니다.
 
 Button은 정보 표시용 요소가 아니라, 행동을 유도하는 요소입니다.
 
+## Anatomy
+
+Button은 아래 slot으로 구성합니다.
+
+![Button anatomy preview](/previews/button-anatomy.svg)
+
+- `leading icon`
+- `label`
+- `trailing icon`
+- `container`
+
+### Anatomy Compositions
+
+- `label only`
+- `icon + label`
+- `icon only`
+
+### Required Slots
+
+- `label`
+- `container`
+
+### Optional Slots
+
+- `leading icon`
+- `trailing icon`
+
+### Composition Rules
+
+- 기본 button은 `container + label`로 구성합니다.
+- leading icon variant는 `leading icon + label`을 사용합니다.
+- trailing icon variant는 `label + trailing icon`을 사용합니다.
+- icon only variant는 시각적 label 없이 렌더할 수 있지만, accessible name은 반드시 필요합니다.
+- 하나의 button 안에 leading icon과 trailing icon을 동시에 기본값으로 두지 않습니다.
+
+### Notes
+
+- loading indicator는 상태 표현 요소이며, 기본 anatomy slot으로 보지 않습니다.
+- interaction surface는 container의 상호작용 속성으로 다루고, 별도 visual slot으로 분리하지 않습니다.
+
 ## Preview
 
 현재 렌더 결과를 문서에서 바로 확인할 수 있는 snapshot입니다.
@@ -40,8 +80,7 @@ Button은 시각 장식보다 액션 의미를 먼저 전달해야 합니다.
 
 주요 의미 계층:
 - `primary`: 현재 문맥에서 가장 중요한 액션
-- `secondary`: 보조 액션
-- `tertiary`: 낮은 강조의 보조 액션
+- `assistive`: primary를 보조하는 일반 액션
 - `destructive`: 데이터 손실 또는 되돌리기 어려운 액션
 
 Button은 다음을 분명히 보여야 합니다.
@@ -50,14 +89,35 @@ Button은 다음을 분명히 보여야 합니다.
 - 이미 진행 중인지
 - 위험한 결과를 가질 수 있는지
 
-## Variants
+## Hierarchy Presets
 
-### Emphasis
+현재 Button은 `Hierarchy Preset` 중심으로 읽는 편이 가장 명확합니다.
 
-- `primary`
-- `secondary`
-- `tertiary`
+- `primary level.4`
+- `primary level.3`
+- `assistive level.2`
+- `assistive level.1`
 - `destructive`
+
+각 preset은 단순 의미 레벨만이 아니라, 실제 버튼 형태까지 함께 포함합니다.
+
+예:
+- `primary level.4` = solid primary
+- `primary level.3` = outlined primary
+- `assistive level.2` = soft filled assistive
+- `assistive level.1` = outlined assistive 또는 text-like low emphasis
+
+즉 현재 Button은 `hierarchy`가 기본 형태를 결정하는 preset 축입니다.
+
+## Content Options
+
+### Content
+
+- `label only`
+- `icon + label`
+- `icon only`
+
+이 axis는 버튼 내부 콘텐츠 조합을 정합니다.
 
 ### Size
 
@@ -65,20 +125,34 @@ Button은 다음을 분명히 보여야 합니다.
 - `md`
 - `lg`
 
+### State
+
+- `enabled`
+- `pressed`
+- `disabled`
+- `loading`
+
 ### Width
 
 - `hug`
 - `full`
 
-### Content Form
+## Preset Reading Rule
 
-- text only
-- leading icon + text
-- trailing icon + text
-- icon only
+실제 버튼은 아래 순서로 읽습니다.
 
-현재 핵심 contract 축은 `emphasis`, `size`, `width`입니다.
-content form은 허용 범위로 다루고, 별도 시각 계층을 만들지 않습니다.
+1. hierarchy preset을 먼저 정합니다.
+2. content option을 선택합니다.
+3. size, width, state를 적용합니다.
+
+즉 현재 Button은 `variant -> color`보다 `hierarchy preset -> content -> size/state` 순서로 읽는 편이 더 자연스럽습니다.
+
+## Icon Only Sizing Rule
+
+- `icon only` 버튼은 square control로 다룹니다.
+- width는 별도 라벨 폭이 아니라 현재 control height와 같습니다.
+- 즉 현재 기준은 `sm 32`, `md 40`, `lg 48`의 정사각형입니다.
+- 이 규칙이 없으면 icon only button의 폭, 터치 타깃, row 균형이 쉽게 흔들립니다.
 
 ## Metrics
 
@@ -129,7 +203,7 @@ Foundation이 변경되면 Button 수치는 자동으로 바뀝니다.
 ### Action Hierarchy
 
 - 한 섹션에는 primary 액션을 하나만 둡니다.
-- secondary는 primary와 경쟁하면 안 됩니다.
+- assistive는 primary와 경쟁하면 안 됩니다.
 - destructive는 일반 액션과 섞이지 않게 분리합니다.
 
 ### Width Usage
@@ -178,7 +252,7 @@ Foundation이 변경되면 Button 수치는 자동으로 바뀝니다.
 Button은 Module 안에서 자주 사용되지만, Module 자체가 되지는 않습니다.
 
 예:
-- `BottomActionGroup` 안의 primary / secondary action
+- `BottomActionGroup` 안의 primary / assistive action
 - `EmptyStateBlock` 안의 recovery action
 - `FormField` 아래의 submit action
 
@@ -203,17 +277,18 @@ Button은 Module 안에서 자주 사용되지만, Module 자체가 되지는 �
 ## Current Visual Direction
 
 - 강조색은 과한 원색보다 서비스형 우선순위 전달에 집중합니다.
-- secondary와 tertiary는 샘플용 대비보다 실제 제품 화면에서의 안정감을 우선합니다.
+- assistive와 outlined는 샘플용 대비보다 실제 제품 화면에서의 안정감을 우선합니다.
 - radius와 spacing은 과장된 showcase보다 실사용 밀도에 맞춥니다.
 
 ## Palette
 
 현재 Button palette는 raw 색이 아니라 Foundation semantic token에서 파생합니다.
 
-| Emphasis | Fill | Stroke | Text | Pressed Fill | Pressed Stroke |
-| --- | --- | --- | --- | --- | --- |
-| `primary` | `#1A75FF` | `#1A75FF` | `#FFFFFF` | `#0066FF` | `#0066FF` |
-| `secondary` | `#FFFFFF` | `#E1E2E4` | `#171719` | `#F7F7F8` | `#EAEBEC` |
-| `tertiary` | `transparent` | `transparent` | `#2E2F33` | `transparent` | `transparent` |
-| `destructive` | `#FF4242` | `#FF4242` | `#FFFFFF` | `#E52222` | `#E52222` |
-| `disabled` | `#F4F4F5` | `#E1E2E4` | `#989BA2` | - | - |
+| Variant | Color | Fill | Stroke | Text | Pressed Fill | Pressed Stroke |
+| --- | --- | --- | --- | --- | --- | --- |
+| `solid` | `primary` | `#1A75FF` | `transparent` | `#FFFFFF` | `#0066FF` | `transparent` |
+| `solid` | `destructive` | `#FF4242` | `transparent` | `#FFFFFF` | `#E52222` | `transparent` |
+| `outlined` | `assistive` | `#FFFFFF` | `#E1E2E4` | `#171719` | `#F7F7F8` | `#EAEBEC` |
+| `outlined` | `primary` | `#FFFFFF` | `#1A75FF` | `#1A75FF` | `#F7F7F8` | `#0066FF` |
+| `outlined` | `destructive` | `#FFFFFF` | `#FF4242` | `#FF4242` | `#FFF1F1` | `#E52222` |
+| `disabled` | `all` | `#F4F4F5` | `#E1E2E4` | `#989BA2` | - | - |

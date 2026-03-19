@@ -112,7 +112,8 @@
       "status": {
         "success": "#00BF40",
         "cautionary": "#FF9200",
-        "danger": "#FF4242"
+        "danger": "#FF4242",
+        "dangerPressed": "#E52222"
       },
       "preview": {
         "axisPillFill": "#F7F7F8",
@@ -148,7 +149,8 @@
             "lg": 220
           }
         }
-      }
+      },
+      "multilineExtra": 16
     },
     "typography": {
       "buttonLabel": {
@@ -190,52 +192,43 @@
       "helperTextGap": 6
     },
     "radius": {
-      "button": {
-        "sm": 10,
-        "md": 10,
-        "lg": 12
-      },
-      "input": {
-        "sm": 10,
-        "md": 10,
-        "lg": 12
-      }
+      "none": 0,
+      "sm": 10,
+      "md": 10,
+      "lg": 12,
+      "round": 999
     }
   },
   "button": {
     "inspection": {
       "title": "Button Inspection",
       "axes": {
-        "emphasis": ["primary", "secondary", "tertiary", "destructive"],
+        "hierarchy": ["primary-level-4", "primary-level-3", "assistive-level-2", "assistive-level-1"],
+        "content": ["label-only", "icon-label", "icon-only"],
         "size": ["sm", "md", "lg"],
-        "width": ["hug", "full"],
         "state": ["enabled", "pressed", "disabled", "loading"]
       },
       "rows": [
-        { "axis": "emphasis", "items": ["Primary", "Secondary", "Tertiary", "Destructive"] },
+        { "axis": "hierarchy", "items": ["Primary L4", "Primary L3", "Assistive L2", "Assistive L1"] },
+        { "axis": "content", "items": ["Label Only", "Icon + Label", "Icon Only"] },
         { "axis": "size", "items": ["Small", "Medium", "Large"] },
-        { "axis": "state", "items": ["Pressed", "Disabled", "Loading"] },
-        { "axis": "width", "items": ["Hug Width", "Full Width"] },
-        { "axis": "bundle", "items": ["Leading Icon", "Icon Only", "Bottom CTA", "Danger CTA"] }
+        { "axis": "state", "items": ["Pressed", "Disabled", "Loading"] }
       ],
       "sections": ["preview"],
       "components": [
-        { "component": "button", "section": "preview", "label": "Primary", "emphasis": "primary", "size": "md", "width": "hug", "state": "enabled" },
-        { "component": "button", "section": "preview", "label": "Secondary", "emphasis": "secondary", "size": "md", "width": "hug", "state": "enabled" },
-        { "component": "button", "section": "preview", "label": "Tertiary", "emphasis": "tertiary", "size": "md", "width": "hug", "state": "enabled" },
-        { "component": "button", "section": "preview", "label": "Destructive", "emphasis": "destructive", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Primary L4", "appearance": "solid", "hierarchy": "primary-level-4", "emphasis": "primary", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Primary L3", "appearance": "outlined", "hierarchy": "primary-level-3", "emphasis": "secondary", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Assistive L2", "appearance": "outlined", "hierarchy": "assistive-level-2", "emphasis": "secondary", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Assistive L1", "appearance": "text", "hierarchy": "assistive-level-1", "emphasis": "tertiary", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Label Only", "appearance": "solid", "hierarchy": "primary-level-4", "emphasis": "primary", "size": "md", "width": "hug", "state": "enabled" },
+        { "component": "button", "section": "preview", "label": "Icon + Label", "appearance": "outlined", "hierarchy": "assistive-level-2", "emphasis": "secondary", "size": "md", "width": "hug", "state": "enabled", "iconLeading": true },
+        { "component": "button", "section": "preview", "label": "Icon Only", "appearance": "text", "hierarchy": "assistive-level-1", "emphasis": "tertiary", "size": "md", "width": "hug", "state": "enabled", "iconOnly": true },
         { "component": "button", "section": "preview", "label": "Small", "emphasis": "primary", "size": "sm", "width": "hug", "state": "enabled" },
         { "component": "button", "section": "preview", "label": "Medium", "emphasis": "primary", "size": "md", "width": "hug", "state": "enabled" },
         { "component": "button", "section": "preview", "label": "Large", "emphasis": "primary", "size": "lg", "width": "hug", "state": "enabled" },
         { "component": "button", "section": "preview", "label": "Pressed", "emphasis": "primary", "size": "md", "width": "hug", "state": "pressed" },
         { "component": "button", "section": "preview", "label": "Disabled", "emphasis": "primary", "size": "md", "width": "hug", "state": "disabled", "disabled": true },
-        { "component": "button", "section": "preview", "label": "Loading", "emphasis": "primary", "size": "md", "width": "hug", "state": "loading", "loading": true },
-        { "component": "button", "section": "preview", "label": "Hug Width", "emphasis": "secondary", "size": "md", "width": "hug", "state": "enabled" },
-        { "component": "button", "section": "preview", "label": "Full Width", "emphasis": "primary", "size": "lg", "width": "full", "state": "enabled" },
-        { "component": "button", "section": "preview", "label": "Leading Icon", "emphasis": "secondary", "size": "md", "width": "hug", "state": "enabled", "iconLeading": true },
-        { "component": "button", "section": "preview", "label": "Icon Only", "emphasis": "tertiary", "size": "md", "width": "hug", "state": "enabled", "iconOnly": true },
-        { "component": "button", "section": "preview", "label": "Bottom CTA", "emphasis": "primary", "size": "lg", "width": "full", "state": "enabled" },
-        { "component": "button", "section": "preview", "label": "Danger CTA", "emphasis": "destructive", "size": "lg", "width": "full", "state": "enabled" }
+        { "component": "button", "section": "preview", "label": "Loading", "emphasis": "primary", "size": "md", "width": "hug", "state": "loading", "loading": true }
       ]
     }
   },

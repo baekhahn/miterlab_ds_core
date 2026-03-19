@@ -14,7 +14,7 @@ export const getButtonMetrics = (size = "md") => {
     height: foundation.size.controlHeight[sizeKey],
     paddingX: foundation.spacing.buttonPaddingX[sizeKey],
     paddingY: foundation.spacing.buttonPaddingY[sizeKey],
-    radius: foundation.radius.button[sizeKey],
+    radius: foundation.radius[sizeKey],
     fontSize: foundation.typography.buttonLabel[sizeKey].fontSize,
     lineHeight: foundation.typography.buttonLabel[sizeKey].lineHeight,
     gap: foundation.spacing.controlGap.button,
@@ -30,7 +30,7 @@ export const getInputMetrics = (size = "md") => {
     height: foundation.size.controlHeight[sizeKey],
     paddingX: foundation.spacing.inputPaddingX[sizeKey],
     paddingY: foundation.spacing.inputPaddingY[sizeKey],
-    radius: foundation.radius.input[sizeKey],
+    radius: foundation.radius[sizeKey],
     fontSize: foundation.typography.inputValue[sizeKey].fontSize,
     lineHeight: foundation.typography.inputValue[sizeKey].lineHeight,
     minWidth: foundation.size.controlWidth.input.minWidth[sizeKey]
@@ -42,7 +42,7 @@ export const getInputWidth = (width = "full") => foundation.size.controlWidth.in
 export const getInputMultilineHeight = (size = "md", rowsCount = 3) => {
   const metrics = getInputMetrics(size);
   const rows = Math.max(2, rowsCount);
-  return Math.max(metrics.height * 2, metrics.lineHeight * rows + metrics.paddingY * 2 + 16);
+  return Math.max(metrics.height * 2, metrics.lineHeight * rows + metrics.paddingY * 2 + foundation.size.multilineExtra);
 };
 
 export const getButtonPalette = (emphasis = "primary", state = "enabled") => {
@@ -72,16 +72,120 @@ export const getButtonPalette = (emphasis = "primary", state = "enabled") => {
 
   if (emphasis === "destructive") {
     return {
-      fill: state === "pressed" ? "#E52222" : semanticLight.status.negative,
-      stroke: state === "pressed" ? "#E52222" : semanticLight.status.negative,
-      text: "#FFFFFF"
+      fill: state === "pressed" ? foundation.colors.status.dangerPressed : semanticLight.status.negative,
+      stroke: "transparent",
+      text: foundation.colors.text.inverse
     };
   }
 
   return {
     fill: state === "pressed" ? semanticLight.primary.heavy : semanticLight.primary.strong,
-    stroke: state === "pressed" ? semanticLight.primary.heavy : semanticLight.primary.strong,
-    text: "#FFFFFF"
+    stroke: "transparent",
+    text: foundation.colors.text.inverse
+  };
+};
+
+export const getButtonPaletteByAxes = (
+  appearance = "solid",
+  hierarchy = "primary-level-4",
+  state = "enabled"
+) => {
+  if (state === "disabled") {
+    return {
+      fill: semanticLight.interaction.disable,
+      stroke: semanticLight.line.solidNormal,
+      text: semanticLight.interaction.inactive
+    };
+  }
+
+  const isPressed = state === "pressed";
+  const elevated = semanticLight.background.elevated;
+  const alt = semanticLight.background.alternative;
+
+  if (hierarchy === "destructive") {
+    if (appearance === "outlined") {
+      return {
+        fill: elevated,
+        stroke: semanticLight.status.negative,
+        text: semanticLight.status.negative
+      };
+    }
+
+    if (appearance === "text") {
+      return {
+        fill: "transparent",
+        stroke: "transparent",
+        text: semanticLight.status.negative
+      };
+    }
+
+    return {
+      fill: isPressed ? foundation.colors.status.dangerPressed : semanticLight.status.negative,
+      stroke: "transparent",
+      text: foundation.colors.text.inverse
+    };
+  }
+
+  if (hierarchy === "assistive-level-1") {
+    return {
+      fill: "transparent",
+      stroke: "transparent",
+      text: semanticLight.label.neutral
+    };
+  }
+
+  if (hierarchy === "assistive-level-2") {
+    return {
+      fill: isPressed ? alt : elevated,
+      stroke: isPressed ? semanticLight.line.solidNeutral : semanticLight.line.solidNormal,
+      text: semanticLight.label.normal
+    };
+  }
+
+  if (hierarchy === "primary-level-3") {
+    if (appearance === "solid") {
+      return {
+        fill: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong,
+        stroke: "transparent",
+        text: foundation.colors.text.inverse
+      };
+    }
+
+    if (appearance === "text") {
+      return {
+        fill: "transparent",
+        stroke: "transparent",
+        text: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong
+      };
+    }
+
+    return {
+      fill: elevated,
+      stroke: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong,
+      text: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong
+    };
+  }
+
+  if (appearance === "outlined") {
+    return {
+      fill: elevated,
+      stroke: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong,
+      text: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong
+    };
+  }
+
+  if (appearance === "text") {
+    return {
+      fill: "transparent",
+      stroke: "transparent",
+      text: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong
+    };
+  }
+
+  return {
+    fill: isPressed ? semanticLight.primary.heavy : semanticLight.primary.strong,
+    stroke: "transparent",
+    text: foundation.colors.text.inverse
   };
 };
 

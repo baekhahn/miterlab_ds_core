@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="920" height="620" viewBox="0 0 920 620" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="920" height="620" rx="24" fill="#FFFFFF"/>
+  <rect width="920" height="620" rx="24" fill="#FFFFFF" />
   <rect x="210" y="24" width="500" height="572" rx="28" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
 <rect x="242" y="54" width="436" height="48" rx="16" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
 <text x="262" y="85" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="15" font-weight="500" fill="#171719">프론트엔드</text>

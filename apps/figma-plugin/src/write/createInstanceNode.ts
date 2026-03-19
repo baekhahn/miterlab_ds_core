@@ -3,6 +3,7 @@ import mobileCore from "../../../../packages/ui-core/contracts/mobile-core.json"
 import {
   foundationColors,
   getButtonMetrics,
+  getButtonPaletteByAxes,
   getButtonPalette,
   getButtonWidth,
   getInputFocusRing,
@@ -73,6 +74,27 @@ const getButtonEmphasis = (node: FigmaWriteNode): "primary" | "secondary" | "ter
   const emphasis = node.variant?.emphasis;
   if (emphasis === "secondary" || emphasis === "tertiary" || emphasis === "destructive") return emphasis;
   return "primary";
+};
+
+const getButtonAppearance = (node: FigmaWriteNode): "solid" | "outlined" | "text" => {
+  const appearance = node.variant?.appearance;
+  if (appearance === "outlined" || appearance === "text") return appearance;
+  return "solid";
+};
+
+const getButtonHierarchy = (
+  node: FigmaWriteNode
+): "primary-level-4" | "primary-level-3" | "assistive-level-2" | "assistive-level-1" | "destructive" => {
+  const hierarchy = node.variant?.hierarchy;
+  if (
+    hierarchy === "primary-level-3" ||
+    hierarchy === "assistive-level-2" ||
+    hierarchy === "assistive-level-1" ||
+    hierarchy === "destructive"
+  ) {
+    return hierarchy;
+  }
+  return "primary-level-4";
 };
 
 const getInputSize = (node: FigmaWriteNode): "sm" | "md" | "lg" => {
@@ -186,12 +208,18 @@ const createButtonNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   const sizeKey = getButtonSize(node);
   const state = getButtonState(node);
   const emphasis = getButtonEmphasis(node);
+  const appearance = getButtonAppearance(node);
+  const hierarchy = getButtonHierarchy(node);
   const metrics = getButtonMetrics(sizeKey);
-  const palette = getButtonPalette(emphasis, state);
+  const palette =
+    node.variant?.appearance || node.variant?.hierarchy
+      ? getButtonPaletteByAxes(appearance, hierarchy, state)
+      : getButtonPalette(emphasis, state);
   const fill = palette.fill;
   const stroke = palette.stroke;
   const iconOnly = node.variant?.iconOnly === true;
   const iconLeading = node.variant?.iconLeading === true;
+  const iconTrailing = node.variant?.iconTrailing === true;
   const width = iconOnly
     ? metrics.height
     : node.variant?.width === "full"
@@ -226,6 +254,10 @@ const createButtonNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
     const label = await createText(node.text ?? node.name, palette.text, styleFontSize(node, metrics.fontSize), styleLineHeight(node, metrics.lineHeight), "semibold");
     label.textAlignHorizontal = "CENTER";
     frame.appendChild(label);
+  }
+
+  if (!iconOnly && state !== "loading" && iconTrailing) {
+    frame.appendChild(createPlusGlyph(palette.text, Math.max(16, metrics.fontSize + 2)));
   }
   return frame;
 };

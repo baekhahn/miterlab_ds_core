@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import {
   foundationColors,
   getButtonMetrics,
+  getButtonPaletteByAxes,
   getButtonPalette,
   getButtonWidth,
   getInputFocusRing,
@@ -46,9 +47,11 @@ const escapeXml = (value) =>
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
 
-const svgFrame = (width, height, parts) => `<?xml version="1.0" encoding="UTF-8"?>
+const svgFrame = (width, height, parts, options = {}) => `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="${width}" height="${height}" rx="24" fill="${COLORS.bg}"/>
+  <rect width="${width}" height="${height}" rx="${options.radius ?? 24}" fill="${options.bg ?? COLORS.bg}" ${
+    options.stroke ? `stroke="${options.stroke}" stroke-width="${options.strokeWidth ?? 1}"` : ""
+  }/>
   ${parts.join("\n")}
 </svg>`;
 
@@ -57,6 +60,13 @@ const rect = ({ x, y, width, height, rx = 0, fill = "transparent", stroke = "tra
 
 const text = ({ x, y, value, size = 14, weight = 500, fill = COLORS.text, anchor = "start" }) =>
   `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${FONT_STACK}" font-size="${size}" font-weight="${weight}" fill="${fill}">${escapeXml(value)}</text>`;
+
+const estimateTextWidth = (value, fontSize, weight = 600) => {
+  const textValue = String(value ?? "");
+  const base = textValue.length * fontSize * 0.56;
+  const weightAdjust = weight >= 600 ? 1.02 : 1;
+  return Math.ceil(base * weightAdjust);
+};
 
 const axisLabel = (x, y, value) => `
   <g transform="translate(${x} ${y})">
@@ -67,14 +77,11 @@ const axisLabel = (x, y, value) => `
   </g>
 `;
 
-const buttonRect = (x, y, width, height, radius, fill, stroke, label, labelColor, fontSize) => `
+const buttonRect = (x, y, width, height, radius, fill, stroke) => `
   <g transform="translate(${x} ${y})">
     <rect width="${width}" height="${height}" rx="${radius}" fill="${fill}" stroke="${stroke}" stroke-width="${
       stroke === "transparent" ? 0 : 1
     }" />
-    <text x="${width / 2}" y="${height / 2 + fontSize / 2 - 2}" text-anchor="middle"
-      font-family="${FONT_STACK}"
-      font-size="${fontSize}" font-weight="600" fill="${labelColor}">${escapeXml(label)}</text>
   </g>
 `;
 
@@ -100,33 +107,74 @@ const inputRect = (x, y, width, height, radius, fill, stroke, value, valueColor,
 
 const renderButtonComponent = (component, x, y) => {
   const size = getButtonMetrics(component.size);
-  const palette = getButtonPalette(component.emphasis, component.state);
+  const palette =
+    component.appearance || component.hierarchy
+      ? getButtonPaletteByAxes(component.appearance ?? "solid", component.hierarchy ?? "primary-level-4", component.state)
+      : getButtonPalette(component.emphasis, component.state);
   const width = component.iconOnly
     ? size.height
     : component.width === "full"
       ? getButtonWidth("full")
       : getButtonWidth("hug");
 
-  const icon = component.iconLeading || component.iconOnly
-    ? plusGlyph(x + (component.iconOnly ? (width - (size.fontSize + 2)) / 2 : 16), y + (size.height - (size.fontSize + 2)) / 2, size.fontSize + 2, palette.text)
-    : "";
+  const iconSize = Math.max(16, size.fontSize + 2);
+  const gap = size.gap;
+  const hasLeadingIcon = component.iconLeading === true || component.iconOnly === true;
+  const hasTrailingIcon = component.iconTrailing === true;
+  const label = component.label ?? "";
+  const labelWidth = component.iconOnly ? 0 : estimateTextWidth(label, size.fontSize, 600);
+  const contentWidth =
+    (hasLeadingIcon ? iconSize : 0) +
+    (hasLeadingIcon && labelWidth > 0 ? gap : 0) +
+    labelWidth +
+    (hasTrailingIcon && labelWidth > 0 ? gap : 0) +
+    (hasTrailingIcon ? iconSize : 0);
+  const contentStartX = x + Math.round((width - contentWidth) / 2);
+  const contentCenterY = y + Math.round(size.height / 2);
+
+  const parts = [
+    buttonRect(
+      x,
+      y,
+      width,
+      size.height,
+      size.radius,
+      palette.fill,
+      palette.stroke
+    )
+  ];
+
+  let cursorX = contentStartX;
+
+  if (hasLeadingIcon) {
+    parts.push(plusGlyph(cursorX, y + Math.round((size.height - iconSize) / 2), iconSize, palette.text));
+    cursorX += iconSize + (labelWidth > 0 ? gap : 0);
+  }
+
+  if (!component.iconOnly) {
+    parts.push(
+      text({
+        x: cursorX + Math.round(labelWidth / 2),
+        y: contentCenterY + Math.round(size.fontSize / 2) - 2,
+        value: label,
+        size: size.fontSize,
+        weight: 600,
+        fill: palette.text,
+        anchor: "middle"
+      })
+    );
+    cursorX += labelWidth;
+  }
+
+  if (hasTrailingIcon) {
+    cursorX += labelWidth > 0 ? gap : 0;
+    parts.push(plusGlyph(cursorX, y + Math.round((size.height - iconSize) / 2), iconSize, palette.text));
+  }
 
   return {
     width,
     height: size.height,
-    svg:
-      buttonRect(
-        x,
-        y,
-        width,
-        size.height,
-        size.radius,
-        palette.fill,
-        palette.stroke,
-        component.iconOnly ? "" : component.label,
-        palette.text,
-        size.fontSize
-      ) + icon
+    svg: parts.join("")
   };
 };
 
@@ -168,6 +216,12 @@ const renderInspectionPreview = (family) => {
   for (const row of preview.rows) {
     parts.push(axisLabel(row.pill.x, row.pill.y, row.axisTitle));
     for (const item of row.items) {
+      if (family === "button" && row.axis === "bundle" && (item.label === "Apply" || item.label === "Icon Only")) {
+        const centerX = item.x + item.width / 2;
+        parts.push(
+          `<line x1="${centerX}" y1="${item.y - 8}" x2="${centerX}" y2="${item.y + item.height + 8}" stroke="${COLORS.lineStrong}" stroke-width="1" stroke-dasharray="3 3" opacity="0.3" />`
+        );
+      }
       const rendered =
         family === "button"
           ? renderButtonComponent(item.component, item.x, item.y)
@@ -179,8 +233,81 @@ const renderInspectionPreview = (family) => {
   return svgFrame(preview.width, preview.height, parts);
 };
 
-const panel = (x, y, width, height, title, bodyParts = []) => [
-  rect({ x, y, width, height, rx: 20, fill: COLORS.panel, stroke: COLORS.line }),
+const buttonAnatomyPreview = () => {
+  const metrics = getButtonMetrics("md");
+  const height = metrics.height;
+  const iconSize = Math.max(16, metrics.fontSize + 2);
+  const rowY = 136;
+
+  const renderComposition = ({ x, y, width, label, mode, chipLabel }) => {
+    const labelWidth = label ? estimateTextWidth(label, metrics.fontSize, 600) : 0;
+    const hasIcon = mode === "icon-label" || mode === "icon-only";
+    const hasLabel = mode === "label-only" || mode === "icon-label";
+    const gap = hasIcon && hasLabel ? metrics.gap : 0;
+    const contentWidth = (hasIcon ? iconSize : 0) + gap + labelWidth;
+    const contentStartX = x + Math.round((width - contentWidth) / 2);
+    let cursorX = contentStartX;
+    const parts = [
+      rect({ x, y, width, height, rx: metrics.radius, fill: mode === "icon-only" ? COLORS.field : COLORS.primary, stroke: mode === "icon-only" ? COLORS.line : "transparent" }),
+      rect({ x, y, width, height, rx: metrics.radius, fill: "transparent", stroke: COLORS.lineStrong, strokeWidth: 1 }),
+      text({ x, y: y - 12, value: chipLabel, size: 12, weight: 600, fill: COLORS.textSecondary })
+    ];
+    let gapStartX = null;
+    let gapEndX = null;
+
+    if (hasIcon) {
+      parts.push(plusGlyph(cursorX, y + Math.round((height - iconSize) / 2), iconSize, mode === "icon-only" ? COLORS.textSecondary : COLORS.textInverse));
+      if (hasLabel) {
+        gapStartX = cursorX + iconSize;
+        gapEndX = gapStartX + gap;
+      }
+      cursorX += iconSize + gap;
+    }
+
+    if (hasLabel) {
+      parts.push(
+        text({
+          x: cursorX + Math.round(labelWidth / 2),
+          y: y + Math.round(height / 2) + Math.round(metrics.fontSize / 2) - 2,
+          value: label,
+          size: metrics.fontSize,
+          weight: 600,
+          fill: COLORS.textInverse,
+          anchor: "middle"
+        })
+      );
+    }
+
+    return {
+      parts,
+      gapStartX,
+      gapEndX,
+      y,
+      width
+    };
+  };
+
+  const labelOnly = renderComposition({ x: 128, y: rowY, width: 220, label: "Apply", mode: "label-only", chipLabel: "label only" });
+  const iconLabel = renderComposition({ x: 382, y: rowY, width: 220, label: "Apply", mode: "icon-label", chipLabel: "icon + label" });
+  const iconOnly = renderComposition({ x: 636, y: rowY, width: 52, label: "", mode: "icon-only", chipLabel: "icon only" });
+
+  return svgFrame(920, 360, [
+    ...panel(32, 32, 856, 296, "Button Anatomy", [
+      ...labelOnly.parts,
+      ...iconLabel.parts,
+      ...iconOnly.parts,
+      `<line x1="${iconLabel.gapStartX}" y1="${rowY - 18}" x2="${iconLabel.gapEndX}" y2="${rowY - 18}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
+      `<line x1="${iconLabel.gapStartX}" y1="${rowY - 22}" x2="${iconLabel.gapStartX}" y2="${rowY - 14}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
+      `<line x1="${iconLabel.gapEndX}" y1="${rowY - 22}" x2="${iconLabel.gapEndX}" y2="${rowY - 14}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
+      text({ x: (iconLabel.gapStartX + iconLabel.gapEndX) / 2, y: rowY - 24, value: `gap ${metrics.gap}`, size: 11, weight: 600, fill: COLORS.textMuted, anchor: "middle" }),
+      text({ x: 460, y: 258, value: "slots: container, leading icon, label, trailing icon", size: 12, weight: 600, fill: COLORS.textSecondary, anchor: "middle" }),
+      text({ x: 460, y: 282, value: "content group centered", size: 12, weight: 600, fill: COLORS.textMuted, anchor: "middle" })
+    ], { fill: COLORS.panel, stroke: "transparent" })
+  ], { bg: COLORS.panel, radius: 24 });
+};
+
+const panel = (x, y, width, height, title, bodyParts = [], options = {}) => [
+  rect({ x, y, width, height, rx: 20, fill: options.fill ?? COLORS.panel, stroke: options.stroke ?? COLORS.line }),
   text({ x: x + 18, y: y + 28, value: title, size: 13, weight: 700, fill: COLORS.textSecondary }),
   ...bodyParts
 ];
@@ -388,6 +515,7 @@ const genericPreviews = {
 
 await fs.mkdir(outputDir, { recursive: true });
 await fs.writeFile(path.join(outputDir, "button-contract.svg"), renderInspectionPreview("button"), "utf8");
+await fs.writeFile(path.join(outputDir, "button-anatomy.svg"), buttonAnatomyPreview(), "utf8");
 await fs.writeFile(path.join(outputDir, "input-contract.svg"), renderInspectionPreview("input"), "utf8");
 
 for (const [fileName, render] of Object.entries(genericPreviews)) {
@@ -396,6 +524,7 @@ for (const [fileName, render] of Object.entries(genericPreviews)) {
 
 console.log("Generated previews:");
 console.log(path.join(outputDir, "button-contract.svg"));
+console.log(path.join(outputDir, "button-anatomy.svg"));
 console.log(path.join(outputDir, "input-contract.svg"));
 for (const fileName of Object.keys(genericPreviews)) {
   console.log(path.join(outputDir, fileName));

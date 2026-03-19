@@ -572,6 +572,17 @@ const mapComponentToLayoutNode = (index: number, component: GrammarComponent, sc
     name: toNodeName(component.name ?? component.label ?? "Button", `Button ${index + 1}`),
     component: "button",
     props: {
+      appearance:
+        component.appearance === "outlined" || component.appearance === "text"
+          ? component.appearance
+          : "solid",
+      hierarchy:
+        component.hierarchy === "primary-level-3" ||
+        component.hierarchy === "assistive-level-2" ||
+        component.hierarchy === "assistive-level-1" ||
+        component.hierarchy === "destructive"
+          ? component.hierarchy
+          : "primary-level-4",
       emphasis:
         component.emphasis === "primary" ||
         component.emphasis === "secondary" ||

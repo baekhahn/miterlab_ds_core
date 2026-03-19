@@ -30,7 +30,7 @@
                 {
                   "id": "layout_4",
                   "type": "INSTANCE",
-                  "name": "Primary",
+                  "name": "Primary L4",
                   "x": 48,
                   "y": 40,
                   "width": 116,
@@ -53,12 +53,12 @@
                     "size": "md"
                   },
                   "variables": {},
-                  "text": "Primary"
+                  "text": "Primary L4"
                 },
                 {
                   "id": "layout_5",
                   "type": "INSTANCE",
-                  "name": "Secondary",
+                  "name": "Primary L3",
                   "x": 48,
                   "y": 40,
                   "width": 116,
@@ -81,12 +81,40 @@
                     "size": "md"
                   },
                   "variables": {},
-                  "text": "Secondary"
+                  "text": "Primary L3"
                 },
                 {
                   "id": "layout_6",
                   "type": "INSTANCE",
-                  "name": "Tertiary",
+                  "name": "Assistive L2",
+                  "x": 48,
+                  "y": 40,
+                  "width": 116,
+                  "height": 40,
+                  "component": "Button",
+                  "style": {
+                    "radius": 10,
+                    "paddingX": 16,
+                    "paddingY": 10,
+                    "gap": 8,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "semibold",
+                    "minWidth": 116
+                  },
+                  "variant": {
+                    "emphasis": "secondary",
+                    "width": "hug",
+                    "state": "enabled",
+                    "size": "md"
+                  },
+                  "variables": {},
+                  "text": "Assistive L2"
+                },
+                {
+                  "id": "layout_7",
+                  "type": "INSTANCE",
+                  "name": "Assistive L1",
                   "x": 48,
                   "y": 40,
                   "width": 116,
@@ -109,68 +137,40 @@
                     "size": "md"
                   },
                   "variables": {},
-                  "text": "Tertiary"
-                },
-                {
-                  "id": "layout_7",
-                  "type": "INSTANCE",
-                  "name": "Destructive",
-                  "x": 48,
-                  "y": 40,
-                  "width": 116,
-                  "height": 40,
-                  "component": "Button",
-                  "style": {
-                    "radius": 10,
-                    "paddingX": 16,
-                    "paddingY": 10,
-                    "gap": 8,
-                    "fontSize": 14,
-                    "lineHeight": 20,
-                    "fontWeight": "semibold",
-                    "minWidth": 116
-                  },
-                  "variant": {
-                    "emphasis": "destructive",
-                    "width": "hug",
-                    "state": "enabled",
-                    "size": "md"
-                  },
-                  "variables": {},
-                  "text": "Destructive"
+                  "text": "Assistive L1"
                 },
                 {
                   "id": "layout_8",
                   "type": "INSTANCE",
-                  "name": "Small",
+                  "name": "Label Only",
                   "x": 48,
                   "y": 40,
-                  "width": 104,
-                  "height": 32,
+                  "width": 116,
+                  "height": 40,
                   "component": "Button",
                   "style": {
                     "radius": 10,
-                    "paddingX": 14,
-                    "paddingY": 8,
+                    "paddingX": 16,
+                    "paddingY": 10,
                     "gap": 8,
                     "fontSize": 14,
                     "lineHeight": 20,
                     "fontWeight": "semibold",
-                    "minWidth": 104
+                    "minWidth": 116
                   },
                   "variant": {
                     "emphasis": "primary",
                     "width": "hug",
                     "state": "enabled",
-                    "size": "sm"
+                    "size": "md"
                   },
                   "variables": {},
-                  "text": "Small"
+                  "text": "Label Only"
                 },
                 {
                   "id": "layout_9",
                   "type": "INSTANCE",
-                  "name": "Medium",
+                  "name": "Icon + Label",
                   "x": 48,
                   "y": 40,
                   "width": 116,
@@ -187,225 +187,16 @@
                     "minWidth": 116
                   },
                   "variant": {
-                    "emphasis": "primary",
+                    "emphasis": "secondary",
                     "width": "hug",
                     "state": "enabled",
                     "size": "md"
                   },
                   "variables": {},
-                  "text": "Medium"
+                  "text": "Icon + Label"
                 },
                 {
                   "id": "layout_10",
-                  "type": "INSTANCE",
-                  "name": "Large",
-                  "x": 48,
-                  "y": 40,
-                  "width": 148,
-                  "height": 48,
-                  "component": "Button",
-                  "style": {
-                    "radius": 12,
-                    "paddingX": 18,
-                    "paddingY": 13,
-                    "gap": 8,
-                    "fontSize": 16,
-                    "lineHeight": 22,
-                    "fontWeight": "semibold",
-                    "minWidth": 148
-                  },
-                  "variant": {
-                    "emphasis": "primary",
-                    "width": "hug",
-                    "state": "enabled",
-                    "size": "lg"
-                  },
-                  "variables": {},
-                  "text": "Large"
-                },
-                {
-                  "id": "layout_11",
-                  "type": "INSTANCE",
-                  "name": "Pressed",
-                  "x": 48,
-                  "y": 40,
-                  "width": 116,
-                  "height": 40,
-                  "component": "Button",
-                  "style": {
-                    "radius": 10,
-                    "paddingX": 16,
-                    "paddingY": 10,
-                    "gap": 8,
-                    "fontSize": 14,
-                    "lineHeight": 20,
-                    "fontWeight": "semibold",
-                    "minWidth": 116
-                  },
-                  "variant": {
-                    "emphasis": "primary",
-                    "width": "hug",
-                    "state": "pressed",
-                    "size": "md"
-                  },
-                  "variables": {},
-                  "text": "Pressed"
-                },
-                {
-                  "id": "layout_12",
-                  "type": "INSTANCE",
-                  "name": "Disabled",
-                  "x": 48,
-                  "y": 40,
-                  "width": 116,
-                  "height": 40,
-                  "component": "Button",
-                  "style": {
-                    "radius": 10,
-                    "paddingX": 16,
-                    "paddingY": 10,
-                    "gap": 8,
-                    "fontSize": 14,
-                    "lineHeight": 20,
-                    "fontWeight": "semibold",
-                    "minWidth": 116
-                  },
-                  "variant": {
-                    "emphasis": "primary",
-                    "width": "hug",
-                    "state": "disabled",
-                    "size": "md",
-                    "disabled": true
-                  },
-                  "variables": {},
-                  "text": "Disabled"
-                }
-              ]
-            },
-            {
-              "id": "layout_13",
-              "type": "FRAME",
-              "name": "preview-row-2",
-              "x": 48,
-              "y": 40,
-              "width": 1320,
-              "height": 100,
-              "children": [
-                {
-                  "id": "layout_14",
-                  "type": "INSTANCE",
-                  "name": "Loading",
-                  "x": 48,
-                  "y": 40,
-                  "width": 116,
-                  "height": 40,
-                  "component": "Button",
-                  "style": {
-                    "radius": 10,
-                    "paddingX": 16,
-                    "paddingY": 10,
-                    "gap": 8,
-                    "fontSize": 14,
-                    "lineHeight": 20,
-                    "fontWeight": "semibold",
-                    "minWidth": 116
-                  },
-                  "variant": {
-                    "emphasis": "primary",
-                    "width": "hug",
-                    "state": "loading",
-                    "size": "md",
-                    "loading": true
-                  },
-                  "variables": {},
-                  "text": "Loading"
-                },
-                {
-                  "id": "layout_15",
-                  "type": "INSTANCE",
-                  "name": "Hug Width",
-                  "x": 48,
-                  "y": 40,
-                  "width": 116,
-                  "height": 40,
-                  "component": "Button",
-                  "style": {
-                    "radius": 10,
-                    "paddingX": 16,
-                    "paddingY": 10,
-                    "gap": 8,
-                    "fontSize": 14,
-                    "lineHeight": 20,
-                    "fontWeight": "semibold",
-                    "minWidth": 116
-                  },
-                  "variant": {
-                    "emphasis": "secondary",
-                    "width": "hug",
-                    "state": "enabled",
-                    "size": "md"
-                  },
-                  "variables": {},
-                  "text": "Hug Width"
-                },
-                {
-                  "id": "layout_16",
-                  "type": "INSTANCE",
-                  "name": "Full Width",
-                  "x": 48,
-                  "y": 40,
-                  "width": 360,
-                  "height": 48,
-                  "component": "Button",
-                  "style": {
-                    "radius": 12,
-                    "paddingX": 18,
-                    "paddingY": 13,
-                    "gap": 8,
-                    "fontSize": 16,
-                    "lineHeight": 22,
-                    "fontWeight": "semibold",
-                    "minWidth": 148
-                  },
-                  "variant": {
-                    "emphasis": "primary",
-                    "width": "full",
-                    "state": "enabled",
-                    "size": "lg"
-                  },
-                  "variables": {},
-                  "text": "Full Width"
-                },
-                {
-                  "id": "layout_17",
-                  "type": "INSTANCE",
-                  "name": "Leading Icon",
-                  "x": 48,
-                  "y": 40,
-                  "width": 116,
-                  "height": 40,
-                  "component": "Button",
-                  "style": {
-                    "radius": 10,
-                    "paddingX": 16,
-                    "paddingY": 10,
-                    "gap": 8,
-                    "fontSize": 14,
-                    "lineHeight": 20,
-                    "fontWeight": "semibold",
-                    "minWidth": 116
-                  },
-                  "variant": {
-                    "emphasis": "secondary",
-                    "width": "hug",
-                    "state": "enabled",
-                    "size": "md"
-                  },
-                  "variables": {},
-                  "text": "Leading Icon"
-                },
-                {
-                  "id": "layout_18",
                   "type": "INSTANCE",
                   "name": "Icon Only",
                   "x": 48,
@@ -433,12 +224,68 @@
                   "text": "Icon Only"
                 },
                 {
-                  "id": "layout_19",
+                  "id": "layout_11",
                   "type": "INSTANCE",
-                  "name": "Bottom CTA",
+                  "name": "Small",
                   "x": 48,
                   "y": 40,
-                  "width": 360,
+                  "width": 104,
+                  "height": 32,
+                  "component": "Button",
+                  "style": {
+                    "radius": 10,
+                    "paddingX": 14,
+                    "paddingY": 8,
+                    "gap": 8,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "semibold",
+                    "minWidth": 104
+                  },
+                  "variant": {
+                    "emphasis": "primary",
+                    "width": "hug",
+                    "state": "enabled",
+                    "size": "sm"
+                  },
+                  "variables": {},
+                  "text": "Small"
+                },
+                {
+                  "id": "layout_12",
+                  "type": "INSTANCE",
+                  "name": "Medium",
+                  "x": 48,
+                  "y": 40,
+                  "width": 116,
+                  "height": 40,
+                  "component": "Button",
+                  "style": {
+                    "radius": 10,
+                    "paddingX": 16,
+                    "paddingY": 10,
+                    "gap": 8,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "semibold",
+                    "minWidth": 116
+                  },
+                  "variant": {
+                    "emphasis": "primary",
+                    "width": "hug",
+                    "state": "enabled",
+                    "size": "md"
+                  },
+                  "variables": {},
+                  "text": "Medium"
+                },
+                {
+                  "id": "layout_13",
+                  "type": "INSTANCE",
+                  "name": "Large",
+                  "x": 48,
+                  "y": 40,
+                  "width": 148,
                   "height": 48,
                   "component": "Button",
                   "style": {
@@ -453,51 +300,109 @@
                   },
                   "variant": {
                     "emphasis": "primary",
-                    "width": "full",
+                    "width": "hug",
                     "state": "enabled",
                     "size": "lg"
                   },
                   "variables": {},
-                  "text": "Bottom CTA"
+                  "text": "Large"
                 }
               ]
             },
             {
-              "id": "layout_20",
+              "id": "layout_14",
               "type": "FRAME",
-              "name": "preview-row-3",
+              "name": "preview-row-2",
               "x": 48,
               "y": 40,
               "width": 1320,
               "height": 100,
               "children": [
                 {
-                  "id": "layout_21",
+                  "id": "layout_15",
                   "type": "INSTANCE",
-                  "name": "Danger CTA",
+                  "name": "Pressed",
                   "x": 48,
                   "y": 40,
-                  "width": 360,
-                  "height": 48,
+                  "width": 116,
+                  "height": 40,
                   "component": "Button",
                   "style": {
-                    "radius": 12,
-                    "paddingX": 18,
-                    "paddingY": 13,
+                    "radius": 10,
+                    "paddingX": 16,
+                    "paddingY": 10,
                     "gap": 8,
-                    "fontSize": 16,
-                    "lineHeight": 22,
+                    "fontSize": 14,
+                    "lineHeight": 20,
                     "fontWeight": "semibold",
-                    "minWidth": 148
+                    "minWidth": 116
                   },
                   "variant": {
-                    "emphasis": "destructive",
-                    "width": "full",
-                    "state": "enabled",
-                    "size": "lg"
+                    "emphasis": "primary",
+                    "width": "hug",
+                    "state": "pressed",
+                    "size": "md"
                   },
                   "variables": {},
-                  "text": "Danger CTA"
+                  "text": "Pressed"
+                },
+                {
+                  "id": "layout_16",
+                  "type": "INSTANCE",
+                  "name": "Disabled",
+                  "x": 48,
+                  "y": 40,
+                  "width": 116,
+                  "height": 40,
+                  "component": "Button",
+                  "style": {
+                    "radius": 10,
+                    "paddingX": 16,
+                    "paddingY": 10,
+                    "gap": 8,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "semibold",
+                    "minWidth": 116
+                  },
+                  "variant": {
+                    "emphasis": "primary",
+                    "width": "hug",
+                    "state": "disabled",
+                    "size": "md",
+                    "disabled": true
+                  },
+                  "variables": {},
+                  "text": "Disabled"
+                },
+                {
+                  "id": "layout_17",
+                  "type": "INSTANCE",
+                  "name": "Loading",
+                  "x": 48,
+                  "y": 40,
+                  "width": 116,
+                  "height": 40,
+                  "component": "Button",
+                  "style": {
+                    "radius": 10,
+                    "paddingX": 16,
+                    "paddingY": 10,
+                    "gap": 8,
+                    "fontSize": 14,
+                    "lineHeight": 20,
+                    "fontWeight": "semibold",
+                    "minWidth": 116
+                  },
+                  "variant": {
+                    "emphasis": "primary",
+                    "width": "hug",
+                    "state": "loading",
+                    "size": "md",
+                    "loading": true
+                  },
+                  "variables": {},
+                  "text": "Loading"
                 }
               ]
             }
@@ -526,7 +431,7 @@
             {
               "id": "layout_4",
               "type": "INSTANCE",
-              "name": "Primary",
+              "name": "Primary L4",
               "x": 48,
               "y": 40,
               "width": 116,
@@ -549,12 +454,12 @@
                 "size": "md"
               },
               "variables": {},
-              "text": "Primary"
+              "text": "Primary L4"
             },
             {
               "id": "layout_5",
               "type": "INSTANCE",
-              "name": "Secondary",
+              "name": "Primary L3",
               "x": 48,
               "y": 40,
               "width": 116,
@@ -577,12 +482,40 @@
                 "size": "md"
               },
               "variables": {},
-              "text": "Secondary"
+              "text": "Primary L3"
             },
             {
               "id": "layout_6",
               "type": "INSTANCE",
-              "name": "Tertiary",
+              "name": "Assistive L2",
+              "x": 48,
+              "y": 40,
+              "width": 116,
+              "height": 40,
+              "component": "Button",
+              "style": {
+                "radius": 10,
+                "paddingX": 16,
+                "paddingY": 10,
+                "gap": 8,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "semibold",
+                "minWidth": 116
+              },
+              "variant": {
+                "emphasis": "secondary",
+                "width": "hug",
+                "state": "enabled",
+                "size": "md"
+              },
+              "variables": {},
+              "text": "Assistive L2"
+            },
+            {
+              "id": "layout_7",
+              "type": "INSTANCE",
+              "name": "Assistive L1",
               "x": 48,
               "y": 40,
               "width": 116,
@@ -605,68 +538,40 @@
                 "size": "md"
               },
               "variables": {},
-              "text": "Tertiary"
-            },
-            {
-              "id": "layout_7",
-              "type": "INSTANCE",
-              "name": "Destructive",
-              "x": 48,
-              "y": 40,
-              "width": 116,
-              "height": 40,
-              "component": "Button",
-              "style": {
-                "radius": 10,
-                "paddingX": 16,
-                "paddingY": 10,
-                "gap": 8,
-                "fontSize": 14,
-                "lineHeight": 20,
-                "fontWeight": "semibold",
-                "minWidth": 116
-              },
-              "variant": {
-                "emphasis": "destructive",
-                "width": "hug",
-                "state": "enabled",
-                "size": "md"
-              },
-              "variables": {},
-              "text": "Destructive"
+              "text": "Assistive L1"
             },
             {
               "id": "layout_8",
               "type": "INSTANCE",
-              "name": "Small",
+              "name": "Label Only",
               "x": 48,
               "y": 40,
-              "width": 104,
-              "height": 32,
+              "width": 116,
+              "height": 40,
               "component": "Button",
               "style": {
                 "radius": 10,
-                "paddingX": 14,
-                "paddingY": 8,
+                "paddingX": 16,
+                "paddingY": 10,
                 "gap": 8,
                 "fontSize": 14,
                 "lineHeight": 20,
                 "fontWeight": "semibold",
-                "minWidth": 104
+                "minWidth": 116
               },
               "variant": {
                 "emphasis": "primary",
                 "width": "hug",
                 "state": "enabled",
-                "size": "sm"
+                "size": "md"
               },
               "variables": {},
-              "text": "Small"
+              "text": "Label Only"
             },
             {
               "id": "layout_9",
               "type": "INSTANCE",
-              "name": "Medium",
+              "name": "Icon + Label",
               "x": 48,
               "y": 40,
               "width": 116,
@@ -683,225 +588,16 @@
                 "minWidth": 116
               },
               "variant": {
-                "emphasis": "primary",
+                "emphasis": "secondary",
                 "width": "hug",
                 "state": "enabled",
                 "size": "md"
               },
               "variables": {},
-              "text": "Medium"
+              "text": "Icon + Label"
             },
             {
               "id": "layout_10",
-              "type": "INSTANCE",
-              "name": "Large",
-              "x": 48,
-              "y": 40,
-              "width": 148,
-              "height": 48,
-              "component": "Button",
-              "style": {
-                "radius": 12,
-                "paddingX": 18,
-                "paddingY": 13,
-                "gap": 8,
-                "fontSize": 16,
-                "lineHeight": 22,
-                "fontWeight": "semibold",
-                "minWidth": 148
-              },
-              "variant": {
-                "emphasis": "primary",
-                "width": "hug",
-                "state": "enabled",
-                "size": "lg"
-              },
-              "variables": {},
-              "text": "Large"
-            },
-            {
-              "id": "layout_11",
-              "type": "INSTANCE",
-              "name": "Pressed",
-              "x": 48,
-              "y": 40,
-              "width": 116,
-              "height": 40,
-              "component": "Button",
-              "style": {
-                "radius": 10,
-                "paddingX": 16,
-                "paddingY": 10,
-                "gap": 8,
-                "fontSize": 14,
-                "lineHeight": 20,
-                "fontWeight": "semibold",
-                "minWidth": 116
-              },
-              "variant": {
-                "emphasis": "primary",
-                "width": "hug",
-                "state": "pressed",
-                "size": "md"
-              },
-              "variables": {},
-              "text": "Pressed"
-            },
-            {
-              "id": "layout_12",
-              "type": "INSTANCE",
-              "name": "Disabled",
-              "x": 48,
-              "y": 40,
-              "width": 116,
-              "height": 40,
-              "component": "Button",
-              "style": {
-                "radius": 10,
-                "paddingX": 16,
-                "paddingY": 10,
-                "gap": 8,
-                "fontSize": 14,
-                "lineHeight": 20,
-                "fontWeight": "semibold",
-                "minWidth": 116
-              },
-              "variant": {
-                "emphasis": "primary",
-                "width": "hug",
-                "state": "disabled",
-                "size": "md",
-                "disabled": true
-              },
-              "variables": {},
-              "text": "Disabled"
-            }
-          ]
-        },
-        {
-          "id": "layout_13",
-          "type": "FRAME",
-          "name": "preview-row-2",
-          "x": 48,
-          "y": 40,
-          "width": 1320,
-          "height": 100,
-          "children": [
-            {
-              "id": "layout_14",
-              "type": "INSTANCE",
-              "name": "Loading",
-              "x": 48,
-              "y": 40,
-              "width": 116,
-              "height": 40,
-              "component": "Button",
-              "style": {
-                "radius": 10,
-                "paddingX": 16,
-                "paddingY": 10,
-                "gap": 8,
-                "fontSize": 14,
-                "lineHeight": 20,
-                "fontWeight": "semibold",
-                "minWidth": 116
-              },
-              "variant": {
-                "emphasis": "primary",
-                "width": "hug",
-                "state": "loading",
-                "size": "md",
-                "loading": true
-              },
-              "variables": {},
-              "text": "Loading"
-            },
-            {
-              "id": "layout_15",
-              "type": "INSTANCE",
-              "name": "Hug Width",
-              "x": 48,
-              "y": 40,
-              "width": 116,
-              "height": 40,
-              "component": "Button",
-              "style": {
-                "radius": 10,
-                "paddingX": 16,
-                "paddingY": 10,
-                "gap": 8,
-                "fontSize": 14,
-                "lineHeight": 20,
-                "fontWeight": "semibold",
-                "minWidth": 116
-              },
-              "variant": {
-                "emphasis": "secondary",
-                "width": "hug",
-                "state": "enabled",
-                "size": "md"
-              },
-              "variables": {},
-              "text": "Hug Width"
-            },
-            {
-              "id": "layout_16",
-              "type": "INSTANCE",
-              "name": "Full Width",
-              "x": 48,
-              "y": 40,
-              "width": 360,
-              "height": 48,
-              "component": "Button",
-              "style": {
-                "radius": 12,
-                "paddingX": 18,
-                "paddingY": 13,
-                "gap": 8,
-                "fontSize": 16,
-                "lineHeight": 22,
-                "fontWeight": "semibold",
-                "minWidth": 148
-              },
-              "variant": {
-                "emphasis": "primary",
-                "width": "full",
-                "state": "enabled",
-                "size": "lg"
-              },
-              "variables": {},
-              "text": "Full Width"
-            },
-            {
-              "id": "layout_17",
-              "type": "INSTANCE",
-              "name": "Leading Icon",
-              "x": 48,
-              "y": 40,
-              "width": 116,
-              "height": 40,
-              "component": "Button",
-              "style": {
-                "radius": 10,
-                "paddingX": 16,
-                "paddingY": 10,
-                "gap": 8,
-                "fontSize": 14,
-                "lineHeight": 20,
-                "fontWeight": "semibold",
-                "minWidth": 116
-              },
-              "variant": {
-                "emphasis": "secondary",
-                "width": "hug",
-                "state": "enabled",
-                "size": "md"
-              },
-              "variables": {},
-              "text": "Leading Icon"
-            },
-            {
-              "id": "layout_18",
               "type": "INSTANCE",
               "name": "Icon Only",
               "x": 48,
@@ -929,12 +625,68 @@
               "text": "Icon Only"
             },
             {
-              "id": "layout_19",
+              "id": "layout_11",
               "type": "INSTANCE",
-              "name": "Bottom CTA",
+              "name": "Small",
               "x": 48,
               "y": 40,
-              "width": 360,
+              "width": 104,
+              "height": 32,
+              "component": "Button",
+              "style": {
+                "radius": 10,
+                "paddingX": 14,
+                "paddingY": 8,
+                "gap": 8,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "semibold",
+                "minWidth": 104
+              },
+              "variant": {
+                "emphasis": "primary",
+                "width": "hug",
+                "state": "enabled",
+                "size": "sm"
+              },
+              "variables": {},
+              "text": "Small"
+            },
+            {
+              "id": "layout_12",
+              "type": "INSTANCE",
+              "name": "Medium",
+              "x": 48,
+              "y": 40,
+              "width": 116,
+              "height": 40,
+              "component": "Button",
+              "style": {
+                "radius": 10,
+                "paddingX": 16,
+                "paddingY": 10,
+                "gap": 8,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "semibold",
+                "minWidth": 116
+              },
+              "variant": {
+                "emphasis": "primary",
+                "width": "hug",
+                "state": "enabled",
+                "size": "md"
+              },
+              "variables": {},
+              "text": "Medium"
+            },
+            {
+              "id": "layout_13",
+              "type": "INSTANCE",
+              "name": "Large",
+              "x": 48,
+              "y": 40,
+              "width": 148,
               "height": 48,
               "component": "Button",
               "style": {
@@ -949,51 +701,109 @@
               },
               "variant": {
                 "emphasis": "primary",
-                "width": "full",
+                "width": "hug",
                 "state": "enabled",
                 "size": "lg"
               },
               "variables": {},
-              "text": "Bottom CTA"
+              "text": "Large"
             }
           ]
         },
         {
-          "id": "layout_20",
+          "id": "layout_14",
           "type": "FRAME",
-          "name": "preview-row-3",
+          "name": "preview-row-2",
           "x": 48,
           "y": 40,
           "width": 1320,
           "height": 100,
           "children": [
             {
-              "id": "layout_21",
+              "id": "layout_15",
               "type": "INSTANCE",
-              "name": "Danger CTA",
+              "name": "Pressed",
               "x": 48,
               "y": 40,
-              "width": 360,
-              "height": 48,
+              "width": 116,
+              "height": 40,
               "component": "Button",
               "style": {
-                "radius": 12,
-                "paddingX": 18,
-                "paddingY": 13,
+                "radius": 10,
+                "paddingX": 16,
+                "paddingY": 10,
                 "gap": 8,
-                "fontSize": 16,
-                "lineHeight": 22,
+                "fontSize": 14,
+                "lineHeight": 20,
                 "fontWeight": "semibold",
-                "minWidth": 148
+                "minWidth": 116
               },
               "variant": {
-                "emphasis": "destructive",
-                "width": "full",
-                "state": "enabled",
-                "size": "lg"
+                "emphasis": "primary",
+                "width": "hug",
+                "state": "pressed",
+                "size": "md"
               },
               "variables": {},
-              "text": "Danger CTA"
+              "text": "Pressed"
+            },
+            {
+              "id": "layout_16",
+              "type": "INSTANCE",
+              "name": "Disabled",
+              "x": 48,
+              "y": 40,
+              "width": 116,
+              "height": 40,
+              "component": "Button",
+              "style": {
+                "radius": 10,
+                "paddingX": 16,
+                "paddingY": 10,
+                "gap": 8,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "semibold",
+                "minWidth": 116
+              },
+              "variant": {
+                "emphasis": "primary",
+                "width": "hug",
+                "state": "disabled",
+                "size": "md",
+                "disabled": true
+              },
+              "variables": {},
+              "text": "Disabled"
+            },
+            {
+              "id": "layout_17",
+              "type": "INSTANCE",
+              "name": "Loading",
+              "x": 48,
+              "y": 40,
+              "width": 116,
+              "height": 40,
+              "component": "Button",
+              "style": {
+                "radius": 10,
+                "paddingX": 16,
+                "paddingY": 10,
+                "gap": 8,
+                "fontSize": 14,
+                "lineHeight": 20,
+                "fontWeight": "semibold",
+                "minWidth": 116
+              },
+              "variant": {
+                "emphasis": "primary",
+                "width": "hug",
+                "state": "loading",
+                "size": "md",
+                "loading": true
+              },
+              "variables": {},
+              "text": "Loading"
             }
           ]
         }
@@ -1011,7 +821,7 @@
         {
           "id": "layout_4",
           "type": "INSTANCE",
-          "name": "Primary",
+          "name": "Primary L4",
           "x": 48,
           "y": 40,
           "width": 116,
@@ -1034,12 +844,12 @@
             "size": "md"
           },
           "variables": {},
-          "text": "Primary"
+          "text": "Primary L4"
         },
         {
           "id": "layout_5",
           "type": "INSTANCE",
-          "name": "Secondary",
+          "name": "Primary L3",
           "x": 48,
           "y": 40,
           "width": 116,
@@ -1062,12 +872,40 @@
             "size": "md"
           },
           "variables": {},
-          "text": "Secondary"
+          "text": "Primary L3"
         },
         {
           "id": "layout_6",
           "type": "INSTANCE",
-          "name": "Tertiary",
+          "name": "Assistive L2",
+          "x": 48,
+          "y": 40,
+          "width": 116,
+          "height": 40,
+          "component": "Button",
+          "style": {
+            "radius": 10,
+            "paddingX": 16,
+            "paddingY": 10,
+            "gap": 8,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "semibold",
+            "minWidth": 116
+          },
+          "variant": {
+            "emphasis": "secondary",
+            "width": "hug",
+            "state": "enabled",
+            "size": "md"
+          },
+          "variables": {},
+          "text": "Assistive L2"
+        },
+        {
+          "id": "layout_7",
+          "type": "INSTANCE",
+          "name": "Assistive L1",
           "x": 48,
           "y": 40,
           "width": 116,
@@ -1090,12 +928,12 @@
             "size": "md"
           },
           "variables": {},
-          "text": "Tertiary"
+          "text": "Assistive L1"
         },
         {
-          "id": "layout_7",
+          "id": "layout_8",
           "type": "INSTANCE",
-          "name": "Destructive",
+          "name": "Label Only",
           "x": 48,
           "y": 40,
           "width": 116,
@@ -1112,16 +950,72 @@
             "minWidth": 116
           },
           "variant": {
-            "emphasis": "destructive",
+            "emphasis": "primary",
             "width": "hug",
             "state": "enabled",
             "size": "md"
           },
           "variables": {},
-          "text": "Destructive"
+          "text": "Label Only"
         },
         {
-          "id": "layout_8",
+          "id": "layout_9",
+          "type": "INSTANCE",
+          "name": "Icon + Label",
+          "x": 48,
+          "y": 40,
+          "width": 116,
+          "height": 40,
+          "component": "Button",
+          "style": {
+            "radius": 10,
+            "paddingX": 16,
+            "paddingY": 10,
+            "gap": 8,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "semibold",
+            "minWidth": 116
+          },
+          "variant": {
+            "emphasis": "secondary",
+            "width": "hug",
+            "state": "enabled",
+            "size": "md"
+          },
+          "variables": {},
+          "text": "Icon + Label"
+        },
+        {
+          "id": "layout_10",
+          "type": "INSTANCE",
+          "name": "Icon Only",
+          "x": 48,
+          "y": 40,
+          "width": 40,
+          "height": 40,
+          "component": "Button",
+          "style": {
+            "radius": 10,
+            "paddingX": 16,
+            "paddingY": 10,
+            "gap": 8,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "semibold",
+            "minWidth": 116
+          },
+          "variant": {
+            "emphasis": "tertiary",
+            "width": "hug",
+            "state": "enabled",
+            "size": "md"
+          },
+          "variables": {},
+          "text": "Icon Only"
+        },
+        {
+          "id": "layout_11",
           "type": "INSTANCE",
           "name": "Small",
           "x": 48,
@@ -1149,7 +1043,7 @@
           "text": "Small"
         },
         {
-          "id": "layout_9",
+          "id": "layout_12",
           "type": "INSTANCE",
           "name": "Medium",
           "x": 48,
@@ -1177,7 +1071,7 @@
           "text": "Medium"
         },
         {
-          "id": "layout_10",
+          "id": "layout_13",
           "type": "INSTANCE",
           "name": "Large",
           "x": 48,
@@ -1203,70 +1097,13 @@
           },
           "variables": {},
           "text": "Large"
-        },
-        {
-          "id": "layout_11",
-          "type": "INSTANCE",
-          "name": "Pressed",
-          "x": 48,
-          "y": 40,
-          "width": 116,
-          "height": 40,
-          "component": "Button",
-          "style": {
-            "radius": 10,
-            "paddingX": 16,
-            "paddingY": 10,
-            "gap": 8,
-            "fontSize": 14,
-            "lineHeight": 20,
-            "fontWeight": "semibold",
-            "minWidth": 116
-          },
-          "variant": {
-            "emphasis": "primary",
-            "width": "hug",
-            "state": "pressed",
-            "size": "md"
-          },
-          "variables": {},
-          "text": "Pressed"
-        },
-        {
-          "id": "layout_12",
-          "type": "INSTANCE",
-          "name": "Disabled",
-          "x": 48,
-          "y": 40,
-          "width": 116,
-          "height": 40,
-          "component": "Button",
-          "style": {
-            "radius": 10,
-            "paddingX": 16,
-            "paddingY": 10,
-            "gap": 8,
-            "fontSize": 14,
-            "lineHeight": 20,
-            "fontWeight": "semibold",
-            "minWidth": 116
-          },
-          "variant": {
-            "emphasis": "primary",
-            "width": "hug",
-            "state": "disabled",
-            "size": "md",
-            "disabled": true
-          },
-          "variables": {},
-          "text": "Disabled"
         }
       ]
     },
     {
       "id": "layout_4",
       "type": "INSTANCE",
-      "name": "Primary",
+      "name": "Primary L4",
       "x": 48,
       "y": 40,
       "width": 116,
@@ -1289,12 +1126,12 @@
         "size": "md"
       },
       "variables": {},
-      "text": "Primary"
+      "text": "Primary L4"
     },
     {
       "id": "layout_5",
       "type": "INSTANCE",
-      "name": "Secondary",
+      "name": "Primary L3",
       "x": 48,
       "y": 40,
       "width": 116,
@@ -1317,12 +1154,40 @@
         "size": "md"
       },
       "variables": {},
-      "text": "Secondary"
+      "text": "Primary L3"
     },
     {
       "id": "layout_6",
       "type": "INSTANCE",
-      "name": "Tertiary",
+      "name": "Assistive L2",
+      "x": 48,
+      "y": 40,
+      "width": 116,
+      "height": 40,
+      "component": "Button",
+      "style": {
+        "radius": 10,
+        "paddingX": 16,
+        "paddingY": 10,
+        "gap": 8,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "semibold",
+        "minWidth": 116
+      },
+      "variant": {
+        "emphasis": "secondary",
+        "width": "hug",
+        "state": "enabled",
+        "size": "md"
+      },
+      "variables": {},
+      "text": "Assistive L2"
+    },
+    {
+      "id": "layout_7",
+      "type": "INSTANCE",
+      "name": "Assistive L1",
       "x": 48,
       "y": 40,
       "width": 116,
@@ -1345,12 +1210,12 @@
         "size": "md"
       },
       "variables": {},
-      "text": "Tertiary"
+      "text": "Assistive L1"
     },
     {
-      "id": "layout_7",
+      "id": "layout_8",
       "type": "INSTANCE",
-      "name": "Destructive",
+      "name": "Label Only",
       "x": 48,
       "y": 40,
       "width": 116,
@@ -1367,16 +1232,72 @@
         "minWidth": 116
       },
       "variant": {
-        "emphasis": "destructive",
+        "emphasis": "primary",
         "width": "hug",
         "state": "enabled",
         "size": "md"
       },
       "variables": {},
-      "text": "Destructive"
+      "text": "Label Only"
     },
     {
-      "id": "layout_8",
+      "id": "layout_9",
+      "type": "INSTANCE",
+      "name": "Icon + Label",
+      "x": 48,
+      "y": 40,
+      "width": 116,
+      "height": 40,
+      "component": "Button",
+      "style": {
+        "radius": 10,
+        "paddingX": 16,
+        "paddingY": 10,
+        "gap": 8,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "semibold",
+        "minWidth": 116
+      },
+      "variant": {
+        "emphasis": "secondary",
+        "width": "hug",
+        "state": "enabled",
+        "size": "md"
+      },
+      "variables": {},
+      "text": "Icon + Label"
+    },
+    {
+      "id": "layout_10",
+      "type": "INSTANCE",
+      "name": "Icon Only",
+      "x": 48,
+      "y": 40,
+      "width": 40,
+      "height": 40,
+      "component": "Button",
+      "style": {
+        "radius": 10,
+        "paddingX": 16,
+        "paddingY": 10,
+        "gap": 8,
+        "fontSize": 14,
+        "lineHeight": 20,
+        "fontWeight": "semibold",
+        "minWidth": 116
+      },
+      "variant": {
+        "emphasis": "tertiary",
+        "width": "hug",
+        "state": "enabled",
+        "size": "md"
+      },
+      "variables": {},
+      "text": "Icon Only"
+    },
+    {
+      "id": "layout_11",
       "type": "INSTANCE",
       "name": "Small",
       "x": 48,
@@ -1404,7 +1325,7 @@
       "text": "Small"
     },
     {
-      "id": "layout_9",
+      "id": "layout_12",
       "type": "INSTANCE",
       "name": "Medium",
       "x": 48,
@@ -1432,7 +1353,7 @@
       "text": "Medium"
     },
     {
-      "id": "layout_10",
+      "id": "layout_13",
       "type": "INSTANCE",
       "name": "Large",
       "x": 48,
@@ -1460,7 +1381,104 @@
       "text": "Large"
     },
     {
-      "id": "layout_11",
+      "id": "layout_14",
+      "type": "FRAME",
+      "name": "preview-row-2",
+      "x": 48,
+      "y": 40,
+      "width": 1320,
+      "height": 100,
+      "children": [
+        {
+          "id": "layout_15",
+          "type": "INSTANCE",
+          "name": "Pressed",
+          "x": 48,
+          "y": 40,
+          "width": 116,
+          "height": 40,
+          "component": "Button",
+          "style": {
+            "radius": 10,
+            "paddingX": 16,
+            "paddingY": 10,
+            "gap": 8,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "semibold",
+            "minWidth": 116
+          },
+          "variant": {
+            "emphasis": "primary",
+            "width": "hug",
+            "state": "pressed",
+            "size": "md"
+          },
+          "variables": {},
+          "text": "Pressed"
+        },
+        {
+          "id": "layout_16",
+          "type": "INSTANCE",
+          "name": "Disabled",
+          "x": 48,
+          "y": 40,
+          "width": 116,
+          "height": 40,
+          "component": "Button",
+          "style": {
+            "radius": 10,
+            "paddingX": 16,
+            "paddingY": 10,
+            "gap": 8,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "semibold",
+            "minWidth": 116
+          },
+          "variant": {
+            "emphasis": "primary",
+            "width": "hug",
+            "state": "disabled",
+            "size": "md",
+            "disabled": true
+          },
+          "variables": {},
+          "text": "Disabled"
+        },
+        {
+          "id": "layout_17",
+          "type": "INSTANCE",
+          "name": "Loading",
+          "x": 48,
+          "y": 40,
+          "width": 116,
+          "height": 40,
+          "component": "Button",
+          "style": {
+            "radius": 10,
+            "paddingX": 16,
+            "paddingY": 10,
+            "gap": 8,
+            "fontSize": 14,
+            "lineHeight": 20,
+            "fontWeight": "semibold",
+            "minWidth": 116
+          },
+          "variant": {
+            "emphasis": "primary",
+            "width": "hug",
+            "state": "loading",
+            "size": "md",
+            "loading": true
+          },
+          "variables": {},
+          "text": "Loading"
+        }
+      ]
+    },
+    {
+      "id": "layout_15",
       "type": "INSTANCE",
       "name": "Pressed",
       "x": 48,
@@ -1488,7 +1506,7 @@
       "text": "Pressed"
     },
     {
-      "id": "layout_12",
+      "id": "layout_16",
       "type": "INSTANCE",
       "name": "Disabled",
       "x": 48,
@@ -1517,187 +1535,7 @@
       "text": "Disabled"
     },
     {
-      "id": "layout_13",
-      "type": "FRAME",
-      "name": "preview-row-2",
-      "x": 48,
-      "y": 40,
-      "width": 1320,
-      "height": 100,
-      "children": [
-        {
-          "id": "layout_14",
-          "type": "INSTANCE",
-          "name": "Loading",
-          "x": 48,
-          "y": 40,
-          "width": 116,
-          "height": 40,
-          "component": "Button",
-          "style": {
-            "radius": 10,
-            "paddingX": 16,
-            "paddingY": 10,
-            "gap": 8,
-            "fontSize": 14,
-            "lineHeight": 20,
-            "fontWeight": "semibold",
-            "minWidth": 116
-          },
-          "variant": {
-            "emphasis": "primary",
-            "width": "hug",
-            "state": "loading",
-            "size": "md",
-            "loading": true
-          },
-          "variables": {},
-          "text": "Loading"
-        },
-        {
-          "id": "layout_15",
-          "type": "INSTANCE",
-          "name": "Hug Width",
-          "x": 48,
-          "y": 40,
-          "width": 116,
-          "height": 40,
-          "component": "Button",
-          "style": {
-            "radius": 10,
-            "paddingX": 16,
-            "paddingY": 10,
-            "gap": 8,
-            "fontSize": 14,
-            "lineHeight": 20,
-            "fontWeight": "semibold",
-            "minWidth": 116
-          },
-          "variant": {
-            "emphasis": "secondary",
-            "width": "hug",
-            "state": "enabled",
-            "size": "md"
-          },
-          "variables": {},
-          "text": "Hug Width"
-        },
-        {
-          "id": "layout_16",
-          "type": "INSTANCE",
-          "name": "Full Width",
-          "x": 48,
-          "y": 40,
-          "width": 360,
-          "height": 48,
-          "component": "Button",
-          "style": {
-            "radius": 12,
-            "paddingX": 18,
-            "paddingY": 13,
-            "gap": 8,
-            "fontSize": 16,
-            "lineHeight": 22,
-            "fontWeight": "semibold",
-            "minWidth": 148
-          },
-          "variant": {
-            "emphasis": "primary",
-            "width": "full",
-            "state": "enabled",
-            "size": "lg"
-          },
-          "variables": {},
-          "text": "Full Width"
-        },
-        {
-          "id": "layout_17",
-          "type": "INSTANCE",
-          "name": "Leading Icon",
-          "x": 48,
-          "y": 40,
-          "width": 116,
-          "height": 40,
-          "component": "Button",
-          "style": {
-            "radius": 10,
-            "paddingX": 16,
-            "paddingY": 10,
-            "gap": 8,
-            "fontSize": 14,
-            "lineHeight": 20,
-            "fontWeight": "semibold",
-            "minWidth": 116
-          },
-          "variant": {
-            "emphasis": "secondary",
-            "width": "hug",
-            "state": "enabled",
-            "size": "md"
-          },
-          "variables": {},
-          "text": "Leading Icon"
-        },
-        {
-          "id": "layout_18",
-          "type": "INSTANCE",
-          "name": "Icon Only",
-          "x": 48,
-          "y": 40,
-          "width": 40,
-          "height": 40,
-          "component": "Button",
-          "style": {
-            "radius": 10,
-            "paddingX": 16,
-            "paddingY": 10,
-            "gap": 8,
-            "fontSize": 14,
-            "lineHeight": 20,
-            "fontWeight": "semibold",
-            "minWidth": 116
-          },
-          "variant": {
-            "emphasis": "tertiary",
-            "width": "hug",
-            "state": "enabled",
-            "size": "md"
-          },
-          "variables": {},
-          "text": "Icon Only"
-        },
-        {
-          "id": "layout_19",
-          "type": "INSTANCE",
-          "name": "Bottom CTA",
-          "x": 48,
-          "y": 40,
-          "width": 360,
-          "height": 48,
-          "component": "Button",
-          "style": {
-            "radius": 12,
-            "paddingX": 18,
-            "paddingY": 13,
-            "gap": 8,
-            "fontSize": 16,
-            "lineHeight": 22,
-            "fontWeight": "semibold",
-            "minWidth": 148
-          },
-          "variant": {
-            "emphasis": "primary",
-            "width": "full",
-            "state": "enabled",
-            "size": "lg"
-          },
-          "variables": {},
-          "text": "Bottom CTA"
-        }
-      ]
-    },
-    {
-      "id": "layout_14",
+      "id": "layout_17",
       "type": "INSTANCE",
       "name": "Loading",
       "x": 48,
@@ -1724,213 +1562,6 @@
       },
       "variables": {},
       "text": "Loading"
-    },
-    {
-      "id": "layout_15",
-      "type": "INSTANCE",
-      "name": "Hug Width",
-      "x": 48,
-      "y": 40,
-      "width": 116,
-      "height": 40,
-      "component": "Button",
-      "style": {
-        "radius": 10,
-        "paddingX": 16,
-        "paddingY": 10,
-        "gap": 8,
-        "fontSize": 14,
-        "lineHeight": 20,
-        "fontWeight": "semibold",
-        "minWidth": 116
-      },
-      "variant": {
-        "emphasis": "secondary",
-        "width": "hug",
-        "state": "enabled",
-        "size": "md"
-      },
-      "variables": {},
-      "text": "Hug Width"
-    },
-    {
-      "id": "layout_16",
-      "type": "INSTANCE",
-      "name": "Full Width",
-      "x": 48,
-      "y": 40,
-      "width": 360,
-      "height": 48,
-      "component": "Button",
-      "style": {
-        "radius": 12,
-        "paddingX": 18,
-        "paddingY": 13,
-        "gap": 8,
-        "fontSize": 16,
-        "lineHeight": 22,
-        "fontWeight": "semibold",
-        "minWidth": 148
-      },
-      "variant": {
-        "emphasis": "primary",
-        "width": "full",
-        "state": "enabled",
-        "size": "lg"
-      },
-      "variables": {},
-      "text": "Full Width"
-    },
-    {
-      "id": "layout_17",
-      "type": "INSTANCE",
-      "name": "Leading Icon",
-      "x": 48,
-      "y": 40,
-      "width": 116,
-      "height": 40,
-      "component": "Button",
-      "style": {
-        "radius": 10,
-        "paddingX": 16,
-        "paddingY": 10,
-        "gap": 8,
-        "fontSize": 14,
-        "lineHeight": 20,
-        "fontWeight": "semibold",
-        "minWidth": 116
-      },
-      "variant": {
-        "emphasis": "secondary",
-        "width": "hug",
-        "state": "enabled",
-        "size": "md"
-      },
-      "variables": {},
-      "text": "Leading Icon"
-    },
-    {
-      "id": "layout_18",
-      "type": "INSTANCE",
-      "name": "Icon Only",
-      "x": 48,
-      "y": 40,
-      "width": 40,
-      "height": 40,
-      "component": "Button",
-      "style": {
-        "radius": 10,
-        "paddingX": 16,
-        "paddingY": 10,
-        "gap": 8,
-        "fontSize": 14,
-        "lineHeight": 20,
-        "fontWeight": "semibold",
-        "minWidth": 116
-      },
-      "variant": {
-        "emphasis": "tertiary",
-        "width": "hug",
-        "state": "enabled",
-        "size": "md"
-      },
-      "variables": {},
-      "text": "Icon Only"
-    },
-    {
-      "id": "layout_19",
-      "type": "INSTANCE",
-      "name": "Bottom CTA",
-      "x": 48,
-      "y": 40,
-      "width": 360,
-      "height": 48,
-      "component": "Button",
-      "style": {
-        "radius": 12,
-        "paddingX": 18,
-        "paddingY": 13,
-        "gap": 8,
-        "fontSize": 16,
-        "lineHeight": 22,
-        "fontWeight": "semibold",
-        "minWidth": 148
-      },
-      "variant": {
-        "emphasis": "primary",
-        "width": "full",
-        "state": "enabled",
-        "size": "lg"
-      },
-      "variables": {},
-      "text": "Bottom CTA"
-    },
-    {
-      "id": "layout_20",
-      "type": "FRAME",
-      "name": "preview-row-3",
-      "x": 48,
-      "y": 40,
-      "width": 1320,
-      "height": 100,
-      "children": [
-        {
-          "id": "layout_21",
-          "type": "INSTANCE",
-          "name": "Danger CTA",
-          "x": 48,
-          "y": 40,
-          "width": 360,
-          "height": 48,
-          "component": "Button",
-          "style": {
-            "radius": 12,
-            "paddingX": 18,
-            "paddingY": 13,
-            "gap": 8,
-            "fontSize": 16,
-            "lineHeight": 22,
-            "fontWeight": "semibold",
-            "minWidth": 148
-          },
-          "variant": {
-            "emphasis": "destructive",
-            "width": "full",
-            "state": "enabled",
-            "size": "lg"
-          },
-          "variables": {},
-          "text": "Danger CTA"
-        }
-      ]
-    },
-    {
-      "id": "layout_21",
-      "type": "INSTANCE",
-      "name": "Danger CTA",
-      "x": 48,
-      "y": 40,
-      "width": 360,
-      "height": 48,
-      "component": "Button",
-      "style": {
-        "radius": 12,
-        "paddingX": 18,
-        "paddingY": 13,
-        "gap": 8,
-        "fontSize": 16,
-        "lineHeight": 22,
-        "fontWeight": "semibold",
-        "minWidth": 148
-      },
-      "variant": {
-        "emphasis": "destructive",
-        "width": "full",
-        "state": "enabled",
-        "size": "lg"
-      },
-      "variables": {},
-      "text": "Danger CTA"
     }
   ],
   "styles": {
@@ -1967,13 +1598,13 @@
     "layout_7.fontWeight": "semibold",
     "layout_7.minWidth": "116",
     "layout_8.radius": "10",
-    "layout_8.paddingX": "14",
-    "layout_8.paddingY": "8",
+    "layout_8.paddingX": "16",
+    "layout_8.paddingY": "10",
     "layout_8.gap": "8",
     "layout_8.fontSize": "14",
     "layout_8.lineHeight": "20",
     "layout_8.fontWeight": "semibold",
-    "layout_8.minWidth": "104",
+    "layout_8.minWidth": "116",
     "layout_9.radius": "10",
     "layout_9.paddingX": "16",
     "layout_9.paddingY": "10",
@@ -1982,22 +1613,22 @@
     "layout_9.lineHeight": "20",
     "layout_9.fontWeight": "semibold",
     "layout_9.minWidth": "116",
-    "layout_10.radius": "12",
-    "layout_10.paddingX": "18",
-    "layout_10.paddingY": "13",
+    "layout_10.radius": "10",
+    "layout_10.paddingX": "16",
+    "layout_10.paddingY": "10",
     "layout_10.gap": "8",
-    "layout_10.fontSize": "16",
-    "layout_10.lineHeight": "22",
+    "layout_10.fontSize": "14",
+    "layout_10.lineHeight": "20",
     "layout_10.fontWeight": "semibold",
-    "layout_10.minWidth": "148",
+    "layout_10.minWidth": "116",
     "layout_11.radius": "10",
-    "layout_11.paddingX": "16",
-    "layout_11.paddingY": "10",
+    "layout_11.paddingX": "14",
+    "layout_11.paddingY": "8",
     "layout_11.gap": "8",
     "layout_11.fontSize": "14",
     "layout_11.lineHeight": "20",
     "layout_11.fontWeight": "semibold",
-    "layout_11.minWidth": "116",
+    "layout_11.minWidth": "104",
     "layout_12.radius": "10",
     "layout_12.paddingX": "16",
     "layout_12.paddingY": "10",
@@ -2006,14 +1637,14 @@
     "layout_12.lineHeight": "20",
     "layout_12.fontWeight": "semibold",
     "layout_12.minWidth": "116",
-    "layout_14.radius": "10",
-    "layout_14.paddingX": "16",
-    "layout_14.paddingY": "10",
-    "layout_14.gap": "8",
-    "layout_14.fontSize": "14",
-    "layout_14.lineHeight": "20",
-    "layout_14.fontWeight": "semibold",
-    "layout_14.minWidth": "116",
+    "layout_13.radius": "12",
+    "layout_13.paddingX": "18",
+    "layout_13.paddingY": "13",
+    "layout_13.gap": "8",
+    "layout_13.fontSize": "16",
+    "layout_13.lineHeight": "22",
+    "layout_13.fontWeight": "semibold",
+    "layout_13.minWidth": "148",
     "layout_15.radius": "10",
     "layout_15.paddingX": "16",
     "layout_15.paddingY": "10",
@@ -2022,14 +1653,14 @@
     "layout_15.lineHeight": "20",
     "layout_15.fontWeight": "semibold",
     "layout_15.minWidth": "116",
-    "layout_16.radius": "12",
-    "layout_16.paddingX": "18",
-    "layout_16.paddingY": "13",
+    "layout_16.radius": "10",
+    "layout_16.paddingX": "16",
+    "layout_16.paddingY": "10",
     "layout_16.gap": "8",
-    "layout_16.fontSize": "16",
-    "layout_16.lineHeight": "22",
+    "layout_16.fontSize": "14",
+    "layout_16.lineHeight": "20",
     "layout_16.fontWeight": "semibold",
-    "layout_16.minWidth": "148",
+    "layout_16.minWidth": "116",
     "layout_17.radius": "10",
     "layout_17.paddingX": "16",
     "layout_17.paddingY": "10",
@@ -2037,31 +1668,7 @@
     "layout_17.fontSize": "14",
     "layout_17.lineHeight": "20",
     "layout_17.fontWeight": "semibold",
-    "layout_17.minWidth": "116",
-    "layout_18.radius": "10",
-    "layout_18.paddingX": "16",
-    "layout_18.paddingY": "10",
-    "layout_18.gap": "8",
-    "layout_18.fontSize": "14",
-    "layout_18.lineHeight": "20",
-    "layout_18.fontWeight": "semibold",
-    "layout_18.minWidth": "116",
-    "layout_19.radius": "12",
-    "layout_19.paddingX": "18",
-    "layout_19.paddingY": "13",
-    "layout_19.gap": "8",
-    "layout_19.fontSize": "16",
-    "layout_19.lineHeight": "22",
-    "layout_19.fontWeight": "semibold",
-    "layout_19.minWidth": "148",
-    "layout_21.radius": "12",
-    "layout_21.paddingX": "18",
-    "layout_21.paddingY": "13",
-    "layout_21.gap": "8",
-    "layout_21.fontSize": "16",
-    "layout_21.lineHeight": "22",
-    "layout_21.fontWeight": "semibold",
-    "layout_21.minWidth": "148"
+    "layout_17.minWidth": "116"
   },
   "variables": {},
   "components": {
@@ -2083,7 +1690,7 @@
     },
     "layout_6": {
       "variants": {
-        "emphasis": "tertiary",
+        "emphasis": "secondary",
         "width": "hug",
         "state": "enabled",
         "size": "md"
@@ -2091,7 +1698,7 @@
     },
     "layout_7": {
       "variants": {
-        "emphasis": "destructive",
+        "emphasis": "tertiary",
         "width": "hug",
         "state": "enabled",
         "size": "md"
@@ -2102,12 +1709,12 @@
         "emphasis": "primary",
         "width": "hug",
         "state": "enabled",
-        "size": "sm"
+        "size": "md"
       }
     },
     "layout_9": {
       "variants": {
-        "emphasis": "primary",
+        "emphasis": "secondary",
         "width": "hug",
         "state": "enabled",
         "size": "md"
@@ -2115,13 +1722,37 @@
     },
     "layout_10": {
       "variants": {
+        "emphasis": "tertiary",
+        "width": "hug",
+        "state": "enabled",
+        "size": "md"
+      }
+    },
+    "layout_11": {
+      "variants": {
+        "emphasis": "primary",
+        "width": "hug",
+        "state": "enabled",
+        "size": "sm"
+      }
+    },
+    "layout_12": {
+      "variants": {
+        "emphasis": "primary",
+        "width": "hug",
+        "state": "enabled",
+        "size": "md"
+      }
+    },
+    "layout_13": {
+      "variants": {
         "emphasis": "primary",
         "width": "hug",
         "state": "enabled",
         "size": "lg"
       }
     },
-    "layout_11": {
+    "layout_15": {
       "variants": {
         "emphasis": "primary",
         "width": "hug",
@@ -2129,7 +1760,7 @@
         "size": "md"
       }
     },
-    "layout_12": {
+    "layout_16": {
       "variants": {
         "emphasis": "primary",
         "width": "hug",
@@ -2138,61 +1769,13 @@
         "disabled": true
       }
     },
-    "layout_14": {
+    "layout_17": {
       "variants": {
         "emphasis": "primary",
         "width": "hug",
         "state": "loading",
         "size": "md",
         "loading": true
-      }
-    },
-    "layout_15": {
-      "variants": {
-        "emphasis": "secondary",
-        "width": "hug",
-        "state": "enabled",
-        "size": "md"
-      }
-    },
-    "layout_16": {
-      "variants": {
-        "emphasis": "primary",
-        "width": "full",
-        "state": "enabled",
-        "size": "lg"
-      }
-    },
-    "layout_17": {
-      "variants": {
-        "emphasis": "secondary",
-        "width": "hug",
-        "state": "enabled",
-        "size": "md"
-      }
-    },
-    "layout_18": {
-      "variants": {
-        "emphasis": "tertiary",
-        "width": "hug",
-        "state": "enabled",
-        "size": "md"
-      }
-    },
-    "layout_19": {
-      "variants": {
-        "emphasis": "primary",
-        "width": "full",
-        "state": "enabled",
-        "size": "lg"
-      }
-    },
-    "layout_21": {
-      "variants": {
-        "emphasis": "destructive",
-        "width": "full",
-        "state": "enabled",
-        "size": "lg"
       }
     }
   }

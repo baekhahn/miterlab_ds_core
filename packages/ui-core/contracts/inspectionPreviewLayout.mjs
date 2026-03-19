@@ -13,6 +13,8 @@ const ITEM_GAP = 14;
 const WRAP_GAP = 12;
 
 const axisTitle = (axis) => {
+  if (axis === "hierarchy") return "Hierarchy";
+  if (axis === "content") return "Content";
   if (axis === "emphasis") return "Emphasis";
   if (axis === "intent") return "Intent";
   if (axis === "size") return "Size";

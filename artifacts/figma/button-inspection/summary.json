@@ -4,8 +4,8 @@
   "sectionsCreated": [
     "preview"
   ],
-  "componentCount": 16,
-  "nodeCount": 21,
+  "componentCount": 13,
+  "nodeCount": 17,
   "warnings": [
     "No variable bindings found in payload.variables"
   ],
