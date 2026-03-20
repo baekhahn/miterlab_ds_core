@@ -19,6 +19,7 @@ module.exports = {
         {
           type: "category",
           label: "Component Contracts",
+          collapsed: false,
           items: [
             { type: "doc", id: "contracts/component-contracts/button", label: "Button" },
             { type: "doc", id: "contracts/component-contracts/input", label: "Input" },
@@ -30,6 +31,7 @@ module.exports = {
         {
           type: "category",
           label: "Module Contracts",
+          collapsed: false,
           items: [
             { type: "doc", id: "contracts/module-contracts/form-field", label: "FormField" },
             { type: "doc", id: "contracts/module-contracts/search-bar", label: "SearchBar" },
@@ -42,6 +44,7 @@ module.exports = {
         {
           type: "category",
           label: "Pattern Contracts",
+          collapsed: false,
           items: [
             { type: "doc", id: "contracts/pattern-contracts/login-form", label: "Login Form" },
             { type: "doc", id: "contracts/pattern-contracts/search-result-screen", label: "Search Result Screen" },

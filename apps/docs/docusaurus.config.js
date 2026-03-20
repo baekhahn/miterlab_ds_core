@@ -18,6 +18,12 @@ const config = {
     defaultLocale: "en",
     locales: ["en"]
   },
+  scripts: [
+    {
+      src: "/js/navbar-active-fix.js",
+      defer: true
+    }
+  ],
   presets: [
     [
       "classic",
@@ -36,11 +42,26 @@ const config = {
     ]
   ],
   themeConfig: {
+    docs: {
+      sidebar: {
+        autoCollapseCategories: false
+      }
+    },
     navbar: {
       title: "MADS (Miterlab AI Design System)",
       items: [
-        { to: "/", label: "Docs", position: "left" },
-        { to: "/extracted", label: "Extracted", position: "left" }
+        {
+          to: "/",
+          label: "Docs",
+          position: "left",
+          activeBaseRegex: "^/(?!extracted(?:/|$)).*"
+        },
+        {
+          to: "/extracted",
+          label: "Extracted",
+          position: "left",
+          activeBasePath: "/extracted"
+        }
       ]
     }
   }

@@ -143,7 +143,6 @@ Typography token은 텍스트 역할을 공통 scale로 고정합니다.
 
 기본 서체 기준:
 - `Pretendard` 계열을 기본으로 사용합니다.
-- locale에 따라 `Pretendard`, `Pretendard JP`, variable 계열의 우선순위를 조정할 수 있습니다.
 
 줄바꿈 규칙:
 - 한글은 `단어 개행`을 기본 규칙으로 사용합니다.
