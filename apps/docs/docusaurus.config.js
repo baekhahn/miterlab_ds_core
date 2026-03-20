@@ -42,6 +42,10 @@ const config = {
     ]
   ],
   themeConfig: {
+    tableOfContents: {
+      minHeadingLevel: 2,
+      maxHeadingLevel: 2
+    },
     docs: {
       sidebar: {
         autoCollapseCategories: false

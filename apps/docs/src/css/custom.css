@@ -13,8 +13,8 @@
   --ifm-color-content: #2e2f33;
   --ifm-color-content-secondary: #70737c;
   --ifm-navbar-link-color: #666666;
-  --ifm-navbar-link-hover-color: #171719;
-  --ifm-navbar-link-active-color: #171719;
+  --ifm-navbar-link-hover-color: #000000;
+  --ifm-navbar-link-active-color: #000000;
   --ifm-toc-border-color: #eaebec;
   --ifm-table-border-color: #eaebec;
   --ifm-hr-border-color: #eaebec;
@@ -424,12 +424,12 @@ main article table td {
 }
 
 .navbar .navbar__item.navbar__link:hover {
-  color: #171719 !important;
+  color: #000000 !important;
 }
 
 .navbar .navbar__item.navbar__link.navbar__link--active,
 .navbar .navbar__item.navbar__link[aria-current="page"] {
-  color: #171719 !important;
+  color: #000000 !important;
   font-weight: 600 !important;
 }
 
@@ -457,7 +457,19 @@ main article table td {
 .theme-doc-sidebar-menu .menu__link--active,
 .theme-doc-sidebar-menu .menu__link[aria-current="page"],
 .theme-doc-sidebar-menu .menu__link[aria-expanded="true"] {
-  color: #171719 !important;
+  color: #000000 !important;
+}
+
+.theme-doc-sidebar-menu .menu__link--active,
+.theme-doc-sidebar-menu .menu__link--active .linkLabel_PuAu,
+.theme-doc-sidebar-menu .menu__link--active .categoryLinkLabel_Oe72,
+.theme-doc-sidebar-menu .menu__link[aria-current="page"],
+.theme-doc-sidebar-menu .menu__link[aria-current="page"] .linkLabel_PuAu,
+.theme-doc-sidebar-menu .menu__link[aria-current="page"] .categoryLinkLabel_Oe72,
+.theme-doc-sidebar-menu .menu__link[aria-expanded="true"],
+.theme-doc-sidebar-menu .menu__link[aria-expanded="true"] .linkLabel_PuAu,
+.theme-doc-sidebar-menu .menu__link[aria-expanded="true"] .categoryLinkLabel_Oe72 {
+  color: #000000 !important;
 }
 
 .table-of-contents .table-of-contents__link {
@@ -466,7 +478,7 @@ main article table td {
 
 .table-of-contents .table-of-contents__link:hover,
 .table-of-contents .table-of-contents__link--active {
-  color: #171719 !important;
+  color: #000000 !important;
 }
 
 [data-theme="dark"] .theme-doc-sidebar-menu .menu__link,
@@ -488,5 +500,15 @@ main article table td {
 
 [data-theme="dark"] .table-of-contents .table-of-contents__link:hover,
 [data-theme="dark"] .table-of-contents .table-of-contents__link--active {
+  color: #ffffff !important;
+}
+
+.table-of-contents a.table-of-contents__link:hover,
+.table-of-contents a.table-of-contents__link--active {
+  color: #000000 !important;
+}
+
+[data-theme="dark"] .table-of-contents a.table-of-contents__link:hover,
+[data-theme="dark"] .table-of-contents a.table-of-contents__link--active {
   color: #ffffff !important;
 }
