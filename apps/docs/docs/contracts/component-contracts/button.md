@@ -25,20 +25,17 @@ Button은 정보 표시용 요소가 아니라, 행동을 유도하는 요소입
 
 ## Anatomy
 
-Button은 아래 slot으로 구성합니다.
+Anatomy는 대표 Button의 기본 구조를 설명합니다.
+즉 variation이 적용되기 전, Button이 공통으로 가지는 기본 slot 구조입니다.
 
 ![Button anatomy preview](/previews/button-anatomy.svg)
 
-- `leading icon`
-- `label`
-- `trailing icon`
-- `container`
-
-### Anatomy Compositions
-
-- `label only`
-- `icon + label`
-- `icon only`
+| Slot | Role | Required |
+| --- | --- | --- |
+| `container` | 터치 영역과 시각적 버튼 shell | yes |
+| `label` | 액션 이름을 전달하는 기본 텍스트 | yes |
+| `leading icon` | label 앞의 보조 시각 단서 | no |
+| `trailing icon` | label 뒤의 보조 시각 단서 | no |
 
 ### Required Slots
 
@@ -53,8 +50,7 @@ Button은 아래 slot으로 구성합니다.
 ### Composition Rules
 
 - 기본 button은 `container + label`로 구성합니다.
-- leading icon variant는 `leading icon + label`을 사용합니다.
-- trailing icon variant는 `label + trailing icon`을 사용합니다.
+- variation에 따라 `leading icon`, `trailing icon`, `icon only` 구성이 파생됩니다.
 - icon only variant는 시각적 label 없이 렌더할 수 있지만, accessible name은 반드시 필요합니다.
 - 하나의 button 안에 leading icon과 trailing icon을 동시에 기본값으로 두지 않습니다.
 
@@ -62,6 +58,7 @@ Button은 아래 slot으로 구성합니다.
 
 - loading indicator는 상태 표현 요소이며, 기본 anatomy slot으로 보지 않습니다.
 - interaction surface는 container의 상호작용 속성으로 다루고, 별도 visual slot으로 분리하지 않습니다.
+- 즉 Anatomy는 기본 구조 설명이고, 실제 조합 차이는 아래 variation matrix에서 다룹니다.
 
 ## Preview
 
@@ -93,59 +90,39 @@ Button은 다음을 분명히 보여야 합니다.
 
 현재 Button은 `Hierarchy Preset` 중심으로 읽는 편이 가장 명확합니다.
 
-- `primary level.4`
-- `primary level.3`
-- `assistive level.2`
-- `assistive level.1`
-- `destructive`
+| Preset | Meaning | Visual Form |
+| --- | --- | --- |
+| `primary level.4` | 현재 문맥에서 가장 중요한 메인 액션 | `solid primary` |
+| `primary level.3` | primary를 보조하는 대체 액션 | `outlined primary` |
+| `assistive level.2` | 토글이나 보조 액션을 지원하는 액션 | `soft filled assistive` |
+| `assistive level.1` | 닫기, 취소, 돌아가기 같은 낮은 강조 액션 | `outlined assistive` 또는 `text-like low emphasis` |
+| `destructive` | 데이터 손실 또는 되돌리기 어려운 위험 액션 | `destructive emphasis` |
 
 각 preset은 단순 의미 레벨만이 아니라, 실제 버튼 형태까지 함께 포함합니다.
 
-예:
-- `primary level.4` = solid primary
-- `primary level.3` = outlined primary
-- `assistive level.2` = soft filled assistive
-- `assistive level.1` = outlined assistive 또는 text-like low emphasis
-
 즉 현재 Button은 `hierarchy`가 기본 형태를 결정하는 preset 축입니다.
 
-## Content Options
+## Variation
 
-### Content
+Button의 실제 variation은 기본 anatomy 위에 여러 axis가 적용되며 결정됩니다.
+이 axis는 Figma component property와도 직접 연결되는 기준입니다.
 
-- `label only`
-- `icon + label`
-- `icon only`
-
-이 axis는 버튼 내부 콘텐츠 조합을 정합니다.
-
-### Size
-
-- `sm`
-- `md`
-- `lg`
-
-### State
-
-- `enabled`
-- `pressed`
-- `disabled`
-- `loading`
-
-### Width
-
-- `hug`
-- `full`
-
-## Preset Reading Rule
+| Axis | Options | Meaning | Figma Component Relation |
+| --- | --- | --- | --- |
+| `hierarchy preset` | `primary level.4`, `primary level.3`, `assistive level.2`, `assistive level.1`, `destructive` | 버튼의 의미 우선순위와 기본 형태를 함께 결정합니다. | 주요 component preset 또는 variant 조합과 연결됩니다. |
+| `content` | `label only`, `leading icon + label`, `trailing icon + label`, `icon only` | 기본 anatomy slot을 어떤 조합으로 노출할지 결정합니다. | icon option, content-related property와 연결됩니다. |
+| `size` | `sm`, `md`, `lg` | 밀도와 control height를 결정합니다. | size property와 연결됩니다. |
+| `state` | `enabled`, `pressed`, `disabled`, `loading` | 상호작용과 비활성/진행 상태를 결정합니다. | state property와 연결됩니다. |
+| `width` | `hug`, `full` | 버튼의 레이아웃 점유 방식을 결정합니다. | layout option 또는 frame usage와 연결됩니다. |
 
 실제 버튼은 아래 순서로 읽습니다.
 
-1. hierarchy preset을 먼저 정합니다.
-2. content option을 선택합니다.
-3. size, width, state를 적용합니다.
+1. 기본 anatomy를 전제로 합니다.
+2. `hierarchy preset`이 의미와 기본 형태를 결정합니다.
+3. `content`가 어떤 slot 조합을 노출할지 결정합니다.
+4. `size`, `state`, `width`가 최종 렌더 조건을 결정합니다.
 
-즉 현재 Button은 `variant -> color`보다 `hierarchy preset -> content -> size/state` 순서로 읽는 편이 더 자연스럽습니다.
+즉 현재 Button은 `hierarchy preset -> content -> size/state/width` 순서로 읽는 편이 가장 자연스럽습니다.
 
 ## Icon Only Sizing Rule
 
@@ -280,15 +257,48 @@ Button은 Module 안에서 자주 사용되지만, Module 자체가 되지는 �
 - assistive와 outlined는 샘플용 대비보다 실제 제품 화면에서의 안정감을 우선합니다.
 - radius와 spacing은 과장된 showcase보다 실사용 밀도에 맞춥니다.
 
-## Palette
+## Color Mapping
 
-현재 Button palette는 raw 색이 아니라 Foundation semantic token에서 파생합니다.
+Palette는 별도 시각 기준이 아니라, Foundation token이 Button의 실제 시각 역할에 어떻게 매핑되는지 보여주는 확인용 섹션입니다.
 
-| Variant | Color | Fill | Stroke | Text | Pressed Fill | Pressed Stroke |
-| --- | --- | --- | --- | --- | --- | --- |
-| `solid` | `primary` | `#1A75FF` | `transparent` | `#FFFFFF` | `#0066FF` | `transparent` |
-| `solid` | `destructive` | `#FF4242` | `transparent` | `#FFFFFF` | `#E52222` | `transparent` |
-| `outlined` | `assistive` | `#FFFFFF` | `#E1E2E4` | `#171719` | `#F7F7F8` | `#EAEBEC` |
-| `outlined` | `primary` | `#FFFFFF` | `#1A75FF` | `#1A75FF` | `#F7F7F8` | `#0066FF` |
-| `outlined` | `destructive` | `#FFFFFF` | `#FF4242` | `#FF4242` | `#FFF1F1` | `#E52222` |
-| `disabled` | `all` | `#F4F4F5` | `#E1E2E4` | `#989BA2` | - | - |
+### `solid / primary`
+
+- `default fill`: <span className="foundation-chip" style={{ backgroundColor: "#1A75FF", borderColor: "#E1E2E4" }} /> `semantic-primary-strong` `#1A75FF`
+- `pressed fill`: <span className="foundation-chip" style={{ backgroundColor: "#0066FF", borderColor: "#E1E2E4" }} /> `semantic-primary-heavy` `#0066FF`
+- `text`: <span className="foundation-chip" style={{ backgroundColor: "#FFFFFF", borderColor: "#E1E2E4" }} /> `text.inverse` `#FFFFFF`
+
+### `solid / destructive`
+
+- `default fill`: <span className="foundation-chip" style={{ backgroundColor: "#FF4242", borderColor: "#E1E2E4" }} /> `semantic-status-negative` `#FF4242`
+- `pressed fill`: <span className="foundation-chip" style={{ backgroundColor: "#E52222", borderColor: "#E1E2E4" }} /> `status.dangerPressed` `#E52222`
+- `text`: <span className="foundation-chip" style={{ backgroundColor: "#FFFFFF", borderColor: "#E1E2E4" }} /> `text.inverse` `#FFFFFF`
+
+### `outlined / assistive`
+
+- `default fill`: <span className="foundation-chip" style={{ backgroundColor: "#FFFFFF", borderColor: "#E1E2E4" }} /> `background.elevated` `#FFFFFF`
+- `default stroke`: <span className="foundation-chip" style={{ backgroundColor: "#E1E2E4", borderColor: "#D0D4DA" }} /> `line.solidNormal` `#E1E2E4`
+- `pressed fill`: <span className="foundation-chip" style={{ backgroundColor: "#F7F7F8", borderColor: "#E1E2E4" }} /> `background.alternative` `#F7F7F8`
+- `pressed stroke`: <span className="foundation-chip" style={{ backgroundColor: "#EAEBEC", borderColor: "#D0D4DA" }} /> `line.solidNeutral` `#EAEBEC`
+- `text`: <span className="foundation-chip" style={{ backgroundColor: "#171719", borderColor: "#E1E2E4" }} /> `label.normal` `#171719`
+
+### `outlined / primary`
+
+- `default fill`: <span className="foundation-chip" style={{ backgroundColor: "#FFFFFF", borderColor: "#E1E2E4" }} /> `background.elevated` `#FFFFFF`
+- `default stroke`: <span className="foundation-chip" style={{ backgroundColor: "#1A75FF", borderColor: "#E1E2E4" }} /> `semantic-primary-strong` `#1A75FF`
+- `pressed fill`: <span className="foundation-chip" style={{ backgroundColor: "#F7F7F8", borderColor: "#E1E2E4" }} /> `background.alternative` `#F7F7F8`
+- `pressed stroke`: <span className="foundation-chip" style={{ backgroundColor: "#0066FF", borderColor: "#E1E2E4" }} /> `semantic-primary-heavy` `#0066FF`
+- `text`: <span className="foundation-chip" style={{ backgroundColor: "#1A75FF", borderColor: "#E1E2E4" }} /> `semantic-primary-strong` `#1A75FF`
+
+### `outlined / destructive`
+
+- `default fill`: <span className="foundation-chip" style={{ backgroundColor: "#FFFFFF", borderColor: "#E1E2E4" }} /> `background.elevated` `#FFFFFF`
+- `default stroke`: <span className="foundation-chip" style={{ backgroundColor: "#FF4242", borderColor: "#E1E2E4" }} /> `semantic-status-negative` `#FF4242`
+- `pressed fill`: <span className="foundation-chip" style={{ backgroundColor: "#F4F4F5", borderColor: "#E1E2E4" }} /> `background.strong` `#F4F4F5`
+- `pressed stroke`: <span className="foundation-chip" style={{ backgroundColor: "#E52222", borderColor: "#E1E2E4" }} /> `status.dangerPressed` `#E52222`
+- `text`: <span className="foundation-chip" style={{ backgroundColor: "#FF4242", borderColor: "#E1E2E4" }} /> `semantic-status-negative` `#FF4242`
+
+### `disabled`
+
+- `fill`: <span className="foundation-chip" style={{ backgroundColor: "#F4F4F5", borderColor: "#E1E2E4" }} /> `interaction.disable` `#F4F4F5`
+- `stroke`: <span className="foundation-chip" style={{ backgroundColor: "#E1E2E4", borderColor: "#D0D4DA" }} /> `line.solidNormal` `#E1E2E4`
+- `text`: <span className="foundation-chip" style={{ backgroundColor: "#989BA2", borderColor: "#E1E2E4" }} /> `interaction.inactive` `#989BA2`

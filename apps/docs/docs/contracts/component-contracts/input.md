@@ -71,18 +71,18 @@ Input 자체는 `Module`이 아니며, 화면 구조를 설명하는 `Pattern`�
 | `hug` | `220` |
 | `full` | `360` |
 
-## Palette
+## Color Mapping
 
-현재 Input palette는 raw 색이 아니라 Foundation semantic token에서 파생합니다.
+현재 Input palette도 별도 시각 기준이 아니라, Foundation token이 Input의 상태별 역할로 어떻게 매핑되는지 보여주는 확인용 섹션입니다.
 
 | Intent | Fill | Stroke | Text | Subtle |
 | --- | --- | --- | --- | --- |
-| `default` | `#FFFFFF` | `#E1E2E4` | `#171719` | `#989BA2` |
-| `error` | `#FFFFFF` | `#FF4242` | `#171719` | `#989BA2` |
-| `success` | `#FFFFFF` | `#00BF40` | `#171719` | `#989BA2` |
-| `disabled` | `#F4F4F5` | `#E1E2E4` | `#989BA2` | `#989BA2` |
-| `readonly` | `#F7F7F8` | `#E1E2E4` | `#2E2F33` | `#989BA2` |
-| `loading` | `#FFFFFF` | `#E1E2E4` | `#989BA2` | `#989BA2` |
+| `default` | <span className="foundation-chip" style={{ backgroundColor: "#FFFFFF", borderColor: "#E1E2E4" }} /> `background.elevated` `#FFFFFF` | <span className="foundation-chip" style={{ backgroundColor: "#E1E2E4", borderColor: "#D0D4DA" }} /> `line.solidNormal` `#E1E2E4` | <span className="foundation-chip" style={{ backgroundColor: "#171719", borderColor: "#E1E2E4" }} /> `label.normal` `#171719` | <span className="foundation-chip" style={{ backgroundColor: "#989BA2", borderColor: "#E1E2E4" }} /> `interaction.inactive` `#989BA2` |
+| `error` | <span className="foundation-chip" style={{ backgroundColor: "#FFFFFF", borderColor: "#E1E2E4" }} /> `background.elevated` `#FFFFFF` | <span className="foundation-chip" style={{ backgroundColor: "#FF4242", borderColor: "#E1E2E4" }} /> `status.negative` `#FF4242` | <span className="foundation-chip" style={{ backgroundColor: "#171719", borderColor: "#E1E2E4" }} /> `label.normal` `#171719` | <span className="foundation-chip" style={{ backgroundColor: "#989BA2", borderColor: "#E1E2E4" }} /> `interaction.inactive` `#989BA2` |
+| `success` | <span className="foundation-chip" style={{ backgroundColor: "#FFFFFF", borderColor: "#E1E2E4" }} /> `background.elevated` `#FFFFFF` | <span className="foundation-chip" style={{ backgroundColor: "#00BF40", borderColor: "#E1E2E4" }} /> `status.positive` `#00BF40` | <span className="foundation-chip" style={{ backgroundColor: "#171719", borderColor: "#E1E2E4" }} /> `label.normal` `#171719` | <span className="foundation-chip" style={{ backgroundColor: "#989BA2", borderColor: "#E1E2E4" }} /> `interaction.inactive` `#989BA2` |
+| `disabled` | <span className="foundation-chip" style={{ backgroundColor: "#F4F4F5", borderColor: "#E1E2E4" }} /> `interaction.disable` `#F4F4F5` | <span className="foundation-chip" style={{ backgroundColor: "#E1E2E4", borderColor: "#D0D4DA" }} /> `line.solidNormal` `#E1E2E4` | <span className="foundation-chip" style={{ backgroundColor: "#989BA2", borderColor: "#E1E2E4" }} /> `interaction.inactive` `#989BA2` | <span className="foundation-chip" style={{ backgroundColor: "#989BA2", borderColor: "#E1E2E4" }} /> `interaction.inactive` `#989BA2` |
+| `readonly` | <span className="foundation-chip" style={{ backgroundColor: "#F7F7F8", borderColor: "#E1E2E4" }} /> `background.alternative` `#F7F7F8` | <span className="foundation-chip" style={{ backgroundColor: "#E1E2E4", borderColor: "#D0D4DA" }} /> `line.solidNormal` `#E1E2E4` | <span className="foundation-chip" style={{ backgroundColor: "#2E2F33", borderColor: "#E1E2E4" }} /> `label.neutral` `#2E2F33` | <span className="foundation-chip" style={{ backgroundColor: "#989BA2", borderColor: "#E1E2E4" }} /> `interaction.inactive` `#989BA2` |
+| `loading` | <span className="foundation-chip" style={{ backgroundColor: "#FFFFFF", borderColor: "#E1E2E4" }} /> `background.elevated` `#FFFFFF` | <span className="foundation-chip" style={{ backgroundColor: "#E1E2E4", borderColor: "#D0D4DA" }} /> `line.solidNormal` `#E1E2E4` | <span className="foundation-chip" style={{ backgroundColor: "#989BA2", borderColor: "#E1E2E4" }} /> `interaction.inactive` `#989BA2` | <span className="foundation-chip" style={{ backgroundColor: "#989BA2", borderColor: "#E1E2E4" }} /> `interaction.inactive` `#989BA2` |
 
 ## Focus Ring
 
@@ -90,7 +90,7 @@ focus ring도 Foundation primary semantic token에서 파생합니다.
 
 | Token | Value |
 | --- | --- |
-| `stroke` | `#0066FF` |
+| `stroke` | <span className="foundation-chip" style={{ backgroundColor: "#0066FF", borderColor: "#E1E2E4" }} /> `semantic-primary-heavy` `#0066FF` |
 | `strokeWeight` | `2` |
 
 ## States

@@ -165,6 +165,27 @@ main article table td {
   vertical-align: middle;
 }
 
+@media (max-width: 996px) {
+  main article table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  main article table thead,
+  main article table tbody {
+    width: max-content;
+    min-width: 100%;
+  }
+
+  main article table th,
+  main article table td {
+    white-space: nowrap;
+  }
+}
+
 .theme-doc-markdown,
 .theme-doc-markdown p,
 .theme-doc-markdown li,
