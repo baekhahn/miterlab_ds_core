@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="920" height="360" viewBox="0 0 920 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="920" height="360" rx="24" fill="#F7F7F8" />
+  <rect x="32" y="32" width="856" height="296" rx="20" fill="#F7F7F8" stroke="transparent" stroke-width="0" />
+<text x="50" y="60" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13" font-weight="700" fill="#2E2F33">Input Anatomy</text>
+<text x="310" y="88" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="600" fill="#2E2F33">label</text>
+<rect x="310" y="126" width="300" height="40" rx="10" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
+
+    <g transform="translate(324 137)">
+      <rect x="3" y="7.5" width="12" height="3" rx="1.5" fill="#989BA2" />
+      <rect x="7.5" y="3" width="3" height="12" rx="1.5" fill="#989BA2" />
+    </g>
+  
+<text x="352" y="151" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="14" font-weight="400" fill="#989BA2">텍스트를 입력해 주세요.</text>
+<text x="587" y="151" text-anchor="middle" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="16" font-weight="700" fill="#989BA2">×</text>
+<text x="310" y="200" text-anchor="start" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#989BA2">helper text</text>
+<text x="460" y="254" text-anchor="middle" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="600" fill="#2E2F33">slots: container, value, label, helper text, prefix, suffix</text>
+<text x="460" y="278" text-anchor="middle" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="600" fill="#989BA2">single-line field shell</text>
+<line x1="342" y1="108" x2="352" y2="108" stroke="#D3D5D9" stroke-width="1" />
+<line x1="342" y1="104" x2="342" y2="112" stroke="#D3D5D9" stroke-width="1" />
+<line x1="352" y1="104" x2="352" y2="112" stroke="#D3D5D9" stroke-width="1" />
+<text x="347" y="102" text-anchor="middle" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="11" font-weight="600" fill="#989BA2">prefix gap</text>
+<line x1="324" y1="184" x2="348" y2="184" stroke="#D3D5D9" stroke-width="1" />
+<line x1="324" y1="180" x2="324" y2="188" stroke="#D3D5D9" stroke-width="1" />
+<line x1="348" y1="180" x2="348" y2="188" stroke="#D3D5D9" stroke-width="1" />
+<text x="336" y="178" text-anchor="middle" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="11" font-weight="600" fill="#989BA2">padding 14</text>
+</svg>

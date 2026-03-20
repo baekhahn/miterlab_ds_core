@@ -306,6 +306,83 @@ const buttonAnatomyPreview = () => {
   ], { bg: COLORS.panel, radius: 24 });
 };
 
+const inputAnatomyPreview = () => {
+  const metrics = getInputMetrics("md");
+  const width = 300;
+  const height = metrics.height;
+  const fieldX = 310;
+  const fieldY = 126;
+  const labelY = 88;
+  const helperY = fieldY + height + 34;
+  const prefixSize = 18;
+  const suffixSize = 18;
+  const paddingX = metrics.paddingX;
+  const prefixX = fieldX + paddingX;
+  const valueStartX = prefixX + prefixSize + 10;
+  const valueWidth = estimateTextWidth("텍스트를 입력해 주세요.", metrics.fontSize, 400);
+  const suffixX = fieldX + width - paddingX - suffixSize;
+
+  return svgFrame(
+    920,
+    360,
+    [
+      ...panel(32, 32, 856, 296, "Input Anatomy", [
+        text({ x: fieldX, y: labelY, value: "label", size: 12, weight: 600, fill: COLORS.textSecondary }),
+        rect({ x: fieldX, y: fieldY, width, height, rx: metrics.radius, fill: COLORS.field, stroke: COLORS.line }),
+        plusGlyph(prefixX, fieldY + Math.round((height - prefixSize) / 2), prefixSize, COLORS.textMuted),
+        text({
+          x: valueStartX,
+          y: fieldY + Math.round(height / 2) + Math.round(metrics.fontSize / 2) - 2,
+          value: "텍스트를 입력해 주세요.",
+          size: metrics.fontSize,
+          weight: 400,
+          fill: COLORS.textMuted
+        }),
+        text({
+          x: suffixX + suffixSize / 2,
+          y: fieldY + Math.round(height / 2) + 5,
+          value: "×",
+          size: 16,
+          weight: 700,
+          fill: COLORS.textMuted,
+          anchor: "middle"
+        }),
+        text({ x: fieldX, y: helperY, value: "helper text", size: 12, weight: 500, fill: COLORS.textMuted }),
+
+        text({ x: fieldX + width / 2, y: 254, value: "slots: container, value, label, helper text, prefix, suffix", size: 12, weight: 600, fill: COLORS.textSecondary, anchor: "middle" }),
+        text({ x: fieldX + width / 2, y: 278, value: "single-line field shell", size: 12, weight: 600, fill: COLORS.textMuted, anchor: "middle" }),
+
+        `<line x1="${prefixX + prefixSize}" y1="${fieldY - 18}" x2="${valueStartX}" y2="${fieldY - 18}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
+        `<line x1="${prefixX + prefixSize}" y1="${fieldY - 22}" x2="${prefixX + prefixSize}" y2="${fieldY - 14}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
+        `<line x1="${valueStartX}" y1="${fieldY - 22}" x2="${valueStartX}" y2="${fieldY - 14}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
+        text({
+          x: (prefixX + prefixSize + valueStartX) / 2,
+          y: fieldY - 24,
+          value: "prefix gap",
+          size: 11,
+          weight: 600,
+          fill: COLORS.textMuted,
+          anchor: "middle"
+        }),
+
+        `<line x1="${fieldX + paddingX}" y1="${fieldY + height + 18}" x2="${fieldX + paddingX + 24}" y2="${fieldY + height + 18}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
+        `<line x1="${fieldX + paddingX}" y1="${fieldY + height + 14}" x2="${fieldX + paddingX}" y2="${fieldY + height + 22}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
+        `<line x1="${fieldX + paddingX + 24}" y1="${fieldY + height + 14}" x2="${fieldX + paddingX + 24}" y2="${fieldY + height + 22}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
+        text({
+          x: fieldX + paddingX + 12,
+          y: fieldY + height + 12,
+          value: `padding ${paddingX}`,
+          size: 11,
+          weight: 600,
+          fill: COLORS.textMuted,
+          anchor: "middle"
+        })
+      ], { fill: COLORS.panel, stroke: "transparent" })
+    ],
+    { bg: COLORS.panel, radius: 24 }
+  );
+};
+
 const panel = (x, y, width, height, title, bodyParts = [], options = {}) => [
   rect({ x, y, width, height, rx: 20, fill: options.fill ?? COLORS.panel, stroke: options.stroke ?? COLORS.line }),
   text({ x: x + 18, y: y + 28, value: title, size: 13, weight: 700, fill: COLORS.textSecondary }),
@@ -517,6 +594,7 @@ await fs.mkdir(outputDir, { recursive: true });
 await fs.writeFile(path.join(outputDir, "button-contract.svg"), renderInspectionPreview("button"), "utf8");
 await fs.writeFile(path.join(outputDir, "button-anatomy.svg"), buttonAnatomyPreview(), "utf8");
 await fs.writeFile(path.join(outputDir, "input-contract.svg"), renderInspectionPreview("input"), "utf8");
+await fs.writeFile(path.join(outputDir, "input-anatomy.svg"), inputAnatomyPreview(), "utf8");
 
 for (const [fileName, render] of Object.entries(genericPreviews)) {
   await fs.writeFile(path.join(outputDir, fileName), render(), "utf8");
@@ -526,6 +604,7 @@ console.log("Generated previews:");
 console.log(path.join(outputDir, "button-contract.svg"));
 console.log(path.join(outputDir, "button-anatomy.svg"));
 console.log(path.join(outputDir, "input-contract.svg"));
+console.log(path.join(outputDir, "input-anatomy.svg"));
 for (const fileName of Object.keys(genericPreviews)) {
   console.log(path.join(outputDir, fileName));
 }
