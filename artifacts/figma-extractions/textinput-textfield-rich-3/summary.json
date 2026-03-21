@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "extractedAt": "2026-03-20T09:29:20.084Z",
+  "extractionName": "textinput-textfield-rich-3",
+  "outputDir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-rich-3",
+  "selectionCount": 1,
+  "transport": "codex-oauth",
+  "status": "failed",
+  "selectionSvg": null,
+  "nodes": [
+    {
+      "id": "16274:133989",
+      "name": "Textinput/Textfield",
+      "dir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-rich-3/textinput-textfield-16274-133989",
+      "files": [],
+      "isFigmaComponent": true,
+      "componentRole": "instance",
+      "mainComponentName": null
+    }
+  ],
+  "error": "Unexpected end of JSON input",
+  "failedAt": "2026-03-20T09:29:21.978Z"
+}

@@ -19,7 +19,7 @@ Button은 정보 표시용 요소가 아니라, 행동을 유도하는 요소입
 ## Anatomy
 
 Anatomy는 대표 Button의 기본 구조를 설명합니다.
-즉 variation이 적용되기 전, Button이 공통으로 가지는 기본 slot 구조입니다.
+즉 component properties가 적용되기 전, Button이 공통으로 가지는 기본 slot 구조입니다.
 
 ![Button anatomy preview](/previews/button-anatomy.svg)
 
@@ -33,7 +33,7 @@ Anatomy는 대표 Button의 기본 구조를 설명합니다.
 ### Composition Rules
 
 - 기본 button은 `container + label`로 구성합니다.
-- variation에 따라 `leading icon`, `trailing icon`, `icon only` 구성이 파생됩니다.
+- component properties에 따라 `leading icon`, `trailing icon`, `icon only` 구성이 파생됩니다.
 - icon only variant는 시각적 label 없이 렌더할 수 있지만, accessible name은 반드시 필요합니다.
 - 하나의 button 안에 leading icon과 trailing icon을 동시에 기본값으로 두지 않습니다.
 - loading indicator는 상태 표현 요소이며, 기본 anatomy slot으로 보지 않습니다.
@@ -53,10 +53,19 @@ Button은 다음을 분명히 보여야 합니다.
 - 이미 진행 중인지
 - 위험한 결과를 가질 수 있는지
 
-## Variation
+이 문서의 최종 대상은 main component 설명 자체보다, 실제 화면에서 쓰이는 Button instance입니다.
 
-Button의 variation은 기본 anatomy 위에 axis가 적용되며 결정됩니다.
-이 axis는 Figma component property와도 직접 연결되는 기준입니다.
+### Fixed vs Flexible
+
+- 고정: hierarchy 의미, state 의미, accessibility rule, variable 연결
+- 개방: 어떤 instance 조합을 선택할지, 어느 width를 쓸지, icon을 붙일지, 라벨 카피
+- 즉 Button contract는 모든 instance를 하나로 고정하는 문서가 아니라, 허용 범위 안에서 자연스럽게 선택하게 하는 문서입니다.
+
+## Component Properties
+
+Button의 component properties는 기본 anatomy 위에 axis가 적용되며 결정됩니다.
+이 axis는 Figma component property와 직접 연결되는 기준입니다.
+즉 docs에서는 “Button이 어떤 instance 조합으로 생성될 수 있는가”를 이 섹션에서 설명합니다.
 
 | Axis | Options | Meaning | Figma Component Relation |
 | --- | --- | --- | --- |
@@ -65,6 +74,10 @@ Button의 variation은 기본 anatomy 위에 axis가 적용되며 결정됩니�
 | `size` | `sm`, `md`, `lg` | 밀도와 control height를 결정합니다. | size property와 연결됩니다. |
 | `state` | `enabled`, `pressed`, `disabled`, `loading` | 상호작용과 비활성/진행 상태를 결정합니다. | state property와 연결됩니다. |
 | `width` | `hug`, `full` | 버튼의 레이아웃 점유 방식을 결정합니다. | layout option 또는 frame usage와 연결됩니다. |
+
+다만 모든 axis를 항상 동시에 노출해야 하는 것은 아닙니다.
+- contract가 고정하는 것은 axis의 존재와 의미입니다.
+- 실제 instance 생성에서는 문맥에 맞는 axis만 선택적으로 사용합니다.
 
 ### Hierarchy Presets
 
@@ -100,9 +113,13 @@ Button의 variation은 기본 anatomy 위에 axis가 적용되며 결정됩니�
 현재 Button 수치는 로컬 문서가 아니라 `Foundation`에서 파생됩니다.
 즉 `md` control height가 바뀌면 Button preview, Figma inspection, 생성 수치가 함께 바뀌어야 합니다.
 
+Preview는 대표 instance 예시입니다.
+- preview 하나가 Button의 유일한 정답은 아닙니다.
+- 같은 contract 안에서도 hierarchy, width, icon 조합에 따라 다른 instance가 자연스럽게 나올 수 있습니다.
+
 ## Metrics
 
-아래 값은 Button 문서가 직접 소유하는 값이 아니라 `Foundation`에서 파생한 현재 결과입니다.
+아래 값은 Button 문서가 직접 소유하는 값이 아니라 `Variables/Foundation`에서 파생한 현재 결과입니다.
 
 | Size | Height | PaddingX | PaddingY | Radius | Font Size | Line Height | Min Width |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -113,6 +130,18 @@ Button의 variation은 기본 anatomy 위에 axis가 적용되며 결정됩니�
 ## Color Mapping
 
 Color Mapping은 별도 시각 기준이 아니라, Foundation token이 Button의 실제 시각 역할에 어떻게 매핑되는지 보여주는 확인용 섹션입니다.
+
+## Variables
+
+Button은 다음 계열의 variable을 참조합니다.
+
+- color variables
+- spacing variables
+- radius variables
+- typography variables
+- control size variables
+
+즉 `Metrics`와 `Color Mapping`은 Button이 직접 정의한 값이 아니라, variable 계층이 instance에 적용된 현재 결과입니다.
 
 ### `solid / primary`
 
@@ -198,6 +227,12 @@ Color Mapping은 별도 시각 기준이 아니라, Foundation token이 Button�
 - `full`은 하단 CTA나 섹션 수준의 강한 실행 액션에 사용합니다.
 - 모든 버튼을 기본적으로 `full`로 두면 안 됩니다.
 
+### Instance Selection
+
+- 같은 Button contract 안에서도 화면 맥락에 따라 다른 instance를 선택할 수 있습니다.
+- 예: 같은 `primary`라도 하단 CTA에서는 `full`, 카드 안 보조 액션에서는 `hug`가 더 자연스러울 수 있습니다.
+- contract는 선택 가능한 범위를 정의하고, 실제 instance 선택은 패턴 문맥에서 결정합니다.
+
 ### Labeling
 
 - 라벨은 UI 이름이 아니라 행동을 설명해야 합니다.
@@ -229,6 +264,6 @@ Button Contract는 다음을 직접 정의하지 않습니다.
 - radius value
 - control height
 
-Button은 Foundation token을 참조합니다.
+Button은 Variables/Foundation token을 참조합니다.
 
 Foundation이 변경되면 Button 수치는 자동으로 바뀝니다.

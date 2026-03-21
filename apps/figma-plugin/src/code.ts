@@ -55,6 +55,65 @@ const parseFileKeyFromNodeUrl = (value?: string) => {
   }
 };
 
+const getVariantProperties = (node: SceneNode): Record<string, string | boolean> | undefined => {
+  if (!("componentProperties" in node) || !node.componentProperties) {
+    return undefined;
+  }
+
+  const entries = Object.entries(node.componentProperties).map(([key, value]) => [
+    key,
+    "value" in value ? value.value : false
+  ]);
+
+  return Object.fromEntries(entries);
+};
+
+const getComponentMeta = (node: SceneNode) => {
+  if (node.type === "INSTANCE") {
+    const mainComponent = node.mainComponent ?? null;
+    const parent = mainComponent?.parent;
+    const baseComponentName =
+      parent && "type" in parent && parent.type === "COMPONENT_SET"
+        ? parent.name
+        : mainComponent?.name ?? null;
+    return {
+      isFigmaComponent: true,
+      componentRole: "instance" as const,
+      mainComponentName: baseComponentName,
+      componentKey: mainComponent?.key,
+      variantProperties: getVariantProperties(node)
+    };
+  }
+
+  if (node.type === "COMPONENT") {
+    return {
+      isFigmaComponent: true,
+      componentRole: "component" as const,
+      mainComponentName: node.name,
+      componentKey: node.key,
+      variantProperties: getVariantProperties(node)
+    };
+  }
+
+  if (node.type === "COMPONENT_SET") {
+    return {
+      isFigmaComponent: true,
+      componentRole: "component-set" as const,
+      mainComponentName: node.name,
+      componentKey: node.key,
+      variantProperties: getVariantProperties(node)
+    };
+  }
+
+  return {
+    isFigmaComponent: false,
+    componentRole: "node" as const,
+    mainComponentName: null,
+    componentKey: undefined,
+    variantProperties: undefined
+  };
+};
+
 const buildMinimalExtractionReference = (selection: readonly SceneNode[], fallbackNodeUrl?: string) => {
   const runtimeFileKey = figma.fileKey ?? "";
   const parsedFileKey = parseFileKeyFromNodeUrl(fallbackNodeUrl);
@@ -73,18 +132,7 @@ const buildMinimalExtractionReference = (selection: readonly SceneNode[], fallba
       name: node.name,
       type: node.type,
       url: `https://www.figma.com/design/${fileKey}/${encodeURIComponent(figma.root.name)}?node-id=${node.id.replace(":", "-")}`,
-      isFigmaComponent: node.type === "INSTANCE" || node.type === "COMPONENT" || node.type === "COMPONENT_SET",
-      componentRole:
-        node.type === "INSTANCE"
-          ? "instance"
-          : node.type === "COMPONENT"
-            ? "component"
-            : node.type === "COMPONENT_SET"
-              ? "component-set"
-              : "node",
-      mainComponentName: null,
-      componentKey: undefined,
-      variantProperties: undefined
+      ...getComponentMeta(node)
     }))
   };
 };
@@ -310,7 +358,6 @@ const rawUiHtml = `
           <button type="button" class="btn primary" id="extractSelection"><span id="extractSpinner" class="spinner hidden"></span><span id="extractLabel">Extract</span></button>
           <button type="button" class="btn" id="cancelExtraction" disabled>Cancel</button>
         </div>
-        <button type="button" class="btn" id="retryExtraction" disabled>Retry</button>
 
         <div class="status" id="extractionStatus"></div>
         <div class="hint" id="buildStamp"></div>
@@ -347,7 +394,6 @@ const rawUiHtml = `
           bridgeTest: $("bridgeTest"),
           extract: $("extractSelection"),
           cancel: $("cancelExtraction"),
-          retry: $("retryExtraction"),
           spinner: $("extractSpinner"),
           extractLabel: $("extractLabel"),
           status: $("extractionStatus"),
@@ -370,6 +416,7 @@ const rawUiHtml = `
         let lastNodeUrl = "";
         let latestSelectionSvg = null;
         let selectionSvgResolver = null;
+        let extractionPayloadResolver = null;
         let abortController = null;
         let timer = null;
         let poller = null;
@@ -437,7 +484,6 @@ const rawUiHtml = `
         const setLoading = (loading) => {
           el.extract.disabled = loading;
           el.cancel.disabled = !loading;
-          el.retry.disabled = loading || !lastNodeUrl;
           el.spinner.classList.toggle("hidden", !loading);
           el.extractLabel.textContent = loading ? "Extracting" : "Extract";
           if (!loading) stopTimer();
@@ -541,6 +587,17 @@ const rawUiHtml = `
           }, 3000);
         });
 
+        const requestExtractionPayload = (nodeUrl) => new Promise((resolve, reject) => {
+          extractionPayloadResolver = resolve;
+          parent.postMessage({ pluginMessage: { type: "extractSelection", nodeUrl } }, "*");
+          setTimeout(() => {
+            if (extractionPayloadResolver === resolve) {
+              extractionPayloadResolver = null;
+              reject(new Error("선택 payload 준비가 지연되고 있습니다."));
+            }
+          }, 10000);
+        });
+
         const runExtraction = async () => {
           setStoredFileUrl(el.fileUrlInput.value.trim());
           lastNodeUrl = el.fileUrlInput.value.trim() || getStoredFileUrl();
@@ -556,34 +613,21 @@ const rawUiHtml = `
             return;
           }
 
-          if (!latestSelectionSvg) {
-            setStatus("선택 SVG를 준비 중입니다.");
-            startTimer();
-            latestSelectionSvg = await requestSelectionSvg();
+          setStatus("선택 payload를 준비 중입니다.");
+          startTimer();
+          const payload = await requestExtractionPayload(lastNodeUrl);
+          let ensuredSelectionSvg = payload && payload.selectionSvg ? payload.selectionSvg : null;
+          if (!ensuredSelectionSvg) {
+            setStatus("selection SVG를 확인 중입니다.");
+            ensuredSelectionSvg = await requestSelectionSvg();
           }
-
-          const payload = {
-            extractionName: latestSelectionSummary.primaryName || "figma-selection",
-            reference: {
-              fileKey,
-              pageName: latestSelectionSummary.pageName || "",
-              selectionCount: latestSelectionSummary.selectionCount || 0,
-              nodes: (latestSelectionSummary.nodeIds || []).map((nodeId, index) => ({
-                id: nodeId,
-                name: index === 0 ? latestSelectionSummary.primaryName : "Selected node " + (index + 1),
-                type: index === 0 ? latestSelectionSummary.primaryType : "NODE",
-                url: index === 0 && latestSelectionSummary.nodeUrl
-                  ? latestSelectionSummary.nodeUrl
-                  : "https://www.figma.com/design/" + fileKey + "/selection?node-id=" + String(nodeId).replace(":", "-"),
-                isFigmaComponent: false,
-                componentRole: "node",
-                mainComponentName: null,
-                componentKey: undefined,
-                variantProperties: undefined
-              }))
-            },
-            selectionSvg: latestSelectionSvg || undefined
-          };
+          if (!ensuredSelectionSvg && latestSelectionSvg) {
+            ensuredSelectionSvg = latestSelectionSvg;
+          }
+          if (ensuredSelectionSvg) {
+            payload.selectionSvg = ensuredSelectionSvg;
+          }
+          latestSelectionSvg = ensuredSelectionSvg;
 
           stopPoll();
           setLoading(true);
@@ -638,7 +682,20 @@ const rawUiHtml = `
               resolve(latestSelectionSvg);
             }
           }
+          if (msg.type === "extractionPayloadReady") {
+            if (extractionPayloadResolver) {
+              const resolve = extractionPayloadResolver;
+              extractionPayloadResolver = null;
+              resolve(msg.payload);
+            }
+          }
+          if (msg.type === "extractionProgress") {
+            setStatus(msg.message || "추출 준비 중입니다.");
+          }
           if (msg.type === "pluginError") {
+            if (extractionPayloadResolver) {
+              extractionPayloadResolver = null;
+            }
             setStatus(msg.message || "오류가 발생했습니다.", "error");
             setLoading(false);
           }
@@ -658,7 +715,6 @@ const rawUiHtml = `
         });
         el.bridgeTest.addEventListener("click", checkBridge);
         el.extract.addEventListener("click", runExtraction);
-        el.retry.addEventListener("click", runExtraction);
         el.cancel.addEventListener("click", () => {
           if (abortController) abortController.abort();
           stopPoll();
@@ -741,8 +797,20 @@ figma.ui.onmessage = async (message: PluginUiMessage) => {
       const reference = buildMinimalExtractionReference(selection, fallbackNodeUrl);
       figma.ui.postMessage({ type: "extractionProgress", message: "reference를 준비했습니다." });
       await flushUi();
-      const selectionSvg = undefined;
-      figma.ui.postMessage({ type: "extractionProgress", message: "selection SVG 없이 진행합니다." });
+      let selectionSvg: string | undefined;
+      try {
+        const primary = selection[0];
+        const bytes = await primary.exportAsync({
+          format: "SVG",
+          svgOutlineText: false,
+          svgIdAttribute: false
+        });
+        selectionSvg = new TextDecoder("utf-8").decode(bytes);
+        figma.ui.postMessage({ type: "extractionProgress", message: "selection SVG를 준비했습니다." });
+      } catch {
+        selectionSvg = undefined;
+        figma.ui.postMessage({ type: "extractionProgress", message: "selection SVG 없이 진행합니다." });
+      }
       await flushUi();
       figma.ui.postMessage({
         type: "extractionPayloadReady",

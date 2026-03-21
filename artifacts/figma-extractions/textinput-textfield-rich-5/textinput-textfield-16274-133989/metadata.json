@@ -1,12 +1,13 @@
 {
-  "raw": [
+  "content": [
     {
       "type": "text",
-      "text": "<instance id=\"16246:4152514\" name=\"Action Area/Action Area\" x=\"0\" y=\"0\" width=\"375\" height=\"196\" />"
+      "text": "<instance id=\"16274:133989\" name=\"Textinput/Textfield\" x=\"0\" y=\"0\" width=\"333\" height=\"48\" />"
     },
     {
       "type": "text",
       "text": "IMPORTANT: After you call this tool, you MUST call get_design_context if trying to implement the design, since this tool only returns metadata. If you do not call get_design_context, the agent will not be able to implement the design."
     }
-  ]
+  ],
+  "structured_content": null
 }

@@ -18,6 +18,7 @@ const figmaSelectionsDir = path.resolve(repoRoot, "artifacts/figma-selections");
 const componentBlueprintsDir = path.resolve(repoRoot, "artifacts/component-blueprints");
 const figmaRawDir = path.resolve(repoRoot, "artifacts/figma-raw");
 const figmaMcpExtractionsDir = path.resolve(repoRoot, "artifacts/figma-extractions");
+const figmaPromotionsDir = path.resolve(repoRoot, "artifacts/figma-promotions");
 
 const json = (status: number, payload: unknown) => {
   return {
@@ -472,6 +473,46 @@ const server = http.createServer(async (req, res) => {
       fs.rmSync(targetDir, { recursive: true, force: true });
       await refreshExtractedDocs();
       write(res, json(200, { ok: true, slug }));
+      return;
+    } catch (error) {
+      write(
+        res,
+        json(400, {
+          error: error instanceof Error ? error.message : String(error)
+        })
+      );
+      return;
+    }
+  }
+
+  if (method === "POST" && url === "/promote-extraction") {
+    try {
+      const body = await readJsonBody<{ slug?: string }>(req);
+      const slug = sanitizeSlug(body.slug ?? "");
+      if (!slug) {
+        write(res, json(400, { error: "slug is required" }));
+        return;
+      }
+
+      const targetDir = path.resolve(figmaMcpExtractionsDir, slug);
+      const summaryPath = path.resolve(targetDir, "summary.json");
+      if (!fs.existsSync(summaryPath)) {
+        write(res, json(404, { error: "summary not found" }));
+        return;
+      }
+
+      const summary = JSON.parse(fs.readFileSync(summaryPath, "utf-8"));
+      const next = {
+        ...summary,
+        promotionStatus: "accepted",
+        promotedAt: new Date().toISOString()
+      };
+
+      fs.writeFileSync(summaryPath, `${JSON.stringify(next, null, 2)}\n`, "utf-8");
+      fs.mkdirSync(figmaPromotionsDir, { recursive: true });
+      fs.writeFileSync(path.resolve(figmaPromotionsDir, `${slug}.json`), `${JSON.stringify(next, null, 2)}\n`, "utf-8");
+      await refreshExtractedDocs();
+      write(res, json(200, { ok: true, slug, promotedAt: next.promotedAt }));
       return;
     } catch (error) {
       write(

@@ -1,0 +1,21 @@
+{
+  "extractedAt": "2026-03-21T00:56:18.844Z",
+  "extractionName": "Textinput/Textfield",
+  "reference": {
+    "fileKey": "dkTDZO4Gdh64vtvVd11YyJ",
+    "pageName": "3 Component",
+    "selectionCount": 1,
+    "nodes": [
+      {
+        "id": "16215:31385",
+        "name": "Textinput/Textfield",
+        "type": "COMPONENT_SET",
+        "url": "https://www.figma.com/design/dkTDZO4Gdh64vtvVd11YyJ/Wanted%20Design%20System%20(Community)?node-id=16215-31385",
+        "isFigmaComponent": true,
+        "componentRole": "component-set",
+        "mainComponentName": "Textinput/Textfield",
+        "componentKey": "780a99c5606680565329f45a58920515a0d23a71"
+      }
+    ]
+  }
+}

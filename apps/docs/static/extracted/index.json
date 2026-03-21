@@ -1,17 +1,509 @@
 [
   {
-    "slug": "main-action",
-    "title": "┗ Main Action",
-    "nodeName": "┗ Main Action",
-    "nodeType": "INSTANCE",
-    "isFigmaComponent": false,
-    "componentRole": "node",
-    "mainComponentName": null,
+    "slug": "textinput-textfield",
+    "title": "Textinput/Textfield",
+    "nodeName": "Textinput/Textfield",
+    "nodeType": "COMPONENT_SET",
+    "promotionStatus": "draft",
+    "promotedAt": null,
+    "isFigmaComponent": true,
+    "componentRole": "component-set",
+    "mainComponentName": "Textinput/Textfield",
     "variantProperties": {},
+    "component": {
+      "name": "Textinput/Textfield",
+      "type": "COMPONENT_SET",
+      "isFigmaComponent": true,
+      "role": "component-set",
+      "mainComponentName": "Textinput/Textfield"
+    },
+    "figmaProperties": [
+      {
+        "name": "Status",
+        "values": [
+          "Normal",
+          "Positive",
+          "Negative"
+        ]
+      },
+      {
+        "name": "Active",
+        "values": [
+          "False",
+          "True"
+        ]
+      },
+      {
+        "name": "Focus",
+        "values": [
+          "False",
+          "True"
+        ]
+      },
+      {
+        "name": "Disable",
+        "values": [
+          "False",
+          "True"
+        ]
+      },
+      {
+        "name": "Trailing Button",
+        "values": [
+          "False",
+          "True"
+        ]
+      }
+    ],
+    "figmaVariants": [
+      {
+        "id": "16215:31386",
+        "name": "Status=Normal, Active=False, Focus=False, Disable=False, Trailing Button=False",
+        "signature": [
+          "Status=Normal",
+          "Active=False",
+          "Focus=False",
+          "Disable=False",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31406",
+        "name": "Status=Normal, Active=True, Focus=False, Disable=False, Trailing Button=False",
+        "signature": [
+          "Status=Normal",
+          "Active=True",
+          "Focus=False",
+          "Disable=False",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31426",
+        "name": "Status=Normal, Active=False, Focus=True, Disable=False, Trailing Button=False",
+        "signature": [
+          "Status=Normal",
+          "Active=False",
+          "Focus=True",
+          "Disable=False",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31448",
+        "name": "Status=Normal, Active=True, Focus=True, Disable=False, Trailing Button=False",
+        "signature": [
+          "Status=Normal",
+          "Active=True",
+          "Focus=True",
+          "Disable=False",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31472",
+        "name": "Status=Positive, Active=True, Focus=False, Disable=False, Trailing Button=False",
+        "signature": [
+          "Status=Positive",
+          "Active=True",
+          "Focus=False",
+          "Disable=False",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31494",
+        "name": "Status=Positive, Active=True, Focus=True, Disable=False, Trailing Button=False",
+        "signature": [
+          "Status=Positive",
+          "Active=True",
+          "Focus=True",
+          "Disable=False",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31518",
+        "name": "Status=Negative, Active=False, Focus=False, Disable=False, Trailing Button=False",
+        "signature": [
+          "Status=Negative",
+          "Active=False",
+          "Focus=False",
+          "Disable=False",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31540",
+        "name": "Status=Negative, Active=True, Focus=False, Disable=False, Trailing Button=False",
+        "signature": [
+          "Status=Negative",
+          "Active=True",
+          "Focus=False",
+          "Disable=False",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31562",
+        "name": "Status=Negative, Active=False, Focus=True, Disable=False, Trailing Button=False",
+        "signature": [
+          "Status=Negative",
+          "Active=False",
+          "Focus=True",
+          "Disable=False",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31584",
+        "name": "Status=Negative, Active=True, Focus=True, Disable=False, Trailing Button=False",
+        "signature": [
+          "Status=Negative",
+          "Active=True",
+          "Focus=True",
+          "Disable=False",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31608",
+        "name": "Status=Normal, Active=False, Focus=False, Disable=True, Trailing Button=False",
+        "signature": [
+          "Status=Normal",
+          "Active=False",
+          "Focus=False",
+          "Disable=True",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31629",
+        "name": "Status=Positive, Active=False, Focus=False, Disable=True, Trailing Button=False",
+        "signature": [
+          "Status=Positive",
+          "Active=False",
+          "Focus=False",
+          "Disable=True",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31652",
+        "name": "Status=Normal, Active=True, Focus=False, Disable=True, Trailing Button=False",
+        "signature": [
+          "Status=Normal",
+          "Active=True",
+          "Focus=False",
+          "Disable=True",
+          "Trailing Button=False"
+        ]
+      },
+      {
+        "id": "16215:31673",
+        "name": "Status=Normal, Active=False, Focus=False, Disable=False, Trailing Button=True",
+        "signature": [
+          "Status=Normal",
+          "Active=False",
+          "Focus=False",
+          "Disable=False",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31694",
+        "name": "Status=Normal, Active=True, Focus=False, Disable=False, Trailing Button=True",
+        "signature": [
+          "Status=Normal",
+          "Active=True",
+          "Focus=False",
+          "Disable=False",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31715",
+        "name": "Status=Normal, Active=False, Focus=True, Disable=False, Trailing Button=True",
+        "signature": [
+          "Status=Normal",
+          "Active=False",
+          "Focus=True",
+          "Disable=False",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31738",
+        "name": "Status=Normal, Active=True, Focus=True, Disable=False, Trailing Button=True",
+        "signature": [
+          "Status=Normal",
+          "Active=True",
+          "Focus=True",
+          "Disable=False",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31763",
+        "name": "Status=Positive, Active=True, Focus=False, Disable=False, Trailing Button=True",
+        "signature": [
+          "Status=Positive",
+          "Active=True",
+          "Focus=False",
+          "Disable=False",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31786",
+        "name": "Status=Positive, Active=True, Focus=True, Disable=False, Trailing Button=True",
+        "signature": [
+          "Status=Positive",
+          "Active=True",
+          "Focus=True",
+          "Disable=False",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31811",
+        "name": "Status=Negative, Active=False, Focus=False, Disable=False, Trailing Button=True",
+        "signature": [
+          "Status=Negative",
+          "Active=False",
+          "Focus=False",
+          "Disable=False",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31834",
+        "name": "Status=Negative, Active=True, Focus=False, Disable=False, Trailing Button=True",
+        "signature": [
+          "Status=Negative",
+          "Active=True",
+          "Focus=False",
+          "Disable=False",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31857",
+        "name": "Status=Negative, Active=False, Focus=True, Disable=False, Trailing Button=True",
+        "signature": [
+          "Status=Negative",
+          "Active=False",
+          "Focus=True",
+          "Disable=False",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31880",
+        "name": "Status=Negative, Active=True, Focus=True, Disable=False, Trailing Button=True",
+        "signature": [
+          "Status=Negative",
+          "Active=True",
+          "Focus=True",
+          "Disable=False",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31905",
+        "name": "Status=Normal, Active=False, Focus=False, Disable=True, Trailing Button=True",
+        "signature": [
+          "Status=Normal",
+          "Active=False",
+          "Focus=False",
+          "Disable=True",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31927",
+        "name": "Status=Normal, Active=True, Focus=False, Disable=True, Trailing Button=True",
+        "signature": [
+          "Status=Normal",
+          "Active=True",
+          "Focus=False",
+          "Disable=True",
+          "Trailing Button=True"
+        ]
+      },
+      {
+        "id": "16215:31949",
+        "name": "Status=Positive, Active=False, Focus=False, Disable=True, Trailing Button=True",
+        "signature": [
+          "Status=Positive",
+          "Active=False",
+          "Focus=False",
+          "Disable=True",
+          "Trailing Button=True"
+        ]
+      }
+    ],
+    "figmaInstances": [],
+    "properties": {
+      "variantProperties": {},
+      "enabled": [],
+      "summary": [
+        "Status: Normal, Positive, Negative",
+        "Active: False, True",
+        "Focus: False, True",
+        "Disable: False, True",
+        "Trailing Button: False, True"
+      ],
+      "groups": [
+        {
+          "label": "Figma Properties",
+          "items": [
+            "Status: Normal, Positive, Negative",
+            "Active: False, True",
+            "Focus: False, True",
+            "Disable: False, True",
+            "Trailing Button: False, True"
+          ]
+        }
+      ],
+      "hierarchy": []
+    },
+    "nestedInstances": {
+      "present": [],
+      "available": []
+    },
+    "resolvedStructure": {
+      "kind": "component-set",
+      "slots": [],
+      "flow": []
+    },
+    "semantics": {
+      "headline": "Textinput/Textfield의 Figma variant set입니다.",
+      "notes": [
+        "26개의 variant가 포함되어 있습니다."
+      ]
+    },
+    "metricsSummary": [
+      "variants 26"
+    ],
+    "insight": {
+      "kind": "input",
+      "headline": "기본 text input 구조입니다.",
+      "structure": [],
+      "notes": [
+        "기본 입력 shell 중심 구조입니다."
+      ],
+      "metrics": [
+        "field 1440 × 1220"
+      ],
+      "detectedSlots": []
+    },
     "fileKey": "dkTDZO4Gdh64vtvVd11YyJ",
-    "nodeId": "I16246:4152514;16215:35685;16215:35710",
-    "extractedAt": "2026-03-19T23:20:31.775Z",
-    "dir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/main-action/main-action-I16246-4152514;16215-35685;16215-35710",
-    "svgPath": "/extracted/main-action-main-action-I16246-4152514;16215-35685;16215-35710.svg"
+    "nodeId": "16215:31385",
+    "extractedAt": "2026-03-21T00:56:18.845Z",
+    "dir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield/textinput-textfield-16215-31385",
+    "svgPath": "/extracted/textinput-textfield-textinput-textfield-16215-31385.svg",
+    "interpretedSvgPath": "/extracted/textinput-textfield-textinput-textfield-16215-31385-interpreted.svg"
+  },
+  {
+    "slug": "textinput-textfield-summary-v2",
+    "title": "textinput-textfield-summary-v2",
+    "nodeName": "Textinput/Textfield",
+    "nodeType": "INSTANCE",
+    "promotionStatus": "draft",
+    "promotedAt": null,
+    "isFigmaComponent": true,
+    "componentRole": "instance",
+    "mainComponentName": "Textinput/Textfield",
+    "variantProperties": {},
+    "component": {
+      "name": "Textinput/Textfield",
+      "type": "INSTANCE",
+      "isFigmaComponent": true,
+      "role": "instance",
+      "mainComponentName": "Textinput/Textfield"
+    },
+    "figmaProperties": [],
+    "figmaVariants": [],
+    "figmaInstances": [],
+    "properties": {
+      "variantProperties": {},
+      "enabled": [],
+      "summary": [],
+      "groups": [],
+      "hierarchy": []
+    },
+    "nestedInstances": {
+      "present": [
+        "Background",
+        "Trailing Button"
+      ],
+      "available": [
+        "Background",
+        "Trailing Button"
+      ]
+    },
+    "resolvedStructure": {
+      "kind": "input-with-trailing-button",
+      "slots": [
+        "wrapper",
+        "container",
+        "content",
+        "text",
+        "trailing button"
+      ],
+      "flow": [
+        "wrapper",
+        "container",
+        "content",
+        "text",
+        "trailing button"
+      ]
+    },
+    "semantics": {
+      "headline": "입력 영역과 우측 trailing button이 결합된 input입니다.",
+      "notes": [
+        "입력 영역 우측에 독립된 action segment가 결합됩니다.",
+        "trailing button label은 \"확인\"입니다."
+      ]
+    },
+    "metricsSummary": [
+      "field 333 × 48",
+      "content gap 8",
+      "container padding 12"
+    ],
+    "insight": {
+      "kind": "input-with-trailing-button",
+      "headline": "입력 영역과 우측 trailing button이 결합된 input입니다.",
+      "structure": [
+        "wrapper",
+        "container",
+        "content",
+        "text",
+        "trailing button"
+      ],
+      "notes": [
+        "입력 영역 우측에 독립된 action segment가 결합됩니다.",
+        "trailing button label은 \"확인\"입니다."
+      ],
+      "metrics": [
+        "field 333 × 48",
+        "content gap 8",
+        "container padding 12"
+      ],
+      "detectedSlots": [
+        "wrapper",
+        "container",
+        "content",
+        "text",
+        "trailing button"
+      ]
+    },
+    "fileKey": "dkTDZO4Gdh64vtvVd11YyJ",
+    "nodeId": "16274:133989",
+    "extractedAt": "2026-03-20T12:09:30.347Z",
+    "dir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-summary-v2/textinput-textfield-16274-133989",
+    "svgPath": "/extracted/textinput-textfield-summary-v2-textinput-textfield-16274-133989.svg",
+    "interpretedSvgPath": "/extracted/textinput-textfield-summary-v2-textinput-textfield-16274-133989-interpreted.svg"
   }
 ]

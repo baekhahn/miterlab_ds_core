@@ -35,6 +35,7 @@ const COLORS = {
   primary: FOUNDATION_COLORS.accent.primary,
   primaryWeak: FOUNDATION_COLORS.accent.primaryWeak,
   success: FOUNDATION_COLORS.status.success,
+  measure: FOUNDATION_COLORS.status.cautionary,
   danger: FOUNDATION_COLORS.status.danger,
   axisPillFill: FOUNDATION_COLORS.preview.axisPillFill,
   axisPillText: FOUNDATION_COLORS.preview.axisPillText
@@ -290,93 +291,179 @@ const buttonAnatomyPreview = () => {
   const labelOnly = renderComposition({ x: 128, y: rowY, width: 220, label: "Apply", mode: "label-only", chipLabel: "label only" });
   const iconLabel = renderComposition({ x: 382, y: rowY, width: 220, label: "Apply", mode: "icon-label", chipLabel: "icon + label" });
   const iconOnly = renderComposition({ x: 636, y: rowY, width: 52, label: "", mode: "icon-only", chipLabel: "icon only" });
+  const anatomyLines = [
+    `<line x1="${iconLabel.gapStartX}" y1="${rowY - 18}" x2="${iconLabel.gapEndX}" y2="${rowY - 18}" stroke="${COLORS.measure}" stroke-width="1" />`,
+    `<line x1="${iconLabel.gapStartX}" y1="${rowY - 22}" x2="${iconLabel.gapStartX}" y2="${rowY - 14}" stroke="${COLORS.measure}" stroke-width="1" />`,
+    `<line x1="${iconLabel.gapEndX}" y1="${rowY - 22}" x2="${iconLabel.gapEndX}" y2="${rowY - 14}" stroke="${COLORS.measure}" stroke-width="1" />`
+  ];
+  const anatomyTexts = [
+    text({ x: (iconLabel.gapStartX + iconLabel.gapEndX) / 2, y: rowY - 24, value: `gap ${metrics.gap}`, size: 11, weight: 600, fill: COLORS.measure, anchor: "middle" }),
+    text({ x: 460, y: 258, value: "slots: container, leading icon, label, trailing icon", size: 12, weight: 600, fill: COLORS.textSecondary, anchor: "middle" }),
+    text({ x: 460, y: 282, value: "content group centered", size: 12, weight: 600, fill: COLORS.textMuted, anchor: "middle" })
+  ];
 
   return svgFrame(920, 360, [
-    ...panel(32, 32, 856, 296, "Button Anatomy", [
+    ...panel(32, 32, 856, 296, "", [
       ...labelOnly.parts,
       ...iconLabel.parts,
       ...iconOnly.parts,
-      `<line x1="${iconLabel.gapStartX}" y1="${rowY - 18}" x2="${iconLabel.gapEndX}" y2="${rowY - 18}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
-      `<line x1="${iconLabel.gapStartX}" y1="${rowY - 22}" x2="${iconLabel.gapStartX}" y2="${rowY - 14}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
-      `<line x1="${iconLabel.gapEndX}" y1="${rowY - 22}" x2="${iconLabel.gapEndX}" y2="${rowY - 14}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
-      text({ x: (iconLabel.gapStartX + iconLabel.gapEndX) / 2, y: rowY - 24, value: `gap ${metrics.gap}`, size: 11, weight: 600, fill: COLORS.textMuted, anchor: "middle" }),
-      text({ x: 460, y: 258, value: "slots: container, leading icon, label, trailing icon", size: 12, weight: 600, fill: COLORS.textSecondary, anchor: "middle" }),
-      text({ x: 460, y: 282, value: "content group centered", size: 12, weight: 600, fill: COLORS.textMuted, anchor: "middle" })
+      ...anatomyLines,
+      ...anatomyTexts
     ], { fill: COLORS.panel, stroke: "transparent" })
   ], { bg: COLORS.panel, radius: 24 });
 };
 
 const inputAnatomyPreview = () => {
   const metrics = getInputMetrics("md");
-  const width = 300;
+  const width = 320;
   const height = metrics.height;
-  const fieldX = 310;
+  const fieldX = 300;
   const fieldY = 126;
-  const labelY = 88;
-  const helperY = fieldY + height + 34;
+  const labelGap = 12;
+  const helperGap = 12;
+  const labelY = fieldY - labelGap;
+  const helperY = fieldY + height + helperGap + 12;
   const prefixSize = 18;
   const suffixSize = 18;
   const paddingX = metrics.paddingX;
+  const labelValue = "아이디";
+  const placeholderValue = "아이디를 입력해 주세요.";
+  const helperValue = "영문과 숫자만 사용할 수 있습니다.";
+  const prefixValue = "@";
   const prefixX = fieldX + paddingX;
   const valueStartX = prefixX + prefixSize + 10;
-  const valueWidth = estimateTextWidth("텍스트를 입력해 주세요.", metrics.fontSize, 400);
+  const prefixGap = valueStartX - (prefixX + prefixSize);
   const suffixX = fieldX + width - paddingX - suffixSize;
+  const valueWidth = estimateTextWidth(placeholderValue, metrics.fontSize, 400);
+  const valueY = fieldY + Math.round(height / 2) + Math.round(metrics.fontSize / 2) - 2;
+  const centerY = fieldY + height / 2;
+  const contentOffsetX = -2;
+  const contentOffsetY = 30;
+  const paddingLineY = fieldY + height + 24;
+  const paddingTextY = paddingLineY + 16;
+  const gapLineY = fieldY + height + 50;
+  const gapTextY = gapLineY + 16;
+  const labelAnchorX = 172;
+  const labelAnchorY = 80;
+  const containerAnchorX = 168;
+  const containerAnchorY = 144;
+  const prefixAnchorX = 200;
+  const prefixAnchorY = 244;
+  const placeholderAnchorX = 752;
+  const placeholderAnchorY = 88;
+  const suffixAnchorX = 744;
+  const suffixAnchorY = 168;
+  const helperAnchorX = 746;
+  const helperAnchorY = 260;
+  const labelLineEndX = 176;
+  const labelLineY = 80;
+  const containerLineEndX = 164;
+  const containerLineY = 148;
+  const prefixLineEndX = 206;
+  const prefixLineY = 240;
+  const placeholderLineEndX = 744;
+  const placeholderLineY = 88;
+  const suffixLineEndX = 736;
+  const suffixLineY = 168;
+  const helperLineEndX = 738;
+  const helperLineY = 268;
+
+  const contentLines = [
+    `<path d="M ${fieldX - 8} ${labelY - 2} L ${fieldX - 44} ${labelLineY} L ${labelLineEndX} ${labelLineY}" stroke="${COLORS.lineStrong}" stroke-width="1" fill="none" />`,
+    `<path d="M ${fieldX - 8} 152 L ${fieldX - 44} ${containerLineY} L ${containerLineEndX} ${containerLineY}" stroke="${COLORS.lineStrong}" stroke-width="1" fill="none" />`,
+    `<path d="M ${prefixX + prefixSize / 2} 140 L ${prefixX + prefixSize / 2 - 28} ${prefixLineY} L ${prefixLineEndX} ${prefixLineY}" stroke="${COLORS.lineStrong}" stroke-width="1" fill="none" />`,
+    `<path d="M ${valueStartX + valueWidth / 2} 140 L ${valueStartX + valueWidth / 2 + 28} ${placeholderLineY} L ${placeholderLineEndX} ${placeholderLineY}" stroke="${COLORS.lineStrong}" stroke-width="1" fill="none" />`,
+    `<path d="M ${suffixX + suffixSize / 2} 152 L ${suffixX + suffixSize / 2 + 28} ${suffixLineY} L ${suffixLineEndX} ${suffixLineY}" stroke="${COLORS.lineStrong}" stroke-width="1" fill="none" />`,
+    `<path d="M ${fieldX + 118} 198 L ${fieldX + 154} ${helperLineY} L ${helperLineEndX} ${helperLineY}" stroke="${COLORS.lineStrong}" stroke-width="1" fill="none" />`,
+    `<line x1="${fieldX - 28}" y1="${fieldY}" x2="${fieldX - 28}" y2="${fieldY + height}" stroke="${COLORS.measure}" stroke-width="1" />`,
+    `<line x1="${fieldX - 32}" y1="${fieldY}" x2="${fieldX - 24}" y2="${fieldY}" stroke="${COLORS.measure}" stroke-width="1" />`,
+    `<line x1="${fieldX - 32}" y1="${fieldY + height}" x2="${fieldX - 24}" y2="${fieldY + height}" stroke="${COLORS.measure}" stroke-width="1" />`,
+    `<line x1="${fieldX}" y1="${paddingLineY}" x2="${fieldX + paddingX}" y2="${paddingLineY}" stroke="${COLORS.measure}" stroke-width="1" />`,
+    `<line x1="${fieldX}" y1="${paddingLineY - 4}" x2="${fieldX}" y2="${paddingLineY + 4}" stroke="${COLORS.measure}" stroke-width="1" />`,
+    `<line x1="${fieldX + paddingX}" y1="${paddingLineY - 4}" x2="${fieldX + paddingX}" y2="${paddingLineY + 4}" stroke="${COLORS.measure}" stroke-width="1" />`,
+    `<line x1="${prefixX + prefixSize}" y1="${gapLineY}" x2="${valueStartX}" y2="${gapLineY}" stroke="${COLORS.measure}" stroke-width="1" />`,
+    `<line x1="${prefixX + prefixSize}" y1="${gapLineY - 4}" x2="${prefixX + prefixSize}" y2="${gapLineY + 4}" stroke="${COLORS.measure}" stroke-width="1" />`,
+    `<line x1="${valueStartX}" y1="${gapLineY - 4}" x2="${valueStartX}" y2="${gapLineY + 4}" stroke="${COLORS.measure}" stroke-width="1" />`
+  ];
+
+  const contentTexts = [
+    text({ x: fieldX, y: labelY, value: labelValue, size: 12, weight: 600, fill: COLORS.textSecondary }),
+    text({
+      x: prefixX + prefixSize / 2,
+      y: centerY + 5,
+      value: prefixValue,
+      size: 15,
+      weight: 600,
+      fill: COLORS.textMuted,
+      anchor: "middle"
+    }),
+    text({
+      x: valueStartX,
+      y: valueY,
+      value: placeholderValue,
+      size: metrics.fontSize,
+      weight: 400,
+      fill: COLORS.textMuted
+    }),
+    text({
+      x: suffixX + suffixSize / 2,
+      y: centerY + 5,
+      value: "×",
+      size: 16,
+      weight: 700,
+      fill: COLORS.textMuted,
+      anchor: "middle"
+    }),
+    text({ x: fieldX, y: helperY, value: helperValue, size: 12, weight: 500, fill: COLORS.textMuted }),
+    text({ x: labelAnchorX, y: labelAnchorY, value: `label 예시: ${labelValue}`, size: 12, weight: 600, fill: COLORS.textSecondary, anchor: "end" }),
+    text({ x: containerAnchorX, y: containerAnchorY, value: "container", size: 12, weight: 600, fill: COLORS.textSecondary, anchor: "end" }),
+    text({ x: prefixAnchorX, y: prefixAnchorY, value: `prefix 예시: ${prefixValue}`, size: 12, weight: 600, fill: COLORS.textSecondary, anchor: "end" }),
+    text({ x: placeholderAnchorX, y: placeholderAnchorY, value: "placeholder 예시", size: 12, weight: 600, fill: COLORS.textSecondary, anchor: "start" }),
+    text({ x: suffixAnchorX, y: suffixAnchorY, value: "suffix 예시: 지우기", size: 12, weight: 600, fill: COLORS.textSecondary, anchor: "start" }),
+    text({ x: helperAnchorX, y: helperAnchorY, value: "helper 예시", size: 12, weight: 600, fill: COLORS.textSecondary, anchor: "start" }),
+    text({
+      x: fieldX - 40,
+      y: centerY + 4,
+      value: `height ${height}`,
+      size: 11,
+      weight: 600,
+      fill: COLORS.measure,
+      anchor: "end"
+    }),
+    text({
+      x: fieldX + paddingX / 2,
+      y: paddingTextY,
+      value: `padding ${paddingX}`,
+      size: 11,
+      weight: 600,
+      fill: COLORS.measure,
+      anchor: "middle"
+    }),
+    text({
+      x: (prefixX + prefixSize + valueStartX) / 2,
+      y: gapTextY,
+      value: `gap ${prefixGap}`,
+      size: 11,
+      weight: 600,
+      fill: COLORS.measure,
+      anchor: "middle"
+    })
+  ];
+
+  const contentParts = [
+    rect({ x: fieldX, y: fieldY, width, height, rx: metrics.radius, fill: COLORS.field, stroke: COLORS.line }),
+    `<g>${contentLines.join("")}</g>`,
+    `<g>${contentTexts.join("")}</g>`
+  ];
 
   return svgFrame(
     920,
-    360,
+    400,
     [
-      ...panel(32, 32, 856, 296, "Input Anatomy", [
-        text({ x: fieldX, y: labelY, value: "label", size: 12, weight: 600, fill: COLORS.textSecondary }),
-        rect({ x: fieldX, y: fieldY, width, height, rx: metrics.radius, fill: COLORS.field, stroke: COLORS.line }),
-        plusGlyph(prefixX, fieldY + Math.round((height - prefixSize) / 2), prefixSize, COLORS.textMuted),
-        text({
-          x: valueStartX,
-          y: fieldY + Math.round(height / 2) + Math.round(metrics.fontSize / 2) - 2,
-          value: "텍스트를 입력해 주세요.",
-          size: metrics.fontSize,
-          weight: 400,
-          fill: COLORS.textMuted
-        }),
-        text({
-          x: suffixX + suffixSize / 2,
-          y: fieldY + Math.round(height / 2) + 5,
-          value: "×",
-          size: 16,
-          weight: 700,
-          fill: COLORS.textMuted,
-          anchor: "middle"
-        }),
-        text({ x: fieldX, y: helperY, value: "helper text", size: 12, weight: 500, fill: COLORS.textMuted }),
-
-        text({ x: fieldX + width / 2, y: 254, value: "slots: container, value, label, helper text, prefix, suffix", size: 12, weight: 600, fill: COLORS.textSecondary, anchor: "middle" }),
-        text({ x: fieldX + width / 2, y: 278, value: "single-line field shell", size: 12, weight: 600, fill: COLORS.textMuted, anchor: "middle" }),
-
-        `<line x1="${prefixX + prefixSize}" y1="${fieldY - 18}" x2="${valueStartX}" y2="${fieldY - 18}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
-        `<line x1="${prefixX + prefixSize}" y1="${fieldY - 22}" x2="${prefixX + prefixSize}" y2="${fieldY - 14}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
-        `<line x1="${valueStartX}" y1="${fieldY - 22}" x2="${valueStartX}" y2="${fieldY - 14}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
-        text({
-          x: (prefixX + prefixSize + valueStartX) / 2,
-          y: fieldY - 24,
-          value: "prefix gap",
-          size: 11,
-          weight: 600,
-          fill: COLORS.textMuted,
-          anchor: "middle"
-        }),
-
-        `<line x1="${fieldX + paddingX}" y1="${fieldY + height + 18}" x2="${fieldX + paddingX + 24}" y2="${fieldY + height + 18}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
-        `<line x1="${fieldX + paddingX}" y1="${fieldY + height + 14}" x2="${fieldX + paddingX}" y2="${fieldY + height + 22}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
-        `<line x1="${fieldX + paddingX + 24}" y1="${fieldY + height + 14}" x2="${fieldX + paddingX + 24}" y2="${fieldY + height + 22}" stroke="${COLORS.lineStrong}" stroke-width="1" />`,
-        text({
-          x: fieldX + paddingX + 12,
-          y: fieldY + height + 12,
-          value: `padding ${paddingX}`,
-          size: 11,
-          weight: 600,
-          fill: COLORS.textMuted,
-          anchor: "middle"
-        })
+      ...panel(32, 32, 856, 336, "", [
+        `<g transform="translate(${contentOffsetX} ${contentOffsetY})">`,
+        ...contentParts,
+        "</g>"
       ], { fill: COLORS.panel, stroke: "transparent" })
     ],
     { bg: COLORS.panel, radius: 24 }
@@ -385,7 +472,7 @@ const inputAnatomyPreview = () => {
 
 const panel = (x, y, width, height, title, bodyParts = [], options = {}) => [
   rect({ x, y, width, height, rx: 20, fill: options.fill ?? COLORS.panel, stroke: options.stroke ?? COLORS.line }),
-  text({ x: x + 18, y: y + 28, value: title, size: 13, weight: 700, fill: COLORS.textSecondary }),
+  ...(title ? [text({ x: x + 18, y: y + 28, value: title, size: 13, weight: 700, fill: COLORS.textSecondary })] : []),
   ...bodyParts
 ];
 

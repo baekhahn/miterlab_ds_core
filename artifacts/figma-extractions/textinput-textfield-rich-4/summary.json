@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "extractedAt": "2026-03-20T09:31:11.676Z",
+  "extractionName": "textinput-textfield-rich-4",
+  "outputDir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-rich-4",
+  "selectionCount": 1,
+  "transport": "codex-oauth",
+  "status": "failed",
+  "selectionSvg": null,
+  "nodes": [
+    {
+      "id": "16274:133989",
+      "name": "Textinput/Textfield",
+      "dir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-rich-4/textinput-textfield-16274-133989",
+      "files": [],
+      "isFigmaComponent": true,
+      "componentRole": "instance",
+      "mainComponentName": null
+    }
+  ],
+  "error": "Command failed: codex exec -C /Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex --dangerously-bypass-approvals-and-sandbox --json Use [$figma](/Users/baekhahnwork/.codex/skills/figma/SKILL.md).\nFetch the raw Figma MCP results for the exact node below.\nDo not summarize.\nCall get_design_context first, then get_metadata.\nDo not call get_screenshot in this fallback path.\nEnd after the tool calls complete.\nfileKey: dkTDZO4Gdh64vtvVd11YyJ\nnodeId: 16274:133989\nnodeName: Textinput/Textfield\nnodeType: INSTANCE\nnodeUrl: https://www.figma.com/design/dkTDZO4Gdh64vtvVd11YyJ/selection?node-id=16274-133989\n2026-03-20T09:31:11.832324Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at \"/Users/baekhahnwork/.codex/shell_snapshots/019d0a95-a1d4-71f1-9928-c939a0bd8989.tmp-1773999071712632000\": Os { code: 2, kind: NotFound, message: \"No such file or directory\" }\n",
+  "failedAt": "2026-03-20T09:31:46.685Z"
+}

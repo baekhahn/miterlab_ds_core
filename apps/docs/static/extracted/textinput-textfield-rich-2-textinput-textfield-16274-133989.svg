@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="520" height="256" viewBox="0 0 520 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="520" height="256" rx="16" fill="#F7F7F8"/>
+  <rect x="16" y="16" width="488" height="224" rx="20" fill="#FFFFFF" stroke="#E1E2E4" stroke-width="1" />
+<text x="32" y="52" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="20" font-weight="600" fill="#171719">textinput-textfield-rich-2</text>
+<text x="32" y="78" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="14" font-weight="500" fill="#2E2F33">Textinput/Textfield</text>
+<rect x="32" y="96" width="96" height="28" rx="14" fill="#F4F4F5" stroke="transparent" stroke-width="0" />
+<text x="48" y="115" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="600" fill="#37383C">INSTANCE</text>
+<text x="32" y="150" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#5A5C63">fileKey  dkTDZO4Gdh64vtvVd11YyJ</text>
+<text x="32" y="172" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#5A5C63">nodeId   16274:133989</text>
+<text x="32" y="194" font-family="Pretendard, Pretendard Variable, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12" font-weight="500" fill="#5A5C63">saved    2026-03-20T09:27:31.061Z</text>
+</svg>

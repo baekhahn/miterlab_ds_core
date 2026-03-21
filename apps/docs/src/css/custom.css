@@ -389,9 +389,14 @@ main article table td {
   margin: 0;
 }
 
+.extracted-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.extracted-promote,
 .extracted-delete {
-  width: 32px;
-  height: 32px;
   border: 1px solid var(--ifm-toc-border-color);
   border-radius: 8px;
   background: transparent;
@@ -400,16 +405,52 @@ main article table td {
   flex: 0 0 auto;
 }
 
+.extracted-promote {
+  min-height: 32px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.extracted-delete {
+  width: 32px;
+  height: 32px;
+}
+
+.extracted-promote:disabled,
 .extracted-delete:disabled {
   opacity: 0.5;
   cursor: default;
 }
 
+.extracted-preview-block {
+  display: grid;
+  gap: 8px;
+  max-width: 720px;
+}
+
 .extracted-preview {
   display: block;
   width: 100%;
-  max-width: 720px;
   border-radius: 12px;
+}
+
+.extracted-insight {
+  display: grid;
+  gap: 8px;
+  max-width: 720px;
+}
+
+.extracted-insight-headline,
+.extracted-insight-line {
+  margin: 0;
+}
+
+.extracted-insight-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
 }
 
 .extracted-meta {
@@ -418,6 +459,7 @@ main article table td {
   display: grid;
   gap: 6px;
 }
+
 
 .navbar .navbar__item.navbar__link {
   color: #666666 !important;

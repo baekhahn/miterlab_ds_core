@@ -19,7 +19,7 @@ Input은 다음 상황에 사용합니다.
 ## Anatomy
 
 Anatomy는 대표 Input의 기본 구조를 설명합니다.
-즉 variation이 적용되기 전, Input이 공통으로 가지는 기본 slot 구조입니다.
+즉 component properties가 적용되기 전, Input이 공통으로 가지는 기본 slot 구조입니다.
 
 ![Input anatomy preview](/previews/input-anatomy.svg)
 
@@ -38,7 +38,7 @@ Anatomy는 대표 Input의 기본 구조를 설명합니다.
 - form 안의 input은 가능하면 `label`을 함께 가집니다.
 - `placeholder`는 `value slot` 안의 보조 텍스트이며, label을 대체하지 않습니다.
 - `helper text`는 field 아래에서 상태나 설명을 보조합니다.
-- `prefix`, `suffix`는 제한적으로 허용합니다.
+- `prefix`, `suffix`, `trailing button`은 component properties에 따라 선택적으로 붙습니다.
 
 ## Semantics
 
@@ -58,18 +58,36 @@ Input은 다음을 분명히 보여야 합니다.
 - 입력 중인지
 - 설명이나 오류가 필요한지
 
-## Variation
+이 문서의 최종 대상은 main component 설명 자체보다, 실제 화면에서 쓰이는 Input instance입니다.
 
-Input의 variation은 기본 anatomy 위에 axis가 적용되며 결정됩니다.
-이 axis는 Figma component property와도 직접 연결되는 기준입니다.
+### Fixed vs Flexible
+
+- 고정: 입력 구조의 의미, 상태 축, trailing button의 역할, accessibility rule, variable 연결
+- 개방: 어떤 property 조합을 켤지, heading/description을 붙일지, helper 문구와 텍스트 값, 대표 variant 선택
+- 즉 Input contract는 하나의 정답 화면을 고정하는 문서가 아니라, 허용된 instance 범위를 정의하는 문서입니다.
+
+## Component Properties
+
+Input의 component properties는 기본 anatomy 위에 axis가 적용되며 결정됩니다.
+이 axis는 Figma component property와 직접 연결되는 기준입니다.
+즉 docs에서는 “Input이 어떤 instance 조합으로 생성될 수 있는가”를 이 섹션에서 설명합니다.
 
 | Axis | Options | Meaning | Figma Component Relation |
 | --- | --- | --- | --- |
-| `intent` | `default`, `error`, `success` | field의 의미 상태를 결정합니다. | intent 또는 validation property와 연결됩니다. |
-| `size` | `sm`, `md`, `lg` | field 높이와 밀도를 결정합니다. | size property와 연결됩니다. |
-| `state` | `enabled`, `focused`, `disabled`, `readonly`, `loading` | 상호작용 가능 여부와 진행 상태를 결정합니다. | state property와 연결됩니다. |
-| `width` | `hug`, `full` | field의 레이아웃 점유 방식을 결정합니다. | layout option 또는 frame usage와 연결됩니다. |
-| `content` | `value only`, `with label`, `with helper`, `with prefix/suffix` | anatomy slot을 어떤 조합으로 노출할지 결정합니다. | content-related property와 연결됩니다. |
+| `status` | `normal`, `positive`, `negative` | field의 의미 상태를 결정합니다. | `Status` property와 연결됩니다. |
+| `active` | `true`, `false` | 현재 입력값이 채워진 active state를 결정합니다. | `Active` property와 연결됩니다. |
+| `focus` | `true`, `false` | focus treatment 노출 여부를 결정합니다. | `Focus` property와 연결됩니다. |
+| `disable` | `true`, `false` | 입력 가능 여부를 결정합니다. | `Disable` property와 연결됩니다. |
+| `heading` | `true`, `false` | field 위 heading/label block 노출 여부를 결정합니다. | `Heading` property와 연결됩니다. |
+| `description` | `true`, `false` | helper/description block 노출 여부를 결정합니다. | `Description` property와 연결됩니다. |
+| `leading content` | `true`, `false` | 좌측 보조 content 노출 여부를 결정합니다. | `Leading Content` property와 연결됩니다. |
+| `trailing content` | `true`, `false` | 우측 보조 content 노출 여부를 결정합니다. | `Trailing Content` property와 연결됩니다. |
+| `trailing button` | `true`, `false` | 우측 action segment 노출 여부를 결정합니다. | `Trailing Button` 또는 `Button` property와 연결됩니다. |
+| `label / placeholder / text` | string | instance 안의 텍스트 값을 결정합니다. | text property와 연결됩니다. |
+
+다만 모든 property를 한 instance에서 다 켜야 하는 것은 아닙니다.
+- contract가 고정하는 것은 property axis와 그 의미입니다.
+- 실제 instance 생성에서는 form 맥락에 맞는 property 조합만 선택합니다.
 
 ### Width
 
@@ -82,8 +100,11 @@ Input의 variation은 기본 anatomy 위에 axis가 적용되며 결정됩니다
 
 - 기본 input은 `1 line` 입력을 기준으로 합니다.
 - `prefix`, `suffix`는 제한적으로 허용합니다.
+- `trailing button`은 suffix icon이 아니라 우측 action segment로 취급합니다.
 - `clear action`은 선택적으로 둘 수 있습니다.
 - multiline 입력은 현재 contract 범위에 포함하지 않습니다.
+
+대표 variant set이 있어도, 실제 서비스에서는 그중 일부만 채택해 instance를 구성할 수 있습니다.
 
 ## Preview
 
@@ -93,12 +114,16 @@ Input의 variation은 기본 anatomy 위에 axis가 적용되며 결정됩니다
 
 현재 preview는 축 비교 구조를 유지하되, 입력 데모보다 실제 서비스 폼에서 보이는 절제된 field shell을 우선합니다.
 
-현재 Input 수치는 로컬 문서가 아니라 `Foundation`에서 파생됩니다.
+현재 Input 수치는 로컬 문서가 아니라 `Variables/Foundation`에서 파생됩니다.
 즉 `md` control height가 바뀌면 Input preview, Figma inspection, 생성 수치가 함께 바뀌어야 합니다.
+
+Preview는 대표 instance 예시입니다.
+- preview 하나가 Input의 유일한 정답은 아닙니다.
+- 같은 contract 안에서도 `Trailing Button`, `Heading`, `Description`, `Status` 조합에 따라 다른 instance가 자연스럽게 나올 수 있습니다.
 
 ## Metrics
 
-아래 값은 Input 문서가 직접 소유하는 값이 아니라 `Foundation`에서 파생한 현재 결과입니다.
+아래 값은 Input 문서가 직접 소유하는 값이 아니라 `Variables/Foundation`에서 파생한 현재 결과입니다.
 
 | Size | Height | PaddingX | PaddingY | Radius | Font Size | Line Height | Min Width |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -109,6 +134,18 @@ Input의 variation은 기본 anatomy 위에 axis가 적용되며 결정됩니다
 ## Color Mapping
 
 Color Mapping은 별도 시각 기준이 아니라, Foundation token이 Input의 상태별 역할에 어떻게 매핑되는지 보여주는 확인용 섹션입니다.
+
+## Variables
+
+Input은 다음 계열의 variable을 참조합니다.
+
+- color variables
+- spacing variables
+- radius variables
+- typography variables
+- control size variables
+
+즉 `Metrics`와 `Color Mapping`은 Input이 직접 정의한 값이 아니라, variable 계층이 instance에 적용된 현재 결과입니다.
 
 ### `default`
 
@@ -199,6 +236,12 @@ Color Mapping은 별도 시각 기준이 아니라, Foundation token이 Input의
 - helper text, prefix/suffix, input group은 다음 단계에서 분리된 family로 다루는 편이 적절합니다.
 - multiline 입력은 별도 family 또는 하위 contract로 분리할 수 있습니다.
 
+### Instance Selection
+
+- 같은 Input contract 안에서도 폼 목적에 따라 다른 instance를 선택할 수 있습니다.
+- 예: 단순 입력은 기본 field, 검증이 필요한 경우는 `status`, 즉시 액션이 필요한 경우는 `trailing button` instance를 사용합니다.
+- contract는 가능한 조합과 경계를 정의하고, 실제 instance 선택은 화면 문맥에서 결정합니다.
+
 ## Foundation Reference
 
 Input Contract는 다음을 직접 정의하지 않습니다.
@@ -209,6 +252,6 @@ Input Contract는 다음을 직접 정의하지 않습니다.
 - radius value
 - control height
 
-Input은 Foundation token을 참조합니다.
+Input은 Variables/Foundation token을 참조합니다.
 
 Foundation이 변경되면 Input 수치는 자동으로 바뀝니다.

@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "extractedAt": "2026-03-20T11:55:25.705Z",
+  "extractionName": "textinput-textfield-rich-5",
+  "outputDir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-rich-5",
+  "selectionCount": 1,
+  "transport": "codex-oauth",
+  "status": "completed",
+  "promotionStatus": "accepted",
+  "promotedAt": "2026-03-20T11:56:49.754Z",
+  "selectionSvg": null,
+  "nodes": [
+    {
+      "id": "16274:133989",
+      "name": "Textinput/Textfield",
+      "dir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-rich-5/textinput-textfield-16274-133989",
+      "files": [
+        "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-rich-5/textinput-textfield-16274-133989/metadata.json",
+        "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-rich-5/textinput-textfield-16274-133989/design-context.json",
+        "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-rich-5/textinput-textfield-16274-133989/screenshot.json"
+      ],
+      "isFigmaComponent": true,
+      "componentRole": "instance",
+      "mainComponentName": null,
+      "insight": {
+        "kind": "input-with-trailing-button",
+        "headline": "입력 영역과 우측 trailing button이 결합된 input입니다.",
+        "structure": [
+          "wrapper",
+          "container",
+          "content",
+          "text",
+          "trailing button"
+        ],
+        "notes": [
+          "입력 영역 우측에 독립된 action segment가 결합됩니다.",
+          "trailing button label은 \"확인\"입니다."
+        ],
+        "metrics": [
+          "field 333 × 48",
+          "content gap 8",
+          "container padding 12"
+        ],
+        "detectedSlots": [
+          "wrapper",
+          "container",
+          "content",
+          "text",
+          "trailing button"
+        ]
+      }
+    }
+  ],
+  "completedAt": "2026-03-20T11:56:30.909Z"
+}

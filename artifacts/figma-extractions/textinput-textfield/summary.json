@@ -1,0 +1,65 @@
+{
+  "ok": true,
+  "extractedAt": "2026-03-21T00:56:18.845Z",
+  "extractionName": "Textinput/Textfield",
+  "outputDir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield",
+  "selectionCount": 1,
+  "transport": "codex-oauth",
+  "status": "completed",
+  "promotionStatus": "draft",
+  "promotedAt": null,
+  "selectionSvg": null,
+  "nodes": [
+    {
+      "id": "16215:31385",
+      "name": "Textinput/Textfield",
+      "dir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield/textinput-textfield-16215-31385",
+      "files": [
+        "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield/textinput-textfield-16215-31385/metadata.json",
+        "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield/textinput-textfield-16215-31385/design-context.json",
+        "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield/textinput-textfield-16215-31385/screenshot.json"
+      ],
+      "isFigmaComponent": true,
+      "componentRole": "component-set",
+      "mainComponentName": "Textinput/Textfield",
+      "component": {
+        "name": "Textinput/Textfield",
+        "type": "COMPONENT_SET",
+        "isFigmaComponent": true,
+        "role": "component-set",
+        "mainComponentName": "Textinput/Textfield"
+      },
+      "properties": {
+        "variantProperties": {},
+        "enabled": []
+      },
+      "resolvedStructure": {
+        "kind": "input",
+        "slots": [],
+        "flow": []
+      },
+      "semantics": {
+        "headline": "기본 text input 구조입니다.",
+        "notes": [
+          "기본 입력 shell 중심 구조입니다."
+        ]
+      },
+      "metrics": [
+        "field 1440 × 1220"
+      ],
+      "insight": {
+        "kind": "input",
+        "headline": "기본 text input 구조입니다.",
+        "structure": [],
+        "notes": [
+          "기본 입력 shell 중심 구조입니다."
+        ],
+        "metrics": [
+          "field 1440 × 1220"
+        ],
+        "detectedSlots": []
+      }
+    }
+  ],
+  "completedAt": "2026-03-21T00:57:28.864Z"
+}

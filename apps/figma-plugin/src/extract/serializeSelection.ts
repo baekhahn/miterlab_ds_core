@@ -82,6 +82,17 @@ export type SelectionSummary = {
   fileKey: string;
   nodeIds: string[];
   nodeUrl: string | null;
+  nodes: Array<{
+    id: string;
+    name: string;
+    type: string;
+    url: string;
+    isFigmaComponent: boolean;
+    componentRole: "instance" | "component" | "component-set" | "node";
+    mainComponentName?: string | null;
+    componentKey?: string;
+    variantProperties?: Record<string, string | boolean>;
+  }>;
 };
 
 export type SelectionReference = {
@@ -259,7 +270,8 @@ export const summarizeSelection = (selection: readonly SceneNode[]): SelectionSu
       pageName: figma.currentPage.name,
       fileKey,
       nodeIds: [],
-      nodeUrl: null
+      nodeUrl: null,
+      nodes: []
     };
   }
 
@@ -277,7 +289,14 @@ export const summarizeSelection = (selection: readonly SceneNode[]): SelectionSu
     pageName: figma.currentPage.name,
     fileKey,
     nodeIds: selection.map((node) => node.id),
-    nodeUrl: fileKey ? buildNodeUrl(fileKey, primary.id) : null
+    nodeUrl: fileKey ? buildNodeUrl(fileKey, primary.id) : null,
+    nodes: selection.map((node) => ({
+      id: node.id,
+      name: node.name,
+      type: node.type,
+      url: fileKey ? buildNodeUrl(fileKey, node.id) : "",
+      ...getNodeComponentMeta(node)
+    }))
   };
 };
 

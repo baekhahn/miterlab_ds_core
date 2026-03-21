@@ -6093,6 +6093,19 @@
 
   // src/extract/serializeSelection.ts
   var buildNodeUrl = (fileKey, nodeId) => `https://www.figma.com/design/${fileKey}/${encodeURIComponent(figma.root.name)}?node-id=${nodeId.replace(":", "-")}`;
+  var serializeComponentProperties = (node) => {
+    if (!("componentProperties" in node) || !node.componentProperties) {
+      return void 0;
+    }
+    const entries = Object.entries(node.componentProperties).map(([key, value]) => [
+      key,
+      {
+        type: value.type,
+        value: "value" in value ? value.value : false
+      }
+    ]);
+    return Object.fromEntries(entries);
+  };
   var summarizeSelection = (selection) => {
     var _a;
     const fileKey = (_a = figma.fileKey) != null ? _a : "";
@@ -6105,7 +6118,8 @@
         pageName: figma.currentPage.name,
         fileKey,
         nodeIds: [],
-        nodeUrl: null
+        nodeUrl: null,
+        nodes: []
       };
     }
     const primary = selection[0];
@@ -6118,7 +6132,52 @@
       pageName: figma.currentPage.name,
       fileKey,
       nodeIds: selection.map((node) => node.id),
-      nodeUrl: fileKey ? buildNodeUrl(fileKey, primary.id) : null
+      nodeUrl: fileKey ? buildNodeUrl(fileKey, primary.id) : null,
+      nodes: selection.map((node) => __spreadValues({
+        id: node.id,
+        name: node.name,
+        type: node.type,
+        url: fileKey ? buildNodeUrl(fileKey, node.id) : ""
+      }, getNodeComponentMeta(node)))
+    };
+  };
+  var getNodeComponentMeta = (node) => {
+    if (node.type === "INSTANCE") {
+      const properties = serializeComponentProperties(node);
+      return {
+        isFigmaComponent: true,
+        componentRole: "instance",
+        mainComponentName: null,
+        componentKey: void 0,
+        variantProperties: properties ? Object.fromEntries(Object.entries(properties).map(([key, value]) => [key, value.value])) : void 0
+      };
+    }
+    if (node.type === "COMPONENT") {
+      const properties = serializeComponentProperties(node);
+      return {
+        isFigmaComponent: true,
+        componentRole: "component",
+        mainComponentName: node.name,
+        componentKey: node.key,
+        variantProperties: properties ? Object.fromEntries(Object.entries(properties).map(([key, value]) => [key, value.value])) : void 0
+      };
+    }
+    if (node.type === "COMPONENT_SET") {
+      const properties = serializeComponentProperties(node);
+      return {
+        isFigmaComponent: true,
+        componentRole: "component-set",
+        mainComponentName: node.name,
+        componentKey: node.key,
+        variantProperties: properties ? Object.fromEntries(Object.entries(properties).map(([key, value]) => [key, value.value])) : void 0
+      };
+    }
+    return {
+      isFigmaComponent: false,
+      componentRole: "node",
+      mainComponentName: null,
+      componentKey: void 0,
+      variantProperties: void 0
     };
   };
 
@@ -6160,6 +6219,56 @@
       return (_d = match == null ? void 0 : match[1]) != null ? _d : null;
     }
   };
+  var getVariantProperties = (node) => {
+    if (!("componentProperties" in node) || !node.componentProperties) {
+      return void 0;
+    }
+    const entries = Object.entries(node.componentProperties).map(([key, value]) => [
+      key,
+      "value" in value ? value.value : false
+    ]);
+    return Object.fromEntries(entries);
+  };
+  var getComponentMeta = (node) => {
+    var _a, _b;
+    if (node.type === "INSTANCE") {
+      const mainComponent = (_a = node.mainComponent) != null ? _a : null;
+      const parent = mainComponent == null ? void 0 : mainComponent.parent;
+      const baseComponentName = parent && "type" in parent && parent.type === "COMPONENT_SET" ? parent.name : (_b = mainComponent == null ? void 0 : mainComponent.name) != null ? _b : null;
+      return {
+        isFigmaComponent: true,
+        componentRole: "instance",
+        mainComponentName: baseComponentName,
+        componentKey: mainComponent == null ? void 0 : mainComponent.key,
+        variantProperties: getVariantProperties(node)
+      };
+    }
+    if (node.type === "COMPONENT") {
+      return {
+        isFigmaComponent: true,
+        componentRole: "component",
+        mainComponentName: node.name,
+        componentKey: node.key,
+        variantProperties: getVariantProperties(node)
+      };
+    }
+    if (node.type === "COMPONENT_SET") {
+      return {
+        isFigmaComponent: true,
+        componentRole: "component-set",
+        mainComponentName: node.name,
+        componentKey: node.key,
+        variantProperties: getVariantProperties(node)
+      };
+    }
+    return {
+      isFigmaComponent: false,
+      componentRole: "node",
+      mainComponentName: null,
+      componentKey: void 0,
+      variantProperties: void 0
+    };
+  };
   var buildMinimalExtractionReference = (selection, fallbackNodeUrl) => {
     var _a;
     const runtimeFileKey = (_a = figma.fileKey) != null ? _a : "";
@@ -6172,17 +6281,12 @@
       fileKey,
       pageName: figma.currentPage.name,
       selectionCount: selection.length,
-      nodes: selection.map((node) => ({
+      nodes: selection.map((node) => __spreadValues({
         id: node.id,
         name: node.name,
         type: node.type,
-        url: `https://www.figma.com/design/${fileKey}/${encodeURIComponent(figma.root.name)}?node-id=${node.id.replace(":", "-")}`,
-        isFigmaComponent: node.type === "INSTANCE" || node.type === "COMPONENT" || node.type === "COMPONENT_SET",
-        componentRole: node.type === "INSTANCE" ? "instance" : node.type === "COMPONENT" ? "component" : node.type === "COMPONENT_SET" ? "component-set" : "node",
-        mainComponentName: null,
-        componentKey: void 0,
-        variantProperties: void 0
-      }))
+        url: `https://www.figma.com/design/${fileKey}/${encodeURIComponent(figma.root.name)}?node-id=${node.id.replace(":", "-")}`
+      }, getComponentMeta(node)))
     };
   };
   var sendSelectionInfo = () => {
@@ -6402,7 +6506,6 @@
           <button type="button" class="btn primary" id="extractSelection"><span id="extractSpinner" class="spinner hidden"></span><span id="extractLabel">Extract</span></button>
           <button type="button" class="btn" id="cancelExtraction" disabled>Cancel</button>
         </div>
-        <button type="button" class="btn" id="retryExtraction" disabled>Retry</button>
 
         <div class="status" id="extractionStatus"></div>
         <div class="hint" id="buildStamp"></div>
@@ -6439,7 +6542,6 @@
           bridgeTest: $("bridgeTest"),
           extract: $("extractSelection"),
           cancel: $("cancelExtraction"),
-          retry: $("retryExtraction"),
           spinner: $("extractSpinner"),
           extractLabel: $("extractLabel"),
           status: $("extractionStatus"),
@@ -6462,6 +6564,7 @@
         let lastNodeUrl = "";
         let latestSelectionSvg = null;
         let selectionSvgResolver = null;
+        let extractionPayloadResolver = null;
         let abortController = null;
         let timer = null;
         let poller = null;
@@ -6529,7 +6632,6 @@
         const setLoading = (loading) => {
           el.extract.disabled = loading;
           el.cancel.disabled = !loading;
-          el.retry.disabled = loading || !lastNodeUrl;
           el.spinner.classList.toggle("hidden", !loading);
           el.extractLabel.textContent = loading ? "Extracting" : "Extract";
           if (!loading) stopTimer();
@@ -6633,6 +6735,17 @@
           }, 3000);
         });
 
+        const requestExtractionPayload = (nodeUrl) => new Promise((resolve, reject) => {
+          extractionPayloadResolver = resolve;
+          parent.postMessage({ pluginMessage: { type: "extractSelection", nodeUrl } }, "*");
+          setTimeout(() => {
+            if (extractionPayloadResolver === resolve) {
+              extractionPayloadResolver = null;
+              reject(new Error("\uC120\uD0DD payload \uC900\uBE44\uAC00 \uC9C0\uC5F0\uB418\uACE0 \uC788\uC2B5\uB2C8\uB2E4."));
+            }
+          }, 10000);
+        });
+
         const runExtraction = async () => {
           setStoredFileUrl(el.fileUrlInput.value.trim());
           lastNodeUrl = el.fileUrlInput.value.trim() || getStoredFileUrl();
@@ -6648,34 +6761,21 @@
             return;
           }
 
-          if (!latestSelectionSvg) {
-            setStatus("\uC120\uD0DD SVG\uB97C \uC900\uBE44 \uC911\uC785\uB2C8\uB2E4.");
-            startTimer();
-            latestSelectionSvg = await requestSelectionSvg();
+          setStatus("\uC120\uD0DD payload\uB97C \uC900\uBE44 \uC911\uC785\uB2C8\uB2E4.");
+          startTimer();
+          const payload = await requestExtractionPayload(lastNodeUrl);
+          let ensuredSelectionSvg = payload && payload.selectionSvg ? payload.selectionSvg : null;
+          if (!ensuredSelectionSvg) {
+            setStatus("selection SVG\uB97C \uD655\uC778 \uC911\uC785\uB2C8\uB2E4.");
+            ensuredSelectionSvg = await requestSelectionSvg();
           }
-
-          const payload = {
-            extractionName: latestSelectionSummary.primaryName || "figma-selection",
-            reference: {
-              fileKey,
-              pageName: latestSelectionSummary.pageName || "",
-              selectionCount: latestSelectionSummary.selectionCount || 0,
-              nodes: (latestSelectionSummary.nodeIds || []).map((nodeId, index) => ({
-                id: nodeId,
-                name: index === 0 ? latestSelectionSummary.primaryName : "Selected node " + (index + 1),
-                type: index === 0 ? latestSelectionSummary.primaryType : "NODE",
-                url: index === 0 && latestSelectionSummary.nodeUrl
-                  ? latestSelectionSummary.nodeUrl
-                  : "https://www.figma.com/design/" + fileKey + "/selection?node-id=" + String(nodeId).replace(":", "-"),
-                isFigmaComponent: false,
-                componentRole: "node",
-                mainComponentName: null,
-                componentKey: undefined,
-                variantProperties: undefined
-              }))
-            },
-            selectionSvg: latestSelectionSvg || undefined
-          };
+          if (!ensuredSelectionSvg && latestSelectionSvg) {
+            ensuredSelectionSvg = latestSelectionSvg;
+          }
+          if (ensuredSelectionSvg) {
+            payload.selectionSvg = ensuredSelectionSvg;
+          }
+          latestSelectionSvg = ensuredSelectionSvg;
 
           stopPoll();
           setLoading(true);
@@ -6730,7 +6830,20 @@
               resolve(latestSelectionSvg);
             }
           }
+          if (msg.type === "extractionPayloadReady") {
+            if (extractionPayloadResolver) {
+              const resolve = extractionPayloadResolver;
+              extractionPayloadResolver = null;
+              resolve(msg.payload);
+            }
+          }
+          if (msg.type === "extractionProgress") {
+            setStatus(msg.message || "\uCD94\uCD9C \uC900\uBE44 \uC911\uC785\uB2C8\uB2E4.");
+          }
           if (msg.type === "pluginError") {
+            if (extractionPayloadResolver) {
+              extractionPayloadResolver = null;
+            }
             setStatus(msg.message || "\uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.", "error");
             setLoading(false);
           }
@@ -6750,7 +6863,6 @@
         });
         el.bridgeTest.addEventListener("click", checkBridge);
         el.extract.addEventListener("click", runExtraction);
-        el.retry.addEventListener("click", runExtraction);
         el.cancel.addEventListener("click", () => {
           if (abortController) abortController.abort();
           stopPoll();
@@ -6821,8 +6933,20 @@
         const reference = buildMinimalExtractionReference(selection, fallbackNodeUrl);
         figma.ui.postMessage({ type: "extractionProgress", message: "reference\uB97C \uC900\uBE44\uD588\uC2B5\uB2C8\uB2E4." });
         await flushUi();
-        const selectionSvg = void 0;
-        figma.ui.postMessage({ type: "extractionProgress", message: "selection SVG \uC5C6\uC774 \uC9C4\uD589\uD569\uB2C8\uB2E4." });
+        let selectionSvg;
+        try {
+          const primary = selection[0];
+          const bytes = await primary.exportAsync({
+            format: "SVG",
+            svgOutlineText: false,
+            svgIdAttribute: false
+          });
+          selectionSvg = new TextDecoder("utf-8").decode(bytes);
+          figma.ui.postMessage({ type: "extractionProgress", message: "selection SVG\uB97C \uC900\uBE44\uD588\uC2B5\uB2C8\uB2E4." });
+        } catch (e) {
+          selectionSvg = void 0;
+          figma.ui.postMessage({ type: "extractionProgress", message: "selection SVG \uC5C6\uC774 \uC9C4\uD589\uD569\uB2C8\uB2E4." });
+        }
         await flushUi();
         figma.ui.postMessage({
           type: "extractionPayloadReady",

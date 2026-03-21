@@ -1,0 +1,95 @@
+{
+  "ok": true,
+  "extractedAt": "2026-03-20T12:09:30.347Z",
+  "extractionName": "textinput-textfield-summary-v2",
+  "outputDir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-summary-v2",
+  "selectionCount": 1,
+  "transport": "codex-oauth",
+  "status": "completed",
+  "promotionStatus": "draft",
+  "promotedAt": null,
+  "selectionSvg": null,
+  "nodes": [
+    {
+      "id": "16274:133989",
+      "name": "Textinput/Textfield",
+      "dir": "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-summary-v2/textinput-textfield-16274-133989",
+      "files": [
+        "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-summary-v2/textinput-textfield-16274-133989/metadata.json",
+        "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-summary-v2/textinput-textfield-16274-133989/design-context.json",
+        "/Users/baekhahnwork/Documents/Baek_Codex/designsystem_codex/artifacts/figma-extractions/textinput-textfield-summary-v2/textinput-textfield-16274-133989/screenshot.json"
+      ],
+      "isFigmaComponent": true,
+      "componentRole": "instance",
+      "mainComponentName": "Textinput/Textfield",
+      "component": {
+        "name": "Textinput/Textfield",
+        "type": "INSTANCE",
+        "isFigmaComponent": true,
+        "role": "instance",
+        "mainComponentName": "Textinput/Textfield"
+      },
+      "properties": {
+        "variantProperties": {},
+        "enabled": []
+      },
+      "resolvedStructure": {
+        "kind": "input-with-trailing-button",
+        "slots": [
+          "wrapper",
+          "container",
+          "content",
+          "text",
+          "trailing button"
+        ],
+        "flow": [
+          "wrapper",
+          "container",
+          "content",
+          "text",
+          "trailing button"
+        ]
+      },
+      "semantics": {
+        "headline": "입력 영역과 우측 trailing button이 결합된 input입니다.",
+        "notes": [
+          "입력 영역 우측에 독립된 action segment가 결합됩니다.",
+          "trailing button label은 \"확인\"입니다."
+        ]
+      },
+      "metrics": [
+        "field 333 × 48",
+        "content gap 8",
+        "container padding 12"
+      ],
+      "insight": {
+        "kind": "input-with-trailing-button",
+        "headline": "입력 영역과 우측 trailing button이 결합된 input입니다.",
+        "structure": [
+          "wrapper",
+          "container",
+          "content",
+          "text",
+          "trailing button"
+        ],
+        "notes": [
+          "입력 영역 우측에 독립된 action segment가 결합됩니다.",
+          "trailing button label은 \"확인\"입니다."
+        ],
+        "metrics": [
+          "field 333 × 48",
+          "content gap 8",
+          "container padding 12"
+        ],
+        "detectedSlots": [
+          "wrapper",
+          "container",
+          "content",
+          "text",
+          "trailing button"
+        ]
+      }
+    }
+  ],
+  "completedAt": "2026-03-20T12:10:29.145Z"
+}
