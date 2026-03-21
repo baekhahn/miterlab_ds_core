@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { DesignPrompt } from "../../../packages/figma-generator/src/types/designPrompt";
-import { createPromptFromMakerPrompt, createPromptFromScreen } from "./promptLibrary";
+import { createPromptFromMakerPrompt, createPromptFromScreen, inferMakerPromptArchetype } from "./promptLibrary";
 import { generateFromPrompt } from "./generate";
 import { analyzeSelectionNodeViaMcp, extractViaMcp, refreshExtractedDocs } from "./extractViaMcp";
 import type { GenerateFromPromptRequest, GenerateScreenRequest } from "./contracts/generateScreenRequest";
@@ -165,12 +165,7 @@ const deriveInputBlueprintFromRaw = (rawComponent?: {
 };
 
 const inferMakerScreen = (prompt: string) => {
-  const normalized = prompt.toLowerCase();
-  if (/(login|log in|sign in|로그인|로그 인|signin)/i.test(normalized)) return "login";
-  if (/(settings|setting|설정|preferences)/i.test(normalized)) return "settings";
-  if (/(dashboard|대시보드)/i.test(normalized)) return "dashboard";
-  if (/(list|목록|리스트|filter|검색결과)/i.test(normalized)) return "list";
-  return "login";
+  return inferMakerPromptArchetype(prompt);
 };
 
 type MakerSelectionSummary = {

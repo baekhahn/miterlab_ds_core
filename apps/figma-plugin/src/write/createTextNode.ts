@@ -22,6 +22,57 @@ const fontCandidates: Record<string, FontName[]> = {
   ]
 };
 
+const fontCache: Partial<Record<"regular" | "medium" | "semibold", FontName>> = {};
+let availableFontsPromise: Promise<Font[]> | null = null;
+
+const getAvailableFonts = async () => {
+  if (!availableFontsPromise) {
+    availableFontsPromise = figma.listAvailableFontsAsync();
+  }
+  return await availableFontsPromise;
+};
+
+const matchPreferredFont = (
+  availableFonts: Font[],
+  weight: "regular" | "medium" | "semibold"
+): FontName | null => {
+  const exactCandidates = fontCandidates[weight];
+
+  for (const candidate of exactCandidates) {
+    const found = availableFonts.find(
+      (font) =>
+        font.fontName.family === candidate.family &&
+        font.fontName.style === candidate.style
+    );
+    if (found) {
+      return found.fontName;
+    }
+  }
+
+  for (const candidate of exactCandidates) {
+    const found = availableFonts.find((font) => font.fontName.family === candidate.family);
+    if (found) {
+      return found.fontName;
+    }
+  }
+
+  const styleHints =
+    weight === "semibold"
+      ? [/semi/i, /bold/i, /medium/i]
+      : weight === "medium"
+        ? [/medium/i, /regular/i]
+        : [/regular/i, /book/i, /roman/i];
+
+  for (const hint of styleHints) {
+    const found = availableFonts.find((font) => hint.test(font.fontName.style));
+    if (found) {
+      return found.fontName;
+    }
+  }
+
+  return availableFonts[0]?.fontName ?? null;
+};
+
 const rgb = (hex: string) => {
   const normalized = hex.replace("#", "");
   const bigint = Number.parseInt(normalized, 16);
@@ -33,16 +84,19 @@ const rgb = (hex: string) => {
 };
 
 export const loadFont = async (weight: "regular" | "medium" | "semibold" = "regular"): Promise<FontName> => {
-  for (const font of fontCandidates[weight]) {
-    try {
-      await figma.loadFontAsync(font);
-      return font;
-    } catch {
-      continue;
-    }
+  if (fontCache[weight]) {
+    return fontCache[weight]!;
   }
 
-  throw new Error("No supported default font found. Install Pretendard or Inter in Figma.");
+  const availableFonts = await getAvailableFonts();
+  const preferred = matchPreferredFont(availableFonts, weight);
+  if (!preferred) {
+    throw new Error("사용 가능한 Figma 폰트를 찾지 못했습니다.");
+  }
+
+  await figma.loadFontAsync(preferred);
+  fontCache[weight] = preferred;
+  return preferred;
 };
 
 export const loadDefaultFont = async (): Promise<FontName> => {

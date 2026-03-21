@@ -43,47 +43,17 @@ export interface PluginRequestMakerGenerateMessage {
   placement?: "new-frame" | "selection" | "selection-preview";
 }
 
+export interface PluginRequestMakerRunMessage {
+  type: "requestMakerRun";
+  prompt: string;
+  selectionSummary?: unknown;
+  placement?: "new-frame" | "selection";
+}
+
 export interface PluginMakerDirectEditMessage {
   type: "makerDirectEdit";
   prompt: string;
-  intent?: {
-    kind: "direct-edit";
-    targetScope?: "selection" | "container" | "container-children";
-    message?: string;
-    commands: Array<
-      | {
-          type: "set-container-cross-align";
-          value: "CENTER" | "MIN" | "MAX";
-        }
-      | {
-          type: "set-node-layout-align";
-          value: "STRETCH" | "INHERIT" | "MIN" | "CENTER" | "MAX";
-        }
-      | {
-          type: "set-node-layout-grow";
-          value: number;
-        }
-      | {
-          type: "set-node-layout-sizing-horizontal";
-          value: "FILL" | "HUG" | "FIXED";
-        }
-      | {
-          type: "resize-node-width-to-parent-inner";
-        }
-      | {
-          type: "center-node-in-parent";
-        }
-      | {
-          type: "shrink-node-to-hug-content";
-        }
-    >;
-    analysis?: {
-      componentName?: string;
-      role?: string;
-      resolvedStructureKind?: string;
-      selectionIntentKind?: string;
-    };
-  };
+  intent?: MakerDirectEditIntent;
 }
 
 export interface PluginCancelExtractionMessage {
@@ -105,5 +75,52 @@ export type PluginUiMessage =
   | PluginCancelExtractionMessage
   | PluginExtractSelectionMessage
   | PluginRequestMakerGenerateMessage
+  | PluginRequestMakerRunMessage
   | PluginMakerGenerateMessage
   | PluginMakerDirectEditMessage;
+
+export type MakerDirectEditTargetScope = "selection" | "container" | "container-children";
+
+export type MakerDirectEditCommand =
+  | {
+      type: "set-container-cross-align";
+      value: "CENTER" | "MIN" | "MAX";
+    }
+  | {
+      type: "set-node-layout-align";
+      value: "STRETCH" | "INHERIT" | "MIN" | "CENTER" | "MAX";
+    }
+  | {
+      type: "set-node-layout-grow";
+      value: number;
+    }
+  | {
+      type: "set-node-layout-sizing-horizontal";
+      value: "FILL" | "HUG" | "FIXED";
+    }
+  | {
+      type: "resize-node-width-to-parent-inner";
+    }
+  | {
+      type: "center-node-in-parent";
+    }
+  | {
+      type: "shrink-node-to-hug-content";
+    };
+
+export interface MakerDirectEditAnalysis {
+  componentName?: string;
+  role?: string;
+  resolvedStructureKind?: string;
+  selectionIntentKind?: string;
+  localIntentKind?: string;
+  matchedConcepts?: string[];
+}
+
+export interface MakerDirectEditIntent {
+  kind: "direct-edit";
+  targetScope?: MakerDirectEditTargetScope;
+  message?: string;
+  commands: MakerDirectEditCommand[];
+  analysis?: MakerDirectEditAnalysis;
+}

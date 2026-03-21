@@ -1,6 +1,7 @@
 import { renderPayload } from "./write/renderPayload";
 import type { PluginUiMessage } from "./types";
 import { contractPreviewOptions, renderContractPreview } from "./write/renderContractPreview";
+import { buildLocalDirectEditIntent, parseLocalEditIntentKind } from "./maker/directEdit";
 import buttonInspectionPayload from "../../../artifacts/figma/button-inspection/mcp-payload.json";
 import inputInspectionPayload from "../../../artifacts/figma/input-inspection/mcp-payload.json";
 import type { FigmaWritePayload } from "../../../shared/contracts/figmaWritePayload";
@@ -397,12 +398,6 @@ const renderMakerPayloadToCanvas = async (
   });
 };
 
-const looksLikeFullWidthPrompt = (value: string) =>
-  /(full|full width|가득|꽉|채워|좌우 full|전체 너비|좌우 폭|폭 늘려)/i.test(value);
-
-const looksLikeCenterAlignPrompt = (value: string) =>
-  /(가운데 정렬|중앙 정렬|센터 정렬|center align|centered|가운데로|중앙으로)/i.test(value);
-
 const resolveDirectEditTargets = (selection: readonly SceneNode[]) => {
   if (selection.length !== 1) {
     return [...selection];
@@ -696,7 +691,7 @@ const rawUiHtml = `
       * { box-sizing: border-box; }
       body {
         margin: 0;
-        padding: 14px;
+        padding: 64px 14px 28px;
         background: var(--bg);
         color: var(--text);
         font: 12px/1.45 Pretendard, "Pretendard Variable", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -708,6 +703,22 @@ const rawUiHtml = `
         gap: 12px;
         width: 100%;
         min-width: 0;
+        position: relative;
+        z-index: 1;
+        margin-top: 4px;
+      }
+      .app-footer {
+        color: #9399a4;
+        font-size: 10px;
+        line-height: 1.4;
+        text-align: right;
+        padding: 0 2px;
+        position: fixed;
+        left: 14px;
+        right: 14px;
+        bottom: 8px;
+        z-index: 10;
+        background: linear-gradient(180deg, rgba(9,9,11,0) 0%, rgba(9,9,11,0.92) 45%, rgba(9,9,11,1) 100%);
       }
       .tabs {
         display: grid;
@@ -717,6 +728,8 @@ const rawUiHtml = `
         border: 1px solid var(--line);
         border-radius: 12px;
         background: var(--panel);
+        position: relative;
+        z-index: 2;
       }
       .tab, button, select, input {
         font: inherit;
@@ -759,6 +772,8 @@ const rawUiHtml = `
         border: 1px solid var(--line);
         background: var(--panel-2);
         color: var(--text);
+        position: relative;
+        z-index: 2;
       }
       .btn {
         cursor: pointer;
@@ -814,13 +829,79 @@ const rawUiHtml = `
         width: 100%;
         min-width: 0;
       }
+      .chat {
+        display: grid;
+        gap: 8px;
+        min-height: 180px;
+        max-height: 280px;
+        overflow: auto;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #0c0c0f;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      }
+      .chat-item {
+        display: grid;
+        gap: 4px;
+      }
+      .chat-item.user {
+        justify-items: end;
+      }
+      .chat-item.assistant,
+      .chat-item.system,
+      .chat-item.log {
+        justify-items: start;
+      }
+      .chat-role {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+      }
+      .chat-bubble {
+        max-width: 100%;
+        min-width: 0;
+        padding: 10px 12px;
+        border-radius: 12px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+      .chat-item.user .chat-bubble {
+        background: #26292f;
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+      .chat-item.assistant .chat-bubble {
+        background: var(--panel-2);
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+      .chat-item.system .chat-bubble {
+        background: rgba(255,255,255,0.04);
+        color: var(--muted);
+        border: 1px solid var(--line);
+      }
+      .chat-item.log .chat-bubble {
+        background: transparent;
+        color: #c9ced6;
+        border: 1px dashed var(--line);
+        font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      }
       .hint { color: var(--muted); font-size: 11px; }
+      .build-note-inline {
+        color: #9399a4;
+        font-size: 10px;
+        line-height: 1.4;
+        text-align: right;
+        padding: 0 2px;
+      }
       .maker-actions {
         display: grid;
         gap: 8px;
       }
       textarea.control {
-        min-height: 120px;
+        min-height: 96px;
         resize: vertical;
       }
       .spinner {
@@ -844,9 +925,9 @@ const rawUiHtml = `
   <body>
     <div class="app">
       <div class="tabs">
-        <button type="button" class="tab active" id="tabMaker">Maker</button>
-        <button type="button" class="tab" id="tabInspection">Inspection</button>
-        <button type="button" class="tab" id="tabExtraction">Extraction</button>
+        <button type="button" class="tab active" id="tabMaker" data-action="switch-maker">Maker</button>
+        <button type="button" class="tab" id="tabInspection" data-action="switch-inspection">Inspection</button>
+        <button type="button" class="tab" id="tabExtraction" data-action="switch-extraction">Extraction</button>
       </div>
 
       <div class="panel active" id="panelMaker">
@@ -858,11 +939,15 @@ const rawUiHtml = `
           <div class="meta-item"><div class="meta-key">Kinds</div><div class="meta-value" id="makerSelectionKinds">-</div></div>
           <div class="meta-item"><div class="meta-key">Parent</div><div class="meta-value" id="makerSelectionParent">-</div></div>
         </div>
-        <button type="button" class="btn primary" id="makerSubmit"><span id="makerSpinner" class="spinner hidden"></span><span id="makerSubmitLabel">Create</span></button>
-        <div class="status" id="makerStatus"></div>
-        <div class="code" id="makerDetails">Maker intent와 적용 결과가 여기에 표시됩니다.</div>
-        <div class="code" id="makerLog">Maker log가 여기에 표시됩니다.</div>
+        <button type="button" class="btn primary" id="makerSubmit" data-action="maker-submit"><span id="makerSpinner" class="spinner hidden"></span><span id="makerSubmitLabel">Create</span></button>
+        <div class="chat" id="makerThread">
+          <div class="chat-item system">
+            <div class="chat-role">Status</div>
+            <div class="chat-bubble">Maker intent와 적용 결과가 여기에 표시됩니다.</div>
+          </div>
+        </div>
         <div class="hint">Contract와 extracted component를 바탕으로 새 instance를 만들거나, 선택한 영역을 프롬프트로 다시 생성합니다.</div>
+        <div class="build-note-inline" id="makerBuildInline"></div>
       </div>
 
       <div class="panel" id="panelInspection">
@@ -874,7 +959,7 @@ const rawUiHtml = `
         </select>
         <div class="label">Contract</div>
         <select class="control" id="previewItem"></select>
-        <button type="button" class="btn primary" id="renderContractPreview">Render Selected Contract</button>
+        <button type="button" class="btn primary" id="renderContractPreview" data-action="render-contract-preview">Render Selected Contract</button>
         <div class="hint">Button/Input은 inspection payload 기준으로 렌더합니다.</div>
       </div>
 
@@ -883,12 +968,12 @@ const rawUiHtml = `
         <input class="control" id="fileUrlInput" placeholder="https://www.figma.com/design/..." />
 
         <div class="row2">
-          <button type="button" class="btn" id="refreshSelection">Refresh</button>
-          <button type="button" class="btn" id="bridgeTest">Bridge Test</button>
+          <button type="button" class="btn" id="refreshSelection" data-action="refresh-selection">Refresh</button>
+          <button type="button" class="btn" id="bridgeTest" data-action="bridge-test">Bridge Test</button>
         </div>
         <div class="row2">
-          <button type="button" class="btn primary" id="extractSelection"><span id="extractSpinner" class="spinner hidden"></span><span id="extractLabel">Extract</span></button>
-          <button type="button" class="btn" id="cancelExtraction" disabled>Cancel</button>
+          <button type="button" class="btn primary" id="extractSelection" data-action="extract-selection"><span id="extractSpinner" class="spinner hidden"></span><span id="extractLabel">Extract</span></button>
+          <button type="button" class="btn" id="cancelExtraction" data-action="cancel-extraction" disabled>Cancel</button>
         </div>
 
         <div class="status" id="extractionStatus"></div>
@@ -905,15 +990,63 @@ const rawUiHtml = `
 
         <div class="code" id="selectionJson">선택 노드를 새로고침하면 MCP extraction 기준 정보가 표시됩니다.</div>
       </div>
+      <div class="app-footer" id="appBuildStamp"></div>
     </div>
 
     <script>
       (() => {
+        const showBootError = (message) => {
+          const existing = document.getElementById("bootError");
+          if (existing) {
+            existing.textContent = message;
+            return;
+          }
+
+          const banner = document.createElement("div");
+          banner.id = "bootError";
+          banner.style.cssText = [
+            "position:fixed",
+            "left:14px",
+            "right:14px",
+            "top:14px",
+            "z-index:9999",
+            "padding:10px 12px",
+            "border-radius:10px",
+            "border:1px solid #7f1d1d",
+            "background:#2b1111",
+            "color:#fecaca",
+            "font:12px/1.45 Pretendard, Inter, sans-serif",
+            "white-space:pre-wrap"
+          ].join(";");
+          banner.textContent = message;
+          document.body.appendChild(banner);
+        };
+
+        window.addEventListener("error", (event) => {
+          const message = event?.error?.message || event?.message || "Maker UI runtime error";
+          showBootError("Maker UI 오류: " + message);
+        });
+
+        window.addEventListener("unhandledrejection", (event) => {
+          const reason = event?.reason;
+          const message =
+            (reason && reason.message) ||
+            (typeof reason === "string" ? reason : "Maker UI promise rejection");
+          showBootError("Maker UI promise 오류: " + message);
+        });
+
+        try {
         const optionsByLevel = __PREVIEW_OPTIONS_JSON__;
         const BRIDGE_URL = __BRIDGE_URL_JSON__;
         const BUILD_STAMP = __BUILD_STAMP_JSON__;
 
-        const $ = (id) => document.getElementById(id);
+        const $ = (id) => {
+          const node = document.getElementById(id);
+          if (!node) {
+            throw new Error("UI element missing: " + id);
+          }
+          return node;
+        };
         const el = {
           tabMaker: $("tabMaker"),
           tabInspection: $("tabInspection"),
@@ -925,9 +1058,9 @@ const rawUiHtml = `
           makerSubmit: $("makerSubmit"),
           makerSpinner: $("makerSpinner"),
           makerSubmitLabel: $("makerSubmitLabel"),
-          makerStatus: $("makerStatus"),
-          makerDetails: $("makerDetails"),
-          makerLog: $("makerLog"),
+          appBuildStamp: $("appBuildStamp"),
+          makerBuildInline: $("makerBuildInline"),
+          makerThread: $("makerThread"),
           makerSelectionName: $("makerSelectionName"),
           makerSelectionIntent: $("makerSelectionIntent"),
           makerSelectionKinds: $("makerSelectionKinds"),
@@ -954,13 +1087,14 @@ const rawUiHtml = `
         };
 
         el.buildStamp.textContent = "Build " + BUILD_STAMP;
+        el.appBuildStamp.textContent = "Build " + BUILD_STAMP;
+        el.makerBuildInline.textContent = "Build " + BUILD_STAMP;
 
         let memoryFileUrl = "";
         let latestSelectionSummary = null;
         let lastExtractionName = "";
         let lastNodeUrl = "";
         let latestSelectionSvg = null;
-        let makerAnalyzeCache = new Map();
         let selectionSvgResolver = null;
         let extractionPayloadResolver = null;
         let abortController = null;
@@ -970,34 +1104,189 @@ const rawUiHtml = `
         let startedAt = 0;
         let statusText = "";
         let statusTone = "";
+        const THREAD_STORAGE_KEY = "mads-maker-thread-history";
+        const THREAD_HISTORY_LIMIT = 120;
+        let makerThreadHistory = [];
+        let makerThreadSequence = 0;
+        let activeMakerRun = null;
+
+        const saveMakerThreadHistory = () => {
+          try {
+            localStorage.setItem(THREAD_STORAGE_KEY, JSON.stringify(makerThreadHistory));
+          } catch {}
+        };
+
+        const renderMakerThread = () => {
+          el.makerThread.innerHTML = "";
+
+          for (const entry of makerThreadHistory) {
+            const item = document.createElement("div");
+            item.className = "chat-item " + entry.role;
+            item.dataset.id = String(entry.id);
+            if (entry.tone) item.dataset.tone = entry.tone;
+
+            const roleEl = document.createElement("div");
+            roleEl.className = "chat-role";
+            roleEl.textContent =
+              entry.role === "user"
+                ? "You"
+                : entry.role === "assistant"
+                  ? "Maker"
+                  : entry.role === "log"
+                    ? "Log"
+                    : "Status";
+
+            const bubble = document.createElement("div");
+            bubble.className = "chat-bubble";
+            bubble.textContent = entry.text;
+
+            item.appendChild(roleEl);
+            item.appendChild(bubble);
+            el.makerThread.appendChild(item);
+          }
+
+          scrollMakerThread();
+        };
+
+        const loadMakerThreadHistory = () => {
+          try {
+            const raw = localStorage.getItem(THREAD_STORAGE_KEY);
+            const parsed = raw ? JSON.parse(raw) : [];
+            makerThreadHistory = Array.isArray(parsed) ? parsed.filter((entry) =>
+              entry &&
+              typeof entry === "object" &&
+              typeof entry.id === "number" &&
+              typeof entry.role === "string" &&
+              typeof entry.text === "string"
+            ) : [];
+          } catch {
+            makerThreadHistory = [];
+          }
+
+          makerThreadSequence = makerThreadHistory.reduce(
+            (max, entry) => Math.max(max, Number(entry.id) || 0),
+            0
+          );
+
+          if (makerThreadHistory.length === 0) {
+            makerThreadHistory.push({
+              id: ++makerThreadSequence,
+              role: "system",
+              text: "Maker intent와 적용 결과가 여기에 표시됩니다."
+            });
+            saveMakerThreadHistory();
+          }
+
+          renderMakerThread();
+        };
+
+        const trimMakerThreadHistory = () => {
+          if (makerThreadHistory.length <= THREAD_HISTORY_LIMIT) return;
+          makerThreadHistory = makerThreadHistory.slice(-THREAD_HISTORY_LIMIT);
+        };
+
+        const appendThreadEntry = (role, text, options = {}) => {
+          if (!text) return null;
+          const entry = {
+            id: ++makerThreadSequence,
+            role,
+            text,
+            tone: options.tone || ""
+          };
+          makerThreadHistory.push(entry);
+          trimMakerThreadHistory();
+          saveMakerThreadHistory();
+          renderMakerThread();
+          return entry.id;
+        };
+
+        const updateThreadEntry = (id, text, options = {}) => {
+          if (!id || !text) return null;
+          const entry = makerThreadHistory.find((item) => item.id === id);
+          if (!entry) return null;
+          entry.text = text;
+          entry.tone = options.tone || "";
+          saveMakerThreadHistory();
+          renderMakerThread();
+          return id;
+        };
+
+        const appendToThreadEntry = (id, text) => {
+          if (!id || !text) return null;
+          const entry = makerThreadHistory.find((item) => item.id === id);
+          if (!entry) return null;
+          entry.text = entry.text ? entry.text + "\n" + text : text;
+          saveMakerThreadHistory();
+          renderMakerThread();
+          return id;
+        };
+
+        const beginMakerRun = () => {
+          activeMakerRun = {
+            statusId: null,
+            detailsId: null,
+            logId: null
+          };
+        };
+
+        const scrollMakerThread = () => {
+          el.makerThread.scrollTop = el.makerThread.scrollHeight;
+        };
+
+        const clearMakerThread = () => {
+          makerThreadHistory = [];
+          makerThreadSequence = 0;
+          activeMakerRun = null;
+          saveMakerThreadHistory();
+          loadMakerThreadHistory();
+        };
 
         const setMakerStatus = (text, tone) => {
-          el.makerStatus.textContent = text || "";
-          el.makerStatus.className = "status" + (tone ? " " + tone : "");
+          if (!text) return;
+          if (!activeMakerRun) beginMakerRun();
+          if (activeMakerRun.statusId) {
+            updateThreadEntry(activeMakerRun.statusId, text, { tone });
+            return;
+          }
+          activeMakerRun.statusId = appendThreadEntry("system", text, { tone });
         };
 
         const setMakerDetails = (value) => {
-          if (!value) {
-            el.makerDetails.textContent = "Maker intent와 적용 결과가 여기에 표시됩니다.";
+          if (!value) return;
+          if (!activeMakerRun) beginMakerRun();
+          const text =
+            typeof value === "string"
+              ? value
+              : JSON.stringify(value, null, 2);
+          if (activeMakerRun.detailsId) {
+            updateThreadEntry(activeMakerRun.detailsId, text);
             return;
           }
-          el.makerDetails.textContent =
-            typeof value === "string" ? value : JSON.stringify(value, null, 2);
+          activeMakerRun.detailsId = appendThreadEntry("assistant", text);
         };
 
         const clearMakerLog = () => {
-          el.makerLog.textContent = "Maker log가 여기에 표시됩니다.";
+          if (!activeMakerRun || !activeMakerRun.logId) return;
+          makerThreadHistory = makerThreadHistory.filter((entry) => entry.id !== activeMakerRun.logId);
+          activeMakerRun.logId = null;
+          saveMakerThreadHistory();
+          renderMakerThread();
         };
 
         const appendMakerLog = (value) => {
+          if (!value) return;
+          if (!activeMakerRun) beginMakerRun();
           const timestamp = new Date().toLocaleTimeString("ko-KR", { hour12: false });
           const line = "[" + timestamp + "] " + value;
-          if (el.makerLog.textContent === "Maker log가 여기에 표시됩니다.") {
-            el.makerLog.textContent = line;
-          } else {
-            el.makerLog.textContent += "\\n" + line;
+          if (activeMakerRun.logId) {
+            appendToThreadEntry(activeMakerRun.logId, line);
+            return;
           }
-          el.makerLog.scrollTop = el.makerLog.scrollHeight;
+          activeMakerRun.logId = appendThreadEntry("log", line);
+        };
+
+        const pushMakerPrompt = (value) => {
+          appendThreadEntry("user", value);
         };
 
         const syncMakerAction = () => {
@@ -1007,17 +1296,6 @@ const rawUiHtml = `
           if (!el.makerSubmit.disabled) {
             el.makerSubmitLabel.textContent = idleLabel;
           }
-        };
-
-        const getMakerAnalyzeCacheKey = (prompt) => {
-          if (!latestSelectionSummary) return "";
-          return JSON.stringify({
-            prompt: prompt.trim(),
-            fileKey: latestSelectionSummary.fileKey || "",
-            nodeIds: latestSelectionSummary.nodeIds || [],
-            primaryName: latestSelectionSummary.primaryName || "",
-            intent: latestSelectionSummary.selectionIntent || null
-          });
         };
 
         const setMakerLoading = (loading) => {
@@ -1067,12 +1345,12 @@ const rawUiHtml = `
           const raw = String(value).trim();
           if (!raw) return "";
           try {
-            const normalized = /^https?:\\/\\//.test(raw) ? raw : "https://" + raw.replace(/^\\/+/, "");
+            const normalized = /^https?:\/\//.test(raw) ? raw : "https://" + raw.replace(/^\/+/, "");
             const url = new URL(normalized);
-            const match = url.pathname.match(/^\\/(design|proto|board)\\/([^/]+)/);
+            const match = url.pathname.match(/^\/(design|proto|board)\/([^/]+)/);
             return match ? match[2] : "";
           } catch {
-            const match = raw.match(/figma\\.com\\/(?:design|proto|board)\\/([^/?#]+)/i);
+            const match = raw.match(/figma\.com\/(?:design|proto|board)\/([^/?#]+)/i);
             return match ? match[1] : "";
           }
         };
@@ -1250,6 +1528,25 @@ const rawUiHtml = `
           }, 10000);
         });
 
+        const fetchBridgeJson = async (pathname, payload, timeoutMs = 10000) => {
+          const response = await Promise.race([
+            fetch(BRIDGE_URL + pathname, {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify(payload)
+            }),
+            new Promise((_, reject) => {
+              setTimeout(() => reject(new Error(pathname.replace("/", "") + " 응답이 " + Math.round(timeoutMs / 1000) + "초 안에 오지 않았습니다.")), timeoutMs);
+            })
+          ]);
+
+          const result = await response.json();
+          if (!response.ok) {
+            throw new Error(result && result.error ? result.error : pathname + " 요청에 실패했습니다.");
+          }
+          return result;
+        };
+
         const runExtraction = async () => {
           setStoredFileUrl(el.fileUrlInput.value.trim());
           lastNodeUrl = el.fileUrlInput.value.trim() || getStoredFileUrl();
@@ -1318,257 +1615,44 @@ const rawUiHtml = `
         };
 
         const runMaker = async (placement) => {
-          let effectivePlacement = placement;
           const prompt = el.makerPrompt.value.trim();
           if (!prompt) {
             setMakerStatus("Prompt를 입력해 주세요.", "error");
             return;
           }
-          clearMakerLog();
-          appendMakerLog("Maker 요청 시작: placement=" + effectivePlacement);
-
-          const fallbackDirectEditIntent = () => {
-            if (!latestSelectionSummary) return null;
-            const selectionKind = latestSelectionSummary.selectionIntent
-              ? latestSelectionSummary.selectionIntent.kind
-              : "unknown";
-
-            if (looksLikeFullWidthPrompt(prompt)) {
-              return {
-                kind: "direct-edit",
-                targetScope:
-                  selectionKind === "section" || selectionKind === "screen-fragment"
-                    ? "container-children"
-                    : "selection",
-                message: "선택 영역에 full width 직접 수정을 적용합니다.",
-                commands:
-                  selectionKind === "section" || selectionKind === "screen-fragment"
-                    ? [
-                        { type: "set-node-layout-align", value: "STRETCH" },
-                        { type: "set-node-layout-sizing-horizontal", value: "FILL" },
-                        { type: "set-node-layout-grow", value: 0 }
-                      ]
-                    : [
-                        { type: "set-node-layout-align", value: "STRETCH" },
-                        { type: "set-node-layout-sizing-horizontal", value: "FILL" },
-                        { type: "resize-node-width-to-parent-inner" }
-                      ]
-              };
-            }
-
-            if (looksLikeCenterAlignPrompt(prompt)) {
-              return {
-                kind: "direct-edit",
-                targetScope:
-                  selectionKind === "section" || selectionKind === "screen-fragment"
-                    ? "container"
-                    : "selection",
-                message: "선택 영역에 가운데 정렬 직접 수정을 적용합니다.",
-                commands:
-                  selectionKind === "section" || selectionKind === "screen-fragment"
-                    ? [
-                        { type: "set-container-cross-align", value: "CENTER" },
-                        { type: "set-node-layout-align", value: "INHERIT" },
-                        { type: "set-node-layout-grow", value: 0 },
-                        { type: "shrink-node-to-hug-content" }
-                      ]
-                    : [
-                        { type: "set-container-cross-align", value: "CENTER" },
-                        { type: "set-node-layout-align", value: "INHERIT" },
-                        { type: "set-node-layout-grow", value: 0 },
-                        { type: "shrink-node-to-hug-content" },
-                        { type: "center-node-in-parent" }
-                      ]
-              };
-            }
-
-            return null;
-          };
-
-          if (effectivePlacement === "selection" && latestSelectionSummary) {
-            appendMakerLog("selection 기반 요청으로 해석했습니다.");
-            const immediateIntent = fallbackDirectEditIntent();
-            if (immediateIntent) {
-              appendMakerLog("즉시 적용 가능한 direct edit intent를 사용합니다.");
-              setMakerDetails(immediateIntent);
-              setMakerStatus(immediateIntent.message || "선택 영역에 직접 수정 요청을 전달했습니다.");
-              setMakerLoading(true);
-              await nextPaint();
-              parent.postMessage(
-                {
-                  pluginMessage: {
-                    type: "makerDirectEdit",
-                    prompt,
-                    intent: immediateIntent
-                  }
-                },
-                "*"
-              );
-              startMakerAckTimer();
-              return;
-            }
-
-            setMakerStatus("선택 영역을 MCP로 분석 중입니다.");
-            appendMakerLog("MCP selection 분석을 요청합니다.");
-            const analyzeCacheKey = getMakerAnalyzeCacheKey(prompt);
-            const cachedAnalyze = analyzeCacheKey ? makerAnalyzeCache.get(analyzeCacheKey) : null;
-            if (cachedAnalyze && cachedAnalyze.directEdit) {
-              appendMakerLog("캐시된 direct edit intent를 사용합니다.");
-              setMakerDetails(cachedAnalyze.directEdit);
-              setMakerStatus("캐시된 selection 분석을 사용합니다.");
-              setMakerLoading(true);
-              await nextPaint();
-              parent.postMessage(
-                {
-                  pluginMessage: {
-                    type: "makerDirectEdit",
-                    prompt,
-                    intent: cachedAnalyze.directEdit
-                  }
-                },
-                "*"
-              );
-              startMakerAckTimer();
-              return;
-            }
-
-            setMakerDetails("selection MCP 분석을 진행 중입니다.");
-            setMakerLoading(true);
-            await nextPaint();
-            try {
-              const controller = new AbortController();
-              const timeout = setTimeout(() => controller.abort(), 15000);
-              const analyzeResponse = await fetch(BRIDGE_URL + "/maker-analyze", {
-                method: "POST",
-                headers: { "content-type": "application/json" },
-                body: JSON.stringify({
-                  prompt,
-                  selectionSummary: latestSelectionSummary
-                }),
-                signal: controller.signal
-              });
-              clearTimeout(timeout);
-              const analyzed = await analyzeResponse.json();
-              appendMakerLog("MCP selection 분석 응답을 받았습니다.");
-              if (!analyzeResponse.ok) {
-                throw new Error(analyzed && analyzed.error ? analyzed.error : "선택 분석에 실패했습니다.");
-              }
-              if (analyzed && analyzed.directEdit) {
-                appendMakerLog("MCP가 direct edit intent를 반환했습니다.");
-                if (analyzeCacheKey) {
-                  makerAnalyzeCache.set(analyzeCacheKey, analyzed);
-                }
-                parent.postMessage(
-                  {
-                    pluginMessage: {
-                      type: "makerDirectEdit",
-                      prompt,
-                      intent: analyzed.directEdit
-                    }
-                  },
-                  "*"
-                );
-                startMakerAckTimer();
-                const analysis = analyzed.directEdit.analysis;
-                const componentName = analysis && analysis.componentName ? " (" + analysis.componentName + ")" : "";
-                setMakerDetails(analyzed.directEdit);
-                setMakerStatus((analyzed.directEdit.message || "선택 영역에 직접 수정 요청을 전달했습니다.") + componentName);
-                return;
-              }
-              const fallbackIntent = fallbackDirectEditIntent();
-              if (fallbackIntent) {
-                appendMakerLog("MCP direct edit intent가 없어 fallback intent를 사용합니다.");
-                setMakerDetails(fallbackIntent);
-                setMakerStatus(fallbackIntent.message);
-                setMakerLoading(true);
-                await nextPaint();
-                parent.postMessage(
-                  {
-                    pluginMessage: {
-                      type: "makerDirectEdit",
-                      prompt,
-                      intent: fallbackIntent
-                    }
-                  },
-                  "*"
-                );
-                startMakerAckTimer();
-                return;
-              }
-              appendMakerLog("selection-preview 생성으로 전환합니다.");
-              setMakerStatus("직접 수정으로 해석되지 않아, selection 기준 새 제안안을 생성합니다.", "warning");
-              setMakerDetails("selection 기준 새 프레임 제안안을 생성합니다.");
-              effectivePlacement = "selection-preview";
-            } catch (error) {
-              appendMakerLog("selection 분석 오류: " + (error && error.message ? error.message : String(error)));
-              const fallbackIntent = fallbackDirectEditIntent();
-              if (fallbackIntent) {
-                appendMakerLog("fallback direct edit intent를 사용합니다.");
-                setMakerDetails(fallbackIntent);
-                setMakerLoading(true);
-                await nextPaint();
-                parent.postMessage(
-                  {
-                    pluginMessage: {
-                      type: "makerDirectEdit",
-                      prompt,
-                      intent: fallbackIntent
-                    }
-                  },
-                  "*"
-                );
-                startMakerAckTimer();
-                const timeoutMessage =
-                  error && error.name === "AbortError"
-                    ? "분석이 오래 걸려 fallback direct edit를 적용합니다."
-                    : fallbackIntent.message;
-                setMakerStatus(timeoutMessage, "warning");
-                return;
-              }
-              appendMakerLog("selection-preview 생성으로 전환합니다.");
-              setMakerStatus("선택 분석이 불안정해, selection 기준 새 제안안을 생성합니다.", "warning");
-              setMakerDetails(error && error.message ? error.message : "selection 분석 오류");
-              effectivePlacement = "selection-preview";
-            }
-          }
-
-          setMakerStatus("Maker payload를 생성 중입니다.");
+          beginMakerRun();
+          pushMakerPrompt(prompt);
+          appendMakerLog("Maker 요청 시작: placement=" + placement);
           setMakerDetails("");
-          appendMakerLog("브리지로 maker-generate를 요청합니다. placement=" + effectivePlacement);
           setMakerLoading(true);
-          await nextPaint();
 
           try {
-            appendMakerLog("plugin main으로 requestMakerGenerate 메시지를 전달합니다.");
-            setTimeout(() => {
-              try {
-                parent.postMessage(
-                  {
-                    pluginMessage: {
-                      type: "requestMakerGenerate",
-                      prompt,
-                      selectionSummary: latestSelectionSummary,
-                      placement: effectivePlacement
-                    }
-                  },
-                  "*"
-                );
-                appendMakerLog("requestMakerGenerate 메시지 전달을 큐에 넣었습니다.");
-              } catch (error) {
-                const message = error && error.message ? error.message : String(error);
-                appendMakerLog("requestMakerGenerate 전송 오류: " + message);
-                setMakerStatus(message || "Maker 생성 메시지 전달에 실패했습니다.", "error");
-                setMakerLoading(false);
-              }
-            }, 0);
+            setMakerStatus(
+              placement === "selection"
+                ? "선택 영역을 기준으로 분석과 생성을 준비 중입니다."
+                : "Maker payload를 생성 중입니다."
+            );
+            appendMakerLog(
+              "plugin main으로 requestMakerRun 메시지를 전달합니다. placement=" + placement
+            );
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "requestMakerRun",
+                  prompt,
+                  selectionSummary: latestSelectionSummary,
+                  placement
+                }
+              },
+              "*"
+            );
+            appendMakerLog("requestMakerRun 메시지를 전달했습니다.");
             startMakerAckTimer();
-            setMakerStatus("Maker 생성 요청을 전달했습니다.");
           } catch (error) {
             const message = error && error.message ? error.message : String(error);
-            appendMakerLog("Maker generate 오류: " + message);
+            appendMakerLog("Maker 실행 오류: " + message);
             setMakerStatus(message || "Maker 생성 중 오류가 발생했습니다.", "error");
             setMakerLoading(false);
-          } finally {
           }
         };
 
@@ -1626,31 +1710,76 @@ const rawUiHtml = `
           }
         };
 
-        el.tabMaker.addEventListener("click", () => switchTab("maker"));
-        el.tabInspection.addEventListener("click", () => switchTab("inspection"));
-        el.tabExtraction.addEventListener("click", () => switchTab("extraction"));
-        el.makerSubmit.addEventListener("click", () => {
-          const hasSelection = Boolean(latestSelectionSummary && latestSelectionSummary.selectionCount);
-          runMaker(hasSelection ? "selection" : "new-frame");
-        });
+        const handleAction = (action) => {
+          if (!action) return;
+
+          if (action === "switch-maker") {
+            switchTab("maker");
+            return;
+          }
+          if (action === "switch-inspection") {
+            switchTab("inspection");
+            return;
+          }
+          if (action === "switch-extraction") {
+            switchTab("extraction");
+            return;
+          }
+          if (action === "maker-submit") {
+            const hasSelection = Boolean(latestSelectionSummary && latestSelectionSummary.selectionCount);
+            runMaker(hasSelection ? "selection" : "new-frame");
+            return;
+          }
+          if (action === "render-contract-preview") {
+            el.render.disabled = true;
+            parent.postMessage({ pluginMessage: { type: "renderContractPreview", previewId: el.previewItem.value } }, "*");
+            return;
+          }
+          if (action === "refresh-selection") {
+            parent.postMessage({ pluginMessage: { type: "requestSelectionInfo" } }, "*");
+            parent.postMessage({ pluginMessage: { type: "requestSelectionSvg" } }, "*");
+            checkBridge();
+            return;
+          }
+          if (action === "bridge-test") {
+            checkBridge();
+            return;
+          }
+          if (action === "extract-selection") {
+            runExtraction();
+            return;
+          }
+          if (action === "cancel-extraction") {
+            if (abortController) abortController.abort();
+            stopPoll();
+            setLoading(false);
+            setStatus("Extraction cancelled.", "warning");
+          }
+        };
+
+        const bindAction = (node, action) => {
+          if (!node) return;
+          node.dataset.action = action;
+          node.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            handleAction(action);
+          });
+        };
+
+        [
+          [el.tabMaker, "switch-maker"],
+          [el.tabInspection, "switch-inspection"],
+          [el.tabExtraction, "switch-extraction"],
+          [el.makerSubmit, "maker-submit"],
+          [el.render, "render-contract-preview"],
+          [el.refresh, "refresh-selection"],
+          [el.bridgeTest, "bridge-test"],
+          [el.extract, "extract-selection"],
+          [el.cancel, "cancel-extraction"]
+        ].forEach(([node, action]) => bindAction(node, action));
+
         el.previewLevel.addEventListener("change", syncPreviewItems);
-        el.render.addEventListener("click", () => {
-          el.render.disabled = true;
-          parent.postMessage({ pluginMessage: { type: "renderContractPreview", previewId: el.previewItem.value } }, "*");
-        });
-        el.refresh.addEventListener("click", () => {
-          parent.postMessage({ pluginMessage: { type: "requestSelectionInfo" } }, "*");
-          parent.postMessage({ pluginMessage: { type: "requestSelectionSvg" } }, "*");
-          checkBridge();
-        });
-        el.bridgeTest.addEventListener("click", checkBridge);
-        el.extract.addEventListener("click", runExtraction);
-        el.cancel.addEventListener("click", () => {
-          if (abortController) abortController.abort();
-          stopPoll();
-          setLoading(false);
-          setStatus("Extraction cancelled.", "warning");
-        });
         el.fileUrlInput.addEventListener("change", () => setStoredFileUrl(el.fileUrlInput.value.trim()));
         el.fileUrlInput.addEventListener("blur", () => setStoredFileUrl(el.fileUrlInput.value.trim()));
 
@@ -1658,12 +1787,17 @@ const rawUiHtml = `
         lastNodeUrl = getStoredFileUrl();
         syncPreviewItems();
         syncMakerAction();
+        loadMakerThreadHistory();
         setLoading(false);
         stopMakerAckTimer();
         setMakerLoading(false);
         parent.postMessage({ pluginMessage: { type: "pluginReady" } }, "*");
         parent.postMessage({ pluginMessage: { type: "requestSelectionSvg" } }, "*");
         checkBridge();
+        } catch (error) {
+          const message = error && error.message ? error.message : String(error);
+          showBootError("Maker UI 초기화 실패: " + message);
+        }
       })();
     </script>
   </body>
@@ -1677,7 +1811,7 @@ const uiHtml = rawUiHtml
 
 figma.showUI(uiHtml, {
   width: 360,
-  height: 520
+  height: 620
 });
 
 figma.ui.onmessage = async (message: PluginUiMessage) => {
@@ -1748,6 +1882,140 @@ figma.ui.onmessage = async (message: PluginUiMessage) => {
         }
       });
       await renderMakerPayloadToCanvas(result.payload, message.placement);
+      return;
+    }
+
+    if (message.type === "requestMakerRun") {
+      const selectionSummary = (message.selectionSummary as
+        | {
+            selectionIntent?: {
+              kind?: "single-component" | "component-group" | "section" | "screen-fragment" | "unknown";
+            };
+          }
+        | undefined) ?? summarizeSelection(figma.currentPage.selection);
+
+      if (message.placement === "selection") {
+        const looksLikeImmediateDirectEdit = parseLocalEditIntentKind(message.prompt) !== null;
+        const immediateIntent = buildLocalDirectEditIntent(message.prompt, selectionSummary);
+        if (immediateIntent) {
+          postMakerProgress(immediateIntent.message || "direct edit intent를 적용합니다.");
+          const responseMessage = applyDirectEditIntent([...figma.currentPage.selection], immediateIntent);
+          sendSelectionInfo();
+          void sendSelectionSvg();
+          figma.notify(responseMessage);
+          figma.ui.postMessage({
+            type: "makerSummary",
+            summary: immediateIntent
+          });
+          figma.ui.postMessage({
+            type: "makerRendered",
+            message: responseMessage
+          });
+          return;
+        }
+
+        if (looksLikeImmediateDirectEdit) {
+          throw new Error("현재 selection에서는 직접 수정 기준을 찾지 못했습니다.");
+        }
+
+        postMakerProgress("선택 영역을 MCP로 분석하는 중입니다.");
+        const analyzeResponse = await Promise.race([
+          fetch(BRIDGE_URL + "/maker-analyze", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              prompt: message.prompt,
+              selectionSummary: message.selectionSummary
+            })
+          }),
+          new Promise<Response>((_, reject) => {
+            setTimeout(() => reject(new Error("maker-analyze 응답이 10초 안에 오지 않았습니다.")), 10000);
+          })
+        ]);
+        const analyzed = await analyzeResponse.json();
+        if (!analyzeResponse.ok) {
+          throw new Error(analyzed && analyzed.error ? analyzed.error : "선택 분석에 실패했습니다.");
+        }
+        if (analyzed && analyzed.directEdit) {
+          postMakerProgress("MCP direct edit intent를 적용합니다.");
+          const responseMessage = applyDirectEditIntent([...figma.currentPage.selection], analyzed.directEdit);
+          sendSelectionInfo();
+          void sendSelectionSvg();
+          figma.notify(responseMessage);
+          figma.ui.postMessage({
+            type: "makerSummary",
+            summary: analyzed.directEdit
+          });
+          figma.ui.postMessage({
+            type: "makerRendered",
+            message: responseMessage
+          });
+          return;
+        }
+
+        postMakerProgress("selection-preview 제안안을 생성합니다.");
+        const response = await Promise.race([
+          fetch(BRIDGE_URL + "/maker-generate", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              prompt: message.prompt,
+              selectionSummary: message.selectionSummary
+            })
+          }),
+          new Promise<Response>((_, reject) => {
+            setTimeout(() => reject(new Error("maker-generate 응답이 10초 안에 오지 않았습니다.")), 10000);
+          })
+        ]);
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result && result.error ? result.error : "Maker 생성에 실패했습니다.");
+        }
+        if (!result || !isFigmaWritePayload(result.payload)) {
+          throw new Error("Maker payload 형식이 올바르지 않습니다.");
+        }
+        figma.ui.postMessage({
+          type: "makerSummary",
+          summary: {
+            inferredScreen: result?.maker?.inferredScreen ?? null,
+            summary: result?.summary ?? null,
+            evaluation: result?.evaluation ?? null
+          }
+        });
+        await renderMakerPayloadToCanvas(result.payload, "selection-preview");
+        return;
+      }
+
+      postMakerProgress("브리지에서 Maker payload를 생성하는 중입니다.");
+      const response = await Promise.race([
+        fetch(BRIDGE_URL + "/maker-generate", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            prompt: message.prompt,
+            selectionSummary: message.selectionSummary
+          })
+        }),
+        new Promise<Response>((_, reject) => {
+          setTimeout(() => reject(new Error("maker-generate 응답이 10초 안에 오지 않았습니다.")), 10000);
+        })
+      ]);
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result && result.error ? result.error : "Maker 생성에 실패했습니다.");
+      }
+      if (!result || !isFigmaWritePayload(result.payload)) {
+        throw new Error("Maker payload 형식이 올바르지 않습니다.");
+      }
+      figma.ui.postMessage({
+        type: "makerSummary",
+        summary: {
+          inferredScreen: result?.maker?.inferredScreen ?? null,
+          summary: result?.summary ?? null,
+          evaluation: result?.evaluation ?? null
+        }
+      });
+      await renderMakerPayloadToCanvas(result.payload, "new-frame");
       return;
     }
 

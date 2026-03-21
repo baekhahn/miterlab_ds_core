@@ -220,11 +220,8 @@ const createButtonNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   const iconOnly = node.variant?.iconOnly === true;
   const iconLeading = node.variant?.iconLeading === true;
   const iconTrailing = node.variant?.iconTrailing === true;
-  const width = iconOnly
-    ? metrics.height
-    : node.variant?.width === "full"
-      ? getButtonWidth("full")
-      : getButtonWidth("hug");
+  const widthMode = node.variant?.width === "full" ? "full" : "hug";
+  const width = iconOnly ? metrics.height : widthMode === "full" ? getButtonWidth("full") : getButtonWidth("hug");
 
   const frame = figma.createFrame();
   frame.name = node.name;
@@ -268,7 +265,8 @@ const createInputNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   const intent = getInputIntent(node);
   const metrics = getInputMetrics(sizeKey);
   const palette = getInputPalette(intent, state);
-  const width = node.variant?.width === "hug" ? getInputWidth("hug") : getInputWidth("full");
+  const widthMode = node.variant?.width === "hug" ? "hug" : "full";
+  const width = widthMode === "hug" ? getInputWidth("hug") : getInputWidth("full");
   const focusRing = getInputFocusRing();
   const stroke = state === "focused" ? focusRing.stroke : palette.stroke;
   const strokeWeight = state === "focused" ? focusRing.strokeWeight : 1;
@@ -338,6 +336,9 @@ const createInputNode = async (node: FigmaWriteNode): Promise<FrameNode> => {
   }
 
   wrapper.appendChild(frame);
+  if ("layoutSizingHorizontal" in frame) {
+    frame.layoutSizingHorizontal = widthMode === "full" ? "FILL" : "HUG";
+  }
 
   if (helperText) {
     const helper = await createText(

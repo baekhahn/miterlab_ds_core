@@ -953,6 +953,40 @@
       { family: "Inter", style: "Medium" }
     ]
   };
+  var fontCache = {};
+  var availableFontsPromise = null;
+  var getAvailableFonts = async () => {
+    if (!availableFontsPromise) {
+      availableFontsPromise = figma.listAvailableFontsAsync();
+    }
+    return await availableFontsPromise;
+  };
+  var matchPreferredFont = (availableFonts, weight) => {
+    var _a, _b;
+    const exactCandidates = fontCandidates[weight];
+    for (const candidate of exactCandidates) {
+      const found = availableFonts.find(
+        (font) => font.fontName.family === candidate.family && font.fontName.style === candidate.style
+      );
+      if (found) {
+        return found.fontName;
+      }
+    }
+    for (const candidate of exactCandidates) {
+      const found = availableFonts.find((font) => font.fontName.family === candidate.family);
+      if (found) {
+        return found.fontName;
+      }
+    }
+    const styleHints = weight === "semibold" ? [/semi/i, /bold/i, /medium/i] : weight === "medium" ? [/medium/i, /regular/i] : [/regular/i, /book/i, /roman/i];
+    for (const hint of styleHints) {
+      const found = availableFonts.find((font) => hint.test(font.fontName.style));
+      if (found) {
+        return found.fontName;
+      }
+    }
+    return (_b = (_a = availableFonts[0]) == null ? void 0 : _a.fontName) != null ? _b : null;
+  };
   var rgb = (hex) => {
     const normalized = hex.replace("#", "");
     const bigint = Number.parseInt(normalized, 16);
@@ -963,15 +997,17 @@
     };
   };
   var loadFont = async (weight = "regular") => {
-    for (const font of fontCandidates[weight]) {
-      try {
-        await figma.loadFontAsync(font);
-        return font;
-      } catch (e) {
-        continue;
-      }
+    if (fontCache[weight]) {
+      return fontCache[weight];
     }
-    throw new Error("No supported default font found. Install Pretendard or Inter in Figma.");
+    const availableFonts = await getAvailableFonts();
+    const preferred = matchPreferredFont(availableFonts, weight);
+    if (!preferred) {
+      throw new Error("\uC0AC\uC6A9 \uAC00\uB2A5\uD55C Figma \uD3F0\uD2B8\uB97C \uCC3E\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.");
+    }
+    await figma.loadFontAsync(preferred);
+    fontCache[weight] = preferred;
+    return preferred;
   };
   var typographyMap = {
     "text/heading/xl": { fontSize: 32, lineHeight: 40, weight: "semibold" },
@@ -1190,7 +1226,8 @@
     const iconOnly = ((_c = node.variant) == null ? void 0 : _c.iconOnly) === true;
     const iconLeading = ((_d = node.variant) == null ? void 0 : _d.iconLeading) === true;
     const iconTrailing = ((_e = node.variant) == null ? void 0 : _e.iconTrailing) === true;
-    const width = iconOnly ? metrics.height : ((_f = node.variant) == null ? void 0 : _f.width) === "full" ? getButtonWidth2("full") : getButtonWidth2("hug");
+    const widthMode = ((_f = node.variant) == null ? void 0 : _f.width) === "full" ? "full" : "hug";
+    const width = iconOnly ? metrics.height : widthMode === "full" ? getButtonWidth2("full") : getButtonWidth2("hug");
     const frame = figma.createFrame();
     frame.name = node.name;
     frame.resize(Math.max(width, styleMinWidth(node, metrics.minWidth), node.width), Math.max(metrics.height, node.height));
@@ -1230,7 +1267,8 @@
     const intent = getInputIntent(node);
     const metrics = getInputMetrics2(sizeKey);
     const palette = getInputPalette2(intent, state);
-    const width = ((_a = node.variant) == null ? void 0 : _a.width) === "hug" ? getInputWidth2("hug") : getInputWidth2("full");
+    const widthMode = ((_a = node.variant) == null ? void 0 : _a.width) === "hug" ? "hug" : "full";
+    const width = widthMode === "hug" ? getInputWidth2("hug") : getInputWidth2("full");
     const focusRing = getInputFocusRing2();
     const stroke = state === "focused" ? focusRing.stroke : palette.stroke;
     const strokeWeight = state === "focused" ? focusRing.strokeWeight : 1;
@@ -1277,6 +1315,9 @@
       frame.appendChild(createClearGlyph(foundationColors2.text.assistive, Math.max(16, metrics.fontSize + 3)));
     }
     wrapper.appendChild(frame);
+    if ("layoutSizingHorizontal" in frame) {
+      frame.layoutSizingHorizontal = widthMode === "full" ? "FILL" : "HUG";
+    }
     if (helperText) {
       const helper = await createText(
         helperText,
@@ -1332,6 +1373,45 @@
     }
     return createContainerNode(node);
   };
+  var createRenderFallbackNode = async (node, error) => {
+    const frame = figma.createFrame();
+    frame.name = `${node.name} (render fallback)`;
+    frame.resize(Math.max(120, node.width || 120), Math.max(48, node.height || 48));
+    frame.x = node.x;
+    frame.y = node.y;
+    frame.layoutMode = "VERTICAL";
+    frame.primaryAxisSizingMode = "AUTO";
+    frame.counterAxisSizingMode = "FIXED";
+    frame.paddingTop = 10;
+    frame.paddingRight = 12;
+    frame.paddingBottom = 10;
+    frame.paddingLeft = 12;
+    frame.itemSpacing = 4;
+    frame.cornerRadius = 12;
+    frame.fills = [{ type: "SOLID", color: rgb3("#FFF7ED") }];
+    frame.strokes = [{ type: "SOLID", color: rgb3("#FDBA74") }];
+    frame.strokeWeight = 1;
+    const message = error instanceof Error ? error.message : String(error);
+    const font = await loadFont("regular");
+    const title = figma.createText();
+    title.fontName = font;
+    title.characters = node.name;
+    title.fontSize = 12;
+    title.fills = [{ type: "SOLID", color: rgb3("#9A3412") }];
+    title.textAutoResize = "HEIGHT";
+    title.resize(Math.max(96, frame.width - 24), title.height);
+    const detail = figma.createText();
+    detail.fontName = font;
+    detail.characters = `Render fallback: ${message}`;
+    detail.fontSize = 10;
+    detail.lineHeight = { unit: "PIXELS", value: 14 };
+    detail.fills = [{ type: "SOLID", color: rgb3("#C2410C") }];
+    detail.textAutoResize = "HEIGHT";
+    detail.resize(Math.max(96, frame.width - 24), detail.height);
+    frame.appendChild(title);
+    frame.appendChild(detail);
+    return frame;
+  };
   var positionChildInSection = (parent, child, index) => {
     if (!parent.name.endsWith("-section")) {
       return;
@@ -1353,16 +1433,26 @@
       child.layoutGrow = 0;
     }
   };
-  var renderChildren = async (parent, children, theme) => {
+  var renderChildren = async (parent, children, theme, failures) => {
     let count = 0;
     for (const [index, child] of children.entries()) {
-      const next = await toSceneNode(child, theme);
-      parent.appendChild(next);
-      positionChildInSection(parent, next, index);
-      applySectionLayoutRules(parent, next, child);
-      count += 1;
-      if (child.children && child.children.length > 0 && next.type === "FRAME") {
-        count += await renderChildren(next, child.children, theme);
+      try {
+        const next = await toSceneNode(child, theme);
+        parent.appendChild(next);
+        positionChildInSection(parent, next, index);
+        applySectionLayoutRules(parent, next, child);
+        count += 1;
+        if (child.children && child.children.length > 0 && next.type === "FRAME") {
+          count += await renderChildren(next, child.children, theme, failures);
+        }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        failures.push({ nodeName: child.name, message });
+        const fallback = await createRenderFallbackNode(child, error);
+        parent.appendChild(fallback);
+        positionChildInSection(parent, fallback, index);
+        applySectionLayoutRules(parent, fallback, child);
+        count += 1;
       }
     }
     return count;
@@ -1446,31 +1536,51 @@
     const existing = figma.currentPage.children.find(
       (node) => node.type === "FRAME" && node.name === frameName
     );
-    if (existing && existing.type === "FRAME") {
-      existing.remove();
-    }
+    const tempFrameName = `${frameName} __rendering__`;
     if (payload.document.screen === "button-inspection" || payload.document.screen === "input-inspection") {
-      const { frame: frame2, createdNodeCount: createdNodeCount2 } = await createInspectionPreviewFrame(payload, frameName);
-      figma.currentPage.appendChild(frame2);
-      figma.currentPage.selection = [frame2];
-      figma.viewport.scrollAndZoomIntoView([frame2]);
+      const { frame: frame2, createdNodeCount } = await createInspectionPreviewFrame(payload, tempFrameName);
+      try {
+        figma.currentPage.appendChild(frame2);
+        if (existing && existing.type === "FRAME") {
+          existing.remove();
+        }
+        frame2.name = frameName;
+        figma.currentPage.selection = [frame2];
+        figma.viewport.scrollAndZoomIntoView([frame2]);
+        return {
+          createdNodeCount,
+          createdFrameName: frame2.name
+        };
+      } catch (error) {
+        if (!frame2.removed) frame2.remove();
+        throw error;
+      }
+    }
+    const frame = createFrameNode(__spreadProps(__spreadValues({}, root), { name: tempFrameName }), theme);
+    const failures = [];
+    try {
+      figma.currentPage.appendChild(frame);
+      let createdNodeCount = 1;
+      if (root.children && root.children.length > 0) {
+        createdNodeCount += await renderChildren(frame, root.children, theme, failures);
+      }
+      if (existing && existing.type === "FRAME") {
+        existing.remove();
+      }
+      frame.name = frameName;
+      figma.currentPage.selection = [frame];
+      figma.viewport.scrollAndZoomIntoView([frame]);
+      if (failures.length > 0) {
+        figma.notify(`\uC77C\uBD80 \uB178\uB4DC\uB97C fallback\uC73C\uB85C \uB80C\uB354\uB9C1\uD588\uC2B5\uB2C8\uB2E4 (${failures.length}\uAC1C).`);
+      }
       return {
-        createdNodeCount: createdNodeCount2,
-        createdFrameName: frame2.name
+        createdNodeCount,
+        createdFrameName: frame.name
       };
+    } catch (error) {
+      if (!frame.removed) frame.remove();
+      throw error;
     }
-    const frame = createFrameNode(__spreadProps(__spreadValues({}, root), { name: frameName }), theme);
-    figma.currentPage.appendChild(frame);
-    let createdNodeCount = 1;
-    if (root.children && root.children.length > 0) {
-      createdNodeCount += await renderChildren(frame, root.children, theme);
-    }
-    figma.currentPage.selection = [frame];
-    figma.viewport.scrollAndZoomIntoView([frame]);
-    return {
-      createdNodeCount,
-      createdFrameName: frame.name
-    };
   };
 
   // src/write/renderContractPreview.ts
@@ -1799,6 +1909,111 @@
     return {
       createdNodeCount: frame.findAll().length + 1,
       createdFrameName: frame.name
+    };
+  };
+
+  // src/maker/directEdit.ts
+  var normalizeEditPrompt = (value) => value.toLowerCase().replace(/\s+/g, "").replace(/[.,!?/\\()[\]{}:+-]/g, "");
+  var hasAnyKeyword = (value, keywords) => keywords.some((keyword) => value.includes(keyword));
+  var widthDimensionKeywords = ["width", "fullwidth", "full", "\uB108\uBE44", "\uD3ED", "\uAC00\uB85C\uD3ED", "\uAC00\uB85C"];
+  var widthActionKeywords = ["fill", "stretch", "full", "\uAC00\uB4DD", "\uAF49", "\uCC44\uC6CC", "\uB298\uB824", "\uB113\uD600", "\uB113\uAC8C", "\uD655\uC7A5"];
+  var widthDirectionalKeywords = ["\uC88C\uC6B0", "\uC591\uC606", "\uC804\uCCB4"];
+  var centerPositionKeywords = ["center", "centered", "middle", "\uAC00\uC6B4\uB370", "\uC911\uC559", "\uC13C\uD130"];
+  var centerActionKeywords = ["align", "alignment", "\uC815\uB82C", "\uB9DE\uCDB0", "\uBC30\uCE58"];
+  var editIntentDefinitions = {
+    "fill-width": {
+      kind: "fill-width",
+      concepts: ["width", "fill", "stretch"],
+      message: "\uC120\uD0DD \uC601\uC5ED\uC5D0 full width \uC9C1\uC811 \uC218\uC815\uC744 \uC801\uC6A9\uD569\uB2C8\uB2E4.",
+      targetScopeBySelection: {
+        "single-component": "selection",
+        "component-group": "selection",
+        section: "container-children",
+        "screen-fragment": "container-children",
+        unknown: "selection"
+      },
+      commandsByScope: {
+        selection: [
+          { type: "set-node-layout-align", value: "STRETCH" },
+          { type: "set-node-layout-sizing-horizontal", value: "FILL" },
+          { type: "resize-node-width-to-parent-inner" }
+        ],
+        container: [
+          { type: "set-node-layout-align", value: "STRETCH" },
+          { type: "set-node-layout-sizing-horizontal", value: "FILL" },
+          { type: "set-node-layout-grow", value: 0 }
+        ],
+        "container-children": [
+          { type: "set-node-layout-align", value: "STRETCH" },
+          { type: "set-node-layout-sizing-horizontal", value: "FILL" },
+          { type: "set-node-layout-grow", value: 0 }
+        ]
+      }
+    },
+    "center-align": {
+      kind: "center-align",
+      concepts: ["alignment", "center", "layout"],
+      message: "\uC120\uD0DD \uC601\uC5ED\uC5D0 \uAC00\uC6B4\uB370 \uC815\uB82C \uC9C1\uC811 \uC218\uC815\uC744 \uC801\uC6A9\uD569\uB2C8\uB2E4.",
+      targetScopeBySelection: {
+        "single-component": "selection",
+        "component-group": "selection",
+        section: "container",
+        "screen-fragment": "container",
+        unknown: "selection"
+      },
+      commandsByScope: {
+        selection: [
+          { type: "set-container-cross-align", value: "CENTER" },
+          { type: "set-node-layout-align", value: "INHERIT" },
+          { type: "set-node-layout-grow", value: 0 },
+          { type: "shrink-node-to-hug-content" },
+          { type: "center-node-in-parent" }
+        ],
+        container: [
+          { type: "set-container-cross-align", value: "CENTER" },
+          { type: "set-node-layout-align", value: "INHERIT" },
+          { type: "set-node-layout-grow", value: 0 },
+          { type: "shrink-node-to-hug-content" }
+        ],
+        "container-children": [
+          { type: "set-container-cross-align", value: "CENTER" },
+          { type: "set-node-layout-align", value: "INHERIT" },
+          { type: "set-node-layout-grow", value: 0 },
+          { type: "shrink-node-to-hug-content" }
+        ]
+      }
+    }
+  };
+  var parseLocalEditIntentKind = (value) => {
+    const normalized = normalizeEditPrompt(value);
+    const widthScore = (hasAnyKeyword(normalized, widthDimensionKeywords) ? 1 : 0) + (hasAnyKeyword(normalized, widthActionKeywords) ? 1 : 0) + (hasAnyKeyword(normalized, widthDirectionalKeywords) ? 1 : 0);
+    if (normalized.includes("fullwidth") || normalized.includes("fillwidth") || widthScore >= 2 && !hasAnyKeyword(normalized, centerPositionKeywords)) {
+      return "fill-width";
+    }
+    if (hasAnyKeyword(normalized, centerPositionKeywords) && (hasAnyKeyword(normalized, centerActionKeywords) || normalized.endsWith("\uB85C"))) {
+      return "center-align";
+    }
+    return null;
+  };
+  var buildLocalDirectEditIntent = (prompt, selectionSummary) => {
+    var _a, _b;
+    const intentKind = parseLocalEditIntentKind(prompt);
+    if (!intentKind) {
+      return null;
+    }
+    const selectionKind = (_b = (_a = selectionSummary == null ? void 0 : selectionSummary.selectionIntent) == null ? void 0 : _a.kind) != null ? _b : "unknown";
+    const definition = editIntentDefinitions[intentKind];
+    const targetScope = definition.targetScopeBySelection[selectionKind];
+    return {
+      kind: "direct-edit",
+      targetScope,
+      message: definition.message,
+      commands: definition.commandsByScope[targetScope],
+      analysis: {
+        localIntentKind: intentKind,
+        selectionIntentKind: selectionKind,
+        matchedConcepts: [...definition.concepts]
+      }
     };
   };
 
@@ -6702,7 +6917,7 @@
       * { box-sizing: border-box; }
       body {
         margin: 0;
-        padding: 14px;
+        padding: 64px 14px 28px;
         background: var(--bg);
         color: var(--text);
         font: 12px/1.45 Pretendard, "Pretendard Variable", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -6714,6 +6929,22 @@
         gap: 12px;
         width: 100%;
         min-width: 0;
+        position: relative;
+        z-index: 1;
+        margin-top: 4px;
+      }
+      .app-footer {
+        color: #9399a4;
+        font-size: 10px;
+        line-height: 1.4;
+        text-align: right;
+        padding: 0 2px;
+        position: fixed;
+        left: 14px;
+        right: 14px;
+        bottom: 8px;
+        z-index: 10;
+        background: linear-gradient(180deg, rgba(9,9,11,0) 0%, rgba(9,9,11,0.92) 45%, rgba(9,9,11,1) 100%);
       }
       .tabs {
         display: grid;
@@ -6723,6 +6954,8 @@
         border: 1px solid var(--line);
         border-radius: 12px;
         background: var(--panel);
+        position: relative;
+        z-index: 2;
       }
       .tab, button, select, input {
         font: inherit;
@@ -6765,6 +6998,8 @@
         border: 1px solid var(--line);
         background: var(--panel-2);
         color: var(--text);
+        position: relative;
+        z-index: 2;
       }
       .btn {
         cursor: pointer;
@@ -6820,13 +7055,79 @@
         width: 100%;
         min-width: 0;
       }
+      .chat {
+        display: grid;
+        gap: 8px;
+        min-height: 180px;
+        max-height: 280px;
+        overflow: auto;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #0c0c0f;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      }
+      .chat-item {
+        display: grid;
+        gap: 4px;
+      }
+      .chat-item.user {
+        justify-items: end;
+      }
+      .chat-item.assistant,
+      .chat-item.system,
+      .chat-item.log {
+        justify-items: start;
+      }
+      .chat-role {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+      }
+      .chat-bubble {
+        max-width: 100%;
+        min-width: 0;
+        padding: 10px 12px;
+        border-radius: 12px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+      .chat-item.user .chat-bubble {
+        background: #26292f;
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+      .chat-item.assistant .chat-bubble {
+        background: var(--panel-2);
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+      .chat-item.system .chat-bubble {
+        background: rgba(255,255,255,0.04);
+        color: var(--muted);
+        border: 1px solid var(--line);
+      }
+      .chat-item.log .chat-bubble {
+        background: transparent;
+        color: #c9ced6;
+        border: 1px dashed var(--line);
+        font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      }
       .hint { color: var(--muted); font-size: 11px; }
+      .build-note-inline {
+        color: #9399a4;
+        font-size: 10px;
+        line-height: 1.4;
+        text-align: right;
+        padding: 0 2px;
+      }
       .maker-actions {
         display: grid;
         gap: 8px;
       }
       textarea.control {
-        min-height: 120px;
+        min-height: 96px;
         resize: vertical;
       }
       .spinner {
@@ -6850,9 +7151,9 @@
   <body>
     <div class="app">
       <div class="tabs">
-        <button type="button" class="tab active" id="tabMaker">Maker</button>
-        <button type="button" class="tab" id="tabInspection">Inspection</button>
-        <button type="button" class="tab" id="tabExtraction">Extraction</button>
+        <button type="button" class="tab active" id="tabMaker" data-action="switch-maker">Maker</button>
+        <button type="button" class="tab" id="tabInspection" data-action="switch-inspection">Inspection</button>
+        <button type="button" class="tab" id="tabExtraction" data-action="switch-extraction">Extraction</button>
       </div>
 
       <div class="panel active" id="panelMaker">
@@ -6864,11 +7165,15 @@
           <div class="meta-item"><div class="meta-key">Kinds</div><div class="meta-value" id="makerSelectionKinds">-</div></div>
           <div class="meta-item"><div class="meta-key">Parent</div><div class="meta-value" id="makerSelectionParent">-</div></div>
         </div>
-        <button type="button" class="btn primary" id="makerSubmit"><span id="makerSpinner" class="spinner hidden"></span><span id="makerSubmitLabel">Create</span></button>
-        <div class="status" id="makerStatus"></div>
-        <div class="code" id="makerDetails">Maker intent\uC640 \uC801\uC6A9 \uACB0\uACFC\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.</div>
-        <div class="code" id="makerLog">Maker log\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.</div>
+        <button type="button" class="btn primary" id="makerSubmit" data-action="maker-submit"><span id="makerSpinner" class="spinner hidden"></span><span id="makerSubmitLabel">Create</span></button>
+        <div class="chat" id="makerThread">
+          <div class="chat-item system">
+            <div class="chat-role">Status</div>
+            <div class="chat-bubble">Maker intent\uC640 \uC801\uC6A9 \uACB0\uACFC\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.</div>
+          </div>
+        </div>
         <div class="hint">Contract\uC640 extracted component\uB97C \uBC14\uD0D5\uC73C\uB85C \uC0C8 instance\uB97C \uB9CC\uB4E4\uAC70\uB098, \uC120\uD0DD\uD55C \uC601\uC5ED\uC744 \uD504\uB86C\uD504\uD2B8\uB85C \uB2E4\uC2DC \uC0DD\uC131\uD569\uB2C8\uB2E4.</div>
+        <div class="build-note-inline" id="makerBuildInline"></div>
       </div>
 
       <div class="panel" id="panelInspection">
@@ -6880,7 +7185,7 @@
         </select>
         <div class="label">Contract</div>
         <select class="control" id="previewItem"></select>
-        <button type="button" class="btn primary" id="renderContractPreview">Render Selected Contract</button>
+        <button type="button" class="btn primary" id="renderContractPreview" data-action="render-contract-preview">Render Selected Contract</button>
         <div class="hint">Button/Input\uC740 inspection payload \uAE30\uC900\uC73C\uB85C \uB80C\uB354\uD569\uB2C8\uB2E4.</div>
       </div>
 
@@ -6889,12 +7194,12 @@
         <input class="control" id="fileUrlInput" placeholder="https://www.figma.com/design/..." />
 
         <div class="row2">
-          <button type="button" class="btn" id="refreshSelection">Refresh</button>
-          <button type="button" class="btn" id="bridgeTest">Bridge Test</button>
+          <button type="button" class="btn" id="refreshSelection" data-action="refresh-selection">Refresh</button>
+          <button type="button" class="btn" id="bridgeTest" data-action="bridge-test">Bridge Test</button>
         </div>
         <div class="row2">
-          <button type="button" class="btn primary" id="extractSelection"><span id="extractSpinner" class="spinner hidden"></span><span id="extractLabel">Extract</span></button>
-          <button type="button" class="btn" id="cancelExtraction" disabled>Cancel</button>
+          <button type="button" class="btn primary" id="extractSelection" data-action="extract-selection"><span id="extractSpinner" class="spinner hidden"></span><span id="extractLabel">Extract</span></button>
+          <button type="button" class="btn" id="cancelExtraction" data-action="cancel-extraction" disabled>Cancel</button>
         </div>
 
         <div class="status" id="extractionStatus"></div>
@@ -6911,15 +7216,63 @@
 
         <div class="code" id="selectionJson">\uC120\uD0DD \uB178\uB4DC\uB97C \uC0C8\uB85C\uACE0\uCE68\uD558\uBA74 MCP extraction \uAE30\uC900 \uC815\uBCF4\uAC00 \uD45C\uC2DC\uB429\uB2C8\uB2E4.</div>
       </div>
+      <div class="app-footer" id="appBuildStamp"></div>
     </div>
 
     <script>
       (() => {
+        const showBootError = (message) => {
+          const existing = document.getElementById("bootError");
+          if (existing) {
+            existing.textContent = message;
+            return;
+          }
+
+          const banner = document.createElement("div");
+          banner.id = "bootError";
+          banner.style.cssText = [
+            "position:fixed",
+            "left:14px",
+            "right:14px",
+            "top:14px",
+            "z-index:9999",
+            "padding:10px 12px",
+            "border-radius:10px",
+            "border:1px solid #7f1d1d",
+            "background:#2b1111",
+            "color:#fecaca",
+            "font:12px/1.45 Pretendard, Inter, sans-serif",
+            "white-space:pre-wrap"
+          ].join(";");
+          banner.textContent = message;
+          document.body.appendChild(banner);
+        };
+
+        window.addEventListener("error", (event) => {
+          const message = event?.error?.message || event?.message || "Maker UI runtime error";
+          showBootError("Maker UI \uC624\uB958: " + message);
+        });
+
+        window.addEventListener("unhandledrejection", (event) => {
+          const reason = event?.reason;
+          const message =
+            (reason && reason.message) ||
+            (typeof reason === "string" ? reason : "Maker UI promise rejection");
+          showBootError("Maker UI promise \uC624\uB958: " + message);
+        });
+
+        try {
         const optionsByLevel = __PREVIEW_OPTIONS_JSON__;
         const BRIDGE_URL = __BRIDGE_URL_JSON__;
         const BUILD_STAMP = __BUILD_STAMP_JSON__;
 
-        const $ = (id) => document.getElementById(id);
+        const $ = (id) => {
+          const node = document.getElementById(id);
+          if (!node) {
+            throw new Error("UI element missing: " + id);
+          }
+          return node;
+        };
         const el = {
           tabMaker: $("tabMaker"),
           tabInspection: $("tabInspection"),
@@ -6931,9 +7284,9 @@
           makerSubmit: $("makerSubmit"),
           makerSpinner: $("makerSpinner"),
           makerSubmitLabel: $("makerSubmitLabel"),
-          makerStatus: $("makerStatus"),
-          makerDetails: $("makerDetails"),
-          makerLog: $("makerLog"),
+          appBuildStamp: $("appBuildStamp"),
+          makerBuildInline: $("makerBuildInline"),
+          makerThread: $("makerThread"),
           makerSelectionName: $("makerSelectionName"),
           makerSelectionIntent: $("makerSelectionIntent"),
           makerSelectionKinds: $("makerSelectionKinds"),
@@ -6960,13 +7313,14 @@
         };
 
         el.buildStamp.textContent = "Build " + BUILD_STAMP;
+        el.appBuildStamp.textContent = "Build " + BUILD_STAMP;
+        el.makerBuildInline.textContent = "Build " + BUILD_STAMP;
 
         let memoryFileUrl = "";
         let latestSelectionSummary = null;
         let lastExtractionName = "";
         let lastNodeUrl = "";
         let latestSelectionSvg = null;
-        let makerAnalyzeCache = new Map();
         let selectionSvgResolver = null;
         let extractionPayloadResolver = null;
         let abortController = null;
@@ -6976,34 +7330,190 @@
         let startedAt = 0;
         let statusText = "";
         let statusTone = "";
+        const THREAD_STORAGE_KEY = "mads-maker-thread-history";
+        const THREAD_HISTORY_LIMIT = 120;
+        let makerThreadHistory = [];
+        let makerThreadSequence = 0;
+        let activeMakerRun = null;
+
+        const saveMakerThreadHistory = () => {
+          try {
+            localStorage.setItem(THREAD_STORAGE_KEY, JSON.stringify(makerThreadHistory));
+          } catch {}
+        };
+
+        const renderMakerThread = () => {
+          el.makerThread.innerHTML = "";
+
+          for (const entry of makerThreadHistory) {
+            const item = document.createElement("div");
+            item.className = "chat-item " + entry.role;
+            item.dataset.id = String(entry.id);
+            if (entry.tone) item.dataset.tone = entry.tone;
+
+            const roleEl = document.createElement("div");
+            roleEl.className = "chat-role";
+            roleEl.textContent =
+              entry.role === "user"
+                ? "You"
+                : entry.role === "assistant"
+                  ? "Maker"
+                  : entry.role === "log"
+                    ? "Log"
+                    : "Status";
+
+            const bubble = document.createElement("div");
+            bubble.className = "chat-bubble";
+            bubble.textContent = entry.text;
+
+            item.appendChild(roleEl);
+            item.appendChild(bubble);
+            el.makerThread.appendChild(item);
+          }
+
+          scrollMakerThread();
+        };
+
+        const loadMakerThreadHistory = () => {
+          try {
+            const raw = localStorage.getItem(THREAD_STORAGE_KEY);
+            const parsed = raw ? JSON.parse(raw) : [];
+            makerThreadHistory = Array.isArray(parsed) ? parsed.filter((entry) =>
+              entry &&
+              typeof entry === "object" &&
+              typeof entry.id === "number" &&
+              typeof entry.role === "string" &&
+              typeof entry.text === "string"
+            ) : [];
+          } catch {
+            makerThreadHistory = [];
+          }
+
+          makerThreadSequence = makerThreadHistory.reduce(
+            (max, entry) => Math.max(max, Number(entry.id) || 0),
+            0
+          );
+
+          if (makerThreadHistory.length === 0) {
+            makerThreadHistory.push({
+              id: ++makerThreadSequence,
+              role: "system",
+              text: "Maker intent\uC640 \uC801\uC6A9 \uACB0\uACFC\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4."
+            });
+            saveMakerThreadHistory();
+          }
+
+          renderMakerThread();
+        };
+
+        const trimMakerThreadHistory = () => {
+          if (makerThreadHistory.length <= THREAD_HISTORY_LIMIT) return;
+          makerThreadHistory = makerThreadHistory.slice(-THREAD_HISTORY_LIMIT);
+        };
+
+        const appendThreadEntry = (role, text, options = {}) => {
+          if (!text) return null;
+          const entry = {
+            id: ++makerThreadSequence,
+            role,
+            text,
+            tone: options.tone || ""
+          };
+          makerThreadHistory.push(entry);
+          trimMakerThreadHistory();
+          saveMakerThreadHistory();
+          renderMakerThread();
+          return entry.id;
+        };
+
+        const updateThreadEntry = (id, text, options = {}) => {
+          if (!id || !text) return null;
+          const entry = makerThreadHistory.find((item) => item.id === id);
+          if (!entry) return null;
+          entry.text = text;
+          entry.tone = options.tone || "";
+          saveMakerThreadHistory();
+          renderMakerThread();
+          return id;
+        };
+
+        const appendToThreadEntry = (id, text) => {
+          if (!id || !text) return null;
+          const entry = makerThreadHistory.find((item) => item.id === id);
+          if (!entry) return null;
+          entry.text = entry.text ? entry.text + "
+" + text : text;
+          saveMakerThreadHistory();
+          renderMakerThread();
+          return id;
+        };
+
+        const beginMakerRun = () => {
+          activeMakerRun = {
+            statusId: null,
+            detailsId: null,
+            logId: null
+          };
+        };
+
+        const scrollMakerThread = () => {
+          el.makerThread.scrollTop = el.makerThread.scrollHeight;
+        };
+
+        const clearMakerThread = () => {
+          makerThreadHistory = [];
+          makerThreadSequence = 0;
+          activeMakerRun = null;
+          saveMakerThreadHistory();
+          loadMakerThreadHistory();
+        };
 
         const setMakerStatus = (text, tone) => {
-          el.makerStatus.textContent = text || "";
-          el.makerStatus.className = "status" + (tone ? " " + tone : "");
+          if (!text) return;
+          if (!activeMakerRun) beginMakerRun();
+          if (activeMakerRun.statusId) {
+            updateThreadEntry(activeMakerRun.statusId, text, { tone });
+            return;
+          }
+          activeMakerRun.statusId = appendThreadEntry("system", text, { tone });
         };
 
         const setMakerDetails = (value) => {
-          if (!value) {
-            el.makerDetails.textContent = "Maker intent\uC640 \uC801\uC6A9 \uACB0\uACFC\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.";
+          if (!value) return;
+          if (!activeMakerRun) beginMakerRun();
+          const text =
+            typeof value === "string"
+              ? value
+              : JSON.stringify(value, null, 2);
+          if (activeMakerRun.detailsId) {
+            updateThreadEntry(activeMakerRun.detailsId, text);
             return;
           }
-          el.makerDetails.textContent =
-            typeof value === "string" ? value : JSON.stringify(value, null, 2);
+          activeMakerRun.detailsId = appendThreadEntry("assistant", text);
         };
 
         const clearMakerLog = () => {
-          el.makerLog.textContent = "Maker log\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.";
+          if (!activeMakerRun || !activeMakerRun.logId) return;
+          makerThreadHistory = makerThreadHistory.filter((entry) => entry.id !== activeMakerRun.logId);
+          activeMakerRun.logId = null;
+          saveMakerThreadHistory();
+          renderMakerThread();
         };
 
         const appendMakerLog = (value) => {
+          if (!value) return;
+          if (!activeMakerRun) beginMakerRun();
           const timestamp = new Date().toLocaleTimeString("ko-KR", { hour12: false });
           const line = "[" + timestamp + "] " + value;
-          if (el.makerLog.textContent === "Maker log\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.") {
-            el.makerLog.textContent = line;
-          } else {
-            el.makerLog.textContent += "\\n" + line;
+          if (activeMakerRun.logId) {
+            appendToThreadEntry(activeMakerRun.logId, line);
+            return;
           }
-          el.makerLog.scrollTop = el.makerLog.scrollHeight;
+          activeMakerRun.logId = appendThreadEntry("log", line);
+        };
+
+        const pushMakerPrompt = (value) => {
+          appendThreadEntry("user", value);
         };
 
         const syncMakerAction = () => {
@@ -7013,17 +7523,6 @@
           if (!el.makerSubmit.disabled) {
             el.makerSubmitLabel.textContent = idleLabel;
           }
-        };
-
-        const getMakerAnalyzeCacheKey = (prompt) => {
-          if (!latestSelectionSummary) return "";
-          return JSON.stringify({
-            prompt: prompt.trim(),
-            fileKey: latestSelectionSummary.fileKey || "",
-            nodeIds: latestSelectionSummary.nodeIds || [],
-            primaryName: latestSelectionSummary.primaryName || "",
-            intent: latestSelectionSummary.selectionIntent || null
-          });
         };
 
         const setMakerLoading = (loading) => {
@@ -7073,12 +7572,12 @@
           const raw = String(value).trim();
           if (!raw) return "";
           try {
-            const normalized = /^https?:\\/\\//.test(raw) ? raw : "https://" + raw.replace(/^\\/+/, "");
+            const normalized = /^https?:///.test(raw) ? raw : "https://" + raw.replace(/^/+/, "");
             const url = new URL(normalized);
-            const match = url.pathname.match(/^\\/(design|proto|board)\\/([^/]+)/);
+            const match = url.pathname.match(/^/(design|proto|board)/([^/]+)/);
             return match ? match[2] : "";
           } catch {
-            const match = raw.match(/figma\\.com\\/(?:design|proto|board)\\/([^/?#]+)/i);
+            const match = raw.match(/figma.com/(?:design|proto|board)/([^/?#]+)/i);
             return match ? match[1] : "";
           }
         };
@@ -7256,6 +7755,25 @@
           }, 10000);
         });
 
+        const fetchBridgeJson = async (pathname, payload, timeoutMs = 10000) => {
+          const response = await Promise.race([
+            fetch(BRIDGE_URL + pathname, {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify(payload)
+            }),
+            new Promise((_, reject) => {
+              setTimeout(() => reject(new Error(pathname.replace("/", "") + " \uC751\uB2F5\uC774 " + Math.round(timeoutMs / 1000) + "\uCD08 \uC548\uC5D0 \uC624\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.")), timeoutMs);
+            })
+          ]);
+
+          const result = await response.json();
+          if (!response.ok) {
+            throw new Error(result && result.error ? result.error : pathname + " \uC694\uCCAD\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.");
+          }
+          return result;
+        };
+
         const runExtraction = async () => {
           setStoredFileUrl(el.fileUrlInput.value.trim());
           lastNodeUrl = el.fileUrlInput.value.trim() || getStoredFileUrl();
@@ -7324,257 +7842,44 @@
         };
 
         const runMaker = async (placement) => {
-          let effectivePlacement = placement;
           const prompt = el.makerPrompt.value.trim();
           if (!prompt) {
             setMakerStatus("Prompt\uB97C \uC785\uB825\uD574 \uC8FC\uC138\uC694.", "error");
             return;
           }
-          clearMakerLog();
-          appendMakerLog("Maker \uC694\uCCAD \uC2DC\uC791: placement=" + effectivePlacement);
-
-          const fallbackDirectEditIntent = () => {
-            if (!latestSelectionSummary) return null;
-            const selectionKind = latestSelectionSummary.selectionIntent
-              ? latestSelectionSummary.selectionIntent.kind
-              : "unknown";
-
-            if (looksLikeFullWidthPrompt(prompt)) {
-              return {
-                kind: "direct-edit",
-                targetScope:
-                  selectionKind === "section" || selectionKind === "screen-fragment"
-                    ? "container-children"
-                    : "selection",
-                message: "\uC120\uD0DD \uC601\uC5ED\uC5D0 full width \uC9C1\uC811 \uC218\uC815\uC744 \uC801\uC6A9\uD569\uB2C8\uB2E4.",
-                commands:
-                  selectionKind === "section" || selectionKind === "screen-fragment"
-                    ? [
-                        { type: "set-node-layout-align", value: "STRETCH" },
-                        { type: "set-node-layout-sizing-horizontal", value: "FILL" },
-                        { type: "set-node-layout-grow", value: 0 }
-                      ]
-                    : [
-                        { type: "set-node-layout-align", value: "STRETCH" },
-                        { type: "set-node-layout-sizing-horizontal", value: "FILL" },
-                        { type: "resize-node-width-to-parent-inner" }
-                      ]
-              };
-            }
-
-            if (looksLikeCenterAlignPrompt(prompt)) {
-              return {
-                kind: "direct-edit",
-                targetScope:
-                  selectionKind === "section" || selectionKind === "screen-fragment"
-                    ? "container"
-                    : "selection",
-                message: "\uC120\uD0DD \uC601\uC5ED\uC5D0 \uAC00\uC6B4\uB370 \uC815\uB82C \uC9C1\uC811 \uC218\uC815\uC744 \uC801\uC6A9\uD569\uB2C8\uB2E4.",
-                commands:
-                  selectionKind === "section" || selectionKind === "screen-fragment"
-                    ? [
-                        { type: "set-container-cross-align", value: "CENTER" },
-                        { type: "set-node-layout-align", value: "INHERIT" },
-                        { type: "set-node-layout-grow", value: 0 },
-                        { type: "shrink-node-to-hug-content" }
-                      ]
-                    : [
-                        { type: "set-container-cross-align", value: "CENTER" },
-                        { type: "set-node-layout-align", value: "INHERIT" },
-                        { type: "set-node-layout-grow", value: 0 },
-                        { type: "shrink-node-to-hug-content" },
-                        { type: "center-node-in-parent" }
-                      ]
-              };
-            }
-
-            return null;
-          };
-
-          if (effectivePlacement === "selection" && latestSelectionSummary) {
-            appendMakerLog("selection \uAE30\uBC18 \uC694\uCCAD\uC73C\uB85C \uD574\uC11D\uD588\uC2B5\uB2C8\uB2E4.");
-            const immediateIntent = fallbackDirectEditIntent();
-            if (immediateIntent) {
-              appendMakerLog("\uC989\uC2DC \uC801\uC6A9 \uAC00\uB2A5\uD55C direct edit intent\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
-              setMakerDetails(immediateIntent);
-              setMakerStatus(immediateIntent.message || "\uC120\uD0DD \uC601\uC5ED\uC5D0 \uC9C1\uC811 \uC218\uC815 \uC694\uCCAD\uC744 \uC804\uB2EC\uD588\uC2B5\uB2C8\uB2E4.");
-              setMakerLoading(true);
-              await nextPaint();
-              parent.postMessage(
-                {
-                  pluginMessage: {
-                    type: "makerDirectEdit",
-                    prompt,
-                    intent: immediateIntent
-                  }
-                },
-                "*"
-              );
-              startMakerAckTimer();
-              return;
-            }
-
-            setMakerStatus("\uC120\uD0DD \uC601\uC5ED\uC744 MCP\uB85C \uBD84\uC11D \uC911\uC785\uB2C8\uB2E4.");
-            appendMakerLog("MCP selection \uBD84\uC11D\uC744 \uC694\uCCAD\uD569\uB2C8\uB2E4.");
-            const analyzeCacheKey = getMakerAnalyzeCacheKey(prompt);
-            const cachedAnalyze = analyzeCacheKey ? makerAnalyzeCache.get(analyzeCacheKey) : null;
-            if (cachedAnalyze && cachedAnalyze.directEdit) {
-              appendMakerLog("\uCE90\uC2DC\uB41C direct edit intent\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
-              setMakerDetails(cachedAnalyze.directEdit);
-              setMakerStatus("\uCE90\uC2DC\uB41C selection \uBD84\uC11D\uC744 \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
-              setMakerLoading(true);
-              await nextPaint();
-              parent.postMessage(
-                {
-                  pluginMessage: {
-                    type: "makerDirectEdit",
-                    prompt,
-                    intent: cachedAnalyze.directEdit
-                  }
-                },
-                "*"
-              );
-              startMakerAckTimer();
-              return;
-            }
-
-            setMakerDetails("selection MCP \uBD84\uC11D\uC744 \uC9C4\uD589 \uC911\uC785\uB2C8\uB2E4.");
-            setMakerLoading(true);
-            await nextPaint();
-            try {
-              const controller = new AbortController();
-              const timeout = setTimeout(() => controller.abort(), 15000);
-              const analyzeResponse = await fetch(BRIDGE_URL + "/maker-analyze", {
-                method: "POST",
-                headers: { "content-type": "application/json" },
-                body: JSON.stringify({
-                  prompt,
-                  selectionSummary: latestSelectionSummary
-                }),
-                signal: controller.signal
-              });
-              clearTimeout(timeout);
-              const analyzed = await analyzeResponse.json();
-              appendMakerLog("MCP selection \uBD84\uC11D \uC751\uB2F5\uC744 \uBC1B\uC558\uC2B5\uB2C8\uB2E4.");
-              if (!analyzeResponse.ok) {
-                throw new Error(analyzed && analyzed.error ? analyzed.error : "\uC120\uD0DD \uBD84\uC11D\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.");
-              }
-              if (analyzed && analyzed.directEdit) {
-                appendMakerLog("MCP\uAC00 direct edit intent\uB97C \uBC18\uD658\uD588\uC2B5\uB2C8\uB2E4.");
-                if (analyzeCacheKey) {
-                  makerAnalyzeCache.set(analyzeCacheKey, analyzed);
-                }
-                parent.postMessage(
-                  {
-                    pluginMessage: {
-                      type: "makerDirectEdit",
-                      prompt,
-                      intent: analyzed.directEdit
-                    }
-                  },
-                  "*"
-                );
-                startMakerAckTimer();
-                const analysis = analyzed.directEdit.analysis;
-                const componentName = analysis && analysis.componentName ? " (" + analysis.componentName + ")" : "";
-                setMakerDetails(analyzed.directEdit);
-                setMakerStatus((analyzed.directEdit.message || "\uC120\uD0DD \uC601\uC5ED\uC5D0 \uC9C1\uC811 \uC218\uC815 \uC694\uCCAD\uC744 \uC804\uB2EC\uD588\uC2B5\uB2C8\uB2E4.") + componentName);
-                return;
-              }
-              const fallbackIntent = fallbackDirectEditIntent();
-              if (fallbackIntent) {
-                appendMakerLog("MCP direct edit intent\uAC00 \uC5C6\uC5B4 fallback intent\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
-                setMakerDetails(fallbackIntent);
-                setMakerStatus(fallbackIntent.message);
-                setMakerLoading(true);
-                await nextPaint();
-                parent.postMessage(
-                  {
-                    pluginMessage: {
-                      type: "makerDirectEdit",
-                      prompt,
-                      intent: fallbackIntent
-                    }
-                  },
-                  "*"
-                );
-                startMakerAckTimer();
-                return;
-              }
-              appendMakerLog("selection-preview \uC0DD\uC131\uC73C\uB85C \uC804\uD658\uD569\uB2C8\uB2E4.");
-              setMakerStatus("\uC9C1\uC811 \uC218\uC815\uC73C\uB85C \uD574\uC11D\uB418\uC9C0 \uC54A\uC544, selection \uAE30\uC900 \uC0C8 \uC81C\uC548\uC548\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.", "warning");
-              setMakerDetails("selection \uAE30\uC900 \uC0C8 \uD504\uB808\uC784 \uC81C\uC548\uC548\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.");
-              effectivePlacement = "selection-preview";
-            } catch (error) {
-              appendMakerLog("selection \uBD84\uC11D \uC624\uB958: " + (error && error.message ? error.message : String(error)));
-              const fallbackIntent = fallbackDirectEditIntent();
-              if (fallbackIntent) {
-                appendMakerLog("fallback direct edit intent\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
-                setMakerDetails(fallbackIntent);
-                setMakerLoading(true);
-                await nextPaint();
-                parent.postMessage(
-                  {
-                    pluginMessage: {
-                      type: "makerDirectEdit",
-                      prompt,
-                      intent: fallbackIntent
-                    }
-                  },
-                  "*"
-                );
-                startMakerAckTimer();
-                const timeoutMessage =
-                  error && error.name === "AbortError"
-                    ? "\uBD84\uC11D\uC774 \uC624\uB798 \uAC78\uB824 fallback direct edit\uB97C \uC801\uC6A9\uD569\uB2C8\uB2E4."
-                    : fallbackIntent.message;
-                setMakerStatus(timeoutMessage, "warning");
-                return;
-              }
-              appendMakerLog("selection-preview \uC0DD\uC131\uC73C\uB85C \uC804\uD658\uD569\uB2C8\uB2E4.");
-              setMakerStatus("\uC120\uD0DD \uBD84\uC11D\uC774 \uBD88\uC548\uC815\uD574, selection \uAE30\uC900 \uC0C8 \uC81C\uC548\uC548\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.", "warning");
-              setMakerDetails(error && error.message ? error.message : "selection \uBD84\uC11D \uC624\uB958");
-              effectivePlacement = "selection-preview";
-            }
-          }
-
-          setMakerStatus("Maker payload\uB97C \uC0DD\uC131 \uC911\uC785\uB2C8\uB2E4.");
+          beginMakerRun();
+          pushMakerPrompt(prompt);
+          appendMakerLog("Maker \uC694\uCCAD \uC2DC\uC791: placement=" + placement);
           setMakerDetails("");
-          appendMakerLog("\uBE0C\uB9AC\uC9C0\uB85C maker-generate\uB97C \uC694\uCCAD\uD569\uB2C8\uB2E4. placement=" + effectivePlacement);
           setMakerLoading(true);
-          await nextPaint();
 
           try {
-            appendMakerLog("plugin main\uC73C\uB85C requestMakerGenerate \uBA54\uC2DC\uC9C0\uB97C \uC804\uB2EC\uD569\uB2C8\uB2E4.");
-            setTimeout(() => {
-              try {
-                parent.postMessage(
-                  {
-                    pluginMessage: {
-                      type: "requestMakerGenerate",
-                      prompt,
-                      selectionSummary: latestSelectionSummary,
-                      placement: effectivePlacement
-                    }
-                  },
-                  "*"
-                );
-                appendMakerLog("requestMakerGenerate \uBA54\uC2DC\uC9C0 \uC804\uB2EC\uC744 \uD050\uC5D0 \uB123\uC5C8\uC2B5\uB2C8\uB2E4.");
-              } catch (error) {
-                const message = error && error.message ? error.message : String(error);
-                appendMakerLog("requestMakerGenerate \uC804\uC1A1 \uC624\uB958: " + message);
-                setMakerStatus(message || "Maker \uC0DD\uC131 \uBA54\uC2DC\uC9C0 \uC804\uB2EC\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.", "error");
-                setMakerLoading(false);
-              }
-            }, 0);
+            setMakerStatus(
+              placement === "selection"
+                ? "\uC120\uD0DD \uC601\uC5ED\uC744 \uAE30\uC900\uC73C\uB85C \uBD84\uC11D\uACFC \uC0DD\uC131\uC744 \uC900\uBE44 \uC911\uC785\uB2C8\uB2E4."
+                : "Maker payload\uB97C \uC0DD\uC131 \uC911\uC785\uB2C8\uB2E4."
+            );
+            appendMakerLog(
+              "plugin main\uC73C\uB85C requestMakerRun \uBA54\uC2DC\uC9C0\uB97C \uC804\uB2EC\uD569\uB2C8\uB2E4. placement=" + placement
+            );
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "requestMakerRun",
+                  prompt,
+                  selectionSummary: latestSelectionSummary,
+                  placement
+                }
+              },
+              "*"
+            );
+            appendMakerLog("requestMakerRun \uBA54\uC2DC\uC9C0\uB97C \uC804\uB2EC\uD588\uC2B5\uB2C8\uB2E4.");
             startMakerAckTimer();
-            setMakerStatus("Maker \uC0DD\uC131 \uC694\uCCAD\uC744 \uC804\uB2EC\uD588\uC2B5\uB2C8\uB2E4.");
           } catch (error) {
             const message = error && error.message ? error.message : String(error);
-            appendMakerLog("Maker generate \uC624\uB958: " + message);
+            appendMakerLog("Maker \uC2E4\uD589 \uC624\uB958: " + message);
             setMakerStatus(message || "Maker \uC0DD\uC131 \uC911 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.", "error");
             setMakerLoading(false);
-          } finally {
           }
         };
 
@@ -7632,31 +7937,76 @@
           }
         };
 
-        el.tabMaker.addEventListener("click", () => switchTab("maker"));
-        el.tabInspection.addEventListener("click", () => switchTab("inspection"));
-        el.tabExtraction.addEventListener("click", () => switchTab("extraction"));
-        el.makerSubmit.addEventListener("click", () => {
-          const hasSelection = Boolean(latestSelectionSummary && latestSelectionSummary.selectionCount);
-          runMaker(hasSelection ? "selection" : "new-frame");
-        });
+        const handleAction = (action) => {
+          if (!action) return;
+
+          if (action === "switch-maker") {
+            switchTab("maker");
+            return;
+          }
+          if (action === "switch-inspection") {
+            switchTab("inspection");
+            return;
+          }
+          if (action === "switch-extraction") {
+            switchTab("extraction");
+            return;
+          }
+          if (action === "maker-submit") {
+            const hasSelection = Boolean(latestSelectionSummary && latestSelectionSummary.selectionCount);
+            runMaker(hasSelection ? "selection" : "new-frame");
+            return;
+          }
+          if (action === "render-contract-preview") {
+            el.render.disabled = true;
+            parent.postMessage({ pluginMessage: { type: "renderContractPreview", previewId: el.previewItem.value } }, "*");
+            return;
+          }
+          if (action === "refresh-selection") {
+            parent.postMessage({ pluginMessage: { type: "requestSelectionInfo" } }, "*");
+            parent.postMessage({ pluginMessage: { type: "requestSelectionSvg" } }, "*");
+            checkBridge();
+            return;
+          }
+          if (action === "bridge-test") {
+            checkBridge();
+            return;
+          }
+          if (action === "extract-selection") {
+            runExtraction();
+            return;
+          }
+          if (action === "cancel-extraction") {
+            if (abortController) abortController.abort();
+            stopPoll();
+            setLoading(false);
+            setStatus("Extraction cancelled.", "warning");
+          }
+        };
+
+        const bindAction = (node, action) => {
+          if (!node) return;
+          node.dataset.action = action;
+          node.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            handleAction(action);
+          });
+        };
+
+        [
+          [el.tabMaker, "switch-maker"],
+          [el.tabInspection, "switch-inspection"],
+          [el.tabExtraction, "switch-extraction"],
+          [el.makerSubmit, "maker-submit"],
+          [el.render, "render-contract-preview"],
+          [el.refresh, "refresh-selection"],
+          [el.bridgeTest, "bridge-test"],
+          [el.extract, "extract-selection"],
+          [el.cancel, "cancel-extraction"]
+        ].forEach(([node, action]) => bindAction(node, action));
+
         el.previewLevel.addEventListener("change", syncPreviewItems);
-        el.render.addEventListener("click", () => {
-          el.render.disabled = true;
-          parent.postMessage({ pluginMessage: { type: "renderContractPreview", previewId: el.previewItem.value } }, "*");
-        });
-        el.refresh.addEventListener("click", () => {
-          parent.postMessage({ pluginMessage: { type: "requestSelectionInfo" } }, "*");
-          parent.postMessage({ pluginMessage: { type: "requestSelectionSvg" } }, "*");
-          checkBridge();
-        });
-        el.bridgeTest.addEventListener("click", checkBridge);
-        el.extract.addEventListener("click", runExtraction);
-        el.cancel.addEventListener("click", () => {
-          if (abortController) abortController.abort();
-          stopPoll();
-          setLoading(false);
-          setStatus("Extraction cancelled.", "warning");
-        });
         el.fileUrlInput.addEventListener("change", () => setStoredFileUrl(el.fileUrlInput.value.trim()));
         el.fileUrlInput.addEventListener("blur", () => setStoredFileUrl(el.fileUrlInput.value.trim()));
 
@@ -7664,12 +8014,17 @@
         lastNodeUrl = getStoredFileUrl();
         syncPreviewItems();
         syncMakerAction();
+        loadMakerThreadHistory();
         setLoading(false);
         stopMakerAckTimer();
         setMakerLoading(false);
         parent.postMessage({ pluginMessage: { type: "pluginReady" } }, "*");
         parent.postMessage({ pluginMessage: { type: "requestSelectionSvg" } }, "*");
         checkBridge();
+        } catch (error) {
+          const message = error && error.message ? error.message : String(error);
+          showBootError("Maker UI \uCD08\uAE30\uD654 \uC2E4\uD328: " + message);
+        }
       })();
     <\/script>
   </body>
@@ -7678,10 +8033,10 @@
   var uiHtml = rawUiHtml.replace("__PREVIEW_OPTIONS_JSON__", PREVIEW_OPTIONS_JSON).replace("__BRIDGE_URL_JSON__", BRIDGE_URL_JSON).replace("__BUILD_STAMP_JSON__", BUILD_STAMP_JSON);
   figma.showUI(uiHtml, {
     width: 360,
-    height: 520
+    height: 620
   });
   figma.ui.onmessage = async (message) => {
-    var _a, _b, _c, _d, _e, _f, _g;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
     try {
       if (message.type === "pluginReady") {
         sendSelectionInfo();
@@ -7744,6 +8099,128 @@
         await renderMakerPayloadToCanvas(result.payload, message.placement);
         return;
       }
+      if (message.type === "requestMakerRun") {
+        const selectionSummary = (_e = message.selectionSummary) != null ? _e : summarizeSelection(figma.currentPage.selection);
+        if (message.placement === "selection") {
+          const looksLikeImmediateDirectEdit = parseLocalEditIntentKind(message.prompt) !== null;
+          const immediateIntent = buildLocalDirectEditIntent(message.prompt, selectionSummary);
+          if (immediateIntent) {
+            postMakerProgress(immediateIntent.message || "direct edit intent\uB97C \uC801\uC6A9\uD569\uB2C8\uB2E4.");
+            const responseMessage = applyDirectEditIntent([...figma.currentPage.selection], immediateIntent);
+            sendSelectionInfo();
+            void sendSelectionSvg();
+            figma.notify(responseMessage);
+            figma.ui.postMessage({
+              type: "makerSummary",
+              summary: immediateIntent
+            });
+            figma.ui.postMessage({
+              type: "makerRendered",
+              message: responseMessage
+            });
+            return;
+          }
+          if (looksLikeImmediateDirectEdit) {
+            throw new Error("\uD604\uC7AC selection\uC5D0\uC11C\uB294 \uC9C1\uC811 \uC218\uC815 \uAE30\uC900\uC744 \uCC3E\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.");
+          }
+          postMakerProgress("\uC120\uD0DD \uC601\uC5ED\uC744 MCP\uB85C \uBD84\uC11D\uD558\uB294 \uC911\uC785\uB2C8\uB2E4.");
+          const analyzeResponse = await Promise.race([
+            fetch(BRIDGE_URL + "/maker-analyze", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({
+                prompt: message.prompt,
+                selectionSummary: message.selectionSummary
+              })
+            }),
+            new Promise((_, reject) => {
+              setTimeout(() => reject(new Error("maker-analyze \uC751\uB2F5\uC774 10\uCD08 \uC548\uC5D0 \uC624\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.")), 1e4);
+            })
+          ]);
+          const analyzed = await analyzeResponse.json();
+          if (!analyzeResponse.ok) {
+            throw new Error(analyzed && analyzed.error ? analyzed.error : "\uC120\uD0DD \uBD84\uC11D\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.");
+          }
+          if (analyzed && analyzed.directEdit) {
+            postMakerProgress("MCP direct edit intent\uB97C \uC801\uC6A9\uD569\uB2C8\uB2E4.");
+            const responseMessage = applyDirectEditIntent([...figma.currentPage.selection], analyzed.directEdit);
+            sendSelectionInfo();
+            void sendSelectionSvg();
+            figma.notify(responseMessage);
+            figma.ui.postMessage({
+              type: "makerSummary",
+              summary: analyzed.directEdit
+            });
+            figma.ui.postMessage({
+              type: "makerRendered",
+              message: responseMessage
+            });
+            return;
+          }
+          postMakerProgress("selection-preview \uC81C\uC548\uC548\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.");
+          const response2 = await Promise.race([
+            fetch(BRIDGE_URL + "/maker-generate", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({
+                prompt: message.prompt,
+                selectionSummary: message.selectionSummary
+              })
+            }),
+            new Promise((_, reject) => {
+              setTimeout(() => reject(new Error("maker-generate \uC751\uB2F5\uC774 10\uCD08 \uC548\uC5D0 \uC624\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.")), 1e4);
+            })
+          ]);
+          const result2 = await response2.json();
+          if (!response2.ok) {
+            throw new Error(result2 && result2.error ? result2.error : "Maker \uC0DD\uC131\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.");
+          }
+          if (!result2 || !isFigmaWritePayload(result2.payload)) {
+            throw new Error("Maker payload \uD615\uC2DD\uC774 \uC62C\uBC14\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.");
+          }
+          figma.ui.postMessage({
+            type: "makerSummary",
+            summary: {
+              inferredScreen: (_g = (_f = result2 == null ? void 0 : result2.maker) == null ? void 0 : _f.inferredScreen) != null ? _g : null,
+              summary: (_h = result2 == null ? void 0 : result2.summary) != null ? _h : null,
+              evaluation: (_i = result2 == null ? void 0 : result2.evaluation) != null ? _i : null
+            }
+          });
+          await renderMakerPayloadToCanvas(result2.payload, "selection-preview");
+          return;
+        }
+        postMakerProgress("\uBE0C\uB9AC\uC9C0\uC5D0\uC11C Maker payload\uB97C \uC0DD\uC131\uD558\uB294 \uC911\uC785\uB2C8\uB2E4.");
+        const response = await Promise.race([
+          fetch(BRIDGE_URL + "/maker-generate", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              prompt: message.prompt,
+              selectionSummary: message.selectionSummary
+            })
+          }),
+          new Promise((_, reject) => {
+            setTimeout(() => reject(new Error("maker-generate \uC751\uB2F5\uC774 10\uCD08 \uC548\uC5D0 \uC624\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.")), 1e4);
+          })
+        ]);
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result && result.error ? result.error : "Maker \uC0DD\uC131\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.");
+        }
+        if (!result || !isFigmaWritePayload(result.payload)) {
+          throw new Error("Maker payload \uD615\uC2DD\uC774 \uC62C\uBC14\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.");
+        }
+        figma.ui.postMessage({
+          type: "makerSummary",
+          summary: {
+            inferredScreen: (_k = (_j = result == null ? void 0 : result.maker) == null ? void 0 : _j.inferredScreen) != null ? _k : null,
+            summary: (_l = result == null ? void 0 : result.summary) != null ? _l : null,
+            evaluation: (_m = result == null ? void 0 : result.evaluation) != null ? _m : null
+          }
+        });
+        await renderMakerPayloadToCanvas(result.payload, "new-frame");
+        return;
+      }
       if (message.type === "makerGenerate") {
         await renderMakerPayloadToCanvas(message.payload, message.placement);
         return;
@@ -7769,7 +8246,7 @@
         }
         figma.ui.postMessage({ type: "extractionProgress", message: "\uC120\uD0DD \uB178\uB4DC\uB97C \uD655\uC778\uD588\uC2B5\uB2C8\uB2E4." });
         await flushUi();
-        const fallbackNodeUrl = (_e = message.nodeUrl) == null ? void 0 : _e.trim();
+        const fallbackNodeUrl = (_n = message.nodeUrl) == null ? void 0 : _n.trim();
         const reference = buildMinimalExtractionReference(selection, fallbackNodeUrl);
         figma.ui.postMessage({ type: "extractionProgress", message: "reference\uB97C \uC900\uBE44\uD588\uC2B5\uB2C8\uB2E4." });
         await flushUi();
@@ -7791,7 +8268,7 @@
         figma.ui.postMessage({
           type: "extractionPayloadReady",
           payload: {
-            extractionName: (_g = (_f = reference.nodes[0]) == null ? void 0 : _f.name) != null ? _g : "figma-selection",
+            extractionName: (_p = (_o = reference.nodes[0]) == null ? void 0 : _o.name) != null ? _p : "figma-selection",
             reference,
             selectionSvg
           }

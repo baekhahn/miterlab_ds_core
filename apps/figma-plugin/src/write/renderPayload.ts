@@ -24,6 +24,50 @@ const toSceneNode = async (node: FigmaWriteNode, theme: string): Promise<SceneNo
   return createContainerNode(node);
 };
 
+const createRenderFallbackNode = async (node: FigmaWriteNode, error: unknown): Promise<FrameNode> => {
+  const frame = figma.createFrame();
+  frame.name = `${node.name} (render fallback)`;
+  frame.resize(Math.max(120, node.width || 120), Math.max(48, node.height || 48));
+  frame.x = node.x;
+  frame.y = node.y;
+  frame.layoutMode = "VERTICAL";
+  frame.primaryAxisSizingMode = "AUTO";
+  frame.counterAxisSizingMode = "FIXED";
+  frame.paddingTop = 10;
+  frame.paddingRight = 12;
+  frame.paddingBottom = 10;
+  frame.paddingLeft = 12;
+  frame.itemSpacing = 4;
+  frame.cornerRadius = 12;
+  frame.fills = [{ type: "SOLID", color: rgb("#FFF7ED") }];
+  frame.strokes = [{ type: "SOLID", color: rgb("#FDBA74") }];
+  frame.strokeWeight = 1;
+
+  const message = error instanceof Error ? error.message : String(error);
+  const font = await loadFont("regular");
+
+  const title = figma.createText();
+  title.fontName = font;
+  title.characters = node.name;
+  title.fontSize = 12;
+  title.fills = [{ type: "SOLID", color: rgb("#9A3412") }];
+  title.textAutoResize = "HEIGHT";
+  title.resize(Math.max(96, frame.width - 24), title.height);
+
+  const detail = figma.createText();
+  detail.fontName = font;
+  detail.characters = `Render fallback: ${message}`;
+  detail.fontSize = 10;
+  detail.lineHeight = { unit: "PIXELS", value: 14 };
+  detail.fills = [{ type: "SOLID", color: rgb("#C2410C") }];
+  detail.textAutoResize = "HEIGHT";
+  detail.resize(Math.max(96, frame.width - 24), detail.height);
+
+  frame.appendChild(title);
+  frame.appendChild(detail);
+  return frame;
+};
+
 const positionChildInSection = (parent: FrameNode, child: SceneNode, index: number) => {
   if (!parent.name.endsWith("-section")) {
     return;
@@ -50,18 +94,33 @@ const applySectionLayoutRules = (parent: FrameNode, child: SceneNode, source: Fi
   }
 };
 
-const renderChildren = async (parent: FrameNode, children: FigmaWriteNode[], theme: string): Promise<number> => {
+const renderChildren = async (
+  parent: FrameNode,
+  children: FigmaWriteNode[],
+  theme: string,
+  failures: Array<{ nodeName: string; message: string }>
+): Promise<number> => {
   let count = 0;
 
   for (const [index, child] of children.entries()) {
-    const next = await toSceneNode(child, theme);
-    parent.appendChild(next);
-    positionChildInSection(parent, next, index);
-    applySectionLayoutRules(parent, next, child);
-    count += 1;
+    try {
+      const next = await toSceneNode(child, theme);
+      parent.appendChild(next);
+      positionChildInSection(parent, next, index);
+      applySectionLayoutRules(parent, next, child);
+      count += 1;
 
-    if (child.children && child.children.length > 0 && next.type === "FRAME") {
-      count += await renderChildren(next, child.children, theme);
+      if (child.children && child.children.length > 0 && next.type === "FRAME") {
+        count += await renderChildren(next, child.children, theme, failures);
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      failures.push({ nodeName: child.name, message });
+      const fallback = await createRenderFallbackNode(child, error);
+      parent.appendChild(fallback);
+      positionChildInSection(parent, fallback, index);
+      applySectionLayoutRules(parent, fallback, child);
+      count += 1;
     }
   }
 
@@ -157,34 +216,57 @@ export const renderPayload = async (payload: FigmaWritePayload): Promise<PluginW
   const existing = figma.currentPage.children.find(
     (node) => node.type === "FRAME" && node.name === frameName
   );
-  if (existing && existing.type === "FRAME") {
-    existing.remove();
-  }
+  const tempFrameName = `${frameName} __rendering__`;
 
   if (payload.document.screen === "button-inspection" || payload.document.screen === "input-inspection") {
-    const { frame, createdNodeCount } = await createInspectionPreviewFrame(payload, frameName);
+    const { frame, createdNodeCount } = await createInspectionPreviewFrame(payload, tempFrameName);
+    try {
+      figma.currentPage.appendChild(frame);
+      if (existing && existing.type === "FRAME") {
+        existing.remove();
+      }
+      frame.name = frameName;
+      figma.currentPage.selection = [frame];
+      figma.viewport.scrollAndZoomIntoView([frame]);
+      return {
+        createdNodeCount,
+        createdFrameName: frame.name
+      };
+    } catch (error) {
+      if (!frame.removed) frame.remove();
+      throw error;
+    }
+  }
+
+  const frame = createFrameNode({ ...root, name: tempFrameName }, theme);
+  const failures: Array<{ nodeName: string; message: string }> = [];
+
+  try {
     figma.currentPage.appendChild(frame);
+
+    let createdNodeCount = 1;
+    if (root.children && root.children.length > 0) {
+      createdNodeCount += await renderChildren(frame, root.children, theme, failures);
+    }
+
+    if (existing && existing.type === "FRAME") {
+      existing.remove();
+    }
+
+    frame.name = frameName;
     figma.currentPage.selection = [frame];
     figma.viewport.scrollAndZoomIntoView([frame]);
+
+    if (failures.length > 0) {
+      figma.notify(`일부 노드를 fallback으로 렌더링했습니다 (${failures.length}개).`);
+    }
+
     return {
       createdNodeCount,
       createdFrameName: frame.name
     };
+  } catch (error) {
+    if (!frame.removed) frame.remove();
+    throw error;
   }
-
-  const frame = createFrameNode({ ...root, name: frameName }, theme);
-  figma.currentPage.appendChild(frame);
-
-  let createdNodeCount = 1;
-  if (root.children && root.children.length > 0) {
-    createdNodeCount += await renderChildren(frame, root.children, theme);
-  }
-
-  figma.currentPage.selection = [frame];
-  figma.viewport.scrollAndZoomIntoView([frame]);
-
-  return {
-    createdNodeCount,
-    createdFrameName: frame.name
-  };
 };
