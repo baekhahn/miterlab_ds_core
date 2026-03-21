@@ -36,6 +36,13 @@ export interface PluginMakerGenerateMessage {
   placement?: "new-frame" | "selection" | "selection-preview";
 }
 
+export interface PluginRequestMakerGenerateMessage {
+  type: "requestMakerGenerate";
+  prompt: string;
+  selectionSummary?: unknown;
+  placement?: "new-frame" | "selection" | "selection-preview";
+}
+
 export interface PluginMakerDirectEditMessage {
   type: "makerDirectEdit";
   prompt: string;
@@ -97,5 +104,6 @@ export type PluginUiMessage =
   | PluginSaveFileUrlMessage
   | PluginCancelExtractionMessage
   | PluginExtractSelectionMessage
+  | PluginRequestMakerGenerateMessage
   | PluginMakerGenerateMessage
   | PluginMakerDirectEditMessage;

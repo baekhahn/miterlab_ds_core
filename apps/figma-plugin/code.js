@@ -6404,6 +6404,14 @@
     }
   };
   var flushUi = () => new Promise((resolve) => setTimeout(resolve, 0));
+  var withTimeout = async (promise, ms, message) => {
+    return await Promise.race([
+      promise,
+      new Promise((_, reject) => {
+        setTimeout(() => reject(new Error(message)), ms);
+      })
+    ]);
+  };
   var getSelectionBounds = (nodes) => {
     if (nodes.length === 0) return null;
     const bounds = nodes.filter(
@@ -6495,6 +6503,74 @@
     for (const child of [...source.children]) {
       target.appendChild(child);
     }
+  };
+  var postMakerProgress = (message) => {
+    figma.ui.postMessage({
+      type: "makerProgress",
+      message
+    });
+  };
+  var renderMakerPayloadToCanvas = async (payload, placement) => {
+    var _a, _b, _c;
+    if (!isFigmaWritePayload(payload)) {
+      throw new Error("Maker payload \uD615\uC2DD\uC774 \uC62C\uBC14\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.");
+    }
+    postMakerProgress("Figma\uC5D0\uC11C \uC0C8 instance\uB97C \uB80C\uB354\uB9C1\uD558\uB294 \uC911\uC785\uB2C8\uB2E4.");
+    const targetNodes = [...figma.currentPage.selection];
+    const targetBounds = getSelectionBounds(targetNodes);
+    const firstParent = targetNodes.length > 0 ? safeGetParent(targetNodes[0]) : null;
+    const sharedParent = firstParent && targetNodes.every((node) => safeGetParent(node) === firstParent) ? firstParent : null;
+    const sharedParentName = sharedParent ? safeGetName(sharedParent) : null;
+    postMakerProgress("renderPayload\uB97C \uC2DC\uC791\uD569\uB2C8\uB2E4.");
+    const result = await withTimeout(
+      renderPayload(payload),
+      12e3,
+      "Figma \uB80C\uB354\uB9C1\uC774 12\uCD08 \uC774\uC0C1 \uC9C0\uC5F0\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+    );
+    postMakerProgress("\uB80C\uB354 \uACB0\uACFC\uB97C \uBC30\uCE58\uD558\uB294 \uC911\uC785\uB2C8\uB2E4.");
+    const createdFrame = [...figma.currentPage.children].reverse().find(
+      (node) => node.type === "FRAME" && node.name === result.createdFrameName
+    );
+    if (placement === "selection-preview" && createdFrame && targetBounds) {
+      postMakerProgress("selection-preview \uC704\uCE58\uB85C \uC774\uB3D9\uD569\uB2C8\uB2E4.");
+      createdFrame.x = targetBounds.x + targetBounds.width + 40;
+      createdFrame.y = targetBounds.y;
+      figma.currentPage.selection = [createdFrame];
+    } else if (placement === "selection" && createdFrame && targetBounds) {
+      postMakerProgress("selection \uAD50\uCCB4 \uACBD\uB85C\uB97C \uC2DC\uB3C4\uD569\uB2C8\uB2E4.");
+      const sectionFrames = createdFrame.children.filter(
+        (node) => node.type === "FRAME" && node.name.endsWith("-section")
+      );
+      const preferredSectionName = sharedParentName ? sharedParentName : targetNodes.length === 1 ? (_a = safeGetName(targetNodes[0])) != null ? _a : targetNodes[0].id : null;
+      const replacementSection = (_c = (_b = sectionFrames.find((node) => preferredSectionName && node.name === preferredSectionName)) != null ? _b : sectionFrames.find((node) => node.name !== "preview-section")) != null ? _c : null;
+      const replacementParent = sharedParent && safeGetParent(sharedParent) && "appendChild" in safeGetParent(sharedParent) ? safeGetParent(sharedParent) : figma.currentPage;
+      if (replacementSection && sharedParent && sharedParent.type === "FRAME" && sharedParentName && replacementSection.name === sharedParentName) {
+        postMakerProgress("sharedParent frame \uB0B4\uC6A9\uC744 \uAD50\uCCB4\uD569\uB2C8\uB2E4.");
+        replaceFrameContents(sharedParent, replacementSection);
+        createdFrame.remove();
+      } else if (replacementSection) {
+        postMakerProgress("replacement section\uC744 selection \uC704\uCE58\uC5D0 \uBC30\uCE58\uD569\uB2C8\uB2E4.");
+        const parentAbsolute = getParentAbsolutePosition(replacementParent);
+        replacementParent.appendChild(replacementSection);
+        replacementSection.x = targetBounds.x - parentAbsolute.x;
+        replacementSection.y = targetBounds.y - parentAbsolute.y;
+        const removeTargets = sharedParent && sharedParentName && replacementSection.name === sharedParentName ? [sharedParent] : targetNodes;
+        for (const node of removeTargets) {
+          if ("removed" in node && !node.removed) {
+            node.remove();
+          }
+        }
+        createdFrame.remove();
+      } else {
+        postMakerProgress("replacement section\uC774 \uC5C6\uC5B4 \uC0DD\uC131 \uD504\uB808\uC784\uC744 \uC6D0\uC704\uCE58\uC5D0 \uB461\uB2C8\uB2E4.");
+        createdFrame.x = targetBounds.x;
+        createdFrame.y = targetBounds.y;
+      }
+    }
+    figma.ui.postMessage({
+      type: "makerRendered",
+      message: placement === "selection" ? `Selection\uC744 \uAE30\uC900\uC73C\uB85C ${result.createdFrameName}\uB85C \uAD50\uCCB4\uD588\uC2B5\uB2C8\uB2E4.` : placement === "selection-preview" ? `Selection \uAE30\uC900 \uC81C\uC548\uC548 ${result.createdFrameName}\uB97C \uC606\uC5D0 \uC0DD\uC131\uD588\uC2B5\uB2C8\uB2E4.` : `${result.createdFrameName}\uB97C \uC0DD\uC131\uD588\uC2B5\uB2C8\uB2E4.`
+    });
   };
   var resolveDirectEditTargets = (selection) => {
     if (selection.length !== 1) {
@@ -6791,6 +6867,7 @@
         <button type="button" class="btn primary" id="makerSubmit"><span id="makerSpinner" class="spinner hidden"></span><span id="makerSubmitLabel">Create</span></button>
         <div class="status" id="makerStatus"></div>
         <div class="code" id="makerDetails">Maker intent\uC640 \uC801\uC6A9 \uACB0\uACFC\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.</div>
+        <div class="code" id="makerLog">Maker log\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.</div>
         <div class="hint">Contract\uC640 extracted component\uB97C \uBC14\uD0D5\uC73C\uB85C \uC0C8 instance\uB97C \uB9CC\uB4E4\uAC70\uB098, \uC120\uD0DD\uD55C \uC601\uC5ED\uC744 \uD504\uB86C\uD504\uD2B8\uB85C \uB2E4\uC2DC \uC0DD\uC131\uD569\uB2C8\uB2E4.</div>
       </div>
 
@@ -6856,6 +6933,7 @@
           makerSubmitLabel: $("makerSubmitLabel"),
           makerStatus: $("makerStatus"),
           makerDetails: $("makerDetails"),
+          makerLog: $("makerLog"),
           makerSelectionName: $("makerSelectionName"),
           makerSelectionIntent: $("makerSelectionIntent"),
           makerSelectionKinds: $("makerSelectionKinds"),
@@ -6911,6 +6989,21 @@
           }
           el.makerDetails.textContent =
             typeof value === "string" ? value : JSON.stringify(value, null, 2);
+        };
+
+        const clearMakerLog = () => {
+          el.makerLog.textContent = "Maker log\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.";
+        };
+
+        const appendMakerLog = (value) => {
+          const timestamp = new Date().toLocaleTimeString("ko-KR", { hour12: false });
+          const line = "[" + timestamp + "] " + value;
+          if (el.makerLog.textContent === "Maker log\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.") {
+            el.makerLog.textContent = line;
+          } else {
+            el.makerLog.textContent += "\\n" + line;
+          }
+          el.makerLog.scrollTop = el.makerLog.scrollHeight;
         };
 
         const syncMakerAction = () => {
@@ -7237,6 +7330,8 @@
             setMakerStatus("Prompt\uB97C \uC785\uB825\uD574 \uC8FC\uC138\uC694.", "error");
             return;
           }
+          clearMakerLog();
+          appendMakerLog("Maker \uC694\uCCAD \uC2DC\uC791: placement=" + effectivePlacement);
 
           const fallbackDirectEditIntent = () => {
             if (!latestSelectionSummary) return null;
@@ -7297,8 +7392,10 @@
           };
 
           if (effectivePlacement === "selection" && latestSelectionSummary) {
+            appendMakerLog("selection \uAE30\uBC18 \uC694\uCCAD\uC73C\uB85C \uD574\uC11D\uD588\uC2B5\uB2C8\uB2E4.");
             const immediateIntent = fallbackDirectEditIntent();
             if (immediateIntent) {
+              appendMakerLog("\uC989\uC2DC \uC801\uC6A9 \uAC00\uB2A5\uD55C direct edit intent\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
               setMakerDetails(immediateIntent);
               setMakerStatus(immediateIntent.message || "\uC120\uD0DD \uC601\uC5ED\uC5D0 \uC9C1\uC811 \uC218\uC815 \uC694\uCCAD\uC744 \uC804\uB2EC\uD588\uC2B5\uB2C8\uB2E4.");
               setMakerLoading(true);
@@ -7318,9 +7415,11 @@
             }
 
             setMakerStatus("\uC120\uD0DD \uC601\uC5ED\uC744 MCP\uB85C \uBD84\uC11D \uC911\uC785\uB2C8\uB2E4.");
+            appendMakerLog("MCP selection \uBD84\uC11D\uC744 \uC694\uCCAD\uD569\uB2C8\uB2E4.");
             const analyzeCacheKey = getMakerAnalyzeCacheKey(prompt);
             const cachedAnalyze = analyzeCacheKey ? makerAnalyzeCache.get(analyzeCacheKey) : null;
             if (cachedAnalyze && cachedAnalyze.directEdit) {
+              appendMakerLog("\uCE90\uC2DC\uB41C direct edit intent\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
               setMakerDetails(cachedAnalyze.directEdit);
               setMakerStatus("\uCE90\uC2DC\uB41C selection \uBD84\uC11D\uC744 \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
               setMakerLoading(true);
@@ -7356,10 +7455,12 @@
               });
               clearTimeout(timeout);
               const analyzed = await analyzeResponse.json();
+              appendMakerLog("MCP selection \uBD84\uC11D \uC751\uB2F5\uC744 \uBC1B\uC558\uC2B5\uB2C8\uB2E4.");
               if (!analyzeResponse.ok) {
                 throw new Error(analyzed && analyzed.error ? analyzed.error : "\uC120\uD0DD \uBD84\uC11D\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.");
               }
               if (analyzed && analyzed.directEdit) {
+                appendMakerLog("MCP\uAC00 direct edit intent\uB97C \uBC18\uD658\uD588\uC2B5\uB2C8\uB2E4.");
                 if (analyzeCacheKey) {
                   makerAnalyzeCache.set(analyzeCacheKey, analyzed);
                 }
@@ -7382,6 +7483,7 @@
               }
               const fallbackIntent = fallbackDirectEditIntent();
               if (fallbackIntent) {
+                appendMakerLog("MCP direct edit intent\uAC00 \uC5C6\uC5B4 fallback intent\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
                 setMakerDetails(fallbackIntent);
                 setMakerStatus(fallbackIntent.message);
                 setMakerLoading(true);
@@ -7399,12 +7501,15 @@
                 startMakerAckTimer();
                 return;
               }
+              appendMakerLog("selection-preview \uC0DD\uC131\uC73C\uB85C \uC804\uD658\uD569\uB2C8\uB2E4.");
               setMakerStatus("\uC9C1\uC811 \uC218\uC815\uC73C\uB85C \uD574\uC11D\uB418\uC9C0 \uC54A\uC544, selection \uAE30\uC900 \uC0C8 \uC81C\uC548\uC548\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.", "warning");
               setMakerDetails("selection \uAE30\uC900 \uC0C8 \uD504\uB808\uC784 \uC81C\uC548\uC548\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.");
               effectivePlacement = "selection-preview";
             } catch (error) {
+              appendMakerLog("selection \uBD84\uC11D \uC624\uB958: " + (error && error.message ? error.message : String(error)));
               const fallbackIntent = fallbackDirectEditIntent();
               if (fallbackIntent) {
+                appendMakerLog("fallback direct edit intent\uB97C \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
                 setMakerDetails(fallbackIntent);
                 setMakerLoading(true);
                 await nextPaint();
@@ -7426,6 +7531,7 @@
                 setMakerStatus(timeoutMessage, "warning");
                 return;
               }
+              appendMakerLog("selection-preview \uC0DD\uC131\uC73C\uB85C \uC804\uD658\uD569\uB2C8\uB2E4.");
               setMakerStatus("\uC120\uD0DD \uBD84\uC11D\uC774 \uBD88\uC548\uC815\uD574, selection \uAE30\uC900 \uC0C8 \uC81C\uC548\uC548\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.", "warning");
               setMakerDetails(error && error.message ? error.message : "selection \uBD84\uC11D \uC624\uB958");
               effectivePlacement = "selection-preview";
@@ -7434,48 +7540,39 @@
 
           setMakerStatus("Maker payload\uB97C \uC0DD\uC131 \uC911\uC785\uB2C8\uB2E4.");
           setMakerDetails("");
+          appendMakerLog("\uBE0C\uB9AC\uC9C0\uB85C maker-generate\uB97C \uC694\uCCAD\uD569\uB2C8\uB2E4. placement=" + effectivePlacement);
           setMakerLoading(true);
           await nextPaint();
 
           try {
-            const response = await fetch(BRIDGE_URL + "/maker-generate", {
-              method: "POST",
-              headers: { "content-type": "application/json" },
-              body: JSON.stringify({
-                prompt,
-                selectionSummary: latestSelectionSummary
-              })
-            });
-            const result = await response.json();
-            if (!response.ok) {
-              throw new Error(result && result.error ? result.error : "Maker \uC0DD\uC131\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.");
-            }
-            if (!result || !isWritePayload(result.payload)) {
-              throw new Error("Maker payload \uD615\uC2DD\uC774 \uC62C\uBC14\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.");
-            }
-
-            parent.postMessage(
-              {
-                pluginMessage: {
-                    type: "makerGenerate",
-                    payload: result.payload,
-                  placement: effectivePlacement
-                }
-              },
-              "*"
-            );
-
+            appendMakerLog("plugin main\uC73C\uB85C requestMakerGenerate \uBA54\uC2DC\uC9C0\uB97C \uC804\uB2EC\uD569\uB2C8\uB2E4.");
+            setTimeout(() => {
+              try {
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: "requestMakerGenerate",
+                      prompt,
+                      selectionSummary: latestSelectionSummary,
+                      placement: effectivePlacement
+                    }
+                  },
+                  "*"
+                );
+                appendMakerLog("requestMakerGenerate \uBA54\uC2DC\uC9C0 \uC804\uB2EC\uC744 \uD050\uC5D0 \uB123\uC5C8\uC2B5\uB2C8\uB2E4.");
+              } catch (error) {
+                const message = error && error.message ? error.message : String(error);
+                appendMakerLog("requestMakerGenerate \uC804\uC1A1 \uC624\uB958: " + message);
+                setMakerStatus(message || "Maker \uC0DD\uC131 \uBA54\uC2DC\uC9C0 \uC804\uB2EC\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.", "error");
+                setMakerLoading(false);
+              }
+            }, 0);
             startMakerAckTimer();
-
-            const inferred = result?.maker?.inferredScreen ? " (" + result.maker.inferredScreen + ")" : "";
-            setMakerDetails({
-              inferredScreen: result?.maker?.inferredScreen ?? null,
-              summary: result?.summary ?? null,
-              evaluation: result?.evaluation ?? null
-            });
-            setMakerStatus("Maker \uC0DD\uC131 \uC694\uCCAD\uC744 \uC804\uB2EC\uD588\uC2B5\uB2C8\uB2E4" + inferred + ".");
+            setMakerStatus("Maker \uC0DD\uC131 \uC694\uCCAD\uC744 \uC804\uB2EC\uD588\uC2B5\uB2C8\uB2E4.");
           } catch (error) {
-            setMakerStatus(error && error.message ? error.message : "Maker \uC0DD\uC131 \uC911 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.", "error");
+            const message = error && error.message ? error.message : String(error);
+            appendMakerLog("Maker generate \uC624\uB958: " + message);
+            setMakerStatus(message || "Maker \uC0DD\uC131 \uC911 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.", "error");
             setMakerLoading(false);
           } finally {
           }
@@ -7517,14 +7614,21 @@
             setLoading(false);
             stopMakerAckTimer();
             setMakerLoading(false);
+            appendMakerLog("pluginError: " + (msg.message || "\uC624\uB958"));
           }
           if (msg.type === "makerProgress") {
             setMakerStatus(msg.message || "Maker \uC791\uC5C5\uC744 \uC9C4\uD589 \uC911\uC785\uB2C8\uB2E4.");
+            appendMakerLog("makerProgress: " + (msg.message || "\uC9C4\uD589 \uC911"));
+          }
+          if (msg.type === "makerSummary") {
+            setMakerDetails(msg.summary || "");
+            appendMakerLog("makerSummary \uC218\uC2E0");
           }
           if (msg.type === "makerRendered") {
             stopMakerAckTimer();
             setMakerStatus(msg.message || "Maker rendering complete.");
             setMakerLoading(false);
+            appendMakerLog("makerRendered: " + (msg.message || "\uC644\uB8CC"));
           }
         };
 
@@ -7577,7 +7681,7 @@
     height: 520
   });
   figma.ui.onmessage = async (message) => {
-    var _a, _b, _c, _d, _e, _f;
+    var _a, _b, _c, _d, _e, _f, _g;
     try {
       if (message.type === "pluginReady") {
         sendSelectionInfo();
@@ -7607,65 +7711,45 @@
         figma.ui.postMessage({ type: "renderDone" });
         return;
       }
-      if (message.type === "makerGenerate") {
-        figma.ui.postMessage({
-          type: "makerProgress",
-          message: "Figma\uC5D0\uC11C \uC0C8 instance\uB97C \uB80C\uB354\uB9C1\uD558\uB294 \uC911\uC785\uB2C8\uB2E4."
-        });
-        if (!isFigmaWritePayload(message.payload)) {
+      if (message.type === "requestMakerGenerate") {
+        postMakerProgress("\uBE0C\uB9AC\uC9C0\uC5D0\uC11C Maker payload\uB97C \uC0DD\uC131\uD558\uB294 \uC911\uC785\uB2C8\uB2E4.");
+        const response = await Promise.race([
+          fetch(BRIDGE_URL + "/maker-generate", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              prompt: message.prompt,
+              selectionSummary: message.selectionSummary
+            })
+          }),
+          new Promise((_, reject) => {
+            setTimeout(() => reject(new Error("maker-generate \uC751\uB2F5\uC774 10\uCD08 \uC548\uC5D0 \uC624\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.")), 1e4);
+          })
+        ]);
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result && result.error ? result.error : "Maker \uC0DD\uC131\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.");
+        }
+        if (!result || !isFigmaWritePayload(result.payload)) {
           throw new Error("Maker payload \uD615\uC2DD\uC774 \uC62C\uBC14\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.");
         }
-        const targetNodes = [...figma.currentPage.selection];
-        const targetBounds = getSelectionBounds(targetNodes);
-        const firstParent = targetNodes.length > 0 ? safeGetParent(targetNodes[0]) : null;
-        const sharedParent = firstParent && targetNodes.every((node) => safeGetParent(node) === firstParent) ? firstParent : null;
-        const sharedParentName = sharedParent ? safeGetName(sharedParent) : null;
-        const result = await renderPayload(message.payload);
         figma.ui.postMessage({
-          type: "makerProgress",
-          message: "\uB80C\uB354 \uACB0\uACFC\uB97C \uBC30\uCE58\uD558\uB294 \uC911\uC785\uB2C8\uB2E4."
-        });
-        const createdFrame = [...figma.currentPage.children].reverse().find(
-          (node) => node.type === "FRAME" && node.name === result.createdFrameName
-        );
-        if (message.placement === "selection-preview" && createdFrame && targetBounds) {
-          createdFrame.x = targetBounds.x + targetBounds.width + 40;
-          createdFrame.y = targetBounds.y;
-          figma.currentPage.selection = [createdFrame];
-        } else if (message.placement === "selection" && createdFrame && targetBounds) {
-          const sectionFrames = createdFrame.children.filter(
-            (node) => node.type === "FRAME" && node.name.endsWith("-section")
-          );
-          const preferredSectionName = sharedParentName ? sharedParentName : targetNodes.length === 1 ? (_a = safeGetName(targetNodes[0])) != null ? _a : targetNodes[0].id : null;
-          const replacementSection = (_c = (_b = sectionFrames.find((node) => preferredSectionName && node.name === preferredSectionName)) != null ? _b : sectionFrames.find((node) => node.name !== "preview-section")) != null ? _c : null;
-          const replacementParent = sharedParent && safeGetParent(sharedParent) && "appendChild" in safeGetParent(sharedParent) ? safeGetParent(sharedParent) : figma.currentPage;
-          if (replacementSection && sharedParent && sharedParent.type === "FRAME" && sharedParentName && replacementSection.name === sharedParentName) {
-            replaceFrameContents(sharedParent, replacementSection);
-            createdFrame.remove();
-          } else if (replacementSection) {
-            const parentAbsolute = getParentAbsolutePosition(replacementParent);
-            replacementParent.appendChild(replacementSection);
-            replacementSection.x = targetBounds.x - parentAbsolute.x;
-            replacementSection.y = targetBounds.y - parentAbsolute.y;
-            const removeTargets = sharedParent && sharedParentName && replacementSection.name === sharedParentName ? [sharedParent] : targetNodes;
-            for (const node of removeTargets) {
-              if ("removed" in node && !node.removed) {
-                node.remove();
-              }
-            }
-            createdFrame.remove();
-          } else {
-            createdFrame.x = targetBounds.x;
-            createdFrame.y = targetBounds.y;
+          type: "makerSummary",
+          summary: {
+            inferredScreen: (_b = (_a = result == null ? void 0 : result.maker) == null ? void 0 : _a.inferredScreen) != null ? _b : null,
+            summary: (_c = result == null ? void 0 : result.summary) != null ? _c : null,
+            evaluation: (_d = result == null ? void 0 : result.evaluation) != null ? _d : null
           }
-        }
-        figma.ui.postMessage({
-          type: "makerRendered",
-          message: message.placement === "selection" ? `Selection\uC744 \uAE30\uC900\uC73C\uB85C ${result.createdFrameName}\uB85C \uAD50\uCCB4\uD588\uC2B5\uB2C8\uB2E4.` : message.placement === "selection-preview" ? `Selection \uAE30\uC900 \uC81C\uC548\uC548 ${result.createdFrameName}\uB97C \uC606\uC5D0 \uC0DD\uC131\uD588\uC2B5\uB2C8\uB2E4.` : `${result.createdFrameName}\uB97C \uC0DD\uC131\uD588\uC2B5\uB2C8\uB2E4.`
         });
+        await renderMakerPayloadToCanvas(result.payload, message.placement);
+        return;
+      }
+      if (message.type === "makerGenerate") {
+        await renderMakerPayloadToCanvas(message.payload, message.placement);
         return;
       }
       if (message.type === "makerDirectEdit") {
+        postMakerProgress("direct edit intent\uB97C \uC801\uC6A9\uD569\uB2C8\uB2E4.");
         const responseMessage = applyDirectEditIntent([...figma.currentPage.selection], message.intent);
         sendSelectionInfo();
         void sendSelectionSvg();
@@ -7685,7 +7769,7 @@
         }
         figma.ui.postMessage({ type: "extractionProgress", message: "\uC120\uD0DD \uB178\uB4DC\uB97C \uD655\uC778\uD588\uC2B5\uB2C8\uB2E4." });
         await flushUi();
-        const fallbackNodeUrl = (_d = message.nodeUrl) == null ? void 0 : _d.trim();
+        const fallbackNodeUrl = (_e = message.nodeUrl) == null ? void 0 : _e.trim();
         const reference = buildMinimalExtractionReference(selection, fallbackNodeUrl);
         figma.ui.postMessage({ type: "extractionProgress", message: "reference\uB97C \uC900\uBE44\uD588\uC2B5\uB2C8\uB2E4." });
         await flushUi();
@@ -7707,7 +7791,7 @@
         figma.ui.postMessage({
           type: "extractionPayloadReady",
           payload: {
-            extractionName: (_f = (_e = reference.nodes[0]) == null ? void 0 : _e.name) != null ? _f : "figma-selection",
+            extractionName: (_g = (_f = reference.nodes[0]) == null ? void 0 : _f.name) != null ? _g : "figma-selection",
             reference,
             selectionSvg
           }

@@ -167,8 +167,16 @@ const sendSelectionSvg = async () => {
   }
 };
 
-        const flushUi = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
-        const nextPaint = () => new Promise((resolve) => requestAnimationFrame(() => resolve()));
+const flushUi = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+const withTimeout = async <T>(promise: Promise<T>, ms: number, message: string): Promise<T> => {
+  return await Promise.race([
+    promise,
+    new Promise<T>((_, reject) => {
+      setTimeout(() => reject(new Error(message)), ms);
+    })
+  ]);
+};
+        const nextPaint = () => Promise.resolve();
 
 const getSelectionBounds = (nodes: readonly SceneNode[]) => {
   if (nodes.length === 0) return null;
@@ -280,6 +288,113 @@ const replaceFrameContents = (target: FrameNode, source: FrameNode) => {
   for (const child of [...source.children]) {
     target.appendChild(child);
   }
+};
+
+const postMakerProgress = (message: string) => {
+  figma.ui.postMessage({
+    type: "makerProgress",
+    message
+  });
+};
+
+const renderMakerPayloadToCanvas = async (
+  payload: unknown,
+  placement: "new-frame" | "selection" | "selection-preview" | undefined
+) => {
+  if (!isFigmaWritePayload(payload)) {
+    throw new Error("Maker payload 형식이 올바르지 않습니다.");
+  }
+
+  postMakerProgress("Figma에서 새 instance를 렌더링하는 중입니다.");
+
+  const targetNodes = [...figma.currentPage.selection];
+  const targetBounds = getSelectionBounds(targetNodes);
+  const firstParent = targetNodes.length > 0 ? safeGetParent(targetNodes[0]) : null;
+  const sharedParent =
+    firstParent && targetNodes.every((node) => safeGetParent(node) === firstParent)
+      ? firstParent
+      : null;
+  const sharedParentName = sharedParent ? safeGetName(sharedParent) : null;
+  postMakerProgress("renderPayload를 시작합니다.");
+  const result = await withTimeout(
+    renderPayload(payload),
+    12000,
+    "Figma 렌더링이 12초 이상 지연되었습니다."
+  );
+  postMakerProgress("렌더 결과를 배치하는 중입니다.");
+  const createdFrame = [...figma.currentPage.children].reverse().find(
+    (node) => node.type === "FRAME" && node.name === result.createdFrameName
+  );
+
+  if (placement === "selection-preview" && createdFrame && targetBounds) {
+    postMakerProgress("selection-preview 위치로 이동합니다.");
+    createdFrame.x = targetBounds.x + targetBounds.width + 40;
+    createdFrame.y = targetBounds.y;
+    figma.currentPage.selection = [createdFrame];
+  } else if (placement === "selection" && createdFrame && targetBounds) {
+    postMakerProgress("selection 교체 경로를 시도합니다.");
+    const sectionFrames = createdFrame.children.filter(
+      (node): node is FrameNode => node.type === "FRAME" && node.name.endsWith("-section")
+    );
+    const preferredSectionName =
+      sharedParentName
+        ? sharedParentName
+        : targetNodes.length === 1
+          ? safeGetName(targetNodes[0]) ?? targetNodes[0].id
+          : null;
+
+    const replacementSection =
+      sectionFrames.find((node) => preferredSectionName && node.name === preferredSectionName) ??
+      sectionFrames.find((node) => node.name !== "preview-section") ??
+      null;
+
+    const replacementParent =
+      sharedParent &&
+      safeGetParent(sharedParent as SceneNode) &&
+      "appendChild" in (safeGetParent(sharedParent as SceneNode) as BaseNode & ChildrenMixin)
+        ? (safeGetParent(sharedParent as SceneNode) as BaseNode & ChildrenMixin)
+        : figma.currentPage;
+
+    if (replacementSection && sharedParent && sharedParent.type === "FRAME" && sharedParentName && replacementSection.name === sharedParentName) {
+      postMakerProgress("sharedParent frame 내용을 교체합니다.");
+      replaceFrameContents(sharedParent, replacementSection);
+      createdFrame.remove();
+    } else if (replacementSection) {
+      postMakerProgress("replacement section을 selection 위치에 배치합니다.");
+      const parentAbsolute = getParentAbsolutePosition(replacementParent);
+      replacementParent.appendChild(replacementSection);
+      replacementSection.x = targetBounds.x - parentAbsolute.x;
+      replacementSection.y = targetBounds.y - parentAbsolute.y;
+
+      const removeTargets =
+        sharedParent &&
+        sharedParentName &&
+        replacementSection.name === sharedParentName
+          ? [sharedParent]
+          : targetNodes;
+
+      for (const node of removeTargets) {
+        if ("removed" in node && !node.removed) {
+          node.remove();
+        }
+      }
+      createdFrame.remove();
+    } else {
+      postMakerProgress("replacement section이 없어 생성 프레임을 원위치에 둡니다.");
+      createdFrame.x = targetBounds.x;
+      createdFrame.y = targetBounds.y;
+    }
+  }
+
+  figma.ui.postMessage({
+    type: "makerRendered",
+    message:
+      placement === "selection"
+        ? `Selection을 기준으로 ${result.createdFrameName}로 교체했습니다.`
+        : placement === "selection-preview"
+          ? `Selection 기준 제안안 ${result.createdFrameName}를 옆에 생성했습니다.`
+          : `${result.createdFrameName}를 생성했습니다.`
+  });
 };
 
 const looksLikeFullWidthPrompt = (value: string) =>
@@ -746,6 +861,7 @@ const rawUiHtml = `
         <button type="button" class="btn primary" id="makerSubmit"><span id="makerSpinner" class="spinner hidden"></span><span id="makerSubmitLabel">Create</span></button>
         <div class="status" id="makerStatus"></div>
         <div class="code" id="makerDetails">Maker intent와 적용 결과가 여기에 표시됩니다.</div>
+        <div class="code" id="makerLog">Maker log가 여기에 표시됩니다.</div>
         <div class="hint">Contract와 extracted component를 바탕으로 새 instance를 만들거나, 선택한 영역을 프롬프트로 다시 생성합니다.</div>
       </div>
 
@@ -811,6 +927,7 @@ const rawUiHtml = `
           makerSubmitLabel: $("makerSubmitLabel"),
           makerStatus: $("makerStatus"),
           makerDetails: $("makerDetails"),
+          makerLog: $("makerLog"),
           makerSelectionName: $("makerSelectionName"),
           makerSelectionIntent: $("makerSelectionIntent"),
           makerSelectionKinds: $("makerSelectionKinds"),
@@ -866,6 +983,21 @@ const rawUiHtml = `
           }
           el.makerDetails.textContent =
             typeof value === "string" ? value : JSON.stringify(value, null, 2);
+        };
+
+        const clearMakerLog = () => {
+          el.makerLog.textContent = "Maker log가 여기에 표시됩니다.";
+        };
+
+        const appendMakerLog = (value) => {
+          const timestamp = new Date().toLocaleTimeString("ko-KR", { hour12: false });
+          const line = "[" + timestamp + "] " + value;
+          if (el.makerLog.textContent === "Maker log가 여기에 표시됩니다.") {
+            el.makerLog.textContent = line;
+          } else {
+            el.makerLog.textContent += "\\n" + line;
+          }
+          el.makerLog.scrollTop = el.makerLog.scrollHeight;
         };
 
         const syncMakerAction = () => {
@@ -1192,6 +1324,8 @@ const rawUiHtml = `
             setMakerStatus("Prompt를 입력해 주세요.", "error");
             return;
           }
+          clearMakerLog();
+          appendMakerLog("Maker 요청 시작: placement=" + effectivePlacement);
 
           const fallbackDirectEditIntent = () => {
             if (!latestSelectionSummary) return null;
@@ -1252,8 +1386,10 @@ const rawUiHtml = `
           };
 
           if (effectivePlacement === "selection" && latestSelectionSummary) {
+            appendMakerLog("selection 기반 요청으로 해석했습니다.");
             const immediateIntent = fallbackDirectEditIntent();
             if (immediateIntent) {
+              appendMakerLog("즉시 적용 가능한 direct edit intent를 사용합니다.");
               setMakerDetails(immediateIntent);
               setMakerStatus(immediateIntent.message || "선택 영역에 직접 수정 요청을 전달했습니다.");
               setMakerLoading(true);
@@ -1273,9 +1409,11 @@ const rawUiHtml = `
             }
 
             setMakerStatus("선택 영역을 MCP로 분석 중입니다.");
+            appendMakerLog("MCP selection 분석을 요청합니다.");
             const analyzeCacheKey = getMakerAnalyzeCacheKey(prompt);
             const cachedAnalyze = analyzeCacheKey ? makerAnalyzeCache.get(analyzeCacheKey) : null;
             if (cachedAnalyze && cachedAnalyze.directEdit) {
+              appendMakerLog("캐시된 direct edit intent를 사용합니다.");
               setMakerDetails(cachedAnalyze.directEdit);
               setMakerStatus("캐시된 selection 분석을 사용합니다.");
               setMakerLoading(true);
@@ -1311,10 +1449,12 @@ const rawUiHtml = `
               });
               clearTimeout(timeout);
               const analyzed = await analyzeResponse.json();
+              appendMakerLog("MCP selection 분석 응답을 받았습니다.");
               if (!analyzeResponse.ok) {
                 throw new Error(analyzed && analyzed.error ? analyzed.error : "선택 분석에 실패했습니다.");
               }
               if (analyzed && analyzed.directEdit) {
+                appendMakerLog("MCP가 direct edit intent를 반환했습니다.");
                 if (analyzeCacheKey) {
                   makerAnalyzeCache.set(analyzeCacheKey, analyzed);
                 }
@@ -1337,6 +1477,7 @@ const rawUiHtml = `
               }
               const fallbackIntent = fallbackDirectEditIntent();
               if (fallbackIntent) {
+                appendMakerLog("MCP direct edit intent가 없어 fallback intent를 사용합니다.");
                 setMakerDetails(fallbackIntent);
                 setMakerStatus(fallbackIntent.message);
                 setMakerLoading(true);
@@ -1354,12 +1495,15 @@ const rawUiHtml = `
                 startMakerAckTimer();
                 return;
               }
+              appendMakerLog("selection-preview 생성으로 전환합니다.");
               setMakerStatus("직접 수정으로 해석되지 않아, selection 기준 새 제안안을 생성합니다.", "warning");
               setMakerDetails("selection 기준 새 프레임 제안안을 생성합니다.");
               effectivePlacement = "selection-preview";
             } catch (error) {
+              appendMakerLog("selection 분석 오류: " + (error && error.message ? error.message : String(error)));
               const fallbackIntent = fallbackDirectEditIntent();
               if (fallbackIntent) {
+                appendMakerLog("fallback direct edit intent를 사용합니다.");
                 setMakerDetails(fallbackIntent);
                 setMakerLoading(true);
                 await nextPaint();
@@ -1381,6 +1525,7 @@ const rawUiHtml = `
                 setMakerStatus(timeoutMessage, "warning");
                 return;
               }
+              appendMakerLog("selection-preview 생성으로 전환합니다.");
               setMakerStatus("선택 분석이 불안정해, selection 기준 새 제안안을 생성합니다.", "warning");
               setMakerDetails(error && error.message ? error.message : "selection 분석 오류");
               effectivePlacement = "selection-preview";
@@ -1389,48 +1534,39 @@ const rawUiHtml = `
 
           setMakerStatus("Maker payload를 생성 중입니다.");
           setMakerDetails("");
+          appendMakerLog("브리지로 maker-generate를 요청합니다. placement=" + effectivePlacement);
           setMakerLoading(true);
           await nextPaint();
 
           try {
-            const response = await fetch(BRIDGE_URL + "/maker-generate", {
-              method: "POST",
-              headers: { "content-type": "application/json" },
-              body: JSON.stringify({
-                prompt,
-                selectionSummary: latestSelectionSummary
-              })
-            });
-            const result = await response.json();
-            if (!response.ok) {
-              throw new Error(result && result.error ? result.error : "Maker 생성에 실패했습니다.");
-            }
-            if (!result || !isWritePayload(result.payload)) {
-              throw new Error("Maker payload 형식이 올바르지 않습니다.");
-            }
-
-            parent.postMessage(
-              {
-                pluginMessage: {
-                    type: "makerGenerate",
-                    payload: result.payload,
-                  placement: effectivePlacement
-                }
-              },
-              "*"
-            );
-
+            appendMakerLog("plugin main으로 requestMakerGenerate 메시지를 전달합니다.");
+            setTimeout(() => {
+              try {
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: "requestMakerGenerate",
+                      prompt,
+                      selectionSummary: latestSelectionSummary,
+                      placement: effectivePlacement
+                    }
+                  },
+                  "*"
+                );
+                appendMakerLog("requestMakerGenerate 메시지 전달을 큐에 넣었습니다.");
+              } catch (error) {
+                const message = error && error.message ? error.message : String(error);
+                appendMakerLog("requestMakerGenerate 전송 오류: " + message);
+                setMakerStatus(message || "Maker 생성 메시지 전달에 실패했습니다.", "error");
+                setMakerLoading(false);
+              }
+            }, 0);
             startMakerAckTimer();
-
-            const inferred = result?.maker?.inferredScreen ? " (" + result.maker.inferredScreen + ")" : "";
-            setMakerDetails({
-              inferredScreen: result?.maker?.inferredScreen ?? null,
-              summary: result?.summary ?? null,
-              evaluation: result?.evaluation ?? null
-            });
-            setMakerStatus("Maker 생성 요청을 전달했습니다" + inferred + ".");
+            setMakerStatus("Maker 생성 요청을 전달했습니다.");
           } catch (error) {
-            setMakerStatus(error && error.message ? error.message : "Maker 생성 중 오류가 발생했습니다.", "error");
+            const message = error && error.message ? error.message : String(error);
+            appendMakerLog("Maker generate 오류: " + message);
+            setMakerStatus(message || "Maker 생성 중 오류가 발생했습니다.", "error");
             setMakerLoading(false);
           } finally {
           }
@@ -1472,14 +1608,21 @@ const rawUiHtml = `
             setLoading(false);
             stopMakerAckTimer();
             setMakerLoading(false);
+            appendMakerLog("pluginError: " + (msg.message || "오류"));
           }
           if (msg.type === "makerProgress") {
             setMakerStatus(msg.message || "Maker 작업을 진행 중입니다.");
+            appendMakerLog("makerProgress: " + (msg.message || "진행 중"));
+          }
+          if (msg.type === "makerSummary") {
+            setMakerDetails(msg.summary || "");
+            appendMakerLog("makerSummary 수신");
           }
           if (msg.type === "makerRendered") {
             stopMakerAckTimer();
             setMakerStatus(msg.message || "Maker rendering complete.");
             setMakerLoading(false);
+            appendMakerLog("makerRendered: " + (msg.message || "완료"));
           }
         };
 
@@ -1573,100 +1716,48 @@ figma.ui.onmessage = async (message: PluginUiMessage) => {
       return;
     }
 
-    if (message.type === "makerGenerate") {
-      figma.ui.postMessage({
-        type: "makerProgress",
-        message: "Figma에서 새 instance를 렌더링하는 중입니다."
-      });
-      if (!isFigmaWritePayload(message.payload)) {
+    if (message.type === "requestMakerGenerate") {
+      postMakerProgress("브리지에서 Maker payload를 생성하는 중입니다.");
+      const response = await Promise.race([
+        fetch(BRIDGE_URL + "/maker-generate", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            prompt: message.prompt,
+            selectionSummary: message.selectionSummary
+          })
+        }),
+        new Promise<Response>((_, reject) => {
+          setTimeout(() => reject(new Error("maker-generate 응답이 10초 안에 오지 않았습니다.")), 10000);
+        })
+      ]);
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result && result.error ? result.error : "Maker 생성에 실패했습니다.");
+      }
+      if (!result || !isFigmaWritePayload(result.payload)) {
         throw new Error("Maker payload 형식이 올바르지 않습니다.");
       }
 
-      const targetNodes = [...figma.currentPage.selection];
-      const targetBounds = getSelectionBounds(targetNodes);
-      const firstParent = targetNodes.length > 0 ? safeGetParent(targetNodes[0]) : null;
-      const sharedParent =
-        firstParent && targetNodes.every((node) => safeGetParent(node) === firstParent)
-          ? firstParent
-          : null;
-      const sharedParentName = sharedParent ? safeGetName(sharedParent) : null;
-      const result = await renderPayload(message.payload);
       figma.ui.postMessage({
-        type: "makerProgress",
-        message: "렌더 결과를 배치하는 중입니다."
-      });
-      const createdFrame = [...figma.currentPage.children].reverse().find(
-        (node) => node.type === "FRAME" && node.name === result.createdFrameName
-      );
-
-      if (message.placement === "selection-preview" && createdFrame && targetBounds) {
-        createdFrame.x = targetBounds.x + targetBounds.width + 40;
-        createdFrame.y = targetBounds.y;
-        figma.currentPage.selection = [createdFrame];
-      } else if (message.placement === "selection" && createdFrame && targetBounds) {
-        const sectionFrames = createdFrame.children.filter(
-          (node): node is FrameNode => node.type === "FRAME" && node.name.endsWith("-section")
-        );
-        const preferredSectionName =
-          sharedParentName
-            ? sharedParentName
-            : targetNodes.length === 1
-              ? safeGetName(targetNodes[0]) ?? targetNodes[0].id
-              : null;
-
-        const replacementSection =
-          sectionFrames.find((node) => preferredSectionName && node.name === preferredSectionName) ??
-          sectionFrames.find((node) => node.name !== "preview-section") ??
-          null;
-
-        const replacementParent =
-          sharedParent &&
-          safeGetParent(sharedParent as SceneNode) &&
-          "appendChild" in (safeGetParent(sharedParent as SceneNode) as BaseNode & ChildrenMixin)
-            ? (safeGetParent(sharedParent as SceneNode) as BaseNode & ChildrenMixin)
-            : figma.currentPage;
-
-        if (replacementSection && sharedParent && sharedParent.type === "FRAME" && sharedParentName && replacementSection.name === sharedParentName) {
-          replaceFrameContents(sharedParent, replacementSection);
-          createdFrame.remove();
-        } else if (replacementSection) {
-          const parentAbsolute = getParentAbsolutePosition(replacementParent);
-          replacementParent.appendChild(replacementSection);
-          replacementSection.x = targetBounds.x - parentAbsolute.x;
-          replacementSection.y = targetBounds.y - parentAbsolute.y;
-
-          const removeTargets =
-            sharedParent &&
-            sharedParentName &&
-            replacementSection.name === sharedParentName
-              ? [sharedParent]
-              : targetNodes;
-
-          for (const node of removeTargets) {
-            if ("removed" in node && !node.removed) {
-              node.remove();
-            }
-          }
-          createdFrame.remove();
-        } else {
-          createdFrame.x = targetBounds.x;
-          createdFrame.y = targetBounds.y;
+        type: "makerSummary",
+        summary: {
+          inferredScreen: result?.maker?.inferredScreen ?? null,
+          summary: result?.summary ?? null,
+          evaluation: result?.evaluation ?? null
         }
-      }
-
-      figma.ui.postMessage({
-        type: "makerRendered",
-        message:
-          message.placement === "selection"
-            ? `Selection을 기준으로 ${result.createdFrameName}로 교체했습니다.`
-            : message.placement === "selection-preview"
-              ? `Selection 기준 제안안 ${result.createdFrameName}를 옆에 생성했습니다.`
-            : `${result.createdFrameName}를 생성했습니다.`
       });
+      await renderMakerPayloadToCanvas(result.payload, message.placement);
+      return;
+    }
+
+    if (message.type === "makerGenerate") {
+      await renderMakerPayloadToCanvas(message.payload, message.placement);
       return;
     }
 
     if (message.type === "makerDirectEdit") {
+      postMakerProgress("direct edit intent를 적용합니다.");
       const responseMessage = applyDirectEditIntent([...figma.currentPage.selection], message.intent);
       sendSelectionInfo();
       void sendSelectionSvg();
