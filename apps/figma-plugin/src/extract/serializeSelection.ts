@@ -82,6 +82,12 @@ export type SelectionSummary = {
   fileKey: string;
   nodeIds: string[];
   nodeUrl: string | null;
+  selectionIntent: {
+    kind: "single-component" | "component-group" | "section" | "screen-fragment" | "unknown";
+    componentKinds: string[];
+    parentName: string | null;
+    notes: string[];
+  };
   nodes: Array<{
     id: string;
     name: string;
@@ -259,6 +265,77 @@ const serializeNode = (node: SceneNode): ExtractedNode => {
   return serialized;
 };
 
+const safeParentName = (node: SceneNode) => {
+  try {
+    const parent = node.parent;
+    return parent && "name" in parent ? parent.name : null;
+  } catch {
+    return null;
+  }
+};
+
+const detectComponentKind = (node: {
+  name: string;
+  type: string;
+  mainComponentName?: string | null;
+}) => {
+  const source = `${node.name} ${node.mainComponentName ?? ""} ${node.type}`.toLowerCase();
+  if (/(textinput|textfield|input|text field)/i.test(source)) return "input";
+  if (/(button|cta|action area|action)/i.test(source)) return "button";
+  if (/(checkbox)/i.test(source)) return "checkbox";
+  if (/(radio)/i.test(source)) return "radio";
+  if (/(switch|toggle)/i.test(source)) return "switch";
+  if (/(text|label|heading|title)/i.test(source)) return "text";
+  return "node";
+};
+
+const buildSelectionIntent = (
+  selection: readonly SceneNode[],
+  nodes: SelectionSummary["nodes"]
+): SelectionSummary["selectionIntent"] => {
+  if (selection.length === 0) {
+    return {
+      kind: "unknown",
+      componentKinds: [],
+      parentName: null,
+      notes: []
+    };
+  }
+
+  const parentNames = selection.map(safeParentName).filter((value): value is string => Boolean(value));
+  const sharedParentName =
+    parentNames.length === selection.length && new Set(parentNames).size === 1 ? parentNames[0] : null;
+  const componentKinds = Array.from(
+    new Set(nodes.map((node) => detectComponentKind(node)).filter((value) => value !== "node"))
+  );
+
+  const notes: string[] = [];
+  let kind: SelectionSummary["selectionIntent"]["kind"] = "unknown";
+  const primary = selection[0];
+
+  if (primary.type === "INSTANCE" || primary.type === "COMPONENT" || primary.type === "COMPONENT_SET") {
+    kind = selection.length === 1 ? "single-component" : "component-group";
+  } else if (sharedParentName && /(section|form|header|footer|content|action)/i.test(sharedParentName)) {
+    kind = "section";
+    notes.push(`${sharedParentName} 맥락으로 해석합니다.`);
+  } else if (selection.length > 1) {
+    kind = "component-group";
+    notes.push("여러 노드가 함께 선택되어 있습니다.");
+  } else if (/(frame|group)/i.test(primary.type.toLowerCase())) {
+    kind = "screen-fragment";
+  }
+
+  if (componentKinds.includes("input")) notes.push("input 계열 selection입니다.");
+  if (componentKinds.includes("button")) notes.push("button 계열 selection입니다.");
+
+  return {
+    kind,
+    componentKinds,
+    parentName: sharedParentName,
+    notes
+  };
+};
+
 export const summarizeSelection = (selection: readonly SceneNode[]): SelectionSummary => {
   const fileKey = figma.fileKey ?? "";
   if (selection.length === 0) {
@@ -271,6 +348,12 @@ export const summarizeSelection = (selection: readonly SceneNode[]): SelectionSu
       fileKey,
       nodeIds: [],
       nodeUrl: null,
+      selectionIntent: {
+        kind: "unknown",
+        componentKinds: [],
+        parentName: null,
+        notes: []
+      },
       nodes: []
     };
   }
@@ -280,6 +363,13 @@ export const summarizeSelection = (selection: readonly SceneNode[]): SelectionSu
     "width" in primary && "height" in primary
       ? `${Math.round(primary.width)} × ${Math.round(primary.height)}`
       : "-";
+  const nodes = selection.map((node) => ({
+    id: node.id,
+    name: node.name,
+    type: node.type,
+    url: fileKey ? buildNodeUrl(fileKey, node.id) : "",
+    ...getNodeComponentMeta(node)
+  }));
 
   return {
     selectionCount: selection.length,
@@ -290,13 +380,8 @@ export const summarizeSelection = (selection: readonly SceneNode[]): SelectionSu
     fileKey,
     nodeIds: selection.map((node) => node.id),
     nodeUrl: fileKey ? buildNodeUrl(fileKey, primary.id) : null,
-    nodes: selection.map((node) => ({
-      id: node.id,
-      name: node.name,
-      type: node.type,
-      url: fileKey ? buildNodeUrl(fileKey, node.id) : "",
-      ...getNodeComponentMeta(node)
-    }))
+    selectionIntent: buildSelectionIntent(selection, nodes),
+    nodes
   };
 };
 

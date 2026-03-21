@@ -28,6 +28,17 @@ export interface ExtractViaMcpInput {
   selectionSvg?: string;
 }
 
+export interface MakerSelectionMcpAnalysis {
+  component: ExtractionNodeSummary["component"];
+  figmaProperties?: ExtractionNodeSummary["figmaProperties"];
+  figmaVariants?: ExtractionNodeSummary["figmaVariants"];
+  properties: ExtractionNodeSummary["properties"];
+  nestedInstances: ExtractionNodeSummary["nestedInstances"];
+  resolvedStructure: ExtractionNodeSummary["resolvedStructure"];
+  semantics: ExtractionNodeSummary["semantics"];
+  metrics: ExtractionNodeSummary["metrics"];
+}
+
 type ExtractedNodeArtifacts = {
   node: ExtractionReference["nodes"][number];
   metadata: unknown;
@@ -712,6 +723,15 @@ const extractNode = async (
   }
 
   return await runCodexExtraction(fileKey, node);
+};
+
+export const analyzeSelectionNodeViaMcp = async (
+  fileKey: string,
+  node: ExtractionReference["nodes"][number]
+): Promise<MakerSelectionMcpAnalysis> => {
+  const extracted = await extractNode(fileKey, node);
+  const { summary } = summarizeNodeArtifacts(node, extracted);
+  return summary;
 };
 
 const updateSummary = (

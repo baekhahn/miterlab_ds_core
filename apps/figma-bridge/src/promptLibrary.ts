@@ -93,10 +93,38 @@ const loginPrompt: DesignPrompt = {
   sections: ["header", "form", "action", "footer"],
   primaryAction: "Sign in",
   components: [
-    { type: "text", intent: "title", label: "Welcome back" },
-    { type: "input", intent: "email-input", label: "Email", size: "md" },
-    { type: "input", intent: "password-input", label: "Password", size: "md" },
-    { type: "button", intent: "primary-action", label: "Sign in", variant: "primary", size: "md" }
+    { type: "text", intent: "title", label: "Sign in" },
+    { type: "text", intent: "subtitle", label: "Enter your account details." },
+    {
+      type: "input",
+      intent: "text-input",
+      name: "Email Input",
+      label: "Email",
+      placeholder: "Enter your email",
+      size: "md",
+      width: "full",
+      fullWidth: true
+    },
+    {
+      type: "input",
+      intent: "text-input",
+      name: "Password Input",
+      label: "Password",
+      placeholder: "Enter your password",
+      size: "md",
+      width: "full",
+      fullWidth: true
+    },
+    {
+      type: "button",
+      intent: "primary-action",
+      label: "Sign in",
+      variant: "primary",
+      size: "md",
+      width: "full",
+      fullWidth: true,
+      block: true
+    }
   ]
 };
 
@@ -108,8 +136,25 @@ const settingsPrompt: DesignPrompt = {
   primaryAction: "Save changes",
   components: [
     { type: "text", intent: "title", label: "Settings" },
-    { type: "input", intent: "text-input", label: "Workspace name", size: "md" },
-    { type: "button", intent: "primary-action", label: "Save changes", variant: "primary", size: "md" }
+    {
+      type: "input",
+      intent: "text-input",
+      label: "Workspace name",
+      placeholder: "Enter a workspace name",
+      size: "md",
+      width: "full",
+      fullWidth: true
+    },
+    {
+      type: "button",
+      intent: "primary-action",
+      label: "Save changes",
+      variant: "primary",
+      size: "md",
+      width: "full",
+      fullWidth: true,
+      block: true
+    }
   ]
 };
 
@@ -137,6 +182,119 @@ const filterListPrompt: DesignPrompt = {
     { type: "filter-button", intent: "filter-action", label: "Active", selected: true, size: "md" },
     { type: "button", intent: "primary-action", label: "New item", variant: "primary", size: "md" }
   ]
+};
+
+const hasKorean = (value: string) => /[가-힣]/.test(value);
+
+const buildLoginPromptFromText = (rawPrompt: string, theme: string): DesignPrompt => {
+  const korean = hasKorean(rawPrompt);
+  const wantsPassword = /(password|비밀번호|패스워드|pw)/i.test(rawPrompt) || /(login|sign in|로그인)/i.test(rawPrompt);
+  const wantsTitle = !/(제목 없이|타이틀 없이|title 없이)/i.test(rawPrompt);
+  const wantsSignupLink = /(sign up|signup|register|join|회원가입|가입 링크|가입링크|회원 가입)/i.test(rawPrompt);
+  const title = korean ? "로그인" : "Sign in";
+  const subtitle = korean ? "계정 정보를 입력해 주세요." : "Enter your account details.";
+  const idLabel = korean ? "아이디" : "Email";
+  const idPlaceholder = korean ? "아이디를 입력해 주세요." : "Enter your email";
+  const passwordLabel = korean ? "비밀번호" : "Password";
+  const passwordPlaceholder = korean ? "비밀번호를 입력해 주세요." : "Enter your password";
+  const submitLabel = korean ? "로그인" : "Sign in";
+  const signupLabel = korean ? "회원가입" : "Sign up";
+
+  return {
+    screen: "login",
+    theme,
+    density: "comfortable",
+    sections: ["header", "form", "action", "footer"],
+    primaryAction: submitLabel,
+    components: [
+      ...(wantsTitle
+        ? [
+            { type: "text", intent: "title", label: title },
+            { type: "text", intent: "subtitle", label: subtitle }
+          ]
+        : []),
+      {
+        type: "input",
+        intent: "text-input",
+        name: korean ? "Input / 아이디" : "Email Input",
+        label: idLabel,
+        placeholder: idPlaceholder,
+        size: "md",
+        width: "full",
+        fullWidth: true
+      },
+      ...(wantsPassword
+        ? [
+            {
+              type: "input",
+              intent: "text-input",
+              name: korean ? "Input / 비밀번호" : "Password Input",
+              label: passwordLabel,
+              placeholder: passwordPlaceholder,
+              size: "md",
+              width: "full",
+              fullWidth: true
+            }
+          ]
+        : []),
+      {
+        type: "button",
+        intent: "primary-action",
+        label: submitLabel,
+        variant: "primary",
+        size: "md",
+        width: "full",
+        fullWidth: true,
+        block: true
+      },
+      ...(wantsSignupLink
+        ? [
+            {
+              type: "button",
+              section: "footer",
+              intent: "secondary-action",
+              name: korean ? "Button / 회원가입" : "Button / Sign up",
+              label: signupLabel,
+              variant: "ghost",
+              size: "sm"
+            }
+          ]
+        : [])
+    ]
+  };
+};
+
+const buildSettingsPromptFromText = (rawPrompt: string, theme: string): DesignPrompt => {
+  const korean = hasKorean(rawPrompt);
+  return {
+    screen: "settings",
+    theme,
+    density: "comfortable",
+    sections: ["header", "form", "action"],
+    primaryAction: korean ? "저장" : "Save",
+    components: [
+      { type: "text", intent: "title", label: korean ? "설정" : "Settings" },
+      {
+        type: "input",
+        intent: "text-input",
+        label: korean ? "워크스페이스 이름" : "Workspace name",
+        placeholder: korean ? "이름을 입력해 주세요." : "Enter a workspace name",
+        size: "md",
+        width: "full",
+        fullWidth: true
+      },
+      {
+        type: "button",
+        intent: "primary-action",
+        label: korean ? "저장" : "Save",
+        variant: "primary",
+        size: "md",
+        width: "full",
+        fullWidth: true,
+        block: true
+      }
+    ]
+  };
 };
 
 const templates: Record<string, DesignPrompt> = {
@@ -181,4 +339,25 @@ export const createPromptFromScreen = (screen: string, theme: string): DesignPro
     screen: found ? base.screen : (screen as DesignPrompt["screen"]),
     theme
   };
+};
+
+export const createPromptFromMakerPrompt = (rawPrompt: string, theme: string): DesignPrompt => {
+  const normalized = rawPrompt.toLowerCase();
+
+  if (/(login|log in|sign in|로그인|로그 인|signin)/i.test(normalized)) {
+    return buildLoginPromptFromText(rawPrompt, theme);
+  }
+
+  if (/(settings|setting|설정|preferences)/i.test(normalized)) {
+    return buildSettingsPromptFromText(rawPrompt, theme);
+  }
+
+  const screen =
+    /(dashboard|대시보드)/i.test(normalized)
+      ? "dashboard"
+      : /(list|목록|리스트|filter|검색결과)/i.test(normalized)
+        ? "list"
+        : "login";
+
+  return createPromptFromScreen(screen, theme);
 };

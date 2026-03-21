@@ -4,6 +4,7 @@ import { contractPreviewOptions, renderContractPreview } from "./write/renderCon
 import buttonInspectionPayload from "../../../artifacts/figma/button-inspection/mcp-payload.json";
 import inputInspectionPayload from "../../../artifacts/figma/input-inspection/mcp-payload.json";
 import type { FigmaWritePayload } from "../../../shared/contracts/figmaWritePayload";
+import { isFigmaWritePayload } from "../../../shared/contracts/figmaWritePayload";
 import {
   hasRuntimeFileKey,
   summarizeSelection
@@ -166,7 +167,398 @@ const sendSelectionSvg = async () => {
   }
 };
 
-const flushUi = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+        const flushUi = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+        const nextPaint = () => new Promise((resolve) => requestAnimationFrame(() => resolve()));
+
+const getSelectionBounds = (nodes: readonly SceneNode[]) => {
+  if (nodes.length === 0) return null;
+
+  const bounds = nodes
+    .filter((node): node is SceneNode & { x: number; y: number; width: number; height: number } =>
+      "x" in node && "y" in node && "width" in node && "height" in node
+    )
+    .map((node) => ({
+      x: node.x,
+      y: node.y,
+      right: node.x + node.width,
+      bottom: node.y + node.height
+    }));
+
+  if (bounds.length === 0) return null;
+
+  const minX = Math.min(...bounds.map((item) => item.x));
+  const minY = Math.min(...bounds.map((item) => item.y));
+  const maxX = Math.max(...bounds.map((item) => item.right));
+  const maxY = Math.max(...bounds.map((item) => item.bottom));
+
+  return {
+    x: minX,
+    y: minY,
+    width: maxX - minX,
+    height: maxY - minY
+  };
+};
+
+const safeGetParent = (node: SceneNode) => {
+  try {
+    return node.parent;
+  } catch {
+    return null;
+  }
+};
+
+const safeGetName = (node: BaseNode) => {
+  try {
+    return "name" in node ? node.name : null;
+  } catch {
+    return null;
+  }
+};
+
+const getAncestorFrames = (node: SceneNode) => {
+  const frames: Array<FrameNode | ComponentNode | InstanceNode> = [];
+  let current: BaseNode | null = safeGetParent(node);
+
+  while (current && current.type !== "PAGE") {
+    if (
+      current.type === "FRAME" ||
+      current.type === "COMPONENT" ||
+      current.type === "INSTANCE"
+    ) {
+      frames.push(current);
+    }
+    current = "parent" in current ? current.parent : null;
+  }
+
+  return frames;
+};
+
+const findNearestAutoLayoutAncestor = (node: SceneNode) =>
+  getAncestorFrames(node).find((ancestor) => ancestor.layoutMode !== "NONE") ?? null;
+
+const findNearestSizedFrameAncestor = (node: SceneNode) =>
+  getAncestorFrames(node).find((ancestor) => ancestor.width > ("width" in node ? node.width : 0)) ?? null;
+
+const getParentAbsolutePosition = (node: BaseNode & ChildrenMixin) => {
+  if (node.type === "PAGE") {
+    return { x: 0, y: 0 };
+  }
+
+  if ("absoluteTransform" in node) {
+    return {
+      x: node.absoluteTransform[0][2],
+      y: node.absoluteTransform[1][2]
+    };
+  }
+
+  return { x: 0, y: 0 };
+};
+
+const replaceFrameContents = (target: FrameNode, source: FrameNode) => {
+  target.resize(source.width, source.height);
+  target.layoutMode = source.layoutMode;
+  target.primaryAxisSizingMode = source.primaryAxisSizingMode;
+  target.counterAxisSizingMode = source.counterAxisSizingMode;
+  target.primaryAxisAlignItems = source.primaryAxisAlignItems;
+  target.counterAxisAlignItems = source.counterAxisAlignItems;
+  target.itemSpacing = source.itemSpacing;
+  target.paddingTop = source.paddingTop;
+  target.paddingRight = source.paddingRight;
+  target.paddingBottom = source.paddingBottom;
+  target.paddingLeft = source.paddingLeft;
+  target.cornerRadius = source.cornerRadius;
+  target.fills = source.fills;
+  target.strokes = source.strokes;
+  target.strokeWeight = source.strokeWeight;
+  target.effects = source.effects;
+  target.clipsContent = source.clipsContent;
+
+  for (const child of [...target.children]) {
+    child.remove();
+  }
+
+  for (const child of [...source.children]) {
+    target.appendChild(child);
+  }
+};
+
+const looksLikeFullWidthPrompt = (value: string) =>
+  /(full|full width|가득|꽉|채워|좌우 full|전체 너비|좌우 폭|폭 늘려)/i.test(value);
+
+const looksLikeCenterAlignPrompt = (value: string) =>
+  /(가운데 정렬|중앙 정렬|센터 정렬|center align|centered|가운데로|중앙으로)/i.test(value);
+
+const resolveDirectEditTargets = (selection: readonly SceneNode[]) => {
+  if (selection.length !== 1) {
+    return [...selection];
+  }
+
+  const primary = selection[0];
+  if ("children" in primary && primary.children.length > 0) {
+    const candidates = primary.children.filter(
+      (node) =>
+        "width" in node &&
+        "height" in node &&
+        (node.type === "INSTANCE" || node.type === "FRAME" || node.type === "COMPONENT")
+    );
+    if (candidates.length > 0) {
+      return candidates;
+    }
+  }
+
+  return [...selection];
+};
+
+const canShrinkToHugWidth = (
+  node: SceneNode
+): node is FrameNode | InstanceNode | ComponentNode =>
+  "layoutMode" in node &&
+  node.layoutMode === "HORIZONTAL" &&
+  "children" in node &&
+  "paddingLeft" in node &&
+  "paddingRight" in node &&
+  "itemSpacing" in node &&
+  "resize" in node;
+
+const shrinkToHugWidth = (node: FrameNode | InstanceNode | ComponentNode) => {
+  const visibleChildren = node.children.filter(
+    (child): child is SceneNode & DimensionAndPositionMixin => "width" in child && child.visible !== false
+  );
+  if (visibleChildren.length === 0) return false;
+
+  const contentWidth =
+    visibleChildren.reduce((sum, child) => sum + child.width, 0) +
+    Math.max(0, visibleChildren.length - 1) * node.itemSpacing;
+  const nextWidth = Math.ceil(node.paddingLeft + contentWidth + node.paddingRight);
+  if (!Number.isFinite(nextWidth) || nextWidth <= 0) return false;
+  if (Math.abs(node.width - nextWidth) < 1) return false;
+  node.resize(nextWidth, node.height);
+  return true;
+};
+
+const applyDirectEditIntent = (
+  selection: readonly SceneNode[],
+  intent: NonNullable<PluginUiMessage extends never ? never : Extract<PluginUiMessage, { type: "makerDirectEdit" }>["intent"]>
+) => {
+  if (!intent) {
+    throw new Error("직접 수정 intent가 없습니다.");
+  }
+
+  if (selection.length === 0) {
+    throw new Error("먼저 수정할 selection을 선택해 주세요.");
+  }
+
+  const targetScope = intent.targetScope ?? "selection";
+  const targets = targetScope === "container-children" ? resolveDirectEditTargets(selection) : [...selection];
+  const commands = intent.commands ?? [];
+  let applied = 0;
+
+  if (
+    targetScope === "container" &&
+    selection.length === 1 &&
+    "children" in selection[0] &&
+    "layoutMode" in selection[0] &&
+    selection[0].layoutMode !== "NONE"
+  ) {
+    const container = selection[0];
+    for (const command of commands) {
+      if (command.type === "set-container-cross-align") {
+        container.counterAxisAlignItems = command.value;
+        applied += 1;
+      }
+    }
+
+    for (const child of container.children) {
+      for (const command of commands) {
+        if (command.type === "set-node-layout-align" && "layoutAlign" in child) {
+          child.layoutAlign = command.value;
+          applied += 1;
+        }
+        if (command.type === "set-node-layout-grow" && "layoutGrow" in child) {
+          child.layoutGrow = command.value;
+          applied += 1;
+        }
+        if (command.type === "set-node-layout-sizing-horizontal" && "layoutSizingHorizontal" in child) {
+          child.layoutSizingHorizontal = command.value;
+          applied += 1;
+        }
+        if (command.type === "shrink-node-to-hug-content" && canShrinkToHugWidth(child)) {
+          if (shrinkToHugWidth(child)) applied += 1;
+        }
+      }
+    }
+  } else {
+    for (const node of targets) {
+      const autoAncestor = findNearestAutoLayoutAncestor(node);
+      const frameAncestor = findNearestSizedFrameAncestor(node);
+
+      for (const command of commands) {
+        if (command.type === "set-container-cross-align" && autoAncestor) {
+          autoAncestor.counterAxisAlignItems = command.value;
+          applied += 1;
+        }
+
+        if (command.type === "set-node-layout-align" && "layoutAlign" in node) {
+          node.layoutAlign = command.value;
+          applied += 1;
+        }
+
+        if (command.type === "set-node-layout-grow" && "layoutGrow" in node) {
+          node.layoutGrow = command.value;
+          applied += 1;
+        }
+
+        if (command.type === "set-node-layout-sizing-horizontal" && "layoutSizingHorizontal" in node) {
+          node.layoutSizingHorizontal = command.value;
+          applied += 1;
+        }
+
+        if (
+          command.type === "resize-node-width-to-parent-inner" &&
+          frameAncestor &&
+          "resize" in node &&
+          "height" in node &&
+          "x" in node
+        ) {
+          const availableWidth = Math.max(0, frameAncestor.width - frameAncestor.paddingLeft - frameAncestor.paddingRight);
+          node.resize(availableWidth, node.height);
+          node.x = frameAncestor.paddingLeft;
+          applied += 1;
+        }
+
+        if (command.type === "center-node-in-parent" && frameAncestor && "x" in node && "width" in node) {
+          node.x = Math.round((frameAncestor.width - node.width) / 2);
+          applied += 1;
+        }
+
+        if (command.type === "shrink-node-to-hug-content" && canShrinkToHugWidth(node)) {
+          if (shrinkToHugWidth(node)) applied += 1;
+        }
+      }
+    }
+  }
+
+  if (applied === 0) {
+    throw new Error("현재 selection에서는 직접 수정 기준을 찾지 못했습니다.");
+  }
+
+  return intent.message ?? "선택 영역에 직접 수정을 적용했습니다.";
+};
+
+const applyFullWidthToSelection = (
+  selection: readonly SceneNode[],
+  targetScope: "selection" | "container" | "container-children" = "selection"
+) => {
+  if (selection.length === 0) {
+    throw new Error("먼저 수정할 selection을 선택해 주세요.");
+  }
+
+  const targets = targetScope === "container-children" ? resolveDirectEditTargets(selection) : [...selection];
+  let applied = 0;
+
+  for (const node of targets) {
+    const autoAncestor = findNearestAutoLayoutAncestor(node);
+    if (autoAncestor) {
+      if ("layoutAlign" in node) {
+        node.layoutAlign = "STRETCH";
+      }
+      if ("layoutSizingHorizontal" in node) {
+        node.layoutSizingHorizontal = "FILL";
+      }
+      if ("layoutGrow" in node) {
+        node.layoutGrow = autoAncestor.layoutMode === "HORIZONTAL" ? 1 : 0;
+      }
+      applied += 1;
+      continue;
+    }
+
+    const frameAncestor = findNearestSizedFrameAncestor(node);
+    if (
+      frameAncestor &&
+      "resize" in node &&
+      "height" in node &&
+      "x" in node
+    ) {
+      const availableWidth = Math.max(0, frameAncestor.width - frameAncestor.paddingLeft - frameAncestor.paddingRight);
+      node.resize(availableWidth, node.height);
+      node.x = frameAncestor.paddingLeft;
+      applied += 1;
+    }
+  }
+
+  if (applied > 0) {
+    return `${applied}개 selection을 full width로 맞췄습니다.`;
+  }
+
+  throw new Error("현재 selection에서는 full width 수정 기준을 찾지 못했습니다.");
+};
+
+const applyCenterAlignToSelection = (
+  selection: readonly SceneNode[],
+  targetScope: "selection" | "container" | "container-children" = "selection"
+) => {
+  if (selection.length === 0) {
+    throw new Error("먼저 수정할 selection을 선택해 주세요.");
+  }
+
+  if (
+    selection.length === 1 &&
+    "children" in selection[0] &&
+    "layoutMode" in selection[0] &&
+    selection[0].layoutMode !== "NONE" &&
+    targetScope !== "selection"
+  ) {
+    const container = selection[0];
+    container.counterAxisAlignItems = "CENTER";
+
+    for (const child of container.children) {
+      if ("layoutAlign" in child) {
+        child.layoutAlign = "INHERIT";
+      }
+      if ("layoutGrow" in child) {
+        child.layoutGrow = 0;
+      }
+      if (canShrinkToHugWidth(child)) {
+        shrinkToHugWidth(child);
+      }
+    }
+
+    return `${container.name} 안의 요소를 가운데 정렬했습니다.`;
+  }
+
+  const targets = targetScope === "container-children" ? resolveDirectEditTargets(selection) : [...selection];
+  let applied = 0;
+
+  for (const node of targets) {
+    const autoAncestor = findNearestAutoLayoutAncestor(node);
+    if (autoAncestor) {
+      autoAncestor.counterAxisAlignItems = "CENTER";
+      if ("layoutAlign" in node) {
+        node.layoutAlign = "INHERIT";
+      }
+      if ("layoutGrow" in node) {
+        node.layoutGrow = 0;
+      }
+      if (canShrinkToHugWidth(node)) {
+        shrinkToHugWidth(node);
+      }
+      applied += 1;
+      continue;
+    }
+
+    const frameAncestor = findNearestSizedFrameAncestor(node);
+    if (frameAncestor && "x" in node && "width" in node) {
+      node.x = Math.round((frameAncestor.width - node.width) / 2);
+      applied += 1;
+    }
+  }
+
+  if (applied > 0) {
+    return `${applied}개 selection을 가운데 정렬했습니다.`;
+  }
+
+  throw new Error("현재 selection에서는 가운데 정렬 기준을 찾지 못했습니다.");
+};
 
 const rawUiHtml = `
 <!doctype html>
@@ -204,7 +596,7 @@ const rawUiHtml = `
       }
       .tabs {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 4px;
         padding: 4px;
         border: 1px solid var(--line);
@@ -308,6 +700,14 @@ const rawUiHtml = `
         min-width: 0;
       }
       .hint { color: var(--muted); font-size: 11px; }
+      .maker-actions {
+        display: grid;
+        gap: 8px;
+      }
+      textarea.control {
+        min-height: 120px;
+        resize: vertical;
+      }
       .spinner {
         display: inline-block;
         width: 12px;
@@ -329,11 +729,27 @@ const rawUiHtml = `
   <body>
     <div class="app">
       <div class="tabs">
-        <button type="button" class="tab active" id="tabInspection">Inspection</button>
+        <button type="button" class="tab active" id="tabMaker">Maker</button>
+        <button type="button" class="tab" id="tabInspection">Inspection</button>
         <button type="button" class="tab" id="tabExtraction">Extraction</button>
       </div>
 
-      <div class="panel active" id="panelInspection">
+      <div class="panel active" id="panelMaker">
+        <div class="label">Prompt</div>
+        <textarea class="control" id="makerPrompt" placeholder="예: 인풋과 버튼을 이용한 로그인 화면을 만들어 주세요."></textarea>
+        <div class="meta">
+          <div class="meta-item"><div class="meta-key">Selected</div><div class="meta-value" id="makerSelectionName">선택 없음</div></div>
+          <div class="meta-item"><div class="meta-key">Intent</div><div class="meta-value" id="makerSelectionIntent">-</div></div>
+          <div class="meta-item"><div class="meta-key">Kinds</div><div class="meta-value" id="makerSelectionKinds">-</div></div>
+          <div class="meta-item"><div class="meta-key">Parent</div><div class="meta-value" id="makerSelectionParent">-</div></div>
+        </div>
+        <button type="button" class="btn primary" id="makerSubmit"><span id="makerSpinner" class="spinner hidden"></span><span id="makerSubmitLabel">Create</span></button>
+        <div class="status" id="makerStatus"></div>
+        <div class="code" id="makerDetails">Maker intent와 적용 결과가 여기에 표시됩니다.</div>
+        <div class="hint">Contract와 extracted component를 바탕으로 새 instance를 만들거나, 선택한 영역을 프롬프트로 다시 생성합니다.</div>
+      </div>
+
+      <div class="panel" id="panelInspection">
         <div class="label">Level</div>
         <select class="control" id="previewLevel">
           <option value="component">Component</option>
@@ -383,10 +799,22 @@ const rawUiHtml = `
 
         const $ = (id) => document.getElementById(id);
         const el = {
+          tabMaker: $("tabMaker"),
           tabInspection: $("tabInspection"),
           tabExtraction: $("tabExtraction"),
+          panelMaker: $("panelMaker"),
           panelInspection: $("panelInspection"),
           panelExtraction: $("panelExtraction"),
+          makerPrompt: $("makerPrompt"),
+          makerSubmit: $("makerSubmit"),
+          makerSpinner: $("makerSpinner"),
+          makerSubmitLabel: $("makerSubmitLabel"),
+          makerStatus: $("makerStatus"),
+          makerDetails: $("makerDetails"),
+          makerSelectionName: $("makerSelectionName"),
+          makerSelectionIntent: $("makerSelectionIntent"),
+          makerSelectionKinds: $("makerSelectionKinds"),
+          makerSelectionParent: $("makerSelectionParent"),
           previewLevel: $("previewLevel"),
           previewItem: $("previewItem"),
           render: $("renderContractPreview"),
@@ -415,14 +843,76 @@ const rawUiHtml = `
         let lastExtractionName = "";
         let lastNodeUrl = "";
         let latestSelectionSvg = null;
+        let makerAnalyzeCache = new Map();
         let selectionSvgResolver = null;
         let extractionPayloadResolver = null;
         let abortController = null;
         let timer = null;
         let poller = null;
+        let makerAckTimer = null;
         let startedAt = 0;
         let statusText = "";
         let statusTone = "";
+
+        const setMakerStatus = (text, tone) => {
+          el.makerStatus.textContent = text || "";
+          el.makerStatus.className = "status" + (tone ? " " + tone : "");
+        };
+
+        const setMakerDetails = (value) => {
+          if (!value) {
+            el.makerDetails.textContent = "Maker intent와 적용 결과가 여기에 표시됩니다.";
+            return;
+          }
+          el.makerDetails.textContent =
+            typeof value === "string" ? value : JSON.stringify(value, null, 2);
+        };
+
+        const syncMakerAction = () => {
+          const hasSelection = Boolean(latestSelectionSummary && latestSelectionSummary.selectionCount);
+          const idleLabel = hasSelection ? "Apply to Selection" : "Create";
+          el.makerSubmitLabel.dataset.idleLabel = idleLabel;
+          if (!el.makerSubmit.disabled) {
+            el.makerSubmitLabel.textContent = idleLabel;
+          }
+        };
+
+        const getMakerAnalyzeCacheKey = (prompt) => {
+          if (!latestSelectionSummary) return "";
+          return JSON.stringify({
+            prompt: prompt.trim(),
+            fileKey: latestSelectionSummary.fileKey || "",
+            nodeIds: latestSelectionSummary.nodeIds || [],
+            primaryName: latestSelectionSummary.primaryName || "",
+            intent: latestSelectionSummary.selectionIntent || null
+          });
+        };
+
+        const setMakerLoading = (loading) => {
+          el.makerSubmit.disabled = loading;
+          el.makerSpinner.classList.toggle("hidden", !loading);
+          if (loading) {
+            const hasSelection = Boolean(latestSelectionSummary && latestSelectionSummary.selectionCount);
+            el.makerSubmitLabel.textContent = hasSelection ? "Applying..." : "Creating...";
+          } else {
+            el.makerSubmitLabel.textContent =
+              el.makerSubmitLabel.dataset.idleLabel ||
+              (latestSelectionSummary && latestSelectionSummary.selectionCount ? "Apply to Selection" : "Create");
+          }
+        };
+
+        const stopMakerAckTimer = () => {
+          if (makerAckTimer) clearTimeout(makerAckTimer);
+          makerAckTimer = null;
+        };
+
+        const startMakerAckTimer = () => {
+          stopMakerAckTimer();
+          makerAckTimer = setTimeout(() => {
+            setMakerLoading(false);
+            setMakerStatus("응답이 지연되고 있습니다. selection과 결과를 다시 확인해 주세요.", "warning");
+          }, 6000);
+        };
 
         const getStoredFileUrl = () => {
           try {
@@ -453,6 +943,17 @@ const rawUiHtml = `
             const match = raw.match(/figma\\.com\\/(?:design|proto|board)\\/([^/?#]+)/i);
             return match ? match[1] : "";
           }
+        };
+
+        const isWritePayload = (value) => {
+          if (!value || typeof value !== "object") return false;
+          return Boolean(
+            value.document &&
+            value.document.name &&
+            value.document.screen &&
+            value.document.theme &&
+            Array.isArray(value.nodes)
+          );
         };
 
         const setStatus = (text, tone) => {
@@ -490,11 +991,15 @@ const rawUiHtml = `
         };
 
         const switchTab = (next) => {
+          const maker = next === "maker";
           const inspection = next === "inspection";
+          const extraction = next === "extraction";
+          el.tabMaker.classList.toggle("active", maker);
           el.tabInspection.classList.toggle("active", inspection);
-          el.tabExtraction.classList.toggle("active", !inspection);
+          el.tabExtraction.classList.toggle("active", extraction);
+          el.panelMaker.classList.toggle("active", maker);
           el.panelInspection.classList.toggle("active", inspection);
-          el.panelExtraction.classList.toggle("active", !inspection);
+          el.panelExtraction.classList.toggle("active", extraction);
         };
 
         const syncPreviewItems = () => {
@@ -518,6 +1023,21 @@ const rawUiHtml = `
           el.selectionFileKey.textContent = summary.fileKey || "-";
           el.selectionUrl.textContent = summary.nodeUrl || "-";
           el.selectionJson.textContent = JSON.stringify(summary, null, 2);
+          el.makerSelectionName.textContent = el.selectionName.textContent;
+          el.makerSelectionIntent.textContent = summary.selectionIntent ? summary.selectionIntent.kind : "-";
+          el.makerSelectionKinds.textContent =
+            summary.selectionIntent && summary.selectionIntent.componentKinds.length > 0
+              ? summary.selectionIntent.componentKinds.join(", ")
+              : "-";
+          el.makerSelectionParent.textContent =
+            summary.selectionIntent && summary.selectionIntent.parentName
+              ? summary.selectionIntent.parentName
+              : "-";
+          syncMakerAction();
+          if (!summary.selectionCount) {
+            setMakerStatus("");
+            setMakerDetails("");
+          }
 
           const hasStored = Boolean(getStoredFileUrl().trim());
           if (!hasRuntimeFileKey && !hasStored) {
@@ -665,6 +1185,257 @@ const rawUiHtml = `
           }
         };
 
+        const runMaker = async (placement) => {
+          let effectivePlacement = placement;
+          const prompt = el.makerPrompt.value.trim();
+          if (!prompt) {
+            setMakerStatus("Prompt를 입력해 주세요.", "error");
+            return;
+          }
+
+          const fallbackDirectEditIntent = () => {
+            if (!latestSelectionSummary) return null;
+            const selectionKind = latestSelectionSummary.selectionIntent
+              ? latestSelectionSummary.selectionIntent.kind
+              : "unknown";
+
+            if (looksLikeFullWidthPrompt(prompt)) {
+              return {
+                kind: "direct-edit",
+                targetScope:
+                  selectionKind === "section" || selectionKind === "screen-fragment"
+                    ? "container-children"
+                    : "selection",
+                message: "선택 영역에 full width 직접 수정을 적용합니다.",
+                commands:
+                  selectionKind === "section" || selectionKind === "screen-fragment"
+                    ? [
+                        { type: "set-node-layout-align", value: "STRETCH" },
+                        { type: "set-node-layout-sizing-horizontal", value: "FILL" },
+                        { type: "set-node-layout-grow", value: 0 }
+                      ]
+                    : [
+                        { type: "set-node-layout-align", value: "STRETCH" },
+                        { type: "set-node-layout-sizing-horizontal", value: "FILL" },
+                        { type: "resize-node-width-to-parent-inner" }
+                      ]
+              };
+            }
+
+            if (looksLikeCenterAlignPrompt(prompt)) {
+              return {
+                kind: "direct-edit",
+                targetScope:
+                  selectionKind === "section" || selectionKind === "screen-fragment"
+                    ? "container"
+                    : "selection",
+                message: "선택 영역에 가운데 정렬 직접 수정을 적용합니다.",
+                commands:
+                  selectionKind === "section" || selectionKind === "screen-fragment"
+                    ? [
+                        { type: "set-container-cross-align", value: "CENTER" },
+                        { type: "set-node-layout-align", value: "INHERIT" },
+                        { type: "set-node-layout-grow", value: 0 },
+                        { type: "shrink-node-to-hug-content" }
+                      ]
+                    : [
+                        { type: "set-container-cross-align", value: "CENTER" },
+                        { type: "set-node-layout-align", value: "INHERIT" },
+                        { type: "set-node-layout-grow", value: 0 },
+                        { type: "shrink-node-to-hug-content" },
+                        { type: "center-node-in-parent" }
+                      ]
+              };
+            }
+
+            return null;
+          };
+
+          if (effectivePlacement === "selection" && latestSelectionSummary) {
+            const immediateIntent = fallbackDirectEditIntent();
+            if (immediateIntent) {
+              setMakerDetails(immediateIntent);
+              setMakerStatus(immediateIntent.message || "선택 영역에 직접 수정 요청을 전달했습니다.");
+              setMakerLoading(true);
+              await nextPaint();
+              parent.postMessage(
+                {
+                  pluginMessage: {
+                    type: "makerDirectEdit",
+                    prompt,
+                    intent: immediateIntent
+                  }
+                },
+                "*"
+              );
+              startMakerAckTimer();
+              return;
+            }
+
+            setMakerStatus("선택 영역을 MCP로 분석 중입니다.");
+            const analyzeCacheKey = getMakerAnalyzeCacheKey(prompt);
+            const cachedAnalyze = analyzeCacheKey ? makerAnalyzeCache.get(analyzeCacheKey) : null;
+            if (cachedAnalyze && cachedAnalyze.directEdit) {
+              setMakerDetails(cachedAnalyze.directEdit);
+              setMakerStatus("캐시된 selection 분석을 사용합니다.");
+              setMakerLoading(true);
+              await nextPaint();
+              parent.postMessage(
+                {
+                  pluginMessage: {
+                    type: "makerDirectEdit",
+                    prompt,
+                    intent: cachedAnalyze.directEdit
+                  }
+                },
+                "*"
+              );
+              startMakerAckTimer();
+              return;
+            }
+
+            setMakerDetails("selection MCP 분석을 진행 중입니다.");
+            setMakerLoading(true);
+            await nextPaint();
+            try {
+              const controller = new AbortController();
+              const timeout = setTimeout(() => controller.abort(), 15000);
+              const analyzeResponse = await fetch(BRIDGE_URL + "/maker-analyze", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({
+                  prompt,
+                  selectionSummary: latestSelectionSummary
+                }),
+                signal: controller.signal
+              });
+              clearTimeout(timeout);
+              const analyzed = await analyzeResponse.json();
+              if (!analyzeResponse.ok) {
+                throw new Error(analyzed && analyzed.error ? analyzed.error : "선택 분석에 실패했습니다.");
+              }
+              if (analyzed && analyzed.directEdit) {
+                if (analyzeCacheKey) {
+                  makerAnalyzeCache.set(analyzeCacheKey, analyzed);
+                }
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: "makerDirectEdit",
+                      prompt,
+                      intent: analyzed.directEdit
+                    }
+                  },
+                  "*"
+                );
+                startMakerAckTimer();
+                const analysis = analyzed.directEdit.analysis;
+                const componentName = analysis && analysis.componentName ? " (" + analysis.componentName + ")" : "";
+                setMakerDetails(analyzed.directEdit);
+                setMakerStatus((analyzed.directEdit.message || "선택 영역에 직접 수정 요청을 전달했습니다.") + componentName);
+                return;
+              }
+              const fallbackIntent = fallbackDirectEditIntent();
+              if (fallbackIntent) {
+                setMakerDetails(fallbackIntent);
+                setMakerStatus(fallbackIntent.message);
+                setMakerLoading(true);
+                await nextPaint();
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: "makerDirectEdit",
+                      prompt,
+                      intent: fallbackIntent
+                    }
+                  },
+                  "*"
+                );
+                startMakerAckTimer();
+                return;
+              }
+              setMakerStatus("직접 수정으로 해석되지 않아, selection 기준 새 제안안을 생성합니다.", "warning");
+              setMakerDetails("selection 기준 새 프레임 제안안을 생성합니다.");
+              effectivePlacement = "selection-preview";
+            } catch (error) {
+              const fallbackIntent = fallbackDirectEditIntent();
+              if (fallbackIntent) {
+                setMakerDetails(fallbackIntent);
+                setMakerLoading(true);
+                await nextPaint();
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: "makerDirectEdit",
+                      prompt,
+                      intent: fallbackIntent
+                    }
+                  },
+                  "*"
+                );
+                startMakerAckTimer();
+                const timeoutMessage =
+                  error && error.name === "AbortError"
+                    ? "분석이 오래 걸려 fallback direct edit를 적용합니다."
+                    : fallbackIntent.message;
+                setMakerStatus(timeoutMessage, "warning");
+                return;
+              }
+              setMakerStatus("선택 분석이 불안정해, selection 기준 새 제안안을 생성합니다.", "warning");
+              setMakerDetails(error && error.message ? error.message : "selection 분석 오류");
+              effectivePlacement = "selection-preview";
+            }
+          }
+
+          setMakerStatus("Maker payload를 생성 중입니다.");
+          setMakerDetails("");
+          setMakerLoading(true);
+          await nextPaint();
+
+          try {
+            const response = await fetch(BRIDGE_URL + "/maker-generate", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({
+                prompt,
+                selectionSummary: latestSelectionSummary
+              })
+            });
+            const result = await response.json();
+            if (!response.ok) {
+              throw new Error(result && result.error ? result.error : "Maker 생성에 실패했습니다.");
+            }
+            if (!result || !isWritePayload(result.payload)) {
+              throw new Error("Maker payload 형식이 올바르지 않습니다.");
+            }
+
+            parent.postMessage(
+              {
+                pluginMessage: {
+                    type: "makerGenerate",
+                    payload: result.payload,
+                  placement: effectivePlacement
+                }
+              },
+              "*"
+            );
+
+            startMakerAckTimer();
+
+            const inferred = result?.maker?.inferredScreen ? " (" + result.maker.inferredScreen + ")" : "";
+            setMakerDetails({
+              inferredScreen: result?.maker?.inferredScreen ?? null,
+              summary: result?.summary ?? null,
+              evaluation: result?.evaluation ?? null
+            });
+            setMakerStatus("Maker 생성 요청을 전달했습니다" + inferred + ".");
+          } catch (error) {
+            setMakerStatus(error && error.message ? error.message : "Maker 생성 중 오류가 발생했습니다.", "error");
+            setMakerLoading(false);
+          } finally {
+          }
+        };
+
         window.onmessage = (event) => {
           const msg = event.data && event.data.pluginMessage;
           if (!msg) return;
@@ -696,13 +1467,29 @@ const rawUiHtml = `
             if (extractionPayloadResolver) {
               extractionPayloadResolver = null;
             }
+            setMakerStatus(msg.message || "오류가 발생했습니다.", "error");
             setStatus(msg.message || "오류가 발생했습니다.", "error");
             setLoading(false);
+            stopMakerAckTimer();
+            setMakerLoading(false);
+          }
+          if (msg.type === "makerProgress") {
+            setMakerStatus(msg.message || "Maker 작업을 진행 중입니다.");
+          }
+          if (msg.type === "makerRendered") {
+            stopMakerAckTimer();
+            setMakerStatus(msg.message || "Maker rendering complete.");
+            setMakerLoading(false);
           }
         };
 
+        el.tabMaker.addEventListener("click", () => switchTab("maker"));
         el.tabInspection.addEventListener("click", () => switchTab("inspection"));
         el.tabExtraction.addEventListener("click", () => switchTab("extraction"));
+        el.makerSubmit.addEventListener("click", () => {
+          const hasSelection = Boolean(latestSelectionSummary && latestSelectionSummary.selectionCount);
+          runMaker(hasSelection ? "selection" : "new-frame");
+        });
         el.previewLevel.addEventListener("change", syncPreviewItems);
         el.render.addEventListener("click", () => {
           el.render.disabled = true;
@@ -727,7 +1514,10 @@ const rawUiHtml = `
         el.fileUrlInput.value = getStoredFileUrl();
         lastNodeUrl = getStoredFileUrl();
         syncPreviewItems();
+        syncMakerAction();
         setLoading(false);
+        stopMakerAckTimer();
+        setMakerLoading(false);
         parent.postMessage({ pluginMessage: { type: "pluginReady" } }, "*");
         parent.postMessage({ pluginMessage: { type: "requestSelectionSvg" } }, "*");
         checkBridge();
@@ -780,6 +1570,111 @@ figma.ui.onmessage = async (message: PluginUiMessage) => {
         figma.notify(`Rendered ${result.createdFrameName} (${result.createdNodeCount} nodes)`);
       }
       figma.ui.postMessage({ type: "renderDone" });
+      return;
+    }
+
+    if (message.type === "makerGenerate") {
+      figma.ui.postMessage({
+        type: "makerProgress",
+        message: "Figma에서 새 instance를 렌더링하는 중입니다."
+      });
+      if (!isFigmaWritePayload(message.payload)) {
+        throw new Error("Maker payload 형식이 올바르지 않습니다.");
+      }
+
+      const targetNodes = [...figma.currentPage.selection];
+      const targetBounds = getSelectionBounds(targetNodes);
+      const firstParent = targetNodes.length > 0 ? safeGetParent(targetNodes[0]) : null;
+      const sharedParent =
+        firstParent && targetNodes.every((node) => safeGetParent(node) === firstParent)
+          ? firstParent
+          : null;
+      const sharedParentName = sharedParent ? safeGetName(sharedParent) : null;
+      const result = await renderPayload(message.payload);
+      figma.ui.postMessage({
+        type: "makerProgress",
+        message: "렌더 결과를 배치하는 중입니다."
+      });
+      const createdFrame = [...figma.currentPage.children].reverse().find(
+        (node) => node.type === "FRAME" && node.name === result.createdFrameName
+      );
+
+      if (message.placement === "selection-preview" && createdFrame && targetBounds) {
+        createdFrame.x = targetBounds.x + targetBounds.width + 40;
+        createdFrame.y = targetBounds.y;
+        figma.currentPage.selection = [createdFrame];
+      } else if (message.placement === "selection" && createdFrame && targetBounds) {
+        const sectionFrames = createdFrame.children.filter(
+          (node): node is FrameNode => node.type === "FRAME" && node.name.endsWith("-section")
+        );
+        const preferredSectionName =
+          sharedParentName
+            ? sharedParentName
+            : targetNodes.length === 1
+              ? safeGetName(targetNodes[0]) ?? targetNodes[0].id
+              : null;
+
+        const replacementSection =
+          sectionFrames.find((node) => preferredSectionName && node.name === preferredSectionName) ??
+          sectionFrames.find((node) => node.name !== "preview-section") ??
+          null;
+
+        const replacementParent =
+          sharedParent &&
+          safeGetParent(sharedParent as SceneNode) &&
+          "appendChild" in (safeGetParent(sharedParent as SceneNode) as BaseNode & ChildrenMixin)
+            ? (safeGetParent(sharedParent as SceneNode) as BaseNode & ChildrenMixin)
+            : figma.currentPage;
+
+        if (replacementSection && sharedParent && sharedParent.type === "FRAME" && sharedParentName && replacementSection.name === sharedParentName) {
+          replaceFrameContents(sharedParent, replacementSection);
+          createdFrame.remove();
+        } else if (replacementSection) {
+          const parentAbsolute = getParentAbsolutePosition(replacementParent);
+          replacementParent.appendChild(replacementSection);
+          replacementSection.x = targetBounds.x - parentAbsolute.x;
+          replacementSection.y = targetBounds.y - parentAbsolute.y;
+
+          const removeTargets =
+            sharedParent &&
+            sharedParentName &&
+            replacementSection.name === sharedParentName
+              ? [sharedParent]
+              : targetNodes;
+
+          for (const node of removeTargets) {
+            if ("removed" in node && !node.removed) {
+              node.remove();
+            }
+          }
+          createdFrame.remove();
+        } else {
+          createdFrame.x = targetBounds.x;
+          createdFrame.y = targetBounds.y;
+        }
+      }
+
+      figma.ui.postMessage({
+        type: "makerRendered",
+        message:
+          message.placement === "selection"
+            ? `Selection을 기준으로 ${result.createdFrameName}로 교체했습니다.`
+            : message.placement === "selection-preview"
+              ? `Selection 기준 제안안 ${result.createdFrameName}를 옆에 생성했습니다.`
+            : `${result.createdFrameName}를 생성했습니다.`
+      });
+      return;
+    }
+
+    if (message.type === "makerDirectEdit") {
+      const responseMessage = applyDirectEditIntent([...figma.currentPage.selection], message.intent);
+      sendSelectionInfo();
+      void sendSelectionSvg();
+      figma.notify(responseMessage);
+      figma.ui.postMessage({
+        type: "makerRendered",
+        message: responseMessage
+      });
       return;
     }
 

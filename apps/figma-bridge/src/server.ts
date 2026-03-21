@@ -2,9 +2,10 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { createPromptFromScreen } from "./promptLibrary";
+import type { DesignPrompt } from "../../../packages/figma-generator/src/types/designPrompt";
+import { createPromptFromMakerPrompt, createPromptFromScreen } from "./promptLibrary";
 import { generateFromPrompt } from "./generate";
-import { extractViaMcp, refreshExtractedDocs } from "./extractViaMcp";
+import { analyzeSelectionNodeViaMcp, extractViaMcp, refreshExtractedDocs } from "./extractViaMcp";
 import type { GenerateFromPromptRequest, GenerateScreenRequest } from "./contracts/generateScreenRequest";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -163,6 +164,228 @@ const deriveInputBlueprintFromRaw = (rawComponent?: {
   };
 };
 
+const inferMakerScreen = (prompt: string) => {
+  const normalized = prompt.toLowerCase();
+  if (/(login|log in|sign in|로그인|로그 인|signin)/i.test(normalized)) return "login";
+  if (/(settings|setting|설정|preferences)/i.test(normalized)) return "settings";
+  if (/(dashboard|대시보드)/i.test(normalized)) return "dashboard";
+  if (/(list|목록|리스트|filter|검색결과)/i.test(normalized)) return "list";
+  return "login";
+};
+
+type MakerSelectionSummary = {
+  fileKey?: string;
+  pageName?: string;
+  nodeIds?: string[];
+  primaryName?: string;
+  primaryType?: string;
+  selectionCount?: number;
+  selectionIntent?: {
+    kind?: "single-component" | "component-group" | "section" | "screen-fragment" | "unknown";
+    componentKinds?: string[];
+    parentName?: string | null;
+    notes?: string[];
+  };
+  nodes?: Array<{
+    id?: string;
+    name?: string;
+    type?: string;
+    isFigmaComponent?: boolean;
+    componentRole?: string;
+    mainComponentName?: string | null;
+    variantProperties?: Record<string, string | boolean>;
+  }>;
+};
+
+const looksLikeFullWidthPrompt = (value: string) =>
+  /(full|full width|가득|꽉|채워|좌우 full|전체 너비|좌우 폭|폭 늘려)/i.test(value);
+
+const looksLikeCenterAlignPrompt = (value: string) =>
+  /(가운데 정렬|중앙 정렬|센터 정렬|center align|centered|가운데로|중앙으로)/i.test(value);
+
+const buildMakerAnalysisNode = (selectionSummary: MakerSelectionSummary) => {
+  const primaryNode = selectionSummary.nodes?.[0];
+  const nodeId = primaryNode?.id ?? selectionSummary.nodeIds?.[0];
+  if (!selectionSummary.fileKey || !nodeId) return null;
+
+  return {
+    id: nodeId,
+    name: primaryNode?.name ?? selectionSummary.primaryName ?? "selection",
+    type: primaryNode?.type ?? selectionSummary.primaryType ?? "UNKNOWN",
+    url:
+      primaryNode?.url ??
+      `https://www.figma.com/design/${selectionSummary.fileKey}/${encodeURIComponent("selection")}?node-id=${nodeId.replace(":", "-")}`,
+    isFigmaComponent: Boolean(primaryNode?.isFigmaComponent),
+    componentRole: primaryNode?.componentRole ?? "node",
+    mainComponentName: primaryNode?.mainComponentName ?? null,
+    componentKey: undefined,
+    variantProperties: primaryNode?.variantProperties ?? undefined
+  } as const;
+};
+
+const inferDirectEditIntent = async (rawPrompt: string, selectionSummary?: MakerSelectionSummary) => {
+  if (!selectionSummary) return null;
+  if (!looksLikeFullWidthPrompt(rawPrompt) && !looksLikeCenterAlignPrompt(rawPrompt)) {
+    return null;
+  }
+
+  const analysisNode = buildMakerAnalysisNode(selectionSummary);
+  if (!analysisNode) {
+    return null;
+  }
+
+  const mcp = await analyzeSelectionNodeViaMcp(selectionSummary.fileKey!, analysisNode);
+  const selectionIntentKind = selectionSummary.selectionIntent?.kind ?? "unknown";
+  const hasContainerChildren = selectionIntentKind === "section" || selectionIntentKind === "screen-fragment";
+
+  if (looksLikeFullWidthPrompt(rawPrompt)) {
+    return {
+      kind: "direct-edit" as const,
+      targetScope: hasContainerChildren ? "container-children" as const : "selection" as const,
+      message:
+        hasContainerChildren
+          ? "선택된 container 안의 요소를 full width로 맞춥니다."
+          : "선택된 요소를 full width로 맞춥니다.",
+      commands: hasContainerChildren
+        ? [
+            { type: "set-node-layout-align", value: "STRETCH" as const },
+            { type: "set-node-layout-sizing-horizontal", value: "FILL" as const },
+            { type: "set-node-layout-grow", value: 0 }
+          ]
+        : [
+            { type: "set-node-layout-align", value: "STRETCH" as const },
+            { type: "set-node-layout-sizing-horizontal", value: "FILL" as const },
+            { type: "resize-node-width-to-parent-inner" as const }
+          ],
+      analysis: {
+        componentName: mcp.component.mainComponentName ?? mcp.component.name,
+        role: mcp.component.role,
+        resolvedStructureKind: mcp.resolvedStructure.kind,
+        selectionIntentKind
+      },
+      mcp
+    };
+  }
+
+  if (looksLikeCenterAlignPrompt(rawPrompt)) {
+    return {
+      kind: "direct-edit" as const,
+      targetScope: hasContainerChildren ? "container" as const : "selection" as const,
+      message:
+        hasContainerChildren
+          ? "선택된 container의 정렬을 가운데 기준으로 맞춥니다."
+          : "선택된 요소를 가운데 정렬합니다.",
+      commands: hasContainerChildren
+        ? [
+            { type: "set-container-cross-align", value: "CENTER" as const },
+            { type: "set-node-layout-align", value: "INHERIT" as const },
+            { type: "set-node-layout-grow", value: 0 },
+            { type: "shrink-node-to-hug-content" as const }
+          ]
+        : [
+            { type: "set-container-cross-align", value: "CENTER" as const },
+            { type: "set-node-layout-align", value: "INHERIT" as const },
+            { type: "set-node-layout-grow", value: 0 },
+            { type: "shrink-node-to-hug-content" as const },
+            { type: "center-node-in-parent" as const }
+          ],
+      analysis: {
+        componentName: mcp.component.mainComponentName ?? mcp.component.name,
+        role: mcp.component.role,
+        resolvedStructureKind: mcp.resolvedStructure.kind,
+        selectionIntentKind
+      },
+      mcp
+    };
+  }
+
+  return null;
+};
+
+const looksLikeInput = (node?: {
+  name?: string;
+  mainComponentName?: string | null;
+  type?: string;
+}) => /(input|textinput|textfield|text field|field)/i.test(`${node?.name ?? ""} ${node?.mainComponentName ?? ""} ${node?.type ?? ""}`);
+
+const looksLikeButton = (node?: {
+  name?: string;
+  mainComponentName?: string | null;
+  type?: string;
+}) => /(button|cta|action)/i.test(`${node?.name ?? ""} ${node?.mainComponentName ?? ""} ${node?.type ?? ""}`);
+
+const inferSelectionPrompt = (rawPrompt: string, selectionSummary?: MakerSelectionSummary): DesignPrompt | null => {
+  if (!selectionSummary) return null;
+
+  const normalized = rawPrompt.toLowerCase();
+  const wantsFullWidth = /(full|full width|가득|꽉|채워|좌우 full|전체 너비)/i.test(normalized);
+  if (!wantsFullWidth) return null;
+
+  const selectedNodes = selectionSummary.nodes ?? [];
+  const inputNodes = selectedNodes.filter((node) => looksLikeInput(node));
+  const buttonNodes = selectedNodes.filter((node) => looksLikeButton(node));
+  const selectionIntent = selectionSummary.selectionIntent;
+  const isFormSection =
+    selectionIntent?.kind === "section" ||
+    /form|login|로그인|input|field/i.test(selectionSummary.primaryName ?? "") ||
+    /form|field/i.test(selectionIntent?.parentName ?? "");
+
+  const impliedInputKinds = selectionIntent?.componentKinds?.includes("input");
+  const impliedButtonKinds = selectionIntent?.componentKinds?.includes("button");
+  const inputCount = inputNodes.length > 0 ? inputNodes.length : impliedInputKinds || isFormSection ? 2 : 0;
+  const buttonCount = buttonNodes.length > 0 ? buttonNodes.length : impliedButtonKinds ? 1 : 0;
+
+  if (inputCount === 0 && buttonCount === 0) {
+    return null;
+  }
+
+  const components: DesignPrompt["components"] = [];
+
+  for (let index = 0; index < inputCount; index += 1) {
+    const source = inputNodes[index];
+    const label =
+      source?.name ??
+      (inputCount >= 2
+        ? index === 0
+          ? "아이디"
+          : "비밀번호"
+        : "입력값");
+
+    components.push({
+      type: "input",
+      section: "form",
+      intent: index === 1 && inputCount >= 2 ? "text-input" : "text-input",
+      label,
+      size: "md",
+      width: "full",
+      fullWidth: true
+    });
+  }
+
+  for (let index = 0; index < buttonCount; index += 1) {
+    const source = buttonNodes[index];
+    components.push({
+      type: "button",
+      section: "action",
+      intent: index === 0 ? "primary-action" : "secondary-action",
+      label: source?.name ?? (index === 0 ? "확인" : "보조 액션"),
+      size: "md",
+      width: "full",
+      fullWidth: true,
+      variant: index === 0 ? "primary" : "neutral"
+    });
+  }
+
+  return {
+    screen: "selection-refine",
+    theme: defaultTheme,
+    density: "comfortable",
+    sections: buttonCount > 0 ? ["form", "action"] : ["form"],
+    primaryAction: buttonCount > 0 ? "Apply selection changes" : undefined,
+    components
+  };
+};
+
 const server = http.createServer(async (req, res) => {
   const method = req.method ?? "GET";
   const url = req.url ?? "/";
@@ -215,6 +438,101 @@ const server = http.createServer(async (req, res) => {
       const result = generateFromPrompt(body.prompt);
       writeArtifact("last-generate-from-prompt.json", result);
       write(res, json(200, result));
+      return;
+    } catch (error) {
+      write(
+        res,
+        json(400, {
+          error: error instanceof Error ? error.message : String(error)
+        })
+      );
+      return;
+    }
+  }
+
+  if (method === "POST" && url === "/maker-generate") {
+    try {
+      const body = await readJsonBody<{
+        prompt?: string;
+        selectionSummary?: MakerSelectionSummary;
+      }>(req);
+
+      const rawPrompt = body.prompt?.trim();
+      if (!rawPrompt) {
+        write(res, json(400, { error: "prompt is required" }));
+        return;
+      }
+
+      const selectionPrompt = inferSelectionPrompt(rawPrompt, body.selectionSummary);
+      const inferredScreen = selectionPrompt ? "selection-refine" : inferMakerScreen(rawPrompt);
+      const result = generateFromPrompt(
+        selectionPrompt ?? createPromptFromMakerPrompt(rawPrompt, defaultTheme)
+      );
+      writeArtifact("last-maker-generate.json", {
+        prompt: rawPrompt,
+        inferredScreen,
+        selectionSummary: body.selectionSummary ?? null,
+        result
+      });
+      write(
+        res,
+        json(200, {
+          ...result,
+          maker: {
+            prompt: rawPrompt,
+            inferredScreen
+          }
+        })
+      );
+      return;
+    } catch (error) {
+      write(
+        res,
+        json(400, {
+          error: error instanceof Error ? error.message : String(error)
+        })
+      );
+      return;
+    }
+  }
+
+  if (method === "POST" && url === "/maker-analyze") {
+    try {
+      const body = await readJsonBody<{
+        prompt?: string;
+        selectionSummary?: MakerSelectionSummary;
+      }>(req);
+      const rawPrompt = body.prompt?.trim();
+      if (!rawPrompt) {
+        write(res, json(400, { error: "prompt is required" }));
+        return;
+      }
+
+      const intent = await inferDirectEditIntent(rawPrompt, body.selectionSummary);
+      if (!intent) {
+        write(
+          res,
+          json(200, {
+            ok: true,
+            directEdit: null
+          })
+        );
+        return;
+      }
+
+      writeArtifact("last-maker-analyze.json", {
+        prompt: rawPrompt,
+        selectionSummary: body.selectionSummary ?? null,
+        directEdit: intent
+      });
+
+      write(
+        res,
+        json(200, {
+          ok: true,
+          directEdit: intent
+        })
+      );
       return;
     } catch (error) {
       write(

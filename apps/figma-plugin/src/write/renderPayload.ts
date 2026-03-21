@@ -33,6 +33,23 @@ const positionChildInSection = (parent: FrameNode, child: SceneNode, index: numb
   child.y = Math.max(0, child.y - parent.y);
 };
 
+const applySectionLayoutRules = (parent: FrameNode, child: SceneNode, source: FigmaWriteNode) => {
+  if (!parent.name.endsWith("-section")) {
+    return;
+  }
+
+  const widthMode = source.variant?.width;
+  const wantsFullWidth = widthMode === "full" || source.variant?.fullWidth === true || source.width >= parent.width;
+
+  if ("layoutAlign" in child) {
+    child.layoutAlign = wantsFullWidth ? "STRETCH" : "INHERIT";
+  }
+
+  if ("layoutGrow" in child) {
+    child.layoutGrow = 0;
+  }
+};
+
 const renderChildren = async (parent: FrameNode, children: FigmaWriteNode[], theme: string): Promise<number> => {
   let count = 0;
 
@@ -40,6 +57,7 @@ const renderChildren = async (parent: FrameNode, children: FigmaWriteNode[], the
     const next = await toSceneNode(child, theme);
     parent.appendChild(next);
     positionChildInSection(parent, next, index);
+    applySectionLayoutRules(parent, next, child);
     count += 1;
 
     if (child.children && child.children.length > 0 && next.type === "FRAME") {

@@ -1339,12 +1339,27 @@
     child.x = Math.max(0, child.x - parent.x);
     child.y = Math.max(0, child.y - parent.y);
   };
+  var applySectionLayoutRules = (parent, child, source) => {
+    var _a, _b;
+    if (!parent.name.endsWith("-section")) {
+      return;
+    }
+    const widthMode = (_a = source.variant) == null ? void 0 : _a.width;
+    const wantsFullWidth = widthMode === "full" || ((_b = source.variant) == null ? void 0 : _b.fullWidth) === true || source.width >= parent.width;
+    if ("layoutAlign" in child) {
+      child.layoutAlign = wantsFullWidth ? "STRETCH" : "INHERIT";
+    }
+    if ("layoutGrow" in child) {
+      child.layoutGrow = 0;
+    }
+  };
   var renderChildren = async (parent, children, theme) => {
     let count = 0;
     for (const [index, child] of children.entries()) {
       const next = await toSceneNode(child, theme);
       parent.appendChild(next);
       positionChildInSection(parent, next, index);
+      applySectionLayoutRules(parent, next, child);
       count += 1;
       if (child.children && child.children.length > 0 && next.type === "FRAME") {
         count += await renderChildren(next, child.children, theme);
@@ -6091,6 +6106,15 @@
     }
   };
 
+  // ../../shared/contracts/figmaWritePayload.ts
+  var isFigmaWritePayload = (value) => {
+    if (!value || typeof value !== "object") return false;
+    const maybe = value;
+    return Boolean(
+      maybe.document && maybe.document.name && maybe.document.screen && maybe.document.theme && Array.isArray(maybe.nodes)
+    );
+  };
+
   // src/extract/serializeSelection.ts
   var buildNodeUrl = (fileKey, nodeId) => `https://www.figma.com/design/${fileKey}/${encodeURIComponent(figma.root.name)}?node-id=${nodeId.replace(":", "-")}`;
   var serializeComponentProperties = (node) => {
@@ -6106,6 +6130,62 @@
     ]);
     return Object.fromEntries(entries);
   };
+  var safeParentName = (node) => {
+    try {
+      const parent = node.parent;
+      return parent && "name" in parent ? parent.name : null;
+    } catch (e) {
+      return null;
+    }
+  };
+  var detectComponentKind = (node) => {
+    var _a;
+    const source = `${node.name} ${(_a = node.mainComponentName) != null ? _a : ""} ${node.type}`.toLowerCase();
+    if (/(textinput|textfield|input|text field)/i.test(source)) return "input";
+    if (/(button|cta|action area|action)/i.test(source)) return "button";
+    if (/(checkbox)/i.test(source)) return "checkbox";
+    if (/(radio)/i.test(source)) return "radio";
+    if (/(switch|toggle)/i.test(source)) return "switch";
+    if (/(text|label|heading|title)/i.test(source)) return "text";
+    return "node";
+  };
+  var buildSelectionIntent = (selection, nodes) => {
+    if (selection.length === 0) {
+      return {
+        kind: "unknown",
+        componentKinds: [],
+        parentName: null,
+        notes: []
+      };
+    }
+    const parentNames = selection.map(safeParentName).filter((value) => Boolean(value));
+    const sharedParentName = parentNames.length === selection.length && new Set(parentNames).size === 1 ? parentNames[0] : null;
+    const componentKinds = Array.from(
+      new Set(nodes.map((node) => detectComponentKind(node)).filter((value) => value !== "node"))
+    );
+    const notes = [];
+    let kind = "unknown";
+    const primary = selection[0];
+    if (primary.type === "INSTANCE" || primary.type === "COMPONENT" || primary.type === "COMPONENT_SET") {
+      kind = selection.length === 1 ? "single-component" : "component-group";
+    } else if (sharedParentName && /(section|form|header|footer|content|action)/i.test(sharedParentName)) {
+      kind = "section";
+      notes.push(`${sharedParentName} \uB9E5\uB77D\uC73C\uB85C \uD574\uC11D\uD569\uB2C8\uB2E4.`);
+    } else if (selection.length > 1) {
+      kind = "component-group";
+      notes.push("\uC5EC\uB7EC \uB178\uB4DC\uAC00 \uD568\uAED8 \uC120\uD0DD\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4.");
+    } else if (/(frame|group)/i.test(primary.type.toLowerCase())) {
+      kind = "screen-fragment";
+    }
+    if (componentKinds.includes("input")) notes.push("input \uACC4\uC5F4 selection\uC785\uB2C8\uB2E4.");
+    if (componentKinds.includes("button")) notes.push("button \uACC4\uC5F4 selection\uC785\uB2C8\uB2E4.");
+    return {
+      kind,
+      componentKinds,
+      parentName: sharedParentName,
+      notes
+    };
+  };
   var summarizeSelection = (selection) => {
     var _a;
     const fileKey = (_a = figma.fileKey) != null ? _a : "";
@@ -6119,11 +6199,23 @@
         fileKey,
         nodeIds: [],
         nodeUrl: null,
+        selectionIntent: {
+          kind: "unknown",
+          componentKinds: [],
+          parentName: null,
+          notes: []
+        },
         nodes: []
       };
     }
     const primary = selection[0];
     const dimensions = "width" in primary && "height" in primary ? `${Math.round(primary.width)} \xD7 ${Math.round(primary.height)}` : "-";
+    const nodes = selection.map((node) => __spreadValues({
+      id: node.id,
+      name: node.name,
+      type: node.type,
+      url: fileKey ? buildNodeUrl(fileKey, node.id) : ""
+    }, getNodeComponentMeta(node)));
     return {
       selectionCount: selection.length,
       primaryName: primary.name,
@@ -6133,12 +6225,8 @@
       fileKey,
       nodeIds: selection.map((node) => node.id),
       nodeUrl: fileKey ? buildNodeUrl(fileKey, primary.id) : null,
-      nodes: selection.map((node) => __spreadValues({
-        id: node.id,
-        name: node.name,
-        type: node.type,
-        url: fileKey ? buildNodeUrl(fileKey, node.id) : ""
-      }, getNodeComponentMeta(node)))
+      selectionIntent: buildSelectionIntent(selection, nodes),
+      nodes
     };
   };
   var getNodeComponentMeta = (node) => {
@@ -6316,6 +6404,207 @@
     }
   };
   var flushUi = () => new Promise((resolve) => setTimeout(resolve, 0));
+  var getSelectionBounds = (nodes) => {
+    if (nodes.length === 0) return null;
+    const bounds = nodes.filter(
+      (node) => "x" in node && "y" in node && "width" in node && "height" in node
+    ).map((node) => ({
+      x: node.x,
+      y: node.y,
+      right: node.x + node.width,
+      bottom: node.y + node.height
+    }));
+    if (bounds.length === 0) return null;
+    const minX = Math.min(...bounds.map((item) => item.x));
+    const minY = Math.min(...bounds.map((item) => item.y));
+    const maxX = Math.max(...bounds.map((item) => item.right));
+    const maxY = Math.max(...bounds.map((item) => item.bottom));
+    return {
+      x: minX,
+      y: minY,
+      width: maxX - minX,
+      height: maxY - minY
+    };
+  };
+  var safeGetParent = (node) => {
+    try {
+      return node.parent;
+    } catch (e) {
+      return null;
+    }
+  };
+  var safeGetName = (node) => {
+    try {
+      return "name" in node ? node.name : null;
+    } catch (e) {
+      return null;
+    }
+  };
+  var getAncestorFrames = (node) => {
+    const frames = [];
+    let current = safeGetParent(node);
+    while (current && current.type !== "PAGE") {
+      if (current.type === "FRAME" || current.type === "COMPONENT" || current.type === "INSTANCE") {
+        frames.push(current);
+      }
+      current = "parent" in current ? current.parent : null;
+    }
+    return frames;
+  };
+  var findNearestAutoLayoutAncestor = (node) => {
+    var _a;
+    return (_a = getAncestorFrames(node).find((ancestor) => ancestor.layoutMode !== "NONE")) != null ? _a : null;
+  };
+  var findNearestSizedFrameAncestor = (node) => {
+    var _a;
+    return (_a = getAncestorFrames(node).find((ancestor) => ancestor.width > ("width" in node ? node.width : 0))) != null ? _a : null;
+  };
+  var getParentAbsolutePosition = (node) => {
+    if (node.type === "PAGE") {
+      return { x: 0, y: 0 };
+    }
+    if ("absoluteTransform" in node) {
+      return {
+        x: node.absoluteTransform[0][2],
+        y: node.absoluteTransform[1][2]
+      };
+    }
+    return { x: 0, y: 0 };
+  };
+  var replaceFrameContents = (target, source) => {
+    target.resize(source.width, source.height);
+    target.layoutMode = source.layoutMode;
+    target.primaryAxisSizingMode = source.primaryAxisSizingMode;
+    target.counterAxisSizingMode = source.counterAxisSizingMode;
+    target.primaryAxisAlignItems = source.primaryAxisAlignItems;
+    target.counterAxisAlignItems = source.counterAxisAlignItems;
+    target.itemSpacing = source.itemSpacing;
+    target.paddingTop = source.paddingTop;
+    target.paddingRight = source.paddingRight;
+    target.paddingBottom = source.paddingBottom;
+    target.paddingLeft = source.paddingLeft;
+    target.cornerRadius = source.cornerRadius;
+    target.fills = source.fills;
+    target.strokes = source.strokes;
+    target.strokeWeight = source.strokeWeight;
+    target.effects = source.effects;
+    target.clipsContent = source.clipsContent;
+    for (const child of [...target.children]) {
+      child.remove();
+    }
+    for (const child of [...source.children]) {
+      target.appendChild(child);
+    }
+  };
+  var resolveDirectEditTargets = (selection) => {
+    if (selection.length !== 1) {
+      return [...selection];
+    }
+    const primary = selection[0];
+    if ("children" in primary && primary.children.length > 0) {
+      const candidates = primary.children.filter(
+        (node) => "width" in node && "height" in node && (node.type === "INSTANCE" || node.type === "FRAME" || node.type === "COMPONENT")
+      );
+      if (candidates.length > 0) {
+        return candidates;
+      }
+    }
+    return [...selection];
+  };
+  var canShrinkToHugWidth = (node) => "layoutMode" in node && node.layoutMode === "HORIZONTAL" && "children" in node && "paddingLeft" in node && "paddingRight" in node && "itemSpacing" in node && "resize" in node;
+  var shrinkToHugWidth = (node) => {
+    const visibleChildren = node.children.filter(
+      (child) => "width" in child && child.visible !== false
+    );
+    if (visibleChildren.length === 0) return false;
+    const contentWidth = visibleChildren.reduce((sum, child) => sum + child.width, 0) + Math.max(0, visibleChildren.length - 1) * node.itemSpacing;
+    const nextWidth = Math.ceil(node.paddingLeft + contentWidth + node.paddingRight);
+    if (!Number.isFinite(nextWidth) || nextWidth <= 0) return false;
+    if (Math.abs(node.width - nextWidth) < 1) return false;
+    node.resize(nextWidth, node.height);
+    return true;
+  };
+  var applyDirectEditIntent = (selection, intent) => {
+    var _a, _b, _c;
+    if (!intent) {
+      throw new Error("\uC9C1\uC811 \uC218\uC815 intent\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.");
+    }
+    if (selection.length === 0) {
+      throw new Error("\uBA3C\uC800 \uC218\uC815\uD560 selection\uC744 \uC120\uD0DD\uD574 \uC8FC\uC138\uC694.");
+    }
+    const targetScope = (_a = intent.targetScope) != null ? _a : "selection";
+    const targets = targetScope === "container-children" ? resolveDirectEditTargets(selection) : [...selection];
+    const commands = (_b = intent.commands) != null ? _b : [];
+    let applied = 0;
+    if (targetScope === "container" && selection.length === 1 && "children" in selection[0] && "layoutMode" in selection[0] && selection[0].layoutMode !== "NONE") {
+      const container = selection[0];
+      for (const command of commands) {
+        if (command.type === "set-container-cross-align") {
+          container.counterAxisAlignItems = command.value;
+          applied += 1;
+        }
+      }
+      for (const child of container.children) {
+        for (const command of commands) {
+          if (command.type === "set-node-layout-align" && "layoutAlign" in child) {
+            child.layoutAlign = command.value;
+            applied += 1;
+          }
+          if (command.type === "set-node-layout-grow" && "layoutGrow" in child) {
+            child.layoutGrow = command.value;
+            applied += 1;
+          }
+          if (command.type === "set-node-layout-sizing-horizontal" && "layoutSizingHorizontal" in child) {
+            child.layoutSizingHorizontal = command.value;
+            applied += 1;
+          }
+          if (command.type === "shrink-node-to-hug-content" && canShrinkToHugWidth(child)) {
+            if (shrinkToHugWidth(child)) applied += 1;
+          }
+        }
+      }
+    } else {
+      for (const node of targets) {
+        const autoAncestor = findNearestAutoLayoutAncestor(node);
+        const frameAncestor = findNearestSizedFrameAncestor(node);
+        for (const command of commands) {
+          if (command.type === "set-container-cross-align" && autoAncestor) {
+            autoAncestor.counterAxisAlignItems = command.value;
+            applied += 1;
+          }
+          if (command.type === "set-node-layout-align" && "layoutAlign" in node) {
+            node.layoutAlign = command.value;
+            applied += 1;
+          }
+          if (command.type === "set-node-layout-grow" && "layoutGrow" in node) {
+            node.layoutGrow = command.value;
+            applied += 1;
+          }
+          if (command.type === "set-node-layout-sizing-horizontal" && "layoutSizingHorizontal" in node) {
+            node.layoutSizingHorizontal = command.value;
+            applied += 1;
+          }
+          if (command.type === "resize-node-width-to-parent-inner" && frameAncestor && "resize" in node && "height" in node && "x" in node) {
+            const availableWidth = Math.max(0, frameAncestor.width - frameAncestor.paddingLeft - frameAncestor.paddingRight);
+            node.resize(availableWidth, node.height);
+            node.x = frameAncestor.paddingLeft;
+            applied += 1;
+          }
+          if (command.type === "center-node-in-parent" && frameAncestor && "x" in node && "width" in node) {
+            node.x = Math.round((frameAncestor.width - node.width) / 2);
+            applied += 1;
+          }
+          if (command.type === "shrink-node-to-hug-content" && canShrinkToHugWidth(node)) {
+            if (shrinkToHugWidth(node)) applied += 1;
+          }
+        }
+      }
+    }
+    if (applied === 0) {
+      throw new Error("\uD604\uC7AC selection\uC5D0\uC11C\uB294 \uC9C1\uC811 \uC218\uC815 \uAE30\uC900\uC744 \uCC3E\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.");
+    }
+    return (_c = intent.message) != null ? _c : "\uC120\uD0DD \uC601\uC5ED\uC5D0 \uC9C1\uC811 \uC218\uC815\uC744 \uC801\uC6A9\uD588\uC2B5\uB2C8\uB2E4.";
+  };
   var rawUiHtml = `
 <!doctype html>
 <html lang="ko">
@@ -6352,7 +6641,7 @@
       }
       .tabs {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 4px;
         padding: 4px;
         border: 1px solid var(--line);
@@ -6456,6 +6745,14 @@
         min-width: 0;
       }
       .hint { color: var(--muted); font-size: 11px; }
+      .maker-actions {
+        display: grid;
+        gap: 8px;
+      }
+      textarea.control {
+        min-height: 120px;
+        resize: vertical;
+      }
       .spinner {
         display: inline-block;
         width: 12px;
@@ -6477,11 +6774,27 @@
   <body>
     <div class="app">
       <div class="tabs">
-        <button type="button" class="tab active" id="tabInspection">Inspection</button>
+        <button type="button" class="tab active" id="tabMaker">Maker</button>
+        <button type="button" class="tab" id="tabInspection">Inspection</button>
         <button type="button" class="tab" id="tabExtraction">Extraction</button>
       </div>
 
-      <div class="panel active" id="panelInspection">
+      <div class="panel active" id="panelMaker">
+        <div class="label">Prompt</div>
+        <textarea class="control" id="makerPrompt" placeholder="\uC608: \uC778\uD48B\uACFC \uBC84\uD2BC\uC744 \uC774\uC6A9\uD55C \uB85C\uADF8\uC778 \uD654\uBA74\uC744 \uB9CC\uB4E4\uC5B4 \uC8FC\uC138\uC694."></textarea>
+        <div class="meta">
+          <div class="meta-item"><div class="meta-key">Selected</div><div class="meta-value" id="makerSelectionName">\uC120\uD0DD \uC5C6\uC74C</div></div>
+          <div class="meta-item"><div class="meta-key">Intent</div><div class="meta-value" id="makerSelectionIntent">-</div></div>
+          <div class="meta-item"><div class="meta-key">Kinds</div><div class="meta-value" id="makerSelectionKinds">-</div></div>
+          <div class="meta-item"><div class="meta-key">Parent</div><div class="meta-value" id="makerSelectionParent">-</div></div>
+        </div>
+        <button type="button" class="btn primary" id="makerSubmit"><span id="makerSpinner" class="spinner hidden"></span><span id="makerSubmitLabel">Create</span></button>
+        <div class="status" id="makerStatus"></div>
+        <div class="code" id="makerDetails">Maker intent\uC640 \uC801\uC6A9 \uACB0\uACFC\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.</div>
+        <div class="hint">Contract\uC640 extracted component\uB97C \uBC14\uD0D5\uC73C\uB85C \uC0C8 instance\uB97C \uB9CC\uB4E4\uAC70\uB098, \uC120\uD0DD\uD55C \uC601\uC5ED\uC744 \uD504\uB86C\uD504\uD2B8\uB85C \uB2E4\uC2DC \uC0DD\uC131\uD569\uB2C8\uB2E4.</div>
+      </div>
+
+      <div class="panel" id="panelInspection">
         <div class="label">Level</div>
         <select class="control" id="previewLevel">
           <option value="component">Component</option>
@@ -6531,10 +6844,22 @@
 
         const $ = (id) => document.getElementById(id);
         const el = {
+          tabMaker: $("tabMaker"),
           tabInspection: $("tabInspection"),
           tabExtraction: $("tabExtraction"),
+          panelMaker: $("panelMaker"),
           panelInspection: $("panelInspection"),
           panelExtraction: $("panelExtraction"),
+          makerPrompt: $("makerPrompt"),
+          makerSubmit: $("makerSubmit"),
+          makerSpinner: $("makerSpinner"),
+          makerSubmitLabel: $("makerSubmitLabel"),
+          makerStatus: $("makerStatus"),
+          makerDetails: $("makerDetails"),
+          makerSelectionName: $("makerSelectionName"),
+          makerSelectionIntent: $("makerSelectionIntent"),
+          makerSelectionKinds: $("makerSelectionKinds"),
+          makerSelectionParent: $("makerSelectionParent"),
           previewLevel: $("previewLevel"),
           previewItem: $("previewItem"),
           render: $("renderContractPreview"),
@@ -6563,14 +6888,76 @@
         let lastExtractionName = "";
         let lastNodeUrl = "";
         let latestSelectionSvg = null;
+        let makerAnalyzeCache = new Map();
         let selectionSvgResolver = null;
         let extractionPayloadResolver = null;
         let abortController = null;
         let timer = null;
         let poller = null;
+        let makerAckTimer = null;
         let startedAt = 0;
         let statusText = "";
         let statusTone = "";
+
+        const setMakerStatus = (text, tone) => {
+          el.makerStatus.textContent = text || "";
+          el.makerStatus.className = "status" + (tone ? " " + tone : "");
+        };
+
+        const setMakerDetails = (value) => {
+          if (!value) {
+            el.makerDetails.textContent = "Maker intent\uC640 \uC801\uC6A9 \uACB0\uACFC\uAC00 \uC5EC\uAE30\uC5D0 \uD45C\uC2DC\uB429\uB2C8\uB2E4.";
+            return;
+          }
+          el.makerDetails.textContent =
+            typeof value === "string" ? value : JSON.stringify(value, null, 2);
+        };
+
+        const syncMakerAction = () => {
+          const hasSelection = Boolean(latestSelectionSummary && latestSelectionSummary.selectionCount);
+          const idleLabel = hasSelection ? "Apply to Selection" : "Create";
+          el.makerSubmitLabel.dataset.idleLabel = idleLabel;
+          if (!el.makerSubmit.disabled) {
+            el.makerSubmitLabel.textContent = idleLabel;
+          }
+        };
+
+        const getMakerAnalyzeCacheKey = (prompt) => {
+          if (!latestSelectionSummary) return "";
+          return JSON.stringify({
+            prompt: prompt.trim(),
+            fileKey: latestSelectionSummary.fileKey || "",
+            nodeIds: latestSelectionSummary.nodeIds || [],
+            primaryName: latestSelectionSummary.primaryName || "",
+            intent: latestSelectionSummary.selectionIntent || null
+          });
+        };
+
+        const setMakerLoading = (loading) => {
+          el.makerSubmit.disabled = loading;
+          el.makerSpinner.classList.toggle("hidden", !loading);
+          if (loading) {
+            const hasSelection = Boolean(latestSelectionSummary && latestSelectionSummary.selectionCount);
+            el.makerSubmitLabel.textContent = hasSelection ? "Applying..." : "Creating...";
+          } else {
+            el.makerSubmitLabel.textContent =
+              el.makerSubmitLabel.dataset.idleLabel ||
+              (latestSelectionSummary && latestSelectionSummary.selectionCount ? "Apply to Selection" : "Create");
+          }
+        };
+
+        const stopMakerAckTimer = () => {
+          if (makerAckTimer) clearTimeout(makerAckTimer);
+          makerAckTimer = null;
+        };
+
+        const startMakerAckTimer = () => {
+          stopMakerAckTimer();
+          makerAckTimer = setTimeout(() => {
+            setMakerLoading(false);
+            setMakerStatus("\uC751\uB2F5\uC774 \uC9C0\uC5F0\uB418\uACE0 \uC788\uC2B5\uB2C8\uB2E4. selection\uACFC \uACB0\uACFC\uB97C \uB2E4\uC2DC \uD655\uC778\uD574 \uC8FC\uC138\uC694.", "warning");
+          }, 6000);
+        };
 
         const getStoredFileUrl = () => {
           try {
@@ -6601,6 +6988,17 @@
             const match = raw.match(/figma\\.com\\/(?:design|proto|board)\\/([^/?#]+)/i);
             return match ? match[1] : "";
           }
+        };
+
+        const isWritePayload = (value) => {
+          if (!value || typeof value !== "object") return false;
+          return Boolean(
+            value.document &&
+            value.document.name &&
+            value.document.screen &&
+            value.document.theme &&
+            Array.isArray(value.nodes)
+          );
         };
 
         const setStatus = (text, tone) => {
@@ -6638,11 +7036,15 @@
         };
 
         const switchTab = (next) => {
+          const maker = next === "maker";
           const inspection = next === "inspection";
+          const extraction = next === "extraction";
+          el.tabMaker.classList.toggle("active", maker);
           el.tabInspection.classList.toggle("active", inspection);
-          el.tabExtraction.classList.toggle("active", !inspection);
+          el.tabExtraction.classList.toggle("active", extraction);
+          el.panelMaker.classList.toggle("active", maker);
           el.panelInspection.classList.toggle("active", inspection);
-          el.panelExtraction.classList.toggle("active", !inspection);
+          el.panelExtraction.classList.toggle("active", extraction);
         };
 
         const syncPreviewItems = () => {
@@ -6666,6 +7068,21 @@
           el.selectionFileKey.textContent = summary.fileKey || "-";
           el.selectionUrl.textContent = summary.nodeUrl || "-";
           el.selectionJson.textContent = JSON.stringify(summary, null, 2);
+          el.makerSelectionName.textContent = el.selectionName.textContent;
+          el.makerSelectionIntent.textContent = summary.selectionIntent ? summary.selectionIntent.kind : "-";
+          el.makerSelectionKinds.textContent =
+            summary.selectionIntent && summary.selectionIntent.componentKinds.length > 0
+              ? summary.selectionIntent.componentKinds.join(", ")
+              : "-";
+          el.makerSelectionParent.textContent =
+            summary.selectionIntent && summary.selectionIntent.parentName
+              ? summary.selectionIntent.parentName
+              : "-";
+          syncMakerAction();
+          if (!summary.selectionCount) {
+            setMakerStatus("");
+            setMakerDetails("");
+          }
 
           const hasStored = Boolean(getStoredFileUrl().trim());
           if (!hasRuntimeFileKey && !hasStored) {
@@ -6813,6 +7230,257 @@
           }
         };
 
+        const runMaker = async (placement) => {
+          let effectivePlacement = placement;
+          const prompt = el.makerPrompt.value.trim();
+          if (!prompt) {
+            setMakerStatus("Prompt\uB97C \uC785\uB825\uD574 \uC8FC\uC138\uC694.", "error");
+            return;
+          }
+
+          const fallbackDirectEditIntent = () => {
+            if (!latestSelectionSummary) return null;
+            const selectionKind = latestSelectionSummary.selectionIntent
+              ? latestSelectionSummary.selectionIntent.kind
+              : "unknown";
+
+            if (looksLikeFullWidthPrompt(prompt)) {
+              return {
+                kind: "direct-edit",
+                targetScope:
+                  selectionKind === "section" || selectionKind === "screen-fragment"
+                    ? "container-children"
+                    : "selection",
+                message: "\uC120\uD0DD \uC601\uC5ED\uC5D0 full width \uC9C1\uC811 \uC218\uC815\uC744 \uC801\uC6A9\uD569\uB2C8\uB2E4.",
+                commands:
+                  selectionKind === "section" || selectionKind === "screen-fragment"
+                    ? [
+                        { type: "set-node-layout-align", value: "STRETCH" },
+                        { type: "set-node-layout-sizing-horizontal", value: "FILL" },
+                        { type: "set-node-layout-grow", value: 0 }
+                      ]
+                    : [
+                        { type: "set-node-layout-align", value: "STRETCH" },
+                        { type: "set-node-layout-sizing-horizontal", value: "FILL" },
+                        { type: "resize-node-width-to-parent-inner" }
+                      ]
+              };
+            }
+
+            if (looksLikeCenterAlignPrompt(prompt)) {
+              return {
+                kind: "direct-edit",
+                targetScope:
+                  selectionKind === "section" || selectionKind === "screen-fragment"
+                    ? "container"
+                    : "selection",
+                message: "\uC120\uD0DD \uC601\uC5ED\uC5D0 \uAC00\uC6B4\uB370 \uC815\uB82C \uC9C1\uC811 \uC218\uC815\uC744 \uC801\uC6A9\uD569\uB2C8\uB2E4.",
+                commands:
+                  selectionKind === "section" || selectionKind === "screen-fragment"
+                    ? [
+                        { type: "set-container-cross-align", value: "CENTER" },
+                        { type: "set-node-layout-align", value: "INHERIT" },
+                        { type: "set-node-layout-grow", value: 0 },
+                        { type: "shrink-node-to-hug-content" }
+                      ]
+                    : [
+                        { type: "set-container-cross-align", value: "CENTER" },
+                        { type: "set-node-layout-align", value: "INHERIT" },
+                        { type: "set-node-layout-grow", value: 0 },
+                        { type: "shrink-node-to-hug-content" },
+                        { type: "center-node-in-parent" }
+                      ]
+              };
+            }
+
+            return null;
+          };
+
+          if (effectivePlacement === "selection" && latestSelectionSummary) {
+            const immediateIntent = fallbackDirectEditIntent();
+            if (immediateIntent) {
+              setMakerDetails(immediateIntent);
+              setMakerStatus(immediateIntent.message || "\uC120\uD0DD \uC601\uC5ED\uC5D0 \uC9C1\uC811 \uC218\uC815 \uC694\uCCAD\uC744 \uC804\uB2EC\uD588\uC2B5\uB2C8\uB2E4.");
+              setMakerLoading(true);
+              await nextPaint();
+              parent.postMessage(
+                {
+                  pluginMessage: {
+                    type: "makerDirectEdit",
+                    prompt,
+                    intent: immediateIntent
+                  }
+                },
+                "*"
+              );
+              startMakerAckTimer();
+              return;
+            }
+
+            setMakerStatus("\uC120\uD0DD \uC601\uC5ED\uC744 MCP\uB85C \uBD84\uC11D \uC911\uC785\uB2C8\uB2E4.");
+            const analyzeCacheKey = getMakerAnalyzeCacheKey(prompt);
+            const cachedAnalyze = analyzeCacheKey ? makerAnalyzeCache.get(analyzeCacheKey) : null;
+            if (cachedAnalyze && cachedAnalyze.directEdit) {
+              setMakerDetails(cachedAnalyze.directEdit);
+              setMakerStatus("\uCE90\uC2DC\uB41C selection \uBD84\uC11D\uC744 \uC0AC\uC6A9\uD569\uB2C8\uB2E4.");
+              setMakerLoading(true);
+              await nextPaint();
+              parent.postMessage(
+                {
+                  pluginMessage: {
+                    type: "makerDirectEdit",
+                    prompt,
+                    intent: cachedAnalyze.directEdit
+                  }
+                },
+                "*"
+              );
+              startMakerAckTimer();
+              return;
+            }
+
+            setMakerDetails("selection MCP \uBD84\uC11D\uC744 \uC9C4\uD589 \uC911\uC785\uB2C8\uB2E4.");
+            setMakerLoading(true);
+            await nextPaint();
+            try {
+              const controller = new AbortController();
+              const timeout = setTimeout(() => controller.abort(), 15000);
+              const analyzeResponse = await fetch(BRIDGE_URL + "/maker-analyze", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({
+                  prompt,
+                  selectionSummary: latestSelectionSummary
+                }),
+                signal: controller.signal
+              });
+              clearTimeout(timeout);
+              const analyzed = await analyzeResponse.json();
+              if (!analyzeResponse.ok) {
+                throw new Error(analyzed && analyzed.error ? analyzed.error : "\uC120\uD0DD \uBD84\uC11D\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.");
+              }
+              if (analyzed && analyzed.directEdit) {
+                if (analyzeCacheKey) {
+                  makerAnalyzeCache.set(analyzeCacheKey, analyzed);
+                }
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: "makerDirectEdit",
+                      prompt,
+                      intent: analyzed.directEdit
+                    }
+                  },
+                  "*"
+                );
+                startMakerAckTimer();
+                const analysis = analyzed.directEdit.analysis;
+                const componentName = analysis && analysis.componentName ? " (" + analysis.componentName + ")" : "";
+                setMakerDetails(analyzed.directEdit);
+                setMakerStatus((analyzed.directEdit.message || "\uC120\uD0DD \uC601\uC5ED\uC5D0 \uC9C1\uC811 \uC218\uC815 \uC694\uCCAD\uC744 \uC804\uB2EC\uD588\uC2B5\uB2C8\uB2E4.") + componentName);
+                return;
+              }
+              const fallbackIntent = fallbackDirectEditIntent();
+              if (fallbackIntent) {
+                setMakerDetails(fallbackIntent);
+                setMakerStatus(fallbackIntent.message);
+                setMakerLoading(true);
+                await nextPaint();
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: "makerDirectEdit",
+                      prompt,
+                      intent: fallbackIntent
+                    }
+                  },
+                  "*"
+                );
+                startMakerAckTimer();
+                return;
+              }
+              setMakerStatus("\uC9C1\uC811 \uC218\uC815\uC73C\uB85C \uD574\uC11D\uB418\uC9C0 \uC54A\uC544, selection \uAE30\uC900 \uC0C8 \uC81C\uC548\uC548\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.", "warning");
+              setMakerDetails("selection \uAE30\uC900 \uC0C8 \uD504\uB808\uC784 \uC81C\uC548\uC548\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.");
+              effectivePlacement = "selection-preview";
+            } catch (error) {
+              const fallbackIntent = fallbackDirectEditIntent();
+              if (fallbackIntent) {
+                setMakerDetails(fallbackIntent);
+                setMakerLoading(true);
+                await nextPaint();
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: "makerDirectEdit",
+                      prompt,
+                      intent: fallbackIntent
+                    }
+                  },
+                  "*"
+                );
+                startMakerAckTimer();
+                const timeoutMessage =
+                  error && error.name === "AbortError"
+                    ? "\uBD84\uC11D\uC774 \uC624\uB798 \uAC78\uB824 fallback direct edit\uB97C \uC801\uC6A9\uD569\uB2C8\uB2E4."
+                    : fallbackIntent.message;
+                setMakerStatus(timeoutMessage, "warning");
+                return;
+              }
+              setMakerStatus("\uC120\uD0DD \uBD84\uC11D\uC774 \uBD88\uC548\uC815\uD574, selection \uAE30\uC900 \uC0C8 \uC81C\uC548\uC548\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.", "warning");
+              setMakerDetails(error && error.message ? error.message : "selection \uBD84\uC11D \uC624\uB958");
+              effectivePlacement = "selection-preview";
+            }
+          }
+
+          setMakerStatus("Maker payload\uB97C \uC0DD\uC131 \uC911\uC785\uB2C8\uB2E4.");
+          setMakerDetails("");
+          setMakerLoading(true);
+          await nextPaint();
+
+          try {
+            const response = await fetch(BRIDGE_URL + "/maker-generate", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({
+                prompt,
+                selectionSummary: latestSelectionSummary
+              })
+            });
+            const result = await response.json();
+            if (!response.ok) {
+              throw new Error(result && result.error ? result.error : "Maker \uC0DD\uC131\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.");
+            }
+            if (!result || !isWritePayload(result.payload)) {
+              throw new Error("Maker payload \uD615\uC2DD\uC774 \uC62C\uBC14\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.");
+            }
+
+            parent.postMessage(
+              {
+                pluginMessage: {
+                    type: "makerGenerate",
+                    payload: result.payload,
+                  placement: effectivePlacement
+                }
+              },
+              "*"
+            );
+
+            startMakerAckTimer();
+
+            const inferred = result?.maker?.inferredScreen ? " (" + result.maker.inferredScreen + ")" : "";
+            setMakerDetails({
+              inferredScreen: result?.maker?.inferredScreen ?? null,
+              summary: result?.summary ?? null,
+              evaluation: result?.evaluation ?? null
+            });
+            setMakerStatus("Maker \uC0DD\uC131 \uC694\uCCAD\uC744 \uC804\uB2EC\uD588\uC2B5\uB2C8\uB2E4" + inferred + ".");
+          } catch (error) {
+            setMakerStatus(error && error.message ? error.message : "Maker \uC0DD\uC131 \uC911 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.", "error");
+            setMakerLoading(false);
+          } finally {
+          }
+        };
+
         window.onmessage = (event) => {
           const msg = event.data && event.data.pluginMessage;
           if (!msg) return;
@@ -6844,13 +7512,29 @@
             if (extractionPayloadResolver) {
               extractionPayloadResolver = null;
             }
+            setMakerStatus(msg.message || "\uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.", "error");
             setStatus(msg.message || "\uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.", "error");
             setLoading(false);
+            stopMakerAckTimer();
+            setMakerLoading(false);
+          }
+          if (msg.type === "makerProgress") {
+            setMakerStatus(msg.message || "Maker \uC791\uC5C5\uC744 \uC9C4\uD589 \uC911\uC785\uB2C8\uB2E4.");
+          }
+          if (msg.type === "makerRendered") {
+            stopMakerAckTimer();
+            setMakerStatus(msg.message || "Maker rendering complete.");
+            setMakerLoading(false);
           }
         };
 
+        el.tabMaker.addEventListener("click", () => switchTab("maker"));
         el.tabInspection.addEventListener("click", () => switchTab("inspection"));
         el.tabExtraction.addEventListener("click", () => switchTab("extraction"));
+        el.makerSubmit.addEventListener("click", () => {
+          const hasSelection = Boolean(latestSelectionSummary && latestSelectionSummary.selectionCount);
+          runMaker(hasSelection ? "selection" : "new-frame");
+        });
         el.previewLevel.addEventListener("change", syncPreviewItems);
         el.render.addEventListener("click", () => {
           el.render.disabled = true;
@@ -6875,7 +7559,10 @@
         el.fileUrlInput.value = getStoredFileUrl();
         lastNodeUrl = getStoredFileUrl();
         syncPreviewItems();
+        syncMakerAction();
         setLoading(false);
+        stopMakerAckTimer();
+        setMakerLoading(false);
         parent.postMessage({ pluginMessage: { type: "pluginReady" } }, "*");
         parent.postMessage({ pluginMessage: { type: "requestSelectionSvg" } }, "*");
         checkBridge();
@@ -6890,7 +7577,7 @@
     height: 520
   });
   figma.ui.onmessage = async (message) => {
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e, _f;
     try {
       if (message.type === "pluginReady") {
         sendSelectionInfo();
@@ -6920,6 +7607,75 @@
         figma.ui.postMessage({ type: "renderDone" });
         return;
       }
+      if (message.type === "makerGenerate") {
+        figma.ui.postMessage({
+          type: "makerProgress",
+          message: "Figma\uC5D0\uC11C \uC0C8 instance\uB97C \uB80C\uB354\uB9C1\uD558\uB294 \uC911\uC785\uB2C8\uB2E4."
+        });
+        if (!isFigmaWritePayload(message.payload)) {
+          throw new Error("Maker payload \uD615\uC2DD\uC774 \uC62C\uBC14\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.");
+        }
+        const targetNodes = [...figma.currentPage.selection];
+        const targetBounds = getSelectionBounds(targetNodes);
+        const firstParent = targetNodes.length > 0 ? safeGetParent(targetNodes[0]) : null;
+        const sharedParent = firstParent && targetNodes.every((node) => safeGetParent(node) === firstParent) ? firstParent : null;
+        const sharedParentName = sharedParent ? safeGetName(sharedParent) : null;
+        const result = await renderPayload(message.payload);
+        figma.ui.postMessage({
+          type: "makerProgress",
+          message: "\uB80C\uB354 \uACB0\uACFC\uB97C \uBC30\uCE58\uD558\uB294 \uC911\uC785\uB2C8\uB2E4."
+        });
+        const createdFrame = [...figma.currentPage.children].reverse().find(
+          (node) => node.type === "FRAME" && node.name === result.createdFrameName
+        );
+        if (message.placement === "selection-preview" && createdFrame && targetBounds) {
+          createdFrame.x = targetBounds.x + targetBounds.width + 40;
+          createdFrame.y = targetBounds.y;
+          figma.currentPage.selection = [createdFrame];
+        } else if (message.placement === "selection" && createdFrame && targetBounds) {
+          const sectionFrames = createdFrame.children.filter(
+            (node) => node.type === "FRAME" && node.name.endsWith("-section")
+          );
+          const preferredSectionName = sharedParentName ? sharedParentName : targetNodes.length === 1 ? (_a = safeGetName(targetNodes[0])) != null ? _a : targetNodes[0].id : null;
+          const replacementSection = (_c = (_b = sectionFrames.find((node) => preferredSectionName && node.name === preferredSectionName)) != null ? _b : sectionFrames.find((node) => node.name !== "preview-section")) != null ? _c : null;
+          const replacementParent = sharedParent && safeGetParent(sharedParent) && "appendChild" in safeGetParent(sharedParent) ? safeGetParent(sharedParent) : figma.currentPage;
+          if (replacementSection && sharedParent && sharedParent.type === "FRAME" && sharedParentName && replacementSection.name === sharedParentName) {
+            replaceFrameContents(sharedParent, replacementSection);
+            createdFrame.remove();
+          } else if (replacementSection) {
+            const parentAbsolute = getParentAbsolutePosition(replacementParent);
+            replacementParent.appendChild(replacementSection);
+            replacementSection.x = targetBounds.x - parentAbsolute.x;
+            replacementSection.y = targetBounds.y - parentAbsolute.y;
+            const removeTargets = sharedParent && sharedParentName && replacementSection.name === sharedParentName ? [sharedParent] : targetNodes;
+            for (const node of removeTargets) {
+              if ("removed" in node && !node.removed) {
+                node.remove();
+              }
+            }
+            createdFrame.remove();
+          } else {
+            createdFrame.x = targetBounds.x;
+            createdFrame.y = targetBounds.y;
+          }
+        }
+        figma.ui.postMessage({
+          type: "makerRendered",
+          message: message.placement === "selection" ? `Selection\uC744 \uAE30\uC900\uC73C\uB85C ${result.createdFrameName}\uB85C \uAD50\uCCB4\uD588\uC2B5\uB2C8\uB2E4.` : message.placement === "selection-preview" ? `Selection \uAE30\uC900 \uC81C\uC548\uC548 ${result.createdFrameName}\uB97C \uC606\uC5D0 \uC0DD\uC131\uD588\uC2B5\uB2C8\uB2E4.` : `${result.createdFrameName}\uB97C \uC0DD\uC131\uD588\uC2B5\uB2C8\uB2E4.`
+        });
+        return;
+      }
+      if (message.type === "makerDirectEdit") {
+        const responseMessage = applyDirectEditIntent([...figma.currentPage.selection], message.intent);
+        sendSelectionInfo();
+        void sendSelectionSvg();
+        figma.notify(responseMessage);
+        figma.ui.postMessage({
+          type: "makerRendered",
+          message: responseMessage
+        });
+        return;
+      }
       if (message.type === "extractSelection") {
         figma.ui.postMessage({ type: "extractionProgress", message: "\uC120\uD0DD \uB178\uB4DC\uB97C \uD655\uC778\uD558\uB294 \uC911\uC785\uB2C8\uB2E4." });
         await flushUi();
@@ -6929,7 +7685,7 @@
         }
         figma.ui.postMessage({ type: "extractionProgress", message: "\uC120\uD0DD \uB178\uB4DC\uB97C \uD655\uC778\uD588\uC2B5\uB2C8\uB2E4." });
         await flushUi();
-        const fallbackNodeUrl = (_a = message.nodeUrl) == null ? void 0 : _a.trim();
+        const fallbackNodeUrl = (_d = message.nodeUrl) == null ? void 0 : _d.trim();
         const reference = buildMinimalExtractionReference(selection, fallbackNodeUrl);
         figma.ui.postMessage({ type: "extractionProgress", message: "reference\uB97C \uC900\uBE44\uD588\uC2B5\uB2C8\uB2E4." });
         await flushUi();
@@ -6951,7 +7707,7 @@
         figma.ui.postMessage({
           type: "extractionPayloadReady",
           payload: {
-            extractionName: (_c = (_b = reference.nodes[0]) == null ? void 0 : _b.name) != null ? _c : "figma-selection",
+            extractionName: (_f = (_e = reference.nodes[0]) == null ? void 0 : _e.name) != null ? _f : "figma-selection",
             reference,
             selectionSvg
           }
